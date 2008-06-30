@@ -13,6 +13,10 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self.sbenvironment.color = {}
 	self.sbenvironment.bloom = {}
+	if CAF and CAF.GetAddon("Custom Damage System") then
+		self:SetReceiveDamage(false)
+		self:SetReceiveTemperatureDamage(false)
+	end
 end
 
 function ENT:GetSunburn()

@@ -11,6 +11,10 @@ function ENT:Initialize()
 	self.Entity.sbenvironment.unstable = false
 	self.Entity:SetNotSolid(true)
 	self.Entity:DrawShadow(false)
+	if CAF and CAF.GetAddon("Custom Damage System") then
+		self:SetReceiveDamage(false)
+		self:SetReceiveTemperatureDamage(false)
+	end
 end
 
 function ENT:GetSunburn()

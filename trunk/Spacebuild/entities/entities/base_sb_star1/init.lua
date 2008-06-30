@@ -8,6 +8,10 @@ function ENT:Initialize()
 	self.CDS_IGNORE_ALL = true
 	self:SetNotSolid(true)
 	self:DrawShadow(false)
+	if CAF and CAF.GetAddon("Custom Damage System") then
+		self:SetReceiveDamage(false)
+		self:SetReceiveTemperatureDamage(false)
+	end
 end
 
 function ENT:GetTemperature(ent)

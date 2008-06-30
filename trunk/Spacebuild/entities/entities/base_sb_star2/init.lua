@@ -10,6 +10,10 @@ function ENT:Initialize()
 	self.sbenvironment.temperature3 = 0
 	self:SetNotSolid(true)
 	self:DrawShadow(false)
+	if CAF and CAF.GetAddon("Custom Damage System") then
+		self:SetReceiveDamage(false)
+		self:SetReceiveTemperatureDamage(false)
+	end
 end
 
 function ENT:GetTemperature(ent)
