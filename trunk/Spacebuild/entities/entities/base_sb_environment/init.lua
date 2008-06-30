@@ -435,7 +435,7 @@ function ENT:IsSpace()
 	return false
 end
  
-function ENT:OnPlanet(ent)
+function ENT:OnEnvironment(ent)
 	if not ent then return end
 	if ent == self then return end
 	local pos = ent:GetPos()

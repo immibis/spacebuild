@@ -31,10 +31,10 @@ SetGlobalInt("InSpace", 0)
 TrueSun = {}
 SunAngle = nil
 
-/*SB_Override_PlayerHeatDestroy = false
-SB_Override_EntityHeatDestroy = false
-SB_Override_PressureDamage = false
-SB_PlayerOverride = false*/
+GM.Override_PlayerHeatDestroy = 0
+GM.Override_EntityHeatDestroy = 0
+GM.Override_PressureDamage = 0
+GM.PlayerOverride = 0
 
 CreateConVar( "SB_NoClip", "1" )
 CreateConVar( "SB_PlanetNoClipOnly", "1" )
@@ -44,6 +44,38 @@ CreateConVar( "SB_SuperAdminSpaceNoclip", "1" )
 //Think + Environments
 local Environments = {}
 local numenv = 0
+
+function GM:AddOverride_PlayerHeatDestroy()
+	self.Override_PlayerHeatDestroy = self.Override_PlayerHeatDestroy + 1
+end
+
+function GM:RemoveOverride_PlayerHeatDestroy()
+	self.Override_PlayerHeatDestroy = self.Override_PlayerHeatDestroy - 1
+end
+
+function GM:AddOverride_EntityHeatDestroy()
+	self.Override_EntityHeatDestroy = self.Override_EntityHeatDestroy + 1
+end
+
+function GM:RemoveOverride_EntityHeatDestroy()
+	self.Override_EntityHeatDestroy = self.Override_EntityHeatDestroy - 1
+end
+
+function GM:AddOverride_PressureDamage()
+	self.Override_PressureDamage = Override_PressureDamage + 1
+end
+
+function GM:RemoveOverride_PressureDamage()
+	self.Override_PressureDamage = self.Override_PressureDamage - 1
+end
+
+function GM:AddPlayerOverride()
+	self.PlayerOverride = self.PlayerOverride + 1
+end
+
+function GM:RemoveOverride_PlayerHeatDestroy()
+	self.PlayerOverride = self.PlayerOverride - 1
+end
 
 /*---------------------------------------------------------
 Name: gamemode:PlayerSpawn( )
@@ -94,13 +126,13 @@ end
 
 function GM:PerformEnvironmentCheckOnEnt(ent)
 	if not ent then return end
-	if not ent:IsPlayer() or not SB_PlayerOverride then
+	if not ent:IsPlayer() or self.PlayerOverride == 0 then
 		if ent.environment != sb_space.Get() then
 			ent.environment = sb_space.Get() //restore to default before doing the Environment checks
 		end
 		for k, v in ipairs(Environments) do
 			if v and v:IsValid() then
-				v:OnPlanet(ent)
+				v:OnEnvironment(ent)
 			else
 				table.remove(Environments, k)
 			end
@@ -120,7 +152,7 @@ function GM:PerformEnvironmentCheckOnEnt(ent)
 		end
 	end
 	if ent:IsPlayer() then
-		if not SB_PlayerOverride and not SB_Override_PlayerHeatDestroy then
+		if self.PlayerOverride == 0 and self.Override_PlayerHeatDestroy == 0 then
 			if ent.environment:IsPlanet() and ent.environment:GetTemperature(ent) > 10000 then
 				ent:SilentKill()
 			end
