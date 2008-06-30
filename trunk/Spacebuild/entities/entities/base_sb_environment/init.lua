@@ -460,13 +460,7 @@ function ENT:OnPlanet(ent)
 	end			
 end
 
-function ENT:UsesRD2()
-	return true
-end
-
 function ENT:Remove()
-	if self:UsesRD2() then
 		self.BaseClass.Remove(self)
-	end
 	GAMEMODE:RemoveEnvironment(self)
 end

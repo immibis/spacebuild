@@ -115,13 +115,6 @@ function ENT:GravGunPickupAllowed()
 end
 
 function ENT:Remove()
-	if self:UsesRD2() then
-		self.BaseClass.Remove(self)
-	end
-	GAMEMODE:RemoveEnvironment(self)
+	self.BaseClass.Remove(self)
 	table.remove(TrueSun, self:GetPos())
-end
-
-function ENT:UsesRD2()
-	return false
 end

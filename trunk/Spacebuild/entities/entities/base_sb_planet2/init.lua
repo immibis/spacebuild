@@ -174,17 +174,6 @@ function ENT:GravGunPickupAllowed()
 	return false
 end
 
-function ENT:Remove()
-	if self:UsesRD2() then
-		self.BaseClass.Remove(self)
-	end
-	GAMEMODE:RemoveEnvironment(self)
-end
-
-function ENT:UsesRD2()
-	return false
-end
-
 local function SendBloom(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddPlanet", ply )
