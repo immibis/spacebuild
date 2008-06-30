@@ -254,7 +254,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
 		self.sbenvironment.air.o2per = o2
-		self.sbenvironment.air.o2 = math.Round(o2 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.o2 = math.Round(o2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		o2 = 0
 	end
@@ -263,7 +263,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
 		self.sbenvironment.air.co2per = co2
-		self.sbenvironment.air.co2 = math.Round(co2 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.co2 = math.Round(co2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		co2 = 0
 	end
@@ -272,7 +272,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
 		self.sbenvironment.air.nper = n
-		self.sbenvironment.air.n = math.Round(n * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.n = math.Round(n * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		n = 0
 	end
@@ -281,31 +281,31 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		if h < 0 then h = 0 end
 		if (((100 - o2)-co2)-n) < h then h = ((100-o2)-co2)-n end
 		self.sbenvironment.air.hper = h
-		self.sbenvironment.air.h = math.Round(h * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.h = math.Round(h * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		h = 0
 	end
 	if o2 + co2 + n + h < 100 then
 		local tmp = 100 - (o2 + co2 + n + h)
-		self.sbenvironment.air.o2 = math.Round((o2+ tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.o2 = math.Round((o2+ tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.o2per = o2 + tmp
 	elseif o2 + co2 + n + h > 100 then
 		local tmp = (o2 + co2 + n + h) - 100
 		if o2 > tmp then
-			self.sbenvironment.air.o2 = math.Round((o2 - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.o2 = math.Round((o2 - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.o2per = o2 - tmp
 		elseif co2 > tmp then
-			self.sbenvironment.air.co2 = math.Round((co2 - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.co2 = math.Round((co2 - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.co2per = co2 + tmp
 		elseif n > tmp then
-			self.sbenvironment.air.n = math.Round((n - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.n = math.Round((n - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.nper = n + tmp
 		elseif h > tmp then
-			self.sbenvironment.air.h = math.Round((h - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.h = math.Round((h - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.hper = h + tmp
 		end
 	end
-	self.sbenvironment.air.max = math.Round(100 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+	self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	self:PrintVars()
 end
 
@@ -364,7 +364,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	if o2 and type(o2) == "number" then
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
-		self.sbenvironment.air.o2 = math.Round(o2 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.o2 = math.Round(o2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		o2 = math.Round(self.sbenvironment.air.o2 / (self.sbenvironment.atmosphere * self:GetVolume() * 5))
 	end
@@ -372,7 +372,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	if co2 and type(co2) == "number" then
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
-		self.sbenvironment.air.co2 = math.Round(co2 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.co2 = math.Round(co2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		co2 = math.Round(self.sbenvironment.air.co2 / (self.sbenvironment.atmosphere * self:GetVolume() * 5))
 	end
@@ -380,43 +380,42 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	if n and type(n) == "number" then
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
-		self.sbenvironment.air.n = math.Round(n * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.n = math.Round(n * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		n = math.Round(self.sbenvironment.air.n / (self.sbenvironment.atmosphere * self:GetVolume() * 5))
 	end
 	if h and type(h) == "number" then
 		if h < 0 then h = 0 end
 		if (((100 - o2)-co2)-n) < h then h = (((100-o2)-co2)-n) end
-		self.sbenvironment.air.h = math.Round(h * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.h = math.Round(h * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		h = math.Round(self.sbenvironment.air.h / (self.sbenvironment.atmosphere * self:GetVolume() * 5))
 	end
 	if o2 + co2 + n + h < 100 then
 		local tmp = 100 - (o2 + co2 + n + h)
-		self.sbenvironment.air.o2 = math.Round((o2+ tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+		self.sbenvironment.air.o2 = math.Round((o2+ tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.o2per = o2 + tmp
 	elseif o2 + co2 + n + h > 100 then
 		local tmp = (o2 + co2 + n + h) - 100
 		if o2 > tmp then
-			self.sbenvironment.air.o2 = math.Round((o2 - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.o2 = math.Round((o2 - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.o2per = o2 - tmp
 		elseif co2 > tmp then
-			self.sbenvironment.air.co2 = math.Round((co2 - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.co2 = math.Round((co2 - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.co2per = co2 + tmp
 		elseif n > tmp then
-			self.sbenvironment.air.n = math.Round((n - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.n = math.Round((n - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.nper = n + tmp
 		elseif h > tmp then
-			self.sbenvironment.air.h = math.Round((h - tmp) * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+			self.sbenvironment.air.h = math.Round((h - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.hper = h + tmp
 		end
 	end
-	self.sbenvironment.air.max = math.Round(100 * 5 * self:GetVolume() * self.sbenvironment.atmosphere)
+	self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	self:PrintVars()
 end
 
 function ENT:GetVolume()
-	ErrorNoHalt(self)
 	return (4/3) * math.pi * self.sbenvironment.size * self.sbenvironment.size
 end
 
