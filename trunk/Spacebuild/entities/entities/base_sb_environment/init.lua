@@ -11,6 +11,9 @@ function ENT:Initialize()
 	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetSolid( SOLID_VPHYSICS )
+	self:SetNetworkedInt( "overlaymode", 1 )
+	self:SetNetworkedInt( "OOO", 0 )
+	self.Active = 0
 	self.sbenvironment = {}
 	self.sbenvironment.air = {}
 	self.sbenvironment.size = 0
