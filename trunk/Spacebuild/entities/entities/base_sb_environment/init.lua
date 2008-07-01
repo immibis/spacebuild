@@ -88,8 +88,8 @@ function ENT:GetGravity()
 end
 
 function ENT:UpdatePressure(ent)
-	if not ent or SB_Override_PressureDamage then return end
-	if ent:IsPlayer() and SB_PlayerOverride then return end
+	if not ent or GAMEMODE.PressureDamage > 0 then return end
+	if ent:IsPlayer() and GAMEMODE.PlayerOverride > 0 then return end
 	if self.sbenvironment.pressure and self.sbenvironment.pressure > 1.5 then
 		ent:TakeDamage((self.sbenvironment.pressure - 1.5) * 10)
 	end
