@@ -61,19 +61,19 @@ function ENT:GetPriority()
 end
 
 function ENT:GetO2Percentage()
-	return math.Round((self.sbenvironment.air.o2  / self.sbenvironment.air.max) * 100)
+	return ((self.sbenvironment.air.o2  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetCO2Percentage()
-	return math.Round((self.sbenvironment.air.co2  / self.sbenvironment.air.max) * 100)
+	return ((self.sbenvironment.air.co2  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetNPercentage()
-	return math.Round((self.sbenvironment.air.n  / self.sbenvironment.air.max) * 100)
+	return ((self.sbenvironment.air.n  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetHPercentage()
-	return math.Round((self.sbenvironment.air.h / self.sbenvironment.air.max) * 100)
+	return ((self.sbenvironment.air.h / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:SetSize(size)
