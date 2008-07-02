@@ -73,7 +73,7 @@ function GM:AddPlayerOverride()
 	self.PlayerOverride = self.PlayerOverride + 1
 end
 
-function GM:RemoveOverride_PlayerHeatDestroy()
+function GM:RemovePlayerOverride()
 	self.PlayerOverride = self.PlayerOverride - 1
 end
 
