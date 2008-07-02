@@ -452,6 +452,10 @@ function ENT:OnEnvironment(ent)
 					if self:GetSize() <= ent.environment:GetSize() then
 						ent.environment = self
 						//self:UpdateGravity(ent)
+					else
+						if pos:Distance(self:GetPos()) < pos:Distance(ent.environment:GetPos()) then
+							ent.environment = self
+						end
 					end
 				else
 					ent.environment = self
