@@ -539,12 +539,14 @@ end
 
 function GM:PlayerInitialSpawn(ply) //Send the player info about the Stars and Planets for Effects
 	self.BaseClass:PlayerInitialSpawn(ply)
-	for k, v in pairs(Environments) do
-		if v.IsPlanet and v:IsPlanet() then
-			SendBloom(v, ply)
-			SendColor(v, ply)
-		elseif v.IsStar and v:IsStar() then
-			SendSunBeam(v)
+	if Environments and table.Count(Environments) > 0 then
+		for k, v in pairs(Environments) do
+			if v.IsPlanet and v:IsPlanet() then
+				SendBloom(v, ply)
+				SendColor(v, ply)
+			elseif v.IsStar and v:IsStar() then
+				SendSunBeam(v)
+			end
 		end
 	end
 end

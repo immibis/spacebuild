@@ -5,7 +5,6 @@ include('shared.lua')
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
 	self:SetMoveType(MOVETYPE_NONE)
-	self.CDS_IGNORE_ALL = true
 	self.sbenvironment.temperature2 = 0
 	self.sbenvironment.temperature3 = 0
 	self:SetNotSolid(true)
@@ -37,13 +36,20 @@ function ENT:GetTemperature(ent)
 			end
 		end
 	end
-	if pos:Distance(self:GetPos()) < self:GetSize()/3 then
+	local dist = pos:Distance(self:GetPos())
+	if dist < self:GetSize()/6 then
 		return self.sbenvironment.temperature
-	elseif pos:Distance(self:GetPos()) < self:GetSize() * 2/3 then
+	elseif dist < self:GetSize() * 1/3 then
 		return self.sbenvironment.temperature2
-	else
+	elseif dist < self:GetSize() * 1/2 then
 		return self.sbenvironment.temperature3
+	elseif dist < self:GetSize() * 2/3 then
+		return self.sbenvironment.temperature3/2
+	elseif self.sbenvironment.temperature3/4 <= 14 then //Check that it isn't colder then Space, else return Space temperature
+			return 14
+		end
 	end
+	return self.sbenvironment.temperature3/4 //All other checks failed, player is the farest away from the star, but temp is still warmer then space, return that temperature
 end
 
 function ENT:GetPriority()

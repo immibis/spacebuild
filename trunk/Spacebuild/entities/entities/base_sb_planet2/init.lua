@@ -5,7 +5,6 @@ include('shared.lua')
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
 	self.Entity:SetMoveType(MOVETYPE_NONE);
-	self.CDS_IGNORE_ALL = true
 	self.Entity.sbenvironment.temperature2 = 0
 	self.Entity.sbenvironment.sunburn = false
 	self.Entity.sbenvironment.unstable = false

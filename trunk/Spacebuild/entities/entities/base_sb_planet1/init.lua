@@ -4,7 +4,6 @@ include('shared.lua')
 
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
-	self.CDS_IGNORE_ALL = true
 	self:SetMoveType(MOVETYPE_NONE);
 	self.sbenvironment.temperature2 = 0
 	self.sbenvironment.sunburn = false
