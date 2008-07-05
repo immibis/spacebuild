@@ -568,11 +568,11 @@ function GM:RemoveSBProps(world)
 		local stuff = ents.FindByClass( class )
 		for _, ent in ipairs( stuff ) do
 			if world and ent.environment and ent.environment:IsPlanet() then
-				if not (ent:IsPlayer() or (ent.IsPlanet and ent:IsPlanet()) or (ent.IsStar and ent:IsStar)) then
+				if not (ent:IsPlayer() or (ent.IsPlanet and ent:IsPlanet()) or (ent.IsStar and ent:IsStar())) then
 					ent:Remove()
 				end
 			elseif not world and (not ent.environment or ent.environment:IsSpace()) then
-				if not (ent:IsPlayer() or (ent.IsPlanet and ent:IsPlanet()) or (ent.IsStar and ent:IsStar)) then
+				if not (ent:IsPlayer() or (ent.IsPlanet and ent:IsPlanet()) or (ent.IsStar and ent:IsStar())) then
 					ent:Remove()
 				end
 			end
