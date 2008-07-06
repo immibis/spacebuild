@@ -312,7 +312,8 @@ function GM:Register_Environments()
 						local h
 						local ColorID
 						local BloomID
-						local flags 
+						local flags
+						local name
 						for key2, value2 in pairs(values) do
 							if (key2 == "Case02") then radius = tonumber(value2)
 							elseif (key2 == "Case03") then gravity = tonumber(value2)
@@ -325,6 +326,7 @@ function GM:Register_Environments()
 							elseif (key2 == "Case10") then co2 = tonumber(value2)
 							elseif (key2 == "Case11") then n = tonumber(value2)
 							elseif (key2 == "Case12") then h = tonumber(value2)
+							elseif (key2 == "Name") then name = tostring(value2)
 							elseif (key2 == "Case15") then
 								if (string.len(value2) > 0) then
 									ColorID = value2
@@ -335,12 +337,15 @@ function GM:Register_Environments()
 								end
 							end
 						end
+						if name == "" then
+							name = "Planet"
+						end
 						local planet = ents.Create( "base_sb_planet2" )
 						planet:SetModel("models/props_lab/huladoll.mdl")
 						planet:SetAngles( ent:GetAngles() )
 						planet:SetPos( ent:GetPos() )
 						planet:Spawn()
-						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags)
+						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags, name)
 						if ColorID then
 							Planetscolor[ColorID] = planet
 						end
@@ -422,19 +427,23 @@ function GM:Register_Environments()
 						local temp1
 						local temp2
 						local temp3
-						local issun = false
+						local name
 						for key2, value2 in pairs(values) do
-							if (key2 == "Case02") then radius = tonumber(value2) end
-							if (key2 == "Case03") then temp1 = tonumber(value2) end
-							if (key2 == "Case04") then temp2 = tonumber(value2) end
-							if (key2 == "Case05") then temp3 = tonumber(value2) end
+							if (key2 == "Case02") then radius = tonumber(value2)
+							elseif (key2 == "Case03") then temp1 = tonumber(value2)
+							elseif (key2 == "Case04") then temp2 = tonumber(value2)
+							elseif (key2 == "Case05") then temp3 = tonumber(value2)
+							elseif (key2 == "Name") then name = tostring(value2) end
+						end
+						if name =="" then
+							name = "Star"
 						end
 						local planet = ents.Create( "base_sb_star2" )
 						planet:SetModel("models/props_lab/huladoll.mdl")
 						planet:SetAngles( ent:GetAngles() )
 						planet:SetPos( ent:GetPos() )
 						planet:Spawn()
-						planet:CreateEnvironment(ent, radius, temp1, temp2, temp3)
+						planet:CreateEnvironment(ent, radius, temp1, temp2, temp3, name)
 						table.insert(TrueSun, ent:GetPos())
 						Msg("Registered New Star\n")
 					end

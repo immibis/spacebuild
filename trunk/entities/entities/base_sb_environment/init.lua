@@ -30,6 +30,7 @@ function ENT:Initialize()
 	self.sbenvironment.air.h = 0
 	self.sbenvironment.air.hper = 0
 	self.sbenvironment.air.max = 0
+	self.sbenvironment.name = "No Name"
 	GAMEMODE:AddEnvironment(self)
 end
 
@@ -93,6 +94,15 @@ function ENT:SetSize(size)
 		if size < 0 then size = 0 end
 		self:UpdateSize(self.sbenvironment.size, size)
 	end
+end
+
+function ENT:GetName()
+	return self.sbenvironment.name
+end
+
+function ENT:SetName(value)
+	if not value then return end
+	self.sbenvironment.name = value
 end
 
 function ENT:GetGravity()
@@ -235,7 +245,7 @@ function ENT:GetH()
 	return self.sbenvironment.air.h or 0
 end
 
-function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
+function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h, name)
 	//Msg("CreateEnvironment: "..tostring(gravity).."\n")
 	//set Gravity if one is given
 	if gravity and type(gravity) == "number" then
@@ -318,6 +328,9 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 			self.sbenvironment.air.h = math.Round((h - tmp) * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 			self.sbenvironment.air.hper = h + tmp
 		end
+	end
+	if name then
+		self.sbenvironment.name = name
 	end
 	self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	self:PrintVars()

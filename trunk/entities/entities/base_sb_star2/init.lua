@@ -66,7 +66,7 @@ local function SendSunBeam(ent)
 	end
 end
 
-function ENT:CreateEnvironment(ent, radius, temp1, temp2, temp3)
+function ENT:CreateEnvironment(ent, radius, temp1, temp2, temp3, name)
 	if not ent then self:Remove() end //needs a parent!
 	self:SetParent(ent)
 	if radius and type(radius) == "number" then
@@ -87,7 +87,7 @@ function ENT:CreateEnvironment(ent, radius, temp1, temp2, temp3)
 		end
 		self.sbenvironment.temperature3 = temp3
 	end
-	self.BaseClass.CreateEnvironment(self, ent, 0, 100, temp1,  0, 0, 100, 0)
+	self.BaseClass.CreateEnvironment(self, ent, 0, 100, temp1,  0, 0, 100, 0, name)
 	SendSunBeam(self)
 end
 

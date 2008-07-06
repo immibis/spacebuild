@@ -73,7 +73,7 @@ function ENT:CreateEnvironment(ent, radius)
 		end
 		self.sbenvironment.size = radius * 2
 	end
-	self.BaseClass.CreateEnvironment(self, ent, 0, 100, 100000,  0, 0, 100, 0)
+	self.BaseClass.CreateEnvironment(self, ent, 0, 100, 100000,  0, 0, 100, 0, "Star")
 	SendSunBeam(self)
 end
 

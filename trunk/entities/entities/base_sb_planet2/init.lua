@@ -124,7 +124,7 @@ function ENT:GetPriority()
 	return 1
 end
 
-function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, temperature, temperature2,  o2, co2, n, h, flags)
+function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, temperature, temperature2,  o2, co2, n, h, flags, name)
 	if not ent then self:Remove() end //needs a parent!
 	self:SetParent(ent)
 	self:SetFlags(flags)
@@ -139,7 +139,7 @@ function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, tempe
 	if temperature2 and type(temperature2) == "number" then
 		self.Entity.sbenvironment.temperature2 = temperature2
 	end
-	self.BaseClass.CreateEnvironment(self, gravity, atmosphere, pressure, temperature,  o2, co2, n, h)
+	self.BaseClass.CreateEnvironment(self, gravity, atmosphere, pressure, temperature,  o2, co2, n, h, name)
 end
 
 function ENT:UpdateEnvironment(radius, gravity, atmosphere, pressure, temperature, temperature2, o2, co2, n, h, flags)
