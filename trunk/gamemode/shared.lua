@@ -11,8 +11,13 @@ GM.Author 	= "Spacebuild Dev Team"
 GM.Email 	= ""
 GM.Website 	= "http://snakesvx.blogdns.com"
 
+include("include.lua")
+AddCSLuaFile("include.lua")
+
 DeriveGamemode("sandbox")
+
 GM.IsSpacebuildDerived = true
+
 GM.affected = {
 	"prop_physics",
 	"prop_ragdoll",

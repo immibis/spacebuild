@@ -6,13 +6,11 @@
 
 ------------------------------------------------*/
 
-include( 'shared.lua' )
-include( 'cl_sun.lua' )
 
-include( 'cl_sb_scoreboard.lua' )
+include("shared.lua")
 
 local planets = {} //Clients hasn't been updated yet
-
+local pScoreBoard = nil
 // enabled?
 local Color_Enabled = false;
 local Bloom_Enabled = false;
@@ -170,4 +168,60 @@ function GM:Think()
 	if timer > CurTime() then return end
 	self:Space_Affect_Cl()
 	timer = CurTime() + 0.5
+end
+
+/*---------------------------------------------------------
+   Name: gamemode:CreateScoreboard( )
+   Desc: Creates/Recreates the scoreboard
+---------------------------------------------------------*/
+function GM:CreateScoreboard()
+
+	if ( pScoreBoard ) then
+	
+		pScoreBoard:Remove()
+		pScoreBoard = nil
+	
+	end
+
+	pScoreBoard = vgui.Create( "SB_ScoreBoard" )
+
+end
+
+/*---------------------------------------------------------
+   Name: gamemode:ScoreboardShow( )
+   Desc: Sets the scoreboard to visible
+---------------------------------------------------------*/
+function GM:ScoreboardShow()
+
+	GAMEMODE.ShowScoreboard = true
+	gui.EnableScreenClicker( true )
+	
+	if ( !pScoreBoard ) then
+		self:CreateScoreboard()
+	end
+	
+	pScoreBoard:SetVisible( true )
+	pScoreBoard:UpdateScoreboard( true )
+	
+end
+
+/*---------------------------------------------------------
+   Name: gamemode:ScoreboardHide( )
+   Desc: Hides the scoreboard
+---------------------------------------------------------*/
+function GM:ScoreboardHide()
+
+	
+
+	GAMEMODE.ShowScoreboard = false
+	gui.EnableScreenClicker( false )
+	
+	if ( pScoreBoard ) then pScoreBoard:SetVisible( false ) end
+	
+end
+
+function GM:HUDDrawScoreBoard()
+
+	// Do nothing (We're vgui'd up)
+	
 end

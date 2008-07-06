@@ -1,6 +1,8 @@
-
-include( "sb_player_row.lua" )
-include( "sb_player_frame.lua" )
+AddLua("cl_sb_vote_button.lua")
+AddLua("cl_sb_player_row.lua")
+AddLua("cl_sb_player_frame.lua")
+AddLua("cl_sb_player_infocard.lua")
+AddLua("cl_sb_admin_buttons.lua")
 
 surface.CreateFont( "coolvetica", 32, 500, true, false, "ScoreboardHeader" )
 surface.CreateFont( "coolvetica", 22, 500, true, false, "ScoreboardSubtitle" )

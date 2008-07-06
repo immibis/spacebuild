@@ -6,23 +6,10 @@
 
 ------------------------------------------------*/
 require("sb_space")
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "cl_sun.lua" )
-AddCSLuaFile( "shared.lua" )
 
-AddCSLuaFile( "cl_sb_scoreboard.lua" )
-
-AddCSLuaFile( "scoreboard/sb_admin_buttons.lua" )
-AddCSLuaFile( "scoreboard/sb_player_frame.lua" )
-AddCSLuaFile( "scoreboard/sb_player_infocard.lua" )
-AddCSLuaFile( "scoreboard/sb_player_row.lua" )
-AddCSLuaFile( "scoreboard/sb_scoreboard.lua" )
-AddCSLuaFile( "scoreboard/sb_vote_button.lua" )
+include("shared.lua")
 
 SB_DEBUG = true
-
-//include files for use in here
-include( "shared.lua" )
 
 local NextUpdateTime
 
