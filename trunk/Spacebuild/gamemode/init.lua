@@ -150,15 +150,13 @@ function GM:PerformEnvironmentCheckOnEnt(ent)
 				end
 			end
 		end
-	end
-	if ent:IsPlayer() then
 		if self.PlayerOverride == 0 and self.Override_PlayerHeatDestroy == 0 then
-			if ent.environment:IsPlanet() and ent.environment:GetTemperature(ent) > 10000 then
+			if ent.environment:GetTemperature(ent) > 10000 then
 				ent:SilentKill()
 			end
 		end
 	else
-		if ent.environment:IsPlanet() and ent.environment:GetTemperature(ent) > 10000 then
+		if ent.environment:GetTemperature(ent) > 10000 then
 			ent:Remove()
 		end
 	end

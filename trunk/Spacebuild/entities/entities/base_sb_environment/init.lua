@@ -61,18 +61,30 @@ function ENT:GetPriority()
 end
 
 function ENT:GetO2Percentage()
+	if self.sbenvironment.air.max == 0 then
+		return 0
+	end
 	return ((self.sbenvironment.air.o2  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetCO2Percentage()
+	if self.sbenvironment.air.max == 0 then
+		return 0
+	end
 	return ((self.sbenvironment.air.co2  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetNPercentage()
+	if self.sbenvironment.air.max == 0 then
+		return 0
+	end
 	return ((self.sbenvironment.air.n  / self.sbenvironment.air.max) * 100)
 end
 
 function ENT:GetHPercentage()
+	if self.sbenvironment.air.max == 0 then
+		return 0
+	end
 	return ((self.sbenvironment.air.h / self.sbenvironment.air.max) * 100)
 end
 

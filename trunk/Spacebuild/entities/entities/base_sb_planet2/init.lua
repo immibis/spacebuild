@@ -47,13 +47,6 @@ end
 function ENT:SetFlags(flags)
 	if not flags or type(flags) != "number" then return end
 	self.Entity.sbenvironment.unstable = Extract_Bit(1, flags)
-	if self.Entity.sbenvironment.unstable then
-		if not timer.IsTimer("unstable "..tostring(self)) then
-			timer.Create( "unstable "..tostring(self), 1, 0, function(ent) ent:Unstable() end, self)
-		end
-	elseif timer.IsTimer("unstable "..tostring(self)) then
-		timer.Destroy("unstable "..tostring(self))
-	end
 	self.Entity.sbenvironment.sunburn = Extract_Bit(2, flags)
 end
 
@@ -175,6 +168,12 @@ end
 
 function ENT:GravGunPickupAllowed()
 	return false
+end
+
+function ENT:Think()
+	self:Unstable()
+	self.Entity:NextThink(CurTime() + 1)
+	return true
 end
 
 local function SendBloom(ent)

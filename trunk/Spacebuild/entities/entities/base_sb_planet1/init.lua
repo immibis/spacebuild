@@ -22,6 +22,15 @@ function ENT:GetSunburn()
 	return self.sbenvironment.sunburn
 end
 
+function ENT:Unstable()
+	if self.sbenvironment.unstable then
+		if (math.random(1, 20) < 2) then
+			self:GetParent():Fire("invalue","shake","0") 
+			self:GetParent():Fire("invalue","rumble","0") 
+		end
+	end
+end
+
 function ENT:GetUnstable()
 	return self.sbenvironment.unstable
 end
@@ -50,13 +59,6 @@ function ENT:SetFlags(flags)
 	if not flags or type(flags) != "number" then return end
 	self.sbenvironment.habitat = Extract_Bit(1, flags)
 	self.sbenvironment.unstable = Extract_Bit(2, flags)
-	if self.sbenvironment.unstable then
-		if not timer.IsTimer("unstable "..tostring(self)) then
-			timer.Create( "unstable "..tostring(self), 1, 0, function(ent) ent:Unstable() end, self)
-		end
-	elseif timer.IsTimer("unstable "..tostring(self)) then
-		timer.Destroy("unstable "..tostring(self))
-	end
 	self.sbenvironment.sunburn = Extract_Bit(3, flags)
 end
 
@@ -119,15 +121,6 @@ function ENT:GetTemperature(ent)
 		return self.sbenvironment.temperature2 or 0
 	end
 	return self.sbenvironment.temperature or 0
-end
-
-function ENT:Unstable()
-	if self.sbenvironment.unstable then
-		if (math.random(1, 20) < 2) then
-			self:GetParent():Fire("invalue","shake","0") 
-			self:GetParent():Fire("invalue","rumble","0") 
-		end
-	end
 end
 
 function ENT:GetPriority()
@@ -194,6 +187,12 @@ end
 
 function ENT:GravGunPickupAllowed()
 	return false
+end
+
+function ENT:Think()
+	self:Unstable()
+	self.Entity:NextThink(CurTime() + 1)
+	return true
 end
 
 local function SendBloom(ent)

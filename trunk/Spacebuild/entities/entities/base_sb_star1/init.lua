@@ -44,7 +44,7 @@ function ENT:GetTemperature(ent)
 	elseif dist < self:GetSize() * 2/3 then
 		return self.sbenvironment.temperature/6
 	elseif self.sbenvironment.temperature/12 <= 14 then //Check that it isn't colder then Space, else return Space temperature
-			return 14
+		return 14
 	end
 	return self.sbenvironment.temperature/12 //All other checks failed, player is the farest away from the star, but temp is still warmer then space, return that temperature
 end
