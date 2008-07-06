@@ -156,7 +156,7 @@ function GM:PerformEnvironmentCheckOnEnt(ent)
 			end
 		end
 	else
-		if ent.environment:GetTemperature(ent) > 10000 then
+		if ent.environment:GetTemperature(ent) > 10000 and ((not (ent.IsEnvironment and ent:IsEnvironment())) or (ent.IsEnvironment and ent:IsEnvironment() and not ent:IsPlanet() and not ent:IsStar() and ent:GetVolume() == 0 ))  then
 			ent:Remove()
 		end
 	end
