@@ -11,8 +11,8 @@ GM.Author 	= "Spacebuild Dev Team"
 GM.Email 	= ""
 GM.Website 	= "http://snakesvx.blogdns.com"
 
-include("include.lua")
-AddCSLuaFile("include.lua")
+//include("include.lua") => Not working
+//AddCSLuaFile("include.lua")=> Not working
 
 DeriveGamemode("sandbox")
 

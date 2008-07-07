@@ -6,6 +6,9 @@
 
 ------------------------------------------------*/
 require("sb_space")
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("cl_sun.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
