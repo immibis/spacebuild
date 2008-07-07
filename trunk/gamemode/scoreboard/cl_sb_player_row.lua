@@ -1,5 +1,5 @@
 
-include( "cl_player_infocard.lua" )
+include( "cl_sb_player_infocard.lua" )
 
 surface.CreateFont( "coolvetica", 19, 500, true, false, "ScoreboardPlayerName" )
 surface.CreateFont( "coolvetica", 22, 500, true, false, "ScoreboardPlayerNameBig" )
