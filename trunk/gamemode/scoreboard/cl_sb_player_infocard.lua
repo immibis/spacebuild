@@ -1,6 +1,6 @@
 
-include( "sb_admin_buttons.lua" )
-include( "sb_vote_button.lua" )
+include( "cl_admin_buttons.lua" )
+include( "cl_vote_button.lua" )
 
 local PANEL = {}
 
