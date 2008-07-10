@@ -327,7 +327,7 @@ function GM:Register_Environments()
 							elseif (key2 == "Case10") then co2 = tonumber(value2)
 							elseif (key2 == "Case11") then n = tonumber(value2)
 							elseif (key2 == "Case12") then h = tonumber(value2)
-							elseif (key2 == "name") then name = tostring(value2)
+							elseif (key2 == "Case13") then name = tostring(value2)
 							elseif (key2 == "Case15") then
 								if (string.len(value2) > 0) then
 									ColorID = value2
@@ -434,7 +434,7 @@ function GM:Register_Environments()
 							elseif (key2 == "Case03") then temp1 = tonumber(value2)
 							elseif (key2 == "Case04") then temp2 = tonumber(value2)
 							elseif (key2 == "Case05") then temp3 = tonumber(value2)
-							elseif (key2 == "name") then name = tostring(value2) end
+							elseif (key2 == "Case06") then name = tostring(value2) end
 						end
 						if name =="" then
 							name = "Star"
