@@ -158,7 +158,7 @@ function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, temperature, te
 	if temperature2 and type(temperature2) == "number" then
 		self.sbenvironment.temperature2 = temperature2
 	end
-	self.BaseClass.CreateEnvironment(self, gravity, atmosphere, pressure, temperature,  o2, co2, n, h, "Planet")
+	self.BaseClass.CreateEnvironment(self, gravity, atmosphere, pressure, temperature,  o2, co2, n, h, "Planet " .. tostring(self:GetEnvironmentID()))
 end
 
 function ENT:UpdateEnvironment(radius, gravity, atmosphere, pressure, temperature, temperature2, o2, co2, n, h, flags)

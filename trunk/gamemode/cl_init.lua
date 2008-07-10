@@ -152,6 +152,7 @@ function GM:Space_Affect_Cl ()
 		local ppos = p.position //:LocalToWorld( Vector(0,0,0) )
 		if plypos:Distance(ppos) < p.radius then
 			if not ply.planet or ply.planet != ent then
+				ply:ChatPrint("Entering "..tostring(p.name))
 				SetBloom(p)
 				SetColor(p)
 				ply.planet = ent

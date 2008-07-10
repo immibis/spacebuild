@@ -338,14 +338,14 @@ function GM:Register_Environments()
 								end
 							end
 						end
-						if name == "" then
-							name = "Planet"
-						end
 						local planet = ents.Create( "base_sb_planet2" )
 						planet:SetModel("models/props_lab/huladoll.mdl")
 						planet:SetAngles( ent:GetAngles() )
 						planet:SetPos( ent:GetPos() )
 						planet:Spawn()
+						if name == "" then
+							name = "Planet " .. tostring(ent:GetEnvironmentID())
+						end
 						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags, name)
 						if ColorID then
 							Planetscolor[ColorID] = planet
@@ -473,7 +473,7 @@ end
 local function SendColorAndBloom(ent, ply)
 		umsg.Start( "AddPlanet", ply )
 			umsg.Short( ent:EntIndex())
-			umsg.String(ent:GetName())
+			umsg.String(ent:GetEnvironmentName())
 			umsg.Vector( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 			if table.Count(ent.sbenvironment.color) > 0 then

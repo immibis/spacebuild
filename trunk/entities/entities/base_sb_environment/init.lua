@@ -189,11 +189,11 @@ function ENT:SetSize(size)
 	end
 end
 
-function ENT:GetName()
+function ENT:GetEnvironmentName()
 	return self.sbenvironment.name
 end
 
-function ENT:SetName(value)
+function ENT:SetEnvironmentName(value)
 	if not value then return end
 	self.sbenvironment.name = value
 end
