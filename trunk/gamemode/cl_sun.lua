@@ -81,7 +81,6 @@ hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 local function recvSun( msg )
 	local ent = msg:ReadShort()
 	local position = msg:ReadVector()
-	Msg("Added star at angle: "..tostring(position).."\n")
 	local radius = msg:ReadFloat()/4
 	stars[ ent] = {
 		Ent = ents.GetByIndex(ent),
