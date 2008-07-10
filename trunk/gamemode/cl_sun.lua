@@ -8,7 +8,8 @@ local function DrawSunEffects( )
 		// calculate brightness.
 		local entpos = Sun.Position //Sun.ent:LocalToWorld( Vector(0,0,0) )
 		local dot = math.Clamp( EyeAngles():Forward():DotProduct( Vector( entpos - EyePos() ):Normalize() ), 0, 1 );
-		local dist = Vector( entpos - EyePos() ):Length();
+		//local dist = Vector( entpos - EyePos() ):Length();
+		local dist = entpos:Distance(EyePos())
 		// draw sunbeams.
 		local sunpos = EyePos() + Vector( entpos - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
@@ -36,7 +37,7 @@ local function DrawSunEffects( )
 			// calculate brightness.
 			local frac = ( 1 - ( ( 1 / Sun.Radius ) * dist ) ) * dot;
 			// draw bloom.
-			/*DrawBloom(
+			DrawBloom(
 				0.428, 
 				3 * frac, 
 				15 * frac, 15 * frac, 
@@ -45,8 +46,8 @@ local function DrawSunEffects( )
 				1, 
 				1, 
 				1
-			);*/
-			DrawBloom(
+			);
+			/*DrawBloom(
 				0, 
 				0.75 * frac, 
 				3 * frac, 3 * frac, 
@@ -55,7 +56,7 @@ local function DrawSunEffects( )
 				1, 
 				1, 
 				1
-			);
+			);*/
 			// draw color.
 			local tab = {
 				['$pp_colour_addr']		= 0.35 * frac,
@@ -81,11 +82,11 @@ hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 local function recvSun( msg )
 	local ent = msg:ReadShort()
 	local position = msg:ReadVector()
-	local radius = msg:ReadFloat()/4
+	local radius = msg:ReadFloat()
 	stars[ ent] = {
 		Ent = ents.GetByIndex(ent),
 		Position = position,
-		Radius = radius * 2,
+		Radius = radius, // * 2
 		BeamRadius = radius * 3,
 	}
 end
