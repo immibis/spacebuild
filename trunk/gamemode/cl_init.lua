@@ -108,6 +108,7 @@ local function recPlanet( msg )
 	local ent = msg:ReadShort()
 	local hash  = {}
 	hash.ent = ents.GetByIndex(ent)
+	hash.name = msg:ReadString()
 	hash.position = msg:ReadVector()
 	hash.radius = msg:ReadFloat()
 	if msg:ReadBool() then

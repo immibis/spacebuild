@@ -473,6 +473,7 @@ end
 local function SendColorAndBloom(ent, ply)
 		umsg.Start( "AddPlanet", ply )
 			umsg.Short( ent:EntIndex())
+			umsg.String(ent:GetName())
 			umsg.Vector( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 			if table.Count(ent.sbenvironment.color) > 0 then
@@ -510,6 +511,7 @@ local function SendSunBeam(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddStar", ply )
 			umsg.Short( ent:EntIndex())
+			umsg.String(ent:GetName())
 			umsg.Vector( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 		umsg.End()

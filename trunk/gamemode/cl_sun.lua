@@ -11,8 +11,6 @@ local function DrawSunEffects( )
 		dot = math.abs(dot)
 		//local dist = Vector( entpos - EyePos() ):Length();
 		local dist = entpos:Distance(EyePos())/1.5
-		Msg("Distance: "..tostring(dist).."\n")
-		Msg("Radius: "..tostring(Sun.Radius).."\n")
 		// draw sunbeams.
 		local sunpos = EyePos() + Vector( entpos - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
@@ -84,10 +82,12 @@ hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 // receive sun information
 local function recvSun( msg )
 	local ent = msg:ReadShort()
+	local tmpname = msg:ReadString()
 	local position = msg:ReadVector()
 	local radius = msg:ReadFloat()
 	stars[ ent] = {
 		Ent = ents.GetByIndex(ent),
+		name = tmpname
 		Position = position,
 		Radius = radius, // * 2
 		BeamRadius = radius * 1.5, //*3
