@@ -6,7 +6,7 @@
 
 ------------------------------------------------*/
 
-GM.Name 	= "Spacebuild 3"
+GM.Name 	= "Spacebuild 3 Beta"
 GM.Author 	= "Spacebuild Dev Team"
 GM.Email 	= ""
 GM.Website 	= "http://snakesvx.blogdns.com"

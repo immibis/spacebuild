@@ -1,7 +1,7 @@
 "Gamemode"
 {
-	"name"		"Spacebuild 3 Alpha 1"
-	"version"	"0.1"
+	"name"		"Spacebuild 3 Beta"
+	"version"	"0.8"
 
 	"author_name"	"Spacebuild Dev Team"
 	"author_email"	""
