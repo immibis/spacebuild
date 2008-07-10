@@ -344,7 +344,7 @@ function GM:Register_Environments()
 						planet:SetPos( ent:GetPos() )
 						planet:Spawn()
 						if name == "" then
-							name = "Planet " .. tostring(ent:GetEnvironmentID())
+							name = "Planet " .. tostring(planet:GetEnvironmentID())
 						end
 						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags, name)
 						if ColorID then
