@@ -87,7 +87,7 @@ local function recvSun( msg )
 	local radius = msg:ReadFloat()
 	stars[ ent] = {
 		Ent = ents.GetByIndex(ent),
-		name = tmpname
+		name = tmpname,
 		Position = position,
 		Radius = radius, // * 2
 		BeamRadius = radius * 1.5, //*3
