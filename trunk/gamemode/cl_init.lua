@@ -105,10 +105,10 @@ end
 hook.Add( "RenderScreenspaceEffects", "VFX_Render", Render );
 
 local function recPlanet( msg )
-	Msg("Adding Planet\n")
 	local ent = msg:ReadShort()
 	local hash  = {}
-	hash.Position = msg:ReadAngle()
+	hash.ent = ents.GetByIndex(ent)
+	hash.position = msg:ReadAngle()
 	hash.radius = msg:ReadFloat()
 	if msg:ReadBool() then
 		hash.color = true
@@ -143,11 +143,13 @@ end
 usermessage.Hook( "AddPlanet", recPlanet );
 
 function GM:Space_Affect_Cl ()
+	if table.Count(planets) <= 0 then return end
 	local ply = LocalPlayer()
 	if not (ply and ply:IsValid() and ply:Alive()) then return end
-	local ppos = ply:GetPos()
+	local plypos = ply:LocalToWorld( Vector(0,0,0) )
 	for ent, p in pairs( planets ) do
-		if ppos:Distance(p.Position) < p.radius then
+		local ppos = p.position //:LocalToWorld( Vector(0,0,0) )
+		if plypos:Distance(ppos) < p.radius then
 			if not ply.planet or ply.planet != ent then
 				SetBloom(p)
 				SetColor(p)
@@ -164,7 +166,6 @@ function GM:Space_Affect_Cl ()
 end
 
 function GM:Think()
-	if (GetGlobalInt("InSpace") == 0) then return end
 	if timer > CurTime() then return end
 	self:Space_Affect_Cl()
 	timer = CurTime() + 0.5

@@ -6,10 +6,11 @@ local function DrawSunEffects( )
 	// render each star.
 	for ent, Sun in pairs( stars ) do
 		// calculate brightness.
-		local dot = math.Clamp( EyeAngles():Forward():DotProduct( ( Sun.Position - EyePos() ):Normalize() ), 0, 1 );
-		local dist = ( Sun.Position - EyePos() ):Length();
+		local entpos = Sun.Position //Sun.ent:LocalToWorld( Vector(0,0,0) )
+		local dot = math.Clamp( EyeAngles():Forward():DotProduct( Vector( entpos - EyePos() ):Normalize() ), 0, 1 );
+		local dist = Vector( entpos - EyePos() ):Length();
 		// draw sunbeams.
-		local sunpos = EyePos() + ( Sun.Position - EyePos() ):Normalize() * ( dist * 0.5 );
+		local sunpos = EyePos() + Vector( entpos - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
 		if( dist <= Sun.BeamRadius && dot > 0 ) then
 			local frac = ( 1 - ( ( 1 / ( Sun.BeamRadius ) ) * dist ) ) * dot;
@@ -25,7 +26,7 @@ local function DrawSunEffects( )
 		end
 		// can the sun see us?
 		local trace = {
-			start = Sun.Position,
+			start = entpos,
 			endpos = EyePos(),
 			filter = LocalPlayer(),
 		};
@@ -69,10 +70,12 @@ hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 // receive sun information
 local function recvSun( msg )
 	local ent = msg:ReadShort()
-	local pos = msg:ReadAngle()
-	local radius = msg:ReadFloat()
-	stars[ ent ] = {
-		Position = pos,
+	local position = msg:ReadAngle()
+	Msg("Added star at angle: "..tostring(position).."\n")
+	local radius = msg:ReadFloat()/4
+	stars[ ent] = {
+		Ent = ents.GetByIndex(ent),
+		Position = position,
 		Radius = radius * 2,
 		BeamRadius = radius * 3,
 	}

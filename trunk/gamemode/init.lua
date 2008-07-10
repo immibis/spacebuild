@@ -196,7 +196,6 @@ function GM:AddSentsToList()
 	for _, item in pairs( SEntList ) do
 		local name =  item.t.Classname
 		if not table.HasValue(self.affected, name) then
-			Msg("Putting "..name.." in Affected\n")
 			table.insert(self.affected, name) 
 		end
 	end
@@ -207,7 +206,6 @@ function GM:SB_SentCheck(ply, ent)
 	if not (ent and ent:IsValid()) then return end
 	local c = ent:GetClass()
 	if table.HasValue(self.affected, c) then return end
-	Msg("Adding SENT: "..c.."\n")
 	table.insert(self.affected, c)
 end
 hook.Add( "PlayerSpawnedSENT", "SBSpawnedSent", GM.SB_SentCheck)
@@ -457,13 +455,11 @@ function GM:Register_Environments()
 	for k, v in pairs(Blooms) do
 		if Planetsbloom[k] then
 			Planetsbloom[k]:BloomEffect(v.Col_r, v.Col_g, v.Col_b, v.SizeX, v.SizeY, v.Passes, v.Darken, v.Multiply, v.Color)
-			Msg("Calling BloomEffect\n");
 		end
 	end
 	for k, v in pairs(Colors) do
 		if Planetscolor[k] then
 			Planetscolor[k]:ColorEffect(v.AddColor_r, v.AddColor_g, v.AddColor_b, v.MulColor_r, v.MulColor_g, v.MulColor_b, v.Brightness, v.Contrast, v.Color)
-			Msg("Calling ColorEffect\n");
 		end
 	end
 	Msg ( "Registered " .. table.Count(Planets) .. " planets\n" )
@@ -474,35 +470,10 @@ function GM:PlayerNoClip( ply, on )
 	return server_settings.Bool( "sbox_noclip" )
 end
 
-local function SendBloom(ent, ply)
+local function SendColorAndBloom(ent, ply)
 		umsg.Start( "AddPlanet", ply )
 			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
-			umsg.Float( ent.sbenvironment.size )
-				umsg.Bool (false)
-				if table.Count(ent.sbenvironment.bloom) > 0 then
-					umsg.Bool(true)
-					umsg.Short( ent.sbenvironment.bloom.Col_r )
-					umsg.Short( ent.sbenvironment.bloom.Col_g )
-					umsg.Short( ent.sbenvironment.bloom.Col_b )
-					umsg.Float( ent.sbenvironment.bloom.SizeX )
-					umsg.Float( ent.sbenvironment.bloom.SizeY )
-					umsg.Float( ent.sbenvironment.bloom.Passes )
-					umsg.Float( ent.sbenvironment.bloom.Darken )
-					umsg.Float( ent.sbenvironment.bloom.Multiply )
-					umsg.Float( ent.sbenvironment.bloom.Color )
-				else
-					Msg("Count smaller then 1\n");
-					umsg.Bool(false)
-				end
-		umsg.End()
-end
-
-local function SendColor(ent, ply)
-		umsg.Start( "AddPlanet", ply )
-			//umsg.Entity( ent )
-			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
+			umsg.Angle( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 			if table.Count(ent.sbenvironment.color) > 0 then
 				umsg.Bool( true )
@@ -516,19 +487,30 @@ local function SendColor(ent, ply)
 				umsg.Float( ent.sbenvironment.color.Contrast )
 				umsg.Float( ent.sbenvironment.color.Color )
 			else
-				Msg("Count smaller then 1\n");
 				umsg.Bool(false)
 			end
-			umsg.Bool(false)
+			if table.Count(ent.sbenvironment.bloom) > 0 then
+				umsg.Bool(true)
+				umsg.Short( ent.sbenvironment.bloom.Col_r )
+				umsg.Short( ent.sbenvironment.bloom.Col_g )
+				umsg.Short( ent.sbenvironment.bloom.Col_b )
+				umsg.Float( ent.sbenvironment.bloom.SizeX )
+				umsg.Float( ent.sbenvironment.bloom.SizeY )
+				umsg.Float( ent.sbenvironment.bloom.Passes )
+				umsg.Float( ent.sbenvironment.bloom.Darken )
+				umsg.Float( ent.sbenvironment.bloom.Multiply )
+				umsg.Float( ent.sbenvironment.bloom.Color )
+			else
+				umsg.Bool(false)
+			end
 		umsg.End()
 end
 
 local function SendSunBeam(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddStar", ply )
-			//umsg.Entity( ent ) //planet.num
 			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
+			umsg.Angle( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 		umsg.End()
 	end
@@ -539,8 +521,7 @@ function GM:PlayerInitialSpawn(ply) //Send the player info about the Stars and P
 	if Environments and table.Count(Environments) > 0 then
 		for k, v in pairs(Environments) do
 			if v.IsPlanet and v:IsPlanet() then
-				SendBloom(v, ply)
-				SendColor(v, ply)
+				SendColorAndBloom(v, ply)
 			elseif v.IsStar and v:IsStar() then
 				SendSunBeam(v)
 			end
