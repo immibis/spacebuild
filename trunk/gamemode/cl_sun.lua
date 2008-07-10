@@ -36,12 +36,22 @@ local function DrawSunEffects( )
 			// calculate brightness.
 			local frac = ( 1 - ( ( 1 / Sun.Radius ) * dist ) ) * dot;
 			// draw bloom.
-			DrawBloom(
+			/*DrawBloom(
 				0.428, 
 				3 * frac, 
 				15 * frac, 15 * frac, 
 				5, 
 				0, 
+				1, 
+				1, 
+				1
+			);*/
+			DrawBloom(
+				0, 
+				0.75 * frac, 
+				3 * frac, 3 * frac, 
+				2, 
+				3, 
 				1, 
 				1, 
 				1
@@ -70,7 +80,7 @@ hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 // receive sun information
 local function recvSun( msg )
 	local ent = msg:ReadShort()
-	local position = msg:ReadAngle()
+	local position = msg:ReadVector()
 	Msg("Added star at angle: "..tostring(position).."\n")
 	local radius = msg:ReadFloat()/4
 	stars[ ent] = {
