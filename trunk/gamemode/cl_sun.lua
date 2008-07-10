@@ -7,9 +7,12 @@ local function DrawSunEffects( )
 	for ent, Sun in pairs( stars ) do
 		// calculate brightness.
 		local entpos = Sun.Position //Sun.ent:LocalToWorld( Vector(0,0,0) )
-		local dot = math.Clamp( EyeAngles():Forward():DotProduct( Vector( entpos - EyePos() ):Normalize() ), 0, 1 );
+		local dot = math.Clamp( EyeAngles():Forward():DotProduct( Vector( entpos - EyePos() ):Normalize() ), -1, 1 );
+		dot = math.abs(dot)
 		//local dist = Vector( entpos - EyePos() ):Length();
-		local dist = entpos:Distance(EyePos())
+		local dist = entpos:Distance(EyePos())/1.5
+		Msg("Distance: "..tostring(dist).."\n")
+		Msg("Radius: "..tostring(Sun.Radius).."\n")
 		// draw sunbeams.
 		local sunpos = EyePos() + Vector( entpos - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
@@ -87,7 +90,7 @@ local function recvSun( msg )
 		Ent = ents.GetByIndex(ent),
 		Position = position,
 		Radius = radius, // * 2
-		BeamRadius = radius * 3,
+		BeamRadius = radius * 1.5, //*3
 	}
 end
 usermessage.Hook( "AddStar", recvSun );
