@@ -142,7 +142,8 @@ function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, tempe
 	self.BaseClass.CreateEnvironment(self, gravity, atmosphere, pressure, temperature,  o2, co2, n, h, name)
 end
 
-function ENT:UpdateEnvironment(radius, gravity, atmosphere, pressure, temperature, temperature2, o2, co2, n, h, flags)
+			
+function ENT:UpdateEnvironment(radius, gravity, atmosphere, pressure, temperature,  o2, co2, n, h, temperature2,  flags)
 	if radius and type(radius) == "number" then
 		self:SetFlags(flags)
 		self:UpdateSize(self.Entity.sbenvironment.size, radius)
