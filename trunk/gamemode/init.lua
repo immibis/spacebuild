@@ -380,6 +380,7 @@ function GM:Register_Environments()
 						if (key2 == "Case16") then ColorID = value2 end
 					end
 					Colors[ColorID] = hash
+					Msg("Registered New Planet Color\n")
 				elseif value == "planet_bloom" then
 					local hash = {}
 					local BloomID
@@ -403,6 +404,7 @@ function GM:Register_Environments()
 						if (key2 == "Case16") then BloomID = value2 end
 					end
 					Blooms[BloomID] = hash
+					Msg("Registered New Planet Bloom\n")
 				elseif value == "star" then
 					SB_InSpace = 1
 					SetGlobalInt("InSpace", 1)
@@ -476,7 +478,7 @@ local function SendColorAndBloom(ent, ply)
 			umsg.String(ent:GetEnvironmentName())
 			umsg.Vector( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
-			if table.Count(ent.sbenvironment.color) > 0 then
+			if ent.sbenvironment.color and table.Count(ent.sbenvironment.color) > 0 then
 				umsg.Bool( true )
 				umsg.Short( ent.sbenvironment.color.AddColor_r )
 				umsg.Short( ent.sbenvironment.color.AddColor_g )
@@ -490,7 +492,7 @@ local function SendColorAndBloom(ent, ply)
 			else
 				umsg.Bool(false)
 			end
-			if table.Count(ent.sbenvironment.bloom) > 0 then
+			if ent.sbenvironment.bloom and table.Count(ent.sbenvironment.bloom) > 0 then
 				umsg.Bool(true)
 				umsg.Short( ent.sbenvironment.bloom.Col_r )
 				umsg.Short( ent.sbenvironment.bloom.Col_g )
@@ -507,15 +509,13 @@ local function SendColorAndBloom(ent, ply)
 		umsg.End()
 end
 
-local function SendSunBeam(ent)
-	for k, ply in pairs(player.GetAll()) do
+local function SendSunBeam(ent, ply)
 		umsg.Start( "AddStar", ply )
 			umsg.Short( ent:EntIndex())
 			umsg.String(ent:GetName())
 			umsg.Vector( ent:GetPos() )
 			umsg.Float( ent.sbenvironment.size )
 		umsg.End()
-	end
 end
 
 function GM:PlayerInitialSpawn(ply) //Send the player info about the Stars and Planets for Effects
@@ -525,7 +525,7 @@ function GM:PlayerInitialSpawn(ply) //Send the player info about the Stars and P
 			if v.IsPlanet and v:IsPlanet() then
 				SendColorAndBloom(v, ply)
 			elseif v.IsStar and v:IsStar() then
-				SendSunBeam(v)
+				SendSunBeam(v, ply)
 			end
 		end
 	end
