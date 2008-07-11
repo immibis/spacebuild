@@ -144,16 +144,16 @@ function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, temperature, te
 		self.sbenvironment.size = radius
 	end
 	//set temperature2 if given
-	if self.sbenvironment.habitat then
-		o2 = 80
-		co2 = 15
-		n = 2
-		h = 3
-	else
-		o2 = 5
-		co2 = 90
-		n = 2
-		h = 3
+	if self.sbenvironment.habitat then //Based on values for earth
+		o2 = 21
+		co2 = 0.45
+		n = 78
+		h = 0.55
+	else //Based on values for Venus
+		o2 = 0
+		co2 = 96.5
+		n = 3.5
+		h = 0
 	end
 	if temperature2 and type(temperature2) == "number" then
 		self.sbenvironment.temperature2 = temperature2
