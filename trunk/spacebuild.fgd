@@ -10,6 +10,18 @@
 	Pressure(integer) : "Pressure" : 1 : "The pressure in this brush environment, value < 0 for auto SB3 based pressure (based on atmosphere and pressure) any other value for custom pressure"
 	SunTemp(integer) : "Sun Temperature" : 290 : "The temperature while in sunlight."
 	ShadowTemp(integer) : "Shadow Temperature" : 273 : "The temperature while in shadow."
+	AirThickness(integer) : "Air Thickness" : 1 : "Planetary Air thickness."
+	O2(integer) : "O2 Percentage" : 25 : "The planetary O2 Percentage."
+	CO2(integer) : "CO2 Percentage" : 25 : "The planetary CO2 Percentage."
+	N(integer) : "N Percentage" : 25 : "The planetary N Percentage."
+	H(integer) : "H Percentage" : 25 : "The planetary H Percentage."
+
+//	Gills(choices) : "Breath under water" : 1 : "Does this env give you gills?" =
+//	[
+//		0 : "False"
+//		1 : "True"
+//	]
+// Wishful thinking on my part :P ~Levy
 	
 	Habitable(choices) : "Habitable" : 1 : "Is this brush env habitable?" =
 	[
@@ -77,7 +89,7 @@
 	
 	output OnSpaced(void) : "Fires when the brush env gets spaced!"
 	output OnRestored(void) : "Fires when the brush env gets restored after getting spaced."
-	output OnCharacteristicsAltered(void) : "Fires when something to our environment characteristics."
+	output OnCharacteristicsAltered(void) : "Fires when something changes in our environment characteristics."
 	output OnDie(void) : "Fires when this brush env dies."
 	
 	input SpaceEnv(void) : "Spaces the environment regardless of the input."
@@ -88,4 +100,5 @@
 	input SetGravity(integer) : "Sets the gravity, standered is 1."
 	input SetSunburn(integer) : "Sets if there's sunburn, 1 is true, 0 is false."
 	input SetUnstable(integer) : "Sets if it's unstable, 1 is true, 0 is false."
+	input SetAtmosphericContent(string) : "Resets the atmosphere's gaseous contents to the given vales in this format: (O2, CO2, N, H) Without parenthesis, with commas. Total of all 4 values must equal 100."
 ]
