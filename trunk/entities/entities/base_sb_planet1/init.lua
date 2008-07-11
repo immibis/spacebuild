@@ -75,10 +75,10 @@ function ENT:GetTemperature(ent)
 			SunAngle:Normalize()
 			local startpos = (entpos - (SunAngle * 4096))
 			trace.start = startpos
-			trace.endpos = entpos + Vector(0,0,30)
+			trace.endpos = entpos // + Vector(0,0,30)
 			local tr = util.TraceLine( trace )
 			if (tr.Hit) then
-				if (tr == ent) then
+				if (tr.Entity == ent) then
 					if (ent:IsPlayer()) then
 						if self.sbenvironment.sunburn then
 							if (ent:Health() > 0) then
@@ -98,10 +98,10 @@ function ENT:GetTemperature(ent)
 	end
 	local startpos = (entpos - (SunAngle2 * 4096))
 	trace.start = startpos
-	trace.endpos = entpos + Vector(0,0,30)
+	trace.endpos = entpos // + Vector(0,0,30)
 	local tr = util.TraceLine( trace )
 	if (tr.Hit) then
-		if (tr == ent) then
+		if (tr.Entity == ent) then
 			if (ent:IsPlayer()) then
 				if self.sbenvironment.sunburn then
 					if (ent:Health() > 0) then

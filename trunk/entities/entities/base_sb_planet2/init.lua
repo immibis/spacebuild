@@ -63,7 +63,7 @@ function ENT:GetTemperature(ent)
 			SunAngle:Normalize()
 			local startpos = (entpos - (SunAngle * 4096))
 			trace.start = startpos
-			trace.endpos = entpos + Vector(0,0,30)
+			trace.endpos = entpos //+ Vector(0,0,30)
 			local tr = util.TraceLine( trace )
 			if (tr.Hit) then
 				if (tr == ent) then
@@ -86,7 +86,7 @@ function ENT:GetTemperature(ent)
 	end
 	local startpos = (entpos - (SunAngle2 * 4096))
 	trace.start = startpos
-	trace.endpos = entpos + Vector(0,0,30)
+	trace.endpos = entpos //+ Vector(0,0,30)
 	local tr = util.TraceLine( trace )
 	if (tr.Hit) then
 		if (tr == ent) then
