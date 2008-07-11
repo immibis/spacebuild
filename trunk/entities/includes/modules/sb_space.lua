@@ -7,6 +7,14 @@ local space = {}
 space.__index = space
 local obj = nil
 
+function space:GetEnvironmentName()
+	return "Space"
+end
+
+function space:SetEnvironmentName(value)
+	//not implemented
+end
+
 function space:GetSize()
 	return 0
 end
