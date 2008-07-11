@@ -85,7 +85,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 			local TempY = 0
 			
 			--local pos = self.Entity:GetPos() + (self.Entity:GetForward() ) + (self.Entity:GetUp() * 40 ) + (self.Entity:GetRight())
-			local pos = self.Entity:GetPos() + Vector(0,0,50)  
+			local pos = self.Entity:GetPos() + (self.Entity:GetUp() * (self:BoundingRadius( ) + 10))
 			local angle =  (LocalPlayer():GetPos() - trace.HitPos):Angle()
 			angle.r = angle.r  + 90
 			angle.y = angle.y + 90
