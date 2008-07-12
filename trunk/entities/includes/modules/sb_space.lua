@@ -15,6 +15,10 @@ function space:SetEnvironmentName(value)
 	//not implemented
 end
 
+function space:Convert(air1, air2, value)
+	return 0
+end
+
 function space:GetSize()
 	return 0
 end
@@ -44,6 +48,10 @@ function space:GetNPercentage()
 end
 
 function space:GetHPercentage()
+	return 0
+end
+
+function space:GetEmptyAirPercentage()
 	return 0
 end
 
@@ -89,6 +97,10 @@ end
 
 function space:GetTemperature()
 	return 14
+end
+
+function space:GetEmptyAir()
+	return 0
 end
 
 function space:GetO2()
