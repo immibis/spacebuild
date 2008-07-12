@@ -57,6 +57,8 @@ end
 
 function space:UpdateGravity(ent)
 	if not ent then return end
+	local phys = ent:GetPhysicsObject()
+	if not phys:IsValid() then return end
 	local trace = {}
 	local pos = ent:GetPos()
 	trace.start = pos
@@ -75,8 +77,6 @@ function space:UpdateGravity(ent)
 	if ent.gravity and  ent.gravity == 0 then 
 		return 
 	end
-	local phys = ent:GetPhysicsObject()
-	if not phys:IsValid() then return end
 	phys:EnableGravity( false )
 	phys:EnableDrag( false )
 	ent:SetGravity(0.00001)

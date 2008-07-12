@@ -350,6 +350,8 @@ end
 
 function ENT:UpdateGravity(ent)
 	if not ent then return end
+	local phys = ent:GetPhysicsObject()
+	if not phys:IsValid() then return end
 	if self.sbenvironment.gravity == 0 then
 		local trace = {}
 		local pos = ent:GetPos()
@@ -369,8 +371,6 @@ function ENT:UpdateGravity(ent)
 	elseif ent.gravity and  ent.gravity == self.sbenvironment.gravity then 
 		return 
 	end
-	local phys = ent:GetPhysicsObject()
-	if not phys:IsValid() then return end
 	if not self.sbenvironment.gravity or self.sbenvironment.gravity  == 0 then
 		phys:EnableGravity( false )
 		phys:EnableDrag( false )
