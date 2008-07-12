@@ -35,6 +35,52 @@ CreateConVar( "SB_SuperAdminSpaceNoclip", "1" )
 local Environments = {}
 local numenv = 0
 
+function GM:GetPlanets()
+	local tmp = {}
+	if table.Count(Environments) > 0 then
+		for k, v in pairs(Environments) do
+			if v.IsPlanet and v:IsPlanet() then
+				table.insert(tmp, v)
+			end
+		end
+	end
+	return tmp
+end
+
+function GM:GetStars()
+	local tmp = {}
+	if table.Count(Environments) > 0 then
+		for k, v in pairs(Environments) do
+			if v.IsStar and v:IsStar() then
+				table.insert(tmp, v)
+			end
+		end
+	end
+	return tmp
+end
+
+function GM:GetArtificialEnvironments() //not 100 sure this is correct
+	local tmp = {}
+	if table.Count(Environments) > 0 then
+		for k, v in pairs(Environments) do
+			if v.IsStar and not v:IsStar() and v.IsPlanet and not v:IsPlanet() then
+				table.insert(tmp, v)
+			end
+		end
+	end
+	return tmp
+end
+
+function GM:OnEnvironmentChanged(ent)
+	if not ent.oldsbtmpenvironment or ent.oldsbtmpenvironment != ent.environment then
+		local tmp = ent.oldsbtmpenvironment
+		ent.oldsbtmpenvironment = ent.environment
+		if tmp then
+			gamemode.Call( "OnEnvironmentChanged", ent, tmp, ent.environment )
+		end
+	end
+end
+
 function GM:AddOverride_PlayerHeatDestroy()
 	self.Override_PlayerHeatDestroy = self.Override_PlayerHeatDestroy + 1
 end
@@ -127,6 +173,7 @@ function GM:PerformEnvironmentCheckOnEnt(ent)
 				table.remove(Environments, k)
 			end
 		end
+		self:OnEnvironmentChanged(ent)
 		ent.environment:UpdateGravity(ent)
 		ent.environment:UpdatePressure(ent)
 	end
