@@ -178,7 +178,7 @@ function GM:PerformEnvironmentCheckOnEnt(ent)
 		ent.environment:UpdatePressure(ent)
 	end
 	if ent:IsPlayer() then
-		if SB_InSpace == 1 and (ent.environment == sb_space.Get() or (not ent.environment:IsPlanet() and ent.environment.environment and ent.environment.environment == sb_space.Get())) then
+		if SB_InSpace == 1 and (ent.environment == sb_space.Get()  or (not ent.environment:IsPlanet() and ent.environment.environment and ent.environment.environment == sb_space.Get())) then
 			if not ent:InVehicle() or not SinglePlayer() then
 				if not self:AllowAdminNoclip(ent) then
 					if ent:GetMoveType() == MOVETYPE_NOCLIP then
