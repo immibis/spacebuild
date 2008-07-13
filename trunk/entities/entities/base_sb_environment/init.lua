@@ -130,6 +130,23 @@ end
 
 --RD stuff end
 
+function ENT:IsOnPlanet()
+	if self:IsPlanet() then return self end
+	local environments = {self}
+	local environment = self.environment
+	while(environment) do
+		table.insert(environments, environment)
+		if environment:IsPlanet() then
+			return environment
+		end
+		environment = environment.environment
+		if table.HasValue(environments, environment) then
+			return nil
+		end
+	end
+	return nil
+end
+
 function ENT:SetEnvironmentID(id)
 	if not id or type(id) != "number" then return false end
 	self.sbenvironment.id = id

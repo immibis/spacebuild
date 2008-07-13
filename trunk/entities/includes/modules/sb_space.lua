@@ -7,6 +7,10 @@ local space = {}
 space.__index = space
 local obj = nil
 
+function space:IsOnPlanet()
+	return nil
+end
+
 function space:GetEnvironmentName()
 	return "Space"
 end
