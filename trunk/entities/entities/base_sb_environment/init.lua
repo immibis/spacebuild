@@ -157,9 +157,9 @@ function ENT:GetEnvironmentID()
 end
 
 function ENT:PrintVars()
-	/*Msg("Print Environment Data\n")
+	Msg("Print Environment Data\n")
 	PrintTable(self.sbenvironment)
-	Msg("End Print Environment Data\n")*/
+	Msg("End Print Environment Data\n")
 end
 
 function ENT:GetEnvClass()
@@ -462,40 +462,48 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.temperature = temperature
 	end
 	//set o2 if given
-	if o2 and type(o2) == "number" then
+	if o2 and type(o2) == "number" and o2 > 0 then
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
 		self.sbenvironment.air.o2per = o2
 		self.sbenvironment.air.o2 = math.Round(o2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		o2 = 0
+		self.sbenvironment.air.o2per = 0
+		self.sbenvironment.air.o2 = 0
 	end
 	//set co2 if given
-	if co2 and type(co2) == "number" then
+	if co2 and type(co2) == "number" and co2 > 0 then
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
 		self.sbenvironment.air.co2per = co2
 		self.sbenvironment.air.co2 = math.Round(co2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		co2 = 0
+		self.sbenvironment.air.co2per = 0
+		self.sbenvironment.air.co2 = 0
 	end
 	//set n if given
-	if n and type(n) == "number" then
+	if n and type(n) == "number" and n > 0 then
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
 		self.sbenvironment.air.nper = n
 		self.sbenvironment.air.n = math.Round(n * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		n = 0
+		self.sbenvironment.air.n = 0
+		self.sbenvironment.air.n = 0
 	end
 	//set h if given
-	if h and type(n) == "number" then
+	if h and type(h) == "number" and h > 0 then
 		if h < 0 then h = 0 end
 		if (((100 - o2)-co2)-n) < h then h = ((100-o2)-co2)-n end
 		self.sbenvironment.air.hper = h
 		self.sbenvironment.air.h = math.Round(h * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 	else 
 		h = 0
+		self.sbenvironment.air.h = 0
+		self.sbenvironment.air.h = 0
 	end
 	if o2 + co2 + n + h < 100 then
 		local tmp = 100 - (o2 + co2 + n + h)
