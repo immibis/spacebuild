@@ -136,11 +136,11 @@ function ENT:IsOnPlanet()
 	local environment = self.environment
 	while(environment) do
 		table.insert(environments, environment)
-		if environment:IsPlanet() then
+		if environment and environment.IsPlanet and environment:IsPlanet() then
 			return environment
 		end
 		environment = environment.environment
-		if table.HasValue(environments, environment) then
+		if not environment or table.HasValue(environments, environment) then
 			return nil
 		end
 	end
