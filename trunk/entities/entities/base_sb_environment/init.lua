@@ -625,7 +625,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.o2 = math.Round(o2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.o2per = o2
 	else 
-		o2 = self:GetO2Level()
+		o2 = self:GetO2Percentage()
 	end
 	//set co2 if given
 	if co2 and type(co2) == "number" then
@@ -634,7 +634,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.co2 = math.Round(co2 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.co2per = co2
 	else 
-		co2 = self:GetCO2Level()
+		co2 = self:GetCO2Percentage()
 	end
 	//set n if given
 	if n and type(n) == "number" then
@@ -643,7 +643,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.n = math.Round(n * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.nper = n
 	else 
-		n = self:GetNLevel()
+		n = self:GetNPercentage()
 	end
 	if h and type(h) == "number" then
 		if h < 0 then h = 0 end
@@ -651,7 +651,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.h = math.Round(h * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
 		self.sbenvironment.air.hper = h
 	else 
-		h = self:GetHLevel()
+		h = self:GetHPercentage()
 	end
 	if o2 + co2 + n + h < 100 then
 		local tmp = 100 - (o2 + co2 + n + h)
