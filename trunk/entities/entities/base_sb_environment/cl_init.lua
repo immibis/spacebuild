@@ -35,7 +35,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		--overlaysettings
 		local OverlaySettings = list.Get( "LSEntOverlayText" )[self.Entity:GetClass()]
 		local HasOOO = OverlaySettings.HasOOO
-		local num = OverlaySettings.num
+		local num = OverlaySettings.num or 0
 		local strings = OverlaySettings.strings
 		local resnames = OverlaySettings.resnames
 		--End overlaysettings
