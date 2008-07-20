@@ -94,6 +94,7 @@ function ENT:OnRemove()
 	//self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
 	if CAF and CAF.GetAddon("Resource Distribution") then
 		CAF.GetAddon("Resource Distribution").Unlink(self)
+		CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
 	end
 	if not (WireAddon == nil) then Wire_Remove(self.Entity) end
 end
