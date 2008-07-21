@@ -297,6 +297,7 @@ function ENT:Convert(air1, air2, value)
 		if self.sbenvironment.air.empty < value then
 			value = self.sbenvironment.air.empty
 		end
+		self.sbenvironment.air.empty = self.sbenvironment.air.empty - value
 		if air2 == SB_AIR_CO2 then
 			self.sbenvironment.air.co2 = self.sbenvironment.air.co2 + value
 		elseif air2 == SB_AIR_N then
