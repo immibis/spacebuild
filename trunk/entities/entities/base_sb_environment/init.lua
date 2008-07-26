@@ -700,7 +700,9 @@ end
  
 function ENT:OnEnvironment(ent)
 	if not ent then return end
+	if ent.IsInBrushEnv then return end --ignore those those are managed by the brush
 	if ent == self then return end
+	
 	local pos = ent:GetPos()
 	local dist = pos:Distance(self:GetPos())
 	if dist < self:GetSize() then
