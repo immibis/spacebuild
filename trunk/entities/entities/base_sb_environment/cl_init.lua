@@ -10,9 +10,11 @@ OOO[2] = "Overdrive"
 function ENT:Draw( bDontDrawModel )
 	self:DoNormalDraw()
 	//draw beams by MadDog
-	local RD = CAF.GetAddon("Resource Distribution")
-	if RD then
-		RD.Beam_Render( self.Entity )
+	if CAF then
+		local RD = CAF.GetAddon("Resource Distribution")
+		if RD then
+			RD.Beam_Render( self.Entity )
+		end
 	end
 	if (Wire_Render) then
 		Wire_Render(self.Entity)
@@ -29,7 +31,10 @@ function ENT:GetOOO()
 end
 
 function ENT:DoNormalDraw( bDontDrawModel )
-	local RD = CAF.GetAddon("Resource Distribution")
+	local RD
+	if CAF then
+		RD = CAF.GetAddon("Resource Distribution")
+	end
 	local mode = self:GetNetworkedInt("overlaymode")
 	if RD and ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < 256 and mode != 0) then
 		--overlaysettings
