@@ -118,9 +118,14 @@ function ENT:GetTemperature(ent)
 		lit = true
 	end
 	if lit then
-		return self.sbenvironment.temperature2 or 0
+		if self.sbenvironment.temperature2 then
+			return self.sbenvironment.temperature2 + (( self.sbenvironment.temperature2 * ((self:GetCO2Percentage() - self.sbenvironment.air.co2per)/100))/2)
+		end
 	end
-	return self.sbenvironment.temperature or 0
+	if not self.sbenvironment.temperature then
+		return 0
+	end
+	return self.sbenvironment.temperature + (( self.sbenvironment.temperature * ((self:GetCO2Percentage() - self.sbenvironment.air.co2per)/100))/2)
 end
 
 function ENT:GetPriority()

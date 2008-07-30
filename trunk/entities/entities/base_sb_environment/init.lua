@@ -408,7 +408,10 @@ function ENT:GetAtmosphere()
 end
 
 function ENT:GetPressure()
-	return self.sbenvironment.pressure or 0
+	if not self.sbenvironment.pressure then
+		return 0
+	end
+	return self.sbenvironment.pressure - (((self:GetEmptyAirPercentage()/100) * self.sbenvironment.pressure) * 0.75)
 end
 
 function ENT:GetTemperature()
