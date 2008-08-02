@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "4271"
-	"mapversion" "7"
+	"mapversion" "11"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "7"
+	"mapversion" "11"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -6939,15 +6939,20 @@ entity
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "0"
-	"spawnflags" "1024"
+	"spawnflags" "1280"
 	"spawnpos" "0"
-	"speed" "100"
+	"speed" "2500"
 	"targetname" "OuterDoor"
 	"unlocked_sentence" "0"
 	"wait" "4"
 	connections
 	{
 		"OnOpen" "InnerDoor,Close,,0,-1"
+		"OnOpen" "InnerDoor,Lock,,0.5,-1"
+		"OnFullyClosed" "InnerDoor,Unlock,,0,-1"
+		"OnFullyClosed" "InnerDoor,Open,,0,-1"
+		"OnOpen" "ejection_brush,SpaceEnv,,0.5,-1"
+		"OnFullyClosed" "ejection_brush,RestoreEnv,,0,-1"
 	}
 	solid
 	{
@@ -7039,10 +7044,10 @@ entity
 	"classname" "func_door"
 	"disablereceiveshadows" "0"
 	"disableshadows" "0"
-	"dmg" "0"
+	"dmg" "9001"
 	"forceclosed" "0"
 	"health" "0"
-	"ignoredebris" "0"
+	"ignoredebris" "1"
 	"lip" "-10"
 	"locked_sentence" "0"
 	"loopmovesound" "0"
@@ -7052,16 +7057,12 @@ entity
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "0"
-	"spawnflags" "1024"
+	"spawnflags" "0"
 	"spawnpos" "0"
-	"speed" "100"
+	"speed" "2500"
 	"targetname" "InnerDoor"
 	"unlocked_sentence" "0"
-	"wait" "4"
-	connections
-	{
-		"OnOpen" "OuterDoor,Close,,0,-1"
-	}
+	"wait" "-1"
 	solid
 	{
 		"id" "116"
@@ -7155,7 +7156,6 @@ entity
 	"Bloom_B" "1"
 	"Bloom_Darken" "1"
 	"Bloom_G" "1"
-	"Bloom_Multiple" "1"
 	"Bloom_Multiplier" "1"
 	"Bloom_Passes" "1"
 	"Bloom_R" "1"
@@ -7176,7 +7176,7 @@ entity
 	"Colour_Mod_Range" "1"
 	"Decompression_Explosion_X" "0"
 	"Decompression_Explosion_Y" "0"
-	"Decompression_Explosion_Z" "5"
+	"Decompression_Explosion_Z" "750"
 	"Gravity" "1"
 	"Habitable" "1"
 	"HasBloom" "0"
@@ -7186,6 +7186,7 @@ entity
 	"ParentBrushEnvID" "-1"
 	"Pressure" "1"
 	"Stable" "0"
+	"targetname" "ejection_brush"
 	"Temp" "290"
 	solid
 	{
@@ -7318,7 +7319,7 @@ entity
 		side
 		{
 			"id" "324"
-			"plane" "(-2684 -1092 -764) (-2684 -1092 -68) (-2684 -2044 -68)"
+			"plane" "(-2684 -2044 -764) (-2684 -1092 -764) (-2684 -1092 -68)"
 			"material" "TOOLS/TOOLSTRIGGER"
 			"uaxis" "[0 0 1 0] 0.25"
 			"vaxis" "[0 -1 0 0] 0.25"
@@ -7329,7 +7330,7 @@ entity
 		side
 		{
 			"id" "323"
-			"plane" "(-1476 -2044 -764) (-1476 -2044 -68) (-1476 -1092 -68)"
+			"plane" "(-1476 -1092 -764) (-1476 -2044 -764) (-1476 -2044 -68)"
 			"material" "TOOLS/TOOLSTRIGGER"
 			"uaxis" "[0 0 1 0] 0.25"
 			"vaxis" "[0 -1 0 0] 0.25"
@@ -7351,7 +7352,7 @@ entity
 		side
 		{
 			"id" "321"
-			"plane" "(-1476 -1092 -68) (-1476 -2044 -68) (-2684 -2044 -68)"
+			"plane" "(-2684 -2044 -68) (-2684 -1092 -68) (-1476 -1092 -68)"
 			"material" "TOOLS/TOOLSTRIGGER"
 			"uaxis" "[0 1 0 0] 0.25"
 			"vaxis" "[1 0 0 0] 0.25"
@@ -7436,33 +7437,14 @@ entity
 		"logicalpos" "[0 -12268]"
 	}
 }
-entity
-{
-	"id" "491"
-	"classname" "env_sun"
-	"angles" "0 0 0"
-	"HDRColorScale" "1.0"
-	"material" "sprites/light_glow02_add_noz"
-	"overlaycolor" "0 0 0"
-	"overlaymaterial" "sprites/nadeswirl"
-	"overlaysize" "-1"
-	"pitch" "5"
-	"rendercolor" "100 80 80"
-	"size" "16"
-	"target" "TestPlanet"
-	"targetname" "Sun"
-	"origin" "223.031 1587 1404.16"
-	editor
-	{
-		"color" "255 0 0"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 -11768]"
-	}
-}
 cameras
 {
-	"activecamera" "-1"
+	"activecamera" "0"
+	camera
+	{
+		"position" "[-1853.31 -1018.85 -374.974]"
+		"look" "[-1854.15 -1016.15 -375.181]"
+	}
 }
 cordon
 {

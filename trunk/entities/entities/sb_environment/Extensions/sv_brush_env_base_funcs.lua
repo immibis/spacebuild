@@ -119,12 +119,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 	end
 
 	function ENT:SetSize(size)
-		if size and (type(size) == "number") then
-			if size < 0 then size = 0 end
-			self:UpdateSize(self.sbenvironment.size, size)
-		else
-			Error("Invalid Size!\n")
-		end
+		return Error("Cant set the size of a brush env!\n")
 	end
 
 	function ENT:ChangeAtmosphere(newatmosphere)

@@ -6,8 +6,7 @@ ENT.Debugging	= true
 ENT.Enabled		= true
 ENT.GetEnvClass	= "SB ENVIRONMENT"
 
-GLOBAL_BRUSH_ENV_LIST = {}
-
+SB_Environments_Brush_List = SB_Environments_Brush_List or {}
 local Init_Debugging_Override = true
 
 function ENT:Initialize()
@@ -18,10 +17,10 @@ function ENT:Initialize()
 	if GAMEMODE and GAMEMODE.AddEnvironment then
 		GAMEMODE:AddEnvironment(self)
 	elseif not GAMEMODE then
-		for i = 1, 9001 do --for good measure, hell if it does happen then they deserve it
+		for i = 1, 9001 do -- For good measure. Hell, if it does happen then they deserve it!
 			Error("OMGAZ!!1 Yo3 No0t runizngz aA Gam3am0dez!\n")
 		end
-	end	
+	end
 
 	self.SpacedVector = Vector(self.sbenvironment.DecompressionSettings.X or 0, 
 							   self.sbenvironment.DecompressionSettings.Y or 0, 
@@ -31,42 +30,42 @@ function ENT:Initialize()
 		Msg("Initialized a new brush env: ", self, "\n")
 		Msg("ID is: ", self.ID, "\n")
 		Msg("Dumping stats:\n")
-		Msg("\n\n\n------------ START DUMP ------------\n\n\n")
-		PrintTable(self.Data)
-		Msg("\n\n\n------------- END DUMP -------------\n\n\n")
+		Msg("\n\n------------ START DUMP ------------\n\n")
+		PrintTable(self)
+		Msg("\n\n------------- END DUMP -------------\n\n")
 	end
 end
 
 function ENT:StartTouch(entity)
 	if not self.Enabled then 
-		if self.Debugging then Msg("Entity ", entity, " tried to enter but we weren't on.\n") end
+		if self.Debugging then Msg("Entity ", entity, " tried to enter but ", self, " wasn't on.\n") end
 		
 		return
 	elseif self.Debugging then 
-		Msg("Entity ", entity, " has started touching us in unusual places....\n")
+		Msg("Entity ", entity, " has started touching ", self, " in unusual places....\n")
 	end
 	
 	entity.IsInEnvBrush = true
 	entity.environment = self
-	
+	self:UpdateGravity(entity)
 	self.Entities[entity] = entity
 end
 
 function ENT:EndTouch(entity)
 	if self.Debugging then
-		Msg("Entity ", entity, " has stopped touching us in unusual places....\n")
+		Msg("Entity ", entity, " has stopped touching ", self, " in unusual places....\n")
 	end
 	
 	if SB_Environments_Brush_List[self.ParentID] then
 		entity.environment = SB_Environments_Brush_List[self.ParentID]
-		if true or self.Debugging then
-			Msg("...And has started touching our parent in unusual places....\n")
+		if self.Debugging then
+			Msg("...and has started touching our parent, ", SB_Environments_Brush_List[self.ParentID], " in unusual places....\n")
 		end
 	else //SPACE TEH BASTERD
 		entity.IsInBrushEnv = false
 		entity.environment = nil
 		
-		if self.Debugging then Msg("...And has decided to get spaced.\n") end
+		if self.Debugging then Msg("...and has decided to get spaced.\n") end
 	end
 	
 	self.Entities[entity] = nil
@@ -76,21 +75,26 @@ function ENT:Space()
 	for k, v in pairs(self.Entities) do
 		-- I'm assuming that even if they have LS devices that unsuited people have a tendency to DIE when explosive decompression occures
 		-- Of course this is dependent on the amount of gases inside
+		self.sbenvironment.air.max = self.sbenvironment.air.max or 100 --math.Round(100 * data * 5) * self.sbenvironment.pressure
 		if v and v.IsNPC and v:IsNPC() then
-			local dmg = self.sbenvironment.pressure * (self.sbenvironment.air.max - self.sbenvironment.air.empty)
+			local dmg = self.sbenvironment.pressure *  math.random(1,9001)
 			v:TakeDamage(dmg, self, self)
 		elseif v and v.IsPlayer and v:IsPlayer() and (not v:InVehicle()) then
-			local dmg = self.sbenvironment.pressure * (self.sbenvironment.air.max - self.sbenvironment.air.empty)
+			local dmg = self.sbenvironment.pressure * math.random(1,9001)
 			v:TakeDamage(dmg, self, self)
 		end
 		
 		local phys = v:GetPhysicsObject()
 		
 		if phys and phys:IsValid() then
-			plys:ApplyForceCenter(self.SpacedVector)
+			phys:ApplyForceCenter(self.SpacedVector)
 		end
 		--and for good measure
-		v:SetVelocityInstantaneous(self.SpacedVector)
+		if v.SetVelocityInstantaneous then
+			v:SetVelocityInstantaneous(self.SpacedVector)
+		elseif v.SetVelocity then
+			v:SetVelocity(self.SpacedVector)
+		end
 		
 		v.IsInBrushEnv = false
 	end
@@ -99,6 +103,10 @@ function ENT:Space()
 end
 
 function ENT:AcceptInput(name, activator, caller, data)
+	if not self.Initialized then
+		self:InitEnvBrush()
+	end
+	
 	if name == "SpaceEnv" then
 		self:Space()
 		
@@ -147,7 +155,7 @@ function ENT:AcceptInput(name, activator, caller, data)
 		
 		return true
 	elseif name == "SetGravity" then
-		if not (data and (type(data) == "number") then return Error("Invalid parameter for new gravity in env brush ID" .. self.ID .. "\n") end
+		if (not data) and (type(data) == "number") then return Error("Invalid parameter for new gravity in env brush ID" .. self.ID .. "\n") end
 		
 		if self.sbenvironment.gravity ~= 0 then
 			self.sbenvironment.pressure = self.sbenvironment.pressure * (data/self.sbenvironment.gravity)
@@ -229,6 +237,15 @@ function ENT:InitEnvBrush()
 	self.Initialized = true or false -- for the lulz
 end
 
+function ENT:SetEnvironmentID(duh)
+	self.GazeboOfDeath = duh or 1337
+end
+
+function ENT:GetEnvironmentID()
+	return self.GazeboOfDeath or 1337
+end
+
+
 function ENT:KeyValue(k, v)
 	if not self.Initialized then
 		self:InitEnvBrush()
@@ -250,17 +267,17 @@ function ENT:KeyValue(k, v)
 	if k == "BrushEnvID" then
 		self.ID = v
 		
-		if GLOBAL_BRUSH_ENV_LIST[self.ID] then ErrorNoHalt("NON FATALE ERROR: THERE ARE MULTIPLE USES OF " .. self.ID .. " AS A ENVIRONMENT BRUSH! OVERRIDING!\n") end
+		if SB_Environments_Brush_List[self.ID] then ErrorNoHalt("NON FATALE ERROR: THERE ARE MULTIPLE USES OF " .. self.ID .. " AS A ENVIRONMENT BRUSH! OVERRIDING!\n") end
 		
-		GLOBAL_BRUSH_ENV_LIST[self.ID] = self
+		SB_Environments_Brush_List[self.ID] = self
 	elseif k == "ParentBrushEnvID" then
 		self.ParentID = v
 	elseif k == "Gravity" then
 		self.sbenvironment.gravity = v
 	elseif k == "Atmosphere" then
-		self.Data.atmosphere = v
+		self.sbenvironment.atmosphere = v
 	elseif k == "Pressure" then
-		self.Data.pressure = v
+		self.sbenvironment.pressure = v
 	elseif k == "Temp" then
 		self.sbenvironment.temperature = v
 	elseif k == "Oxygen" then
@@ -271,6 +288,8 @@ function ENT:KeyValue(k, v)
 		self.sbenvironment.air.n = v
 	elseif k == "Hydrogen" then
 		self.sbenvironment.air.h = v
+	elseif k == "AirThickness" then
+		self.sbenvironment.air.AirThickness = v
 	elseif k == "Habitable" then
 		self.sbenvironment.habitable = v
 	elseif k == "Stable" then
@@ -296,7 +315,7 @@ function ENT:KeyValue(k, v)
 		self.sbenvironment.BloomSettings.Passes = v
 	elseif k == "Bloom_Darken" then
 		self.sbenvironment.BloomSettings.Darken = v
-	elseif k == "Bloom_Multi" then
+	elseif k == "Bloom_Multiplier" then
 		self.sbenvironment.BloomSettings.Multi = v
 		
 	-------------------------------------------------------------------------------
@@ -321,6 +340,8 @@ function ENT:KeyValue(k, v)
 		self.sbenvironment.ColourModSettings.Brightness = v
 	elseif k == "Colour_Mod_Contrast" then
 		self.sbenvironment.ColourModSettings.Contrast = v
+	elseif k == "Colour_Mod_Range" then
+		self.sbenvironment.ColourModSettings.Range = v
 		
 	-------------------------------------------------------------------------------
 	---------			Decompression Stuff			---------
