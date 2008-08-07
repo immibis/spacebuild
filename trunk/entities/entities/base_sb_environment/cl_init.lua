@@ -36,7 +36,16 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		RD = CAF.GetAddon("Resource Distribution")
 	end
 	local mode = self:GetNetworkedInt("overlaymode")
-	if RD and ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < 256 and mode != 0) then
+	local rd_overlay_dist = 512
+	if RD_OverLay_Distance then
+		if RD_OverLay_Distance.GetInt then
+			local nr = RD_OverLay_Distance:GetInt()
+			if nr >= 256 then
+				rd_overlay_dist = nr
+			end
+		end
+	end
+	if RD and ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode != 0) then
 		--overlaysettings
 		local OverlaySettings = list.Get( "LSEntOverlayText" )[self.Entity:GetClass()]
 		local HasOOO = OverlaySettings.HasOOO
