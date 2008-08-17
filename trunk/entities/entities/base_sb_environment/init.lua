@@ -284,8 +284,8 @@ end
 //Converts air1 to air2 for the max amount of the specified value
 //Returns the actual amount of converted airtype
 function ENT:Convert(air1, air2, value)
-	if not air1 or not air2 or not value then return end
-	if type(air1) != "number" or type(air2) != "number" or type(value) != "number" then return end 
+	if not air1 or not air2 or not value then return 0 end
+	if type(air1) != "number" or type(air2) != "number" or type(value) != "number" then return 0 end 
 	air1 = math.Round(air1)
 	air2 = math.Round(air2)
 	value = math.Round(value)
