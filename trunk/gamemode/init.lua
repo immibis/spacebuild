@@ -47,6 +47,14 @@ function GM:GetPlanets()
 	return tmp
 end
 
+function GM:PhysgunPickup(ply , ent)
+	local notallowed =  { "base_sb_planet1", "base_sb_planet2", "base_sb_star1", "base_sb_star2", "nature_dev_tree", "sb_environment"}
+	if table.HasValue(notallowed, ent:GetClass()) then
+		return false
+	end
+	return self.BaseClass:PhysgunPickup(ply, ent)
+end
+
 function GM:GetStars()
 	local tmp = {}
 	if table.Count(Environments) > 0 then
