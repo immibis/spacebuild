@@ -36,6 +36,14 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		RD = CAF.GetAddon("Resource Distribution")
 	end
 	local mode = self:GetNetworkedInt("overlaymode")
+	if RD_OverLay_Mode and mode != 0 then -- Don't enable it if disabled by default!
+		if RD_OverLay_Mode.GetInt then
+			local nr = math.Round(RD_OverLay_Mode:GetInt())
+			if nr >= 0 and nr <= 2 then
+				mode = nr;
+			end
+		end
+	end
 	local rd_overlay_dist = 512
 	if RD_OverLay_Distance then
 		if RD_OverLay_Distance.GetInt then
