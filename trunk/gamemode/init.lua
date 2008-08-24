@@ -414,7 +414,7 @@ function GM:Register_Environments()
 				elseif value == "planet2" then
 					local rate
 					for key2, value2 in pairs(values) do
-						if (key2 == "Case02") then rate = tonumber(value2)
+						if (key2 == "Case02") then rate = tonumber(value2) end
 					end
 					local tree = ents.Create( "nature_dev_tree" )
 					tree:SetRate(rate)
