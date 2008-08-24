@@ -1,32 +1,57 @@
+
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
+
 include('shared.lua')
 
 function ENT:Initialize()
-	self.BaseClass.Initialize(self)
-	//Add setmodel
-	//Add health adds
+	self.Entity:PhysicsInit( SOLID_VPHYSICS )
+	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
+	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self.rate = 0
 end
 
-function ENT:Destruct()
-	if LS_Destruct then
-		LS_Destruct( self.Entity, true )
-	end
+function ENT:AcceptInput(name,activator,caller)
 end
 
-function ENT:Damage()
-	if (self.damaged == 0) then self.damaged = 1 end
+function ENT:SetRate(rate)
+	//Add Various models depending on the rate!
+	rate = rate or 0
+	--
+	self:SetModel("models/props_lab/huladoll.mdl")
+	--
+	self.rate = rate
 end
 
-function ENT:OnRemove()
- //nothing
+function ENT:OnTakeDamage(DmgInfo)
+	//Don't take damage?
 end
 
 function ENT:Think()
-	self.BaseClass.Think(self)
-	if self.environment then
-		self.environment:Convert(1, 0, 5)
+	if self.rate > 0 and self.environment then
+		local left = self.environment:Convert(1, 0, self.rate)
+		if left > 0 then
+			left = self.environment:Convert(-1, 0, left)
+			if left > 0 and self.environment:GetO2Percentage() < 10 then
+				left = self.environment:Convert(2, 0, left)
+				if left > 0 and self.environment:GetO2Percentage() < 10 then
+					left = self.environment:Convert(3, 0, left)
+				end
+			end
+		end
 	end
-	self:NextThink( CurTime() +  1 )
+	self.Entity:NextThink(CurTime() + 1)
 	return true
+end
+
+function ENT:CanTool()
+	return false
+end
+
+function ENT:GravGunPunt()
+	return false
+end
+
+function ENT:GravGunPickupAllowed()
+	return false
 end

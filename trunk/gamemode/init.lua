@@ -411,6 +411,17 @@ function GM:Register_Environments()
 						table.insert(Planets, planet)
 						Msg("Registered New Planet\n")
 					end
+				elseif value == "planet2" then
+					local rate
+					for key2, value2 in pairs(values) do
+						if (key2 == "Case02") then rate = tonumber(value2)
+					end
+					local tree = ents.Create( "nature_dev_tree" )
+					tree:SetRate(rate)
+					tree:SetAngles( ent:GetAngles() )
+					tree:SetPos( ent:GetPos() )
+					tree:Spawn()
+					Msg("Registered New SB Tree\n")
 				elseif value == "planet_color" then
 					local hash = {}
 					local ColorID
