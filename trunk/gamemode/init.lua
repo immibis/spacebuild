@@ -411,7 +411,7 @@ function GM:Register_Environments()
 						table.insert(Planets, planet)
 						Msg("Registered New Planet\n")
 					end
-				elseif value == "planet2" then
+				elseif value == "sb_dev_tree" then
 					local rate
 					for key2, value2 in pairs(values) do
 						if (key2 == "Case02") then rate = tonumber(value2) end
