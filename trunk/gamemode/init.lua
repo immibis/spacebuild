@@ -606,7 +606,7 @@ function GM:PlayerSay( ply, txt )
 		self:RemoveSBProps(true)
 	end
 	if not txt then txt = "" end
-	return txt //Fixes the invalid string problem?
+	return tostring(txt)
 end
 
 function GM:RemoveSBProps(world)
