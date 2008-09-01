@@ -95,17 +95,35 @@ function ENT:ConvertResource(res1, res2, amount)
 		if not self.sbenvironment.air[res2] then
 			self:AddExtraResource(res2)
 		end
-		amount = self:Convert(res1, -1, amount)
+		if res1 != -1 then
+			amount = self:Convert(res1, -1, amount)
+		else
+			local available = self:GetEmptyAir()
+			if available < amount then
+				amount = available
+			end
+			self.sbenvironment.air.empty = self.sbenvironment.air.empty - amount
+		end
 		self.sbenvironment.air[res2] = self.sbenvironment.air[res2] + amount
 	elseif type(res2) == "number" then
 		if table.HasValue(ignore, res1) then return 0 end
 		if not self.sbenvironment.air[res1] then
 			self:AddExtraResource(res1)
 		end
-		amount = self:GetResourceAmount(res1)
+		local avail = self:GetResourceAmount(res1)
+		if avail < amount then
+			amount = avail
+		end
 		self.sbenvironment.air[res1] = self.sbenvironment.air[res1] - amount
 		self.sbenvironment.air.empty = self.sbenvironment.air.empty + amount
-		self:Convert(-1, res2, amount)
+		if res2 != -1 then
+			local amount2 = amount
+			amount = self:Convert(-1, res2, amount)
+			if amount2 > amount then
+				self.sbenvironment.air.empty = self.sbenvironment.air.empty - (amount2 - amount)
+				self.sbenvironment.air[res1] = self.sbenvironment.air[res1] + (amount2 - amount)
+			end
+		end
 		return amount
 	else
 		if table.HasValue(ignore, res2) or table.HasValue(ignore, res1) then return 0 end
