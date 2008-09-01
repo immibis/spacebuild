@@ -38,6 +38,109 @@ function ENT:Initialize()
 	self.sbenvironment.name = "No Name"
 	GAMEMODE:AddEnvironment(self)
 end
+
+--[[
+	Will add a new resource to the environment Air Supply, will try to fill up any Vacuum with the new Air if a Start value (either value or percentage)  is set
+
+]]
+function ENT:AddExtraResource(res, start, ispercentage)
+	if not res then return false end
+	local ignore = {"o2per", "co2per", "nper", "hper", "emptyper", "max"}
+	if table.HasValue(ignore, res) then return false end
+	if not start then start = 0 end
+	if not self.sbenvironment.air[res] then
+		self.sbenvironment.air[res] = 0
+		if start > 0 then
+			if ispercentage then
+				start = math.Round(start * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
+			end
+			local available = self:GetEmptyAir()
+			if available < start then
+				start = available
+			end
+			self:ConvertResource(-1, res, start)
+		end
+	end
+end
+
+function ENT:CheckAirValues()
+	local percentage = 0
+	local ignore = {"o2per", "co2per", "nper", "hper", "emptyper", "max"}
+	for k, v in pairs(self.sbenvironment.air) do
+		if not table.HasValue(ignore, k) then
+			if v and v < 0 then
+				v = 0
+			elseif v and v > 0 then
+				percentage = percentage + v
+				if percentage > 100 then
+					-- Remove all above 100%
+					local tomcuch = percentage - 100
+					v = v - tomuch
+				end
+			end
+		end
+	end
+end
+
+--[[
+	Will try to convert resource 1 to resource 2 for a certain amount
+]]
+function ENT:ConvertResource(res1, res2, amount)
+	local ignore = {"o2per", "co2per", "nper", "hper", "emptyper", "max"}
+	if not res1 or not res2 or not amount or not type(amount) == "number" then return 0 end
+	if type(res1) == "number" and type(res2) == "number" then
+		return self:Convert(res1, res2, amount)
+	elseif type(res1) == "number" then
+		if table.HasValue(ignore, res2) then return 0 end
+		if not self.sbenvironment.air[res2] then
+			self:AddExtraResource(res2)
+		end
+		amount = self:Convert(res1, -1, amount)
+		self.sbenvironment.air[res2] = self.sbenvironment.air[res2] + amount
+	elseif type(res2) == "number" then
+		if table.HasValue(ignore, res1) then return 0 end
+		if not self.sbenvironment.air[res1] then
+			self:AddExtraResource(res1)
+		end
+		amount = self:GetResourceAmount(res1)
+		self.sbenvironment.air[res1] = self.sbenvironment.air[res1] - amount
+		self.sbenvironment.air.empty = self.sbenvironment.air.empty + amount
+		self:Convert(-1, res2, amount)
+		return amount
+	else
+		if table.HasValue(ignore, res2) or table.HasValue(ignore, res1) then return 0 end
+		if not self.sbenvironment.air[res1] then
+			self:AddExtraResource(res1)
+		end
+		if not self.sbenvironment.air[res2] then
+			self:AddExtraResource(res2)
+		end
+		if self.sbenvironment.air[res1] < amount then
+			amount = self.sbenvironment.air[res1]
+		end
+		self.sbenvironment.air[res1] = self.sbenvironment.air[res1] - amount
+		self.sbenvironment.air[res2] = self.sbenvironment.air[res2] + amount
+		return amount
+	end
+	return 0
+end
+
+function ENT:GetResourceAmount(res)
+	if not res or type(res) == "number" then return 0 end
+	local ignore = {"o2per", "co2per", "nper", "hper", "emptyper", "max"}
+	if table.HasValue(ignore, res) then return 0 end
+	return self.sbenvironment.air[res] or 0
+end
+
+function ENT:GetResourcePercentage(res)
+	if not res or type(res) == "number" then return 0 end
+	if self.sbenvironment.air.max == 0 then
+		return 0
+	end
+	local ignore = {"o2per", "co2per", "nper", "hper", "emptyper", "max"}
+	if table.HasValue(ignore, res) then return 0 end
+	return ((self:GetResourceAmount(res)  / self.sbenvironment.air.max) * 100)
+end
 -- RD stuff begin
 
 --use this to set self.active

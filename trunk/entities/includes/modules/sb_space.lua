@@ -7,12 +7,36 @@ local space = {}
 space.__index = space
 local obj = nil
 
+function space:CheckAirValues()
+	// Do nothing
+end
+
 function space:IsOnPlanet()
 	return nil
 end
 
+function space:AddExtraAirResource(resource, start, ispercentage)
+	// Do nothing
+end
+
+function space:PrintVars()
+	Msg("No Values for Space\n")
+end
+
+function space:ConvertResource(res1, res2, amount)
+	return 0
+end
+
 function space:GetEnvironmentName()
 	return "Space"
+end
+
+function space:GetResourceAmount(res)
+	return  0
+end
+
+function space:GetResourcePercentage(res)
+	return 0
 end
 
 function space:SetEnvironmentName(value)
