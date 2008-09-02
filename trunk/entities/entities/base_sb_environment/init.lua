@@ -82,6 +82,10 @@ function ENT:CheckAirValues()
 	end
 end
 
+function ENT:Repair()
+	self:SetHealth( self:GetMaxHealth( ))
+end
+
 --[[
 	Will try to convert resource 1 to resource 2 for a certain amount
 ]]
