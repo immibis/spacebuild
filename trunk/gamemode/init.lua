@@ -530,7 +530,6 @@ function GM:Register_Environments()
 			Planetscolor[k]:ColorEffect(v.AddColor_r, v.AddColor_g, v.AddColor_b, v.MulColor_r, v.MulColor_g, v.MulColor_b, v.Brightness, v.Contrast, v.Color)
 		end
 	end
-	Msg ( "Registered " .. table.Count(Planets) .. " planets\n" )
 end
 
 function GM:PlayerNoClip( ply, on )
@@ -639,3 +638,76 @@ function GM:SB_Ragdoll(ply)
 	end
 end
 hook.Add("PlayerKilled","SBRagdoll",GM.SB_Ragdoll)
+
+local volumes = {}
+
+function GM:FindVolume(name, radius)
+	if not name then return false, "No Name Entered!" end
+	if not radius or radius < 0 then radius = 0 end
+	if not volumes[name] then
+		volumes[name] = {}
+		volumes[name].radius = radius
+		volumes[name].pos = Vector(0, 0 ,0 )
+		local tries = 10
+		local found = 0
+		while ( ( found == 0 ) and ( tries > 0 ) ) do
+			tries = tries - 1
+			pos = VectorRand()*16384
+			if (util.IsInWorld( pos ) == true) then
+				found = 1
+				for k, v in pairs(volumes) do
+					if v and v.pos and (v.pos == pos or v.pos:Distance(pos) < v.radius) then
+						found = 0
+					end
+				end
+				if found == 1 then
+					for k, v in pairs(Environments) do
+						if v and ValidEntity(v) and ((v.IsPlanet and v.IsPlanet()) or (v.IsStar and v.IsStar())) and (v:GetPos() == pos or v:GetPos():Distance(pos) < v:GetSize()) then
+							found = 0
+						end
+					end
+				end
+				if (found == 1) and radius > 0 then
+					local edges = {
+						pos+(Vector(1, 0, 0)*radius),
+						pos+(Vector(0, 1, 0)*radius),
+						pos+(Vector(0, 0, 1)*radius),
+						pos+(Vector(-1, 0, 0)*radius),
+						pos+(Vector(0, -1, 0)*radius),
+						pos+(Vector(0, 0, -1)*radius)
+					}
+					local trace = {}
+					trace.start = pos
+					for _, edge in pairs( edges ) do
+						trace.endpos = edge
+						trace.filter = { }
+						local tr = util.TraceLine( trace )
+						if (tr.Hit) then
+							found = 0
+							break
+						end
+					end
+				end
+				if (found == 0) then Msg( "Rejected Volume.\n" ) end
+			end
+			if (found == 1) then
+				volumes[name].pos = pos
+			elseif tries <= 0 then
+				volumes[name] = nil
+			end
+		end
+	end
+	return volumes[name]
+end
+
+function GM:RemoveVolume(name)
+	if name and volumes[name] then volumes[name] = nil end
+end
+
+function GM:AddVolume(name, pos, radius)
+	if not name or not radius or not pos then return false, "Invalid Parameters" end
+	if volumes[name] then return false, "this volume already exists!" end
+	volumes[name] = {}
+	volumes[name].pos = pos
+	volumes[name].radius = radius
+end
