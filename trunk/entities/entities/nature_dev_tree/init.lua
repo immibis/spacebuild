@@ -18,7 +18,9 @@ function ENT:SetRate(rate, setmodel)
 	//Add Various models depending on the rate!
 	rate = rate or 0
 	--
-	self:SetModel("models/props_lab/huladoll.mdl")
+	if setmodel then
+		self:SetModel("models/ce_ls3additional/plants/plantfull.mdl")
+	end
 	--
 	self.rate = rate
 end

@@ -417,7 +417,7 @@ function GM:Register_Environments()
 						if (key2 == "Case02") then rate = tonumber(value2) end
 					end
 					local tree = ents.Create( "nature_dev_tree" )
-					tree:SetRate(rate)
+					tree:SetRate(rate, true)
 					tree:SetAngles( ent:GetAngles() )
 					tree:SetPos( ent:GetPos() )
 					tree:Spawn()
