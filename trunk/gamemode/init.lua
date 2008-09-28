@@ -640,7 +640,35 @@ end
 hook.Add("PlayerKilled","SBRagdoll",GM.SB_Ragdoll)
 
 local volumes = {}
+/**
+* @param name
+* @return Volume(table) or nil
+*
+*/
+function GM:GetVolume(name)
+	return volumes[name]
+end
 
+/**
+* @param name
+* @param radius
+* @return Volume(table) or ( false + errormessage)
+*
+* Notes: If the volume name already exists, that volume is returned! 
+*
+*/
+function GM:CreateVolume(name, radius)
+	return self:FindVolume(name, radius)
+end
+
+/**
+* @param name
+* @param radius
+* @return Volume(table) or ( false + errormessage)
+*
+* Notes: If the volume name already exists, that volume is returned! 
+*
+*/
 function GM:FindVolume(name, radius)
 	if not name then return false, "No Name Entered!" end
 	if not radius or radius < 0 then radius = 0 end
@@ -700,11 +728,33 @@ function GM:FindVolume(name, radius)
 	return volumes[name]
 end
 
+/**
+* @param name
+* @return nil
+*
+*/
+function GM:DestroyVolume(name)
+	self:RemoveVolume(name);
+end
+
+/**
+* @param name
+* @return nil
+*
+*/
 function GM:RemoveVolume(name)
 	if name and volumes[name] then volumes[name] = nil end
 end
 
-function GM:AddVolume(name, pos, radius)
+/**
+* @param name
+* @param pos
+* @param radius
+* @return nil
+*
+* Note: this is meant for people who spawn their props in space using a custom Spawner (like the Stargate Spawner)
+*/
+function GM:AddCustomVolume(name, pos, radius)
 	if not name or not radius or not pos then return false, "Invalid Parameters" end
 	if volumes[name] then return false, "this volume already exists!" end
 	volumes[name] = {}
