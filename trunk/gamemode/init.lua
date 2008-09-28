@@ -676,7 +676,7 @@ function GM:FindVolume(name, radius)
 		volumes[name] = {}
 		volumes[name].radius = radius
 		volumes[name].pos = Vector(0, 0 ,0 )
-		local tries = 10
+		local tries = 11
 		local found = 0
 		while ( ( found == 0 ) and ( tries > 0 ) ) do
 			tries = tries - 1
