@@ -4,7 +4,9 @@ include('shared.lua')
 
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
-	self:SetMoveType(MOVETYPE_NONE)
+	self.Entity:PhysicsInit( SOLID_NONE )
+	self.Entity:SetMoveType( MOVETYPE_NONE )
+	self.Entity:SetSolid( SOLID_NONE )
 	self.sbenvironment.temperature2 = 0
 	self.sbenvironment.temperature3 = 0
 	self:SetNotSolid(true)

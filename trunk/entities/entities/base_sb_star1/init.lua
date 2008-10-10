@@ -4,7 +4,9 @@ include('shared.lua')
 
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
-	self:SetMoveType(MOVETYPE_NONE);
+	self.Entity:PhysicsInit( SOLID_NONE )
+	self.Entity:SetMoveType( MOVETYPE_NONE )
+	self.Entity:SetSolid( SOLID_NONE )
 	self:SetNotSolid(true)
 	self:DrawShadow(false)
 	if CAF and CAF.GetAddon("Custom Damage System") then
