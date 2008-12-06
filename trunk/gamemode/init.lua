@@ -213,12 +213,14 @@ function GM:PerformEnvironmentCheck()
 		end
 	end]]
 	--Msg(tostring(table.Count(sb_spawned_entities)).."\n")
-	for k, ent in pairs( sb_spawned_entities) do
-		self:PerformEnvironmentCheckOnEnt( ent )
+	for k, ent in ipairs( sb_spawned_entities) do
+		if ent and ValidEntity(ent) then
+			self:PerformEnvironmentCheckOnEnt( ent )
+		else
+			table.remove(sb_spawned_entities, k)
+		end
 	end
 	--local endtime = SysTime();
-	--Msg("Start: "..tostring(starttime).."\n")
-	--Msg("End: "..tostring(endtime).."\n")
 	--Msg("End Time: "..tostring(endtime-starttime).."\n");
 end
 
