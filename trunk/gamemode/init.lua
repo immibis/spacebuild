@@ -144,24 +144,82 @@ hook.Call( "PlayerSetModel", GAMEMODE, pl )
 GAMEMODE:SetPlayerSpeed( pl, 250, 500 )
 end
 
+local sb_spawned_entities = {}
+
+local function OnEntitySpawn(ent)
+	Msg("Spawn: "..tostring(ent).."\n")
+	if not table.HasValue(sb_spawned_entities, ent) then
+		table.insert( sb_spawned_entities, ent)
+	end
+end
+
+//Gmod Spawn Hooks
+
+local function SpawnedSent( ply , ent )
+	//Msg("Sent Spawned\n")
+	OnEntitySpawn(ent)
+end
+
+local function SpawnedVehicle( ply , ent)
+	//Msg("Vehicle Spawned\n")
+	OnEntitySpawn(ent)
+end	
+
+local function SpawnedEnt( ply , model , ent )
+	//Msg("Prop Spawned\n")
+	OnEntitySpawn(ent)
+end
+
+local function PlayerSpawn(ply)
+	//Msg("Prop Spawned\n")
+	OnEntitySpawn(ply)
+end
+
+local function NPCSpawn(ply, ent)
+	//Msg("Prop Spawned\n")
+	OnEntitySpawn(ent)
+end
+hook.Add( "PlayerSpawnedNPC", "SB NPC Spawn", NPCSpawn )
+hook.Add( "PlayerInitialSpawn", "SB PLAYER Spawn", PlayerSpawn )
+hook.Add( "PlayerSpawnedProp", "SB PROP Spawn", SpawnedEnt )
+hook.Add( "PlayerSpawnedSENT", "SB SENT Spawn", SpawnedSent )
+hook.Add( "PlayerSpawnedVehicle", "SB VEHICLE Spawn", SpawnedVehicle )
+
+local oldcreate = ents.Create
+ents.Create = function(class)
+	local ent = oldcreate(class)
+	--Msg(tostring(ent))
+	OnEntitySpawn(ent)
+	return ent;
+end
+
 function GM:Think()
 	if (SB_InSpace == 0) then return end
 	if CurTime() < (NextUpdateTime or 0) then return end
 	self:PerformEnvironmentCheck()
-	local ents = ents.FindByClass( "entityflame" )
+	--[[local ents = ents.FindByClass( "entityflame" )
 	for _, ent in ipairs( ents ) do
 		ent:Remove()
-	end
+	end]]
 	NextUpdateTime = CurTime() + 1
 end
 
 function GM:PerformEnvironmentCheck()
-	for _, class in ipairs( self.affected ) do
+	--local starttime =SysTime();
+	--[[for _, class in ipairs( self.affected ) do
 		local ents = ents.FindByClass( class )	
 		for _, ent in ipairs( ents ) do
 			self:PerformEnvironmentCheckOnEnt( ent )
 		end
+	end]]
+	--Msg(tostring(table.Count(sb_spawned_entities)).."\n")
+	for k, ent in pairs( sb_spawned_entities) do
+		self:PerformEnvironmentCheckOnEnt( ent )
 	end
+	--local endtime = SysTime();
+	--Msg("Start: "..tostring(starttime).."\n")
+	--Msg("End: "..tostring(endtime).."\n")
+	--Msg("End Time: "..tostring(endtime-starttime).."\n");
 end
 
 function GM:GetSpace()
