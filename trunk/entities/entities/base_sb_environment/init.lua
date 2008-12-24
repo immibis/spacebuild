@@ -418,6 +418,10 @@ function ENT:Convert(air1, air2, value)
 	if air2 < -1 or air2 > 3 then return 0 end
 	if air1 == air2 then return 0 end
 	if value < 1 then return 0 end
+	if server_settings.Bool( "SB_StaticEnvironment" ) then
+		return value;
+		//Don't do anything else anymore
+	end
 	if air1 == -1 then
 		if self.sbenvironment.air.empty < value then
 			value = self.sbenvironment.air.empty

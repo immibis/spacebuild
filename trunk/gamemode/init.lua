@@ -30,6 +30,7 @@ CreateConVar( "SB_NoClip", "1" )
 CreateConVar( "SB_PlanetNoClipOnly", "1" )
 CreateConVar( "SB_AdminSpaceNoclip", "1" )
 CreateConVar( "SB_SuperAdminSpaceNoclip", "1" )
+CreateConVar( "SB_StaticEnvironment", "0" )
 
 //Think + Environments
 local Environments = {}
