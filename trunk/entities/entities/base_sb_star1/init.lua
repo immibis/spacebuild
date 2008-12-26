@@ -9,9 +9,9 @@ function ENT:Initialize()
 	self.Entity:SetSolid( SOLID_NONE )
 	self:SetNotSolid(true)
 	self:DrawShadow(false)
-	if CAF and CAF.GetAddon("Custom Damage System") then
-		self:SetReceiveDamage(false)
-		self:SetReceiveTemperatureDamage(false)
+	if CAF then
+		self.caf.custom.canreceivedamage = false
+		self.caf.custom.canreceiveheatdamage = false
 	end
 end
 

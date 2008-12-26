@@ -14,9 +14,9 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self.sbenvironment.color = {}
 	self.sbenvironment.bloom = {}
-	if CAF and CAF.GetAddon("Custom Damage System") then
-		self:SetReceiveDamage(false)
-		self:SetReceiveTemperatureDamage(false)
+	if CAF then
+		self.caf.custom.canreceivedamage = false
+		self.caf.custom.canreceiveheatdamage = false
 	end
 end
 
