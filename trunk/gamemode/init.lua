@@ -31,6 +31,7 @@ CreateConVar( "SB_PlanetNoClipOnly", "1" )
 CreateConVar( "SB_AdminSpaceNoclip", "1" )
 CreateConVar( "SB_SuperAdminSpaceNoclip", "1" )
 CreateConVar( "SB_StaticEnvironment", "0" )
+local VolCheckIterations = CreateConVar( "SB_VolumeCheckIterations", "11",{ FCVAR_CHEAT, FCVAR_ARCHIVE } )
 
 //Think + Environments
 local Environments = {}
@@ -737,7 +738,7 @@ function GM:FindVolume(name, radius)
 		volumes[name] = {}
 		volumes[name].radius = radius
 		volumes[name].pos = Vector(0, 0 ,0 )
-		local tries = 11
+		local tries = VolCheckIterations:GetInt()
 		local found = 0
 		while ( ( found == 0 ) and ( tries > 0 ) ) do
 			tries = tries - 1
