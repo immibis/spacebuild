@@ -746,7 +746,8 @@ function GM:FindVolume(name, radius)
 			if (util.IsInWorld( pos ) == true) then
 				found = 1
 				for k, v in pairs(volumes) do
-					if v and v.pos and (v.pos == pos or v.pos:Distance(pos) < v.radius) then
+					--if v and v.pos and (v.pos == pos or v.pos:Distance(pos) < v.radius) then -- Hur hur. This is why i had planetary collisions.
+					if v and v.pos and (v.pos == pos or v.pos:Distance(pos) < v.radius+radius) then
 						found = 0
 					end
 				end
