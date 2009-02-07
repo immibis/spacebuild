@@ -383,6 +383,7 @@ function GM:Register_Environments()
 						local ColorID
 						local BloomID
 						local flags 
+						local disabled = 0
 						for key2, value2 in pairs(values) do
 							if (key2 == "Case02") then radius = tonumber(value2)
 							elseif (key2 == "Case03") then gravity = tonumber(value2)
@@ -397,22 +398,27 @@ function GM:Register_Environments()
 								if (string.len(value2) > 0) then
 									BloomID = value2
 								end
+							elseif (key2 == "Case15") then disabled = tonumber(value2)
 							elseif (key2 == "Case16") then flags = tonumber(value2) end
 						end
-						local planet = ents.Create( "base_sb_planet1" )
-						planet:SetModel("models/props_lab/huladoll.mdl")
-						planet:SetAngles( ent:GetAngles() )
-						planet:SetPos( ent:GetPos() )
-						planet:Spawn()
-						planet:CreateEnvironment(ent, radius, gravity, atmosphere, stemperature, ltemperature, flags)
-						if ColorID then
-							Planetscolor[ColorID] = planet
+						if disabled != 1 then
+							local planet = ents.Create( "base_sb_planet1" )
+							planet:SetModel("models/props_lab/huladoll.mdl")
+							planet:SetAngles( ent:GetAngles() )
+							planet:SetPos( ent:GetPos() )
+							planet:Spawn()
+							planet:CreateEnvironment(ent, radius, gravity, atmosphere, stemperature, ltemperature, flags)
+							if ColorID then
+								Planetscolor[ColorID] = planet
+							end
+							if BloomID then
+								Planetsbloom[BloomID] = planet
+							end
+							table.insert(Planets, planet)
+							Msg("Registered New Planet\n")
+						else
+							Msg("Didn't register SB2 planet\n")
 						end
-						if BloomID then
-							Planetsbloom[BloomID] = planet
-						end
-						table.insert(Planets, planet)
-						Msg("Registered New Planet\n")
 					end
 				elseif value == "planet2" then
 					SB_InSpace = 1
