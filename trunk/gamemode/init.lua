@@ -148,6 +148,10 @@ end
 
 local sb_spawned_entities = {}
 
+function RegisterSBEntity(ent)
+	OnEntitySpawn(ent)
+end
+
 local function OnEntitySpawn(ent)
 	Msg("Spawn: "..tostring(ent).."\n")
 	if not table.HasValue(sb_spawned_entities, ent) then
