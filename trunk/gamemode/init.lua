@@ -834,3 +834,21 @@ function GM:AddCustomVolume(name, pos, radius)
 	volumes[name].pos = pos
 	volumes[name].radius = radius
 end
+
+function GM:FindClosestPlanet(pos, starsto)
+	local closestplanet = nil
+	if(table.Count(Environments) > 0) then
+		for k, v in pairs(Environments) do
+			if v and ValidEntity(v) and ((v.IsPlanet and v.IsPlanet()) or (starsto and v.IsStar and v.IsStar())) then
+				if not closestplanet then
+					closestplanet = v
+				else
+					if (v:GetPos():Distance(pos) - v:GetSize() < closestplanet:GetPos():Distance(pos) - closestplanet:GetSize()) then
+						closestplanet = v
+					end
+				end
+			end
+		end
+	end
+	return closestplanet
+end
