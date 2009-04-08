@@ -729,7 +729,7 @@ end
 
 function GM:PlayerSay( ply, txt )
 	txt = self.BaseClass:PlayerSay( ply, txt )
-	if not ply:IsAdmin() then return end
+	if not ply:IsAdmin() then return tostring(txt) end
 	if (string.sub(txt, 1, 10 ) == "!freespace") then
 		self:RemoveSBProps()
 	elseif (string.sub(txt, 1, 10 ) == "!freeworld") then
