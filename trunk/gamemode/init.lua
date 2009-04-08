@@ -50,7 +50,7 @@ function GM:GetPlanets()
 end
 
 function GM:PhysgunPickup(ply , ent)
-	local notallowed =  { "base_sb_planet1", "base_sb_planet2", "base_sb_star1", "base_sb_star2", "nature_dev_tree", "sb_environment"}
+	local notallowed =  { "base_sb_planet1", "base_sb_planet2", "base_sb_star1", "base_sb_star2", "nature_dev_tree", "sb_environment", "base_cube_environment"}
 	if table.HasValue(notallowed, ent:GetClass()) then
 		return false
 	end
@@ -472,6 +472,65 @@ function GM:Register_Environments()
 						planet:Spawn()
 						if name == "" then
 							name = "Planet " .. tostring(planet:GetEnvironmentID())
+						end
+						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags, name)
+						if ColorID then
+							Planetscolor[ColorID] = planet
+						end
+						if BloomID then
+							Planetsbloom[BloomID] = planet
+						end
+						table.insert(Planets, planet)
+						Msg("Registered New Planet\n")
+					end
+				elseif value == "cube" then
+					SB_InSpace = 1
+					SetGlobalInt("InSpace", 1)
+					if table.Count(TrueSun) == 0 or not table.HasValue(TrueSun, ent:GetPos()) then
+						local radius
+						local gravity
+						local atmosphere
+						local pressure
+						local stemperature
+						local ltemperature
+						local o2
+						local co2
+						local n
+						local h
+						local ColorID
+						local BloomID
+						local flags
+						local name
+						for key2, value2 in pairs(values) do
+							if (key2 == "Case02") then radius = tonumber(value2)
+							elseif (key2 == "Case03") then gravity = tonumber(value2)
+							elseif (key2 == "Case04") then atmosphere = tonumber(value2)
+							elseif (key2 == "Case05") then pressure = tonumber(value2)
+							elseif (key2 == "Case06") then stemperature = tonumber(value2)
+							elseif (key2 == "Case07") then ltemperature = tonumber(value2)
+							elseif (key2 == "Case08") then flags = tonumber(value2)
+							elseif (key2 == "Case09") then o2 = tonumber(value2)
+							elseif (key2 == "Case10") then co2 = tonumber(value2)
+							elseif (key2 == "Case11") then n = tonumber(value2)
+							elseif (key2 == "Case12") then h = tonumber(value2)
+							elseif (key2 == "Case13") then name = tostring(value2)
+							elseif (key2 == "Case15") then
+								if (string.len(value2) > 0) then
+									ColorID = value2
+								end
+							elseif (key2 == "Case16") then
+								if (string.len(value2) > 0) then
+									BloomID = value2
+								end
+							end
+						end
+						local planet = ents.Create( "base_cube_environment" )
+						planet:SetModel("models/props_lab/huladoll.mdl")
+						planet:SetAngles( ent:GetAngles() )
+						planet:SetPos( ent:GetPos() )
+						planet:Spawn()
+						if name == "" then
+							name = "Cube Environment " .. tostring(planet:GetEnvironmentID())
 						end
 						planet:CreateEnvironment(ent, radius, gravity, atmosphere, pressure, stemperature, ltemperature,  o2, co2, n, h, flags, name)
 						if ColorID then
