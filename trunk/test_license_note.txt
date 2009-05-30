@@ -1,0 +1,9 @@
+/****************************************************
+*													*
+*			 	 	SpaceBuild3						*
+*	  Licensed under GNU General Public License		*
+*													*
+*	Author: SnakeSVx								*
+*	Version: 0.1 - SVN								*
+*													*
+*****************************************************/
