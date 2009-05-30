@@ -171,9 +171,9 @@ end
    Desc: Player pressed the noclip key, return true if
 		  the player is allowed to noclip, false to block
 ---------------------------------------------------------*/
-function GM:PlayerNoClip( pl, on )
+function GM:PlayerNoClip( ply, on )
 	// Don't allow if player is in vehicle
-	if ( pl:InVehicle() ) then return false end
+	if ( ply:InVehicle() ) then return false end
 	
 	// Always allow in single player
 	if ( SinglePlayer() ) then return true end
