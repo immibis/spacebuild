@@ -254,6 +254,99 @@ function ENT:PostEntityPaste( Player, Ent, CreatedEntities )
 	end
 end
 
+--NEW Functions 
+function ENT:RegisterNonStorageDevice()
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		RD.RegisterNonStorageDevice(self);
+	end
+end
+
+function ENT:AddResource(resource, maxamount, defaultvalue)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.AddResource(self, resource, maxamount, defaultvalue)
+	end
+end
+
+function ENT:ConsumeResource( resource, amount)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.ConsumeResource(self, resource, amount)
+	end
+end
+
+function ENT:SupplyResource(resource, amount)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.SupplyResource(self, resource, amount)
+	end
+end
+
+function ENT:Link(netid)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		RD.Link(self, netid)
+	end
+end
+
+function ENT:Unlink()
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		RD.Unlink(self)
+	end
+end
+
+function ENT:GetResourceAmount(resource)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.GetResourceAmount(self, resource);
+	end
+end
+
+function ENT:GetUnitCapacity(resource)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.GetUnitCapacity(self, resource)
+	end
+end
+
+function ENT:GetNetworkCapacity(resource)
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.GetNetworkCapacity(self, resource)
+	end
+end
+
+function ENT:GetEntityTable()
+	if self.caf.custom.rdentitydata then
+	
+	else
+		local RD = CAF.GetAddon("Resource Distribution");
+		return RD.GetEntityTable(self)
+	end
+end
+
+--END NEW Functions
+
 --RD stuff end
 
 function ENT:IsOnPlanet()
