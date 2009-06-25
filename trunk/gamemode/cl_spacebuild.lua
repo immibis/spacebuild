@@ -169,7 +169,7 @@ function GM:Think()
 	warn_am = warn_am + 1;
 	if warn_am > 60 then --30 s
 		warn_am = 0;
-		LocalPlayer():ChatPrint("\nWARNING:\n\nSpacebuild will be converted to an Addon soon.\nThe earliest release date for this update is 27/06/2009 19:00 GMT+1\nIf you don't wan't to have that don't update any of the addons using SB (LS, LS:Entities,...) of the SB after this time!\nThe Spacebuild SVN will be replaced with a Dummy Gamemode, so people can still see it's a SB3 server, BUT the addon will be required for SB to keep working!\n\n");
+		LocalPlayer():ChatPrint("\nWARNING:\n\nSpacebuild will be converted to an Addon soon.\nThe earliest release date for this update is 27/06/2009 19:00 GMT+1\nIf you don't wan't to have that don't update any of the addons using SB (LS, LS:Entities,...) or the SB gamemode after this time!\nThe Spacebuild SVN will be replaced with a Dummy Gamemode, so people can still see it's a SB3 server, BUT the addon will be required for SB to keep working!\n\n");
 	end
 	timer = CurTime() + 0.5
 end
