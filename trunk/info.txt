@@ -1,7 +1,7 @@
 "Gamemode"
 {
-	"name"		"Spacebuild 3: The New Age (Beta)"
-	"version"	"0.8"
+	"name"		"Spacebuild 3: The New Age (Dummy)"
+	"version"	"3.1"
 
 	"author_name"	"Spacebuild Dev Team"
 	"author_email"	""
