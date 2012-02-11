@@ -500,7 +500,7 @@ AddNetworkFunctions( "String", 	"String", 	"ReadString", 	"" )
 
 //	SetOOO (3 cap o's)
 // sets off/on/overdrive
-meta[ "SetOOO" ] = function ( self, value )
+meta[ "SetOOO" ] = meta.SetOOO or function ( self, value )
 	if ( value == GetNetworkTable( self, "OOO" )[1] ) then return end
 	
 	GetNetworkTable( self, "OOO" )[1] = value
@@ -512,7 +512,7 @@ meta[ "SetOOO" ] = function ( self, value )
 	
 end
 
-meta[ "GetOOO" ] = function ( self, default )
+meta[ "GetOOO" ] = meta.GetOOO or function ( self, default )
 	local out = GetNetworkTable( self, "OOO" )[ 1 ]
 	if ( out != nil ) then return out end
 	return default or {}
