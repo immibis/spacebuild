@@ -11,8 +11,8 @@ end
 local VT = {
 ---------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------
-	{	name = "Captain's Chair"					,
-		info = "Captain's Chair"					, 
+	{	name = "Captain Chair"					,
+		info = "Captain Chair"					, 
 		model = "models/Spacebuild/chair.mdl"		,
 		HA = SitAnim, ID = "sbep_chair"				} ,
 ---------------------------------------------------------------------------------------------------------------------
@@ -93,10 +93,10 @@ local VT = {
 		model = "models/SmallBridge/Vehicles/SBVdroppod1.mdl", 
 		HA = SitAnim, ID = "sbep_SB_pod"			} ,
 ---------------------------------------------------------------------------------------------------------------------
-	/*{	name = "SmallBridge Assault Pod"			,
+	{	name = "SmallBridge Assault Pod"			,
 		info = "SmallBridge Assault Pod"			, 
 		model = "models/SmallBridge/Vehicles/SBVassaultpod.mdl", 
-		HA = nil	, ID = "sbep_SB_Apod"			} ,*/
+		HA = nil	, ID = "sbep_SB_Apod"			} ,
 ---------------------------------------------------------------------------------------------------------------------
 	{	name = "Ball Pod"							,
 		info = "Ball Shaped Pod"					, 
@@ -183,7 +183,17 @@ local VT = {
 	{	name = "Wraith"								,
 		info = "Wraith Assault Bomber"				, 
 		model = "models/Cerus/Fighters/Wraith.mdl"	, 
-		HA = SitAnim, ID = "sbep_WraithBomber"		}
+		HA = SitAnim, ID = "sbep_WraithBomber"		},
+---------------------------------------------------------------------------------------------------------------------
+	{	name = "VF-1a Fighter"							,
+		info = "VF-1a Valkyrie, Fighter Mode"			, 
+		model = "models/SBEP_community/errject_vf1afighter.mdl"	, 
+		HA = SitAnim, ID = "sbep_vf1aFighter"		},
+---------------------------------------------------------------------------------------------------------------------
+	{	name = "VF-1a Super Fighter"							,
+		info = "VF-1a Valkyrie, Fighter Mode with Super Pack"			, 
+		model = "models/SBEP_community/errject_vf1asuperfighter.mdl"	, 
+		HA = SitAnim, ID = "sbep_vf1aSuperFighter"		}
 ---------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------
 			}

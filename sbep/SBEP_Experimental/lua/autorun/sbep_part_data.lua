@@ -706,7 +706,7 @@ local SMB_PAD = {
 	[ "models/smallbridge/station parts/sbbridgevisorm.mdl"		] = { { type = "ESML" , pos = Vector(    0   ,   0  , 65.1) , dir = Angle(-90,  0,  0) } ,
 																	  { type = "ESML" , pos = Vector(    0   ,   0  ,-65.1) , dir = Angle( 90,  0,  0) } } ,
 	[ "models/smallbridge/station parts/sbbridgevisort.mdl"		] = { { type = "ESML" , pos = Vector(    0   ,   0  ,-65.1) , dir = Angle( 90,  0,  0) } } ,
-	[ "models/smallbridge/station parts/sbdockcs.mdl"			] = { { type = "SWSH" , pos = Vector(  223.2 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } } ,
+	[ "models/smallbridge/station parts/sbdockcs.mdl"			] = { { type = "SWSH" , pos = Vector(  223.2 ,   0  ,  -9.3  ) , dir = Angle(  0,  0,  0) } } ,
 	[ "models/smallbridge/station parts/sbhangarld.mdl"			] = { { type = "SWSH" , pos = Vector(  223.2 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } ,
 																	  { type = "SWSH" , pos = Vector( -223.2 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
 																	  { type = "DWDH" , pos = Vector(  223.2 , 334.8, 65.1) , dir = Angle(  0,  0,  0) } ,
