@@ -15,5 +15,5 @@ ENT.CDown1			= 0
 ENT.CDown2			= true
 ENT.CDown2			= 0
 ENT.HPType			= "Small"
-ENT.APPos			= Vector(-40,0,15)
-ENT.APAng			= Angle(0,0,-90)
+ENT.APPos			= Vector(0,0,15)
+ENT.APAng			= Angle(0,0,0)
