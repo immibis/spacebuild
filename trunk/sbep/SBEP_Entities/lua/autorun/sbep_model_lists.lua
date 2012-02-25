@@ -22,7 +22,9 @@ local DTT = {}
 			"models/smallbridge/ship parts/sbhulldseb.mdl"			,
 			"models/smallbridge/ship parts/sbhulldst.mdl"			,
 			"models/smallbridge/ship parts/sbhulldsdwe.mdl"			,
-			"models/slyfo/slypaneldoor1.mdl"						
+			"models/slyfo/slypaneldoor1.mdl"				,		
+			"models/slyfo/doublehatch.mdl"					,
+			"models/sbep_community/d12MBSFrame.mdl"	
 								}
 		
 		DTT.SmallBridge["Hatches (Base)"] = {
@@ -118,7 +120,9 @@ local DCT = {}
 	DCT[ "models/smallbridge/ship parts/sbhulldsdwe.mdl"		] = { { type = "Door_Hull"  	, V = Vector(0,111.6 ,0) 						} ,
 																	  { type = "Door_Hull"  	, V = Vector(0,-111.6,0) , A = Angle(  0,180,  0)	} }
 	DCT[ "models/slyfo/slypaneldoor1.mdl"						] = { { type = "Door_Sly1"  	} }
-	
+	DCT[ "models/slyfo/doublehatch.mdl"						] = { { type = "Door_SlyDHatch"  	} }
+	DCT[ "models/SBEP_community/d12MBSFrame.mdl"					] = { { type = "Door_d12MBSFrame"  	} }	
+
 	DCT[ "models/cerus/modbridge/misc/doors/door11a.mdl"			] = { { type = "Door_ModBridge_11a" } }
 	DCT[ "models/cerus/modbridge/misc/doors/door11b.mdl"			] = { { type = "Door_ModBridge_11b" } }
 	DCT[ "models/cerus/modbridge/misc/doors/door12b.mdl"			] = { { type = "Door_ModBridge_12b" } }
