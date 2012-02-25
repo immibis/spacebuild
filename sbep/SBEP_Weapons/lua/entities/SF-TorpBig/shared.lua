@@ -9,7 +9,7 @@ ENT.AdminSpawnable	= true
 ENT.Armed			= false
 ENT.Exploded		= false
 ENT.HPType			= "Large"
-ENT.APPos			= Vector(0,100,-20)
+ENT.APPos			= Vector(0,0,0)
 ENT.APAng			= Angle(0,0,180)
 ENT.BigTorp			= true
 

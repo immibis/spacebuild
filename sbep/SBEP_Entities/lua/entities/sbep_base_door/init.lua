@@ -52,6 +52,20 @@ DTT[ "Door_AnimL"	]	= { { model = "models/SmallBridge/SEnts/SBADoorLa.mdl" ,	UD 
 DTT[ "Door_Sly1"	]	= { { model = "models/Slyfo/SLYAdoor1.mdl" ,	UD = 2 , OD = 0.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } } }
+
+DTT[ "Door_SlyDHatch"	]	= { { model = "models/Slyfo/DoublehatchDoor.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
+		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
+				{ model = "models/Slyfo/DoublehatchDoor2.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
+		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
+				{ model = "models/Slyfo/DoublehatchDoor3.mdl" 	,	UD = 2 , OD = 2   , CD = 1 	, 
+		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
+
+DTT[ "Door_d12MBSFrame"	]	= { { model = "models/Slyfo/d12MBDoorN.mdl" ,	UD = 4 , OD = 2 , CD = 3 	,
+		OS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } } }
 		
 DTT[ "Door_DBS"		]	= { { model = "models/SmallBridge/SEnts/SBADoorDBs.mdl" ,	UD = 5 , OD = 4   , CD = 1.5	,
 		OS = { [0] = "Doors.Move14" , [1.30] = "Doors.FullOpen8" , [2.60] = "Doors.FullOpen8" , [3.90] = "Doors.FullOpen9" , [4.90] = "Doors.FullOpen8" } ,
