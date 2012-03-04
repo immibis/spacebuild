@@ -143,7 +143,7 @@ function EFFECT:Render()
 		Ang2:RotateAroundAxis(Ang2:Right(),-90)
 		self.Entity:SetAngles( Ang2 )
 		
-		self.Entity:SetModel("models/Effects/intro_vortshield.mdl")
+		self.Entity:SetModel("models/Effects/combineball.mdl")
 		self.Entity:SetModelScale(Vector(Sz,Sz,Sz))
 		self:SetColor(255, 255, 255, 150)
 		self.Entity:DrawModel()
