@@ -46,7 +46,7 @@ function TOOL:LeftClick( trace )
 	if (trace.Entity:IsPlayer()) then return false end
 	if ( CLIENT ) then return true end
 	local ply = self:GetOwner()
-	if ( trace.Entity:IsValid() && trace.Entity:GetClass() == "gyropod_advanced" && trace.Entity:GetTable().pl == ply ) then
+	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == "gyropod_advanced" and trace.Entity:GetTable().pl == ply ) then
 		return true
 	end
 	if ( !self:GetSWEP():CheckLimit( "gyropod_advanceds" ) ) then return false end

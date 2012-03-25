@@ -15,7 +15,7 @@ function ENT:Initialize()
 	self.Entity:SetModel( "models/dav0r/hoverball.mdl" )
     self.Entity:DrawShadow(false)
 	
-	// Don't use the model's physics object, create a perfect sphere
+	-- Don't use the model's physics object, create a perfect sphere
 	
 	self.Entity:PhysicsInitSphere( 8, "metal_bouncy" )
 	
@@ -27,7 +27,7 @@ function ENT:Initialize()
 		phys:Wake() 
 	end
 	
-	// Start the motion controller (so PhysicsSimulate gets called)
+	-- Start the motion controller (so PhysicsSimulate gets called)
 	self.Entity:StartMotionController()
 	
 	self.maxhealth = 750
@@ -53,7 +53,7 @@ function ENT:TriggerInput(iname, value)
 	if (iname == "ZVelocity") then
 		self:SetZVelocity( value )
 	elseif (iname == "HoverMode") then
-		if (value >= 1 && !self:GetHoverMode()) then
+		if (value >= 1 and !self:GetHoverMode()) then
 			self:EnableHover()
 		elseif (self:GetHoverMode()) then
 			self:DisableHover()
@@ -81,8 +81,8 @@ end
 
 function ENT:EnableHover()
 	self:SetHoverMode( true )
-	self:SetStrength( self.strength ) //reset weight so it will work
-	self:SetTargetZ ( self.Entity:GetPos().z ) //set height to current
+	self:SetStrength( self.strength ) --reset weight so it will work
+	self:SetTargetZ ( self.Entity:GetPos().z ) --set height to current
 	local phys = self.Entity:GetPhysicsObject()
 	if ( phys:IsValid() ) then
 		phys:EnableGravity( false )
@@ -93,10 +93,10 @@ end
 
 function ENT:DisableHover()
 	self:SetHoverMode( false )
-	self:SetStrength(0.1) //for less dead weight while off
+	self:SetStrength(0.1) --for less dead weight while off
 	local phys = self.Entity:GetPhysicsObject()
 	if ( phys:IsValid() ) then
-		phys:EnableGravity( true ) //falls slowly otherwise
+		phys:EnableGravity( true ) --falls slowly otherwise
 	end
 	self:SetOOO(0)
 end
@@ -112,7 +112,7 @@ end
    Name: OnTakeDamage
 ---------------------------------------------------------*/
 function ENT:OnTakeDamage( dmginfo )
-	//self.Entity:TakePhysicsDamage( dmginfo )
+	--self.Entity:TakePhysicsDamage( dmginfo )
 end
 
 function ENT:Damage()
@@ -136,7 +136,7 @@ function ENT:Think()
     
     self.nitrouscon = math.abs(math.floor( self.speed + self.strength + (self.ZVelocity/5) ))
     
-    if (self:CanRun() && self:GetHoverMode() ) then
+    if (self:CanRun() and self:GetHoverMode() ) then
         RD_ConsumeResource(self.Entity, "nitrous", self.nitrouscon)
     else
         self:DisableHover()
@@ -170,7 +170,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	
 	if (self:GetHoverMode()) then
 		
-		if ( self.ZVelocity != 0 ) then
+		if ( self.ZVelocity ~= 0 ) then
 			
 			self:SetTargetZ( self:GetTargetZ() + (self.ZVelocity * deltatime * self:GetSpeed()) )
 			self.Entity:GetPhysicsObject():Wake()
@@ -198,9 +198,9 @@ function ENT:PhysicsSimulate( phys, deltatime )
 		local zVel = physVel.z
 		
 		Exponent = Exponent - (zVel * deltatime * 600 * ( AirResistance + 1 ) )
-		// The higher you make this 300 the less it will flop about
-		// I'm thinking it should actually be relative to any objects we're connected to
-		// Since it seems to flop more and more the heavier the object
+		-- The higher you make this 300 the less it will flop about
+		-- I'm thinking it should actually be relative to any objects we're connected to
+		-- Since it seems to flop more and more the heavier the object
 		
 		Exponent = math.Clamp( Exponent, -5000, 5000 )
 		
@@ -225,7 +225,7 @@ end
 
 function ENT:SetZVelocity( z )
 
-	if ( z != 0 ) then
+	if ( z ~= 0 ) then
 		self.Entity:GetPhysicsObject():Wake()
 	end
 

@@ -6,15 +6,15 @@ function RTSSendOrder(player,commandName,args)
 --	player.RTSUnitsSelected = player.RTSUnitsSelected or {}
 --	for _,i in ipairs(player.RTSUnitsSelected) do
 --		if i:IsNPC() then
---		if i && i:IsValid() then
+--		if i and i:IsValid() then
 --			i:SetLastPosition( Vector(args[1], args[2], args[3]) ) 
---			i:SetSchedule( 71 ) // run move
+--			i:SetSchedule( 71 ) -- run move
 --			--print("Running")
 	--	end
 --		end
 --	end
 	local Unit = ents.GetByIndex(args[1])
-	if Unit && Unit:IsValid() then
+	if Unit and Unit:IsValid() then
 		if tonumber(args[5]) == 1 then
 			Unit.MVec = Vector(args[2],args[3],args[4])
 			if tonumber(args[9]) == 1 then
@@ -34,7 +34,7 @@ concommand.Add("IssueRTSOrder",RTSSendOrder)
 
 function RTSSetStance(player,commandName,args)
 	local Unit = ents.GetByIndex(tonumber(args[1]))
-	if Unit && Unit:IsValid() then
+	if Unit and Unit:IsValid() then
 		Unit.Stance = tonumber(args[2])
 	end
 	 
@@ -59,7 +59,7 @@ function SBEPRTS_S()
 	
 	for _,i in ipairs(plys) do
 		if i:KeyDown( IN_SPEED ) then
-			if i.SBEPYaw == 0 && i.SBEPPitch == 0 then
+			if i.SBEPYaw == 0 and i.SBEPPitch == 0 then
 				local L = LerpAngle( 0.1, i:EyeAngles(), Angle( 0, 0, 0 ) )
 				--i:SetEyeAngles( L )
 			end

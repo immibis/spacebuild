@@ -83,12 +83,12 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if !self.Base || !self.Base:IsValid() then
+	if !self.Base or !self.Base:IsValid() then
 		self.Entity:Remove()
 		return
 	end
 	
-	if self.CPL && self.CPL:IsValid() && ( self.CPL:KeyDown( IN_USE ) || self.CPL:KeyDown( IN_ATTACK ) ) && self.CPL:GetShootPos():Distance(self.Entity:GetPos()) < 200 then
+	if self.CPL and self.CPL:IsValid() and ( self.CPL:KeyDown( IN_USE ) or self.CPL:KeyDown( IN_ATTACK ) ) and self.CPL:GetShootPos():Distance(self.Entity:GetPos()) < 200 then
 		local Dist = self.CPL:GetShootPos():Distance( self.Base:GetPos() )
 		local TargPos = self.CPL:GetShootPos() + self.CPL:GetAimVector() * Dist
 		local FDist = TargPos:Distance( self.Base:GetPos() + self.Base:GetForward() * 30 )
@@ -140,7 +140,7 @@ function ENT:Use( ply, caller )
 end
 
 function ENT:Touch( ent )
-	if ent && ent:IsValid() && ent:IsVehicle() then
+	if ent and ent:IsValid() and ent:IsVehicle() then
 		self.CPod = ent
 	end
 end

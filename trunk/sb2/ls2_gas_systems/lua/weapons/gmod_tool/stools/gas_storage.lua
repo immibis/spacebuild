@@ -71,7 +71,7 @@ end
 
 local gas_stor_models = {
 		{ "Huge Natural Gas Tank", "models/props_wasteland/coolingtank02.mdl", "gas_hstore" },
-		{ "Large Natural Gas Tank", "models//props_wasteland/laundry_washer001a.mdl", "gas_lstore" },
+		{ "Large Natural Gas Tank", "models/props_wasteland/laundry_washer001a.mdl", "gas_lstore" },
 		{ "Small Natural Gas Tank", "models/props_c17/oildrum001.mdl", "gas_sstore" },
 		{ "Huge Processed Gas Tank", "models/props_buildings/watertower_001c.mdl", "gas_phstore" },
         { "Large Processed Gas Tank", "models/props_wasteland/horizontalcoolingtank04.mdl", "gas_plstore" },

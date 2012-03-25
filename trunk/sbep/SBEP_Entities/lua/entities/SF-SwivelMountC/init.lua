@@ -112,7 +112,7 @@ end
 function ENT:Think()
 	local Weap = self.HP[1]["Ent"]
 	
-	if Weap && Weap:IsValid() then
+	if Weap and Weap:IsValid() then
 	
 		if !Weap.Swivved then
 			local LPos = Vector(0,0,0)
@@ -127,9 +127,9 @@ function ENT:Think()
 		end
 		
 		local TargPos = nil
-		if self.CPod && self.CPod:IsValid() then
+		if self.CPod and self.CPod:IsValid() then
 			self.CPL = self.CPod:GetPassenger()
-			if (self.CPL && self.CPL:IsValid()) then
+			if (self.CPL and self.CPL:IsValid()) then
 							
 				if (self.CPL:KeyDown( IN_ATTACK ) and not self.Mounted) then
 					self.HP[1]["Ent"].Entity:HPFire()
@@ -185,11 +185,11 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent && ent:IsValid() && ent:IsVehicle() then
+	if ent and ent:IsValid() and ent:IsVehicle() then
 		self.CPod = ent
 	end
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink(ent.Cont, ent, self.Entity)
 			self.Entity:SetParent()
 			self.Entity:GetPhysicsObject():EnableCollisions(true)

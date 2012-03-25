@@ -1,13 +1,13 @@
 AddCSLuaFile( "autorun/RDBeam_NetVars.lua" )
 
---[[//////////////////////////////////////////////////
-//	===BeamVars===										//
-//	==Client Side Beams Library==						//
-//	Custom Networked Vars and Beams Module				//
-//	Designed for use with								//
-//	Resource Distribution and Wire mod					//
-//	By: TAD2020											//
-////////////////////////////////////////////////////]]
+--[[--------------------------------------------------
+--	===BeamVars===										--
+--	==Client Side Beams Library==						--
+--	Custom Networked Vars and Beams Module				--
+--	Designed for use with								--
+--	Resource Distribution and Wire mod					--
+--	By: TAD2020											--
+----------------------------------------------------]]
 
 --[[
 NOTES:
@@ -18,7 +18,7 @@ NOTES:
 		-TAD2020
 ]]
 
-//RD header for multi distro-ablity
+--RD header for multi distro-ablity
 local ThisBeamVarsVersion = 1.1
 local ThisBeamNetVarsVersion = 0.82 --to make existing standalone versions not load
 local ThisRDBeamLibVersion = 0.72 --to make existing standalone versions not load
@@ -26,23 +26,23 @@ local ThisRDBeamLibVersion = 0.72 --to make existing standalone versions not loa
 
 if (BeamVars and BeamVars.Version and BeamVars.Version > ThisBeamVarsVersion) then
 		Msg("======== A Newer Version of BeamVars Detected ========\n"..
-			"======== This ver: "..ThisBeamVarsVersion.." || Detected ver: "..BeamVars.Version.." || Skipped Loading\n")
+			"======== This ver: "..ThisBeamVarsVersion.." or  Detected ver: "..BeamVars.Version.." or  Skipped Loading\n")
 	return
 elseif (BeamVars and BeamVars.Version and BeamVars.Version == ThisBeamVarsVersion) then
-		Msg("======== The Same Version of BeamVars Detected || Skipped Loading ========\n")
+		Msg("======== The Same Version of BeamVars Detected or  Skipped Loading ========\n")
 		return
 elseif (BeamVars and BeamVars.Version) then
 	Msg("======== Am Older Version of BeamVars Detected ========\n")
 end
 
 
-// Stuff for BeamNetVars
+-- Stuff for BeamNetVars
 BeamNetVars = {}
 BeamNetVars.Version = ThisBeamNetVarsVersion
-//	settings
+--	settings
 local FLOATACCURACY = 1000 --sets accuracy of floats sent for use at text to 1/1000
 local SHORTADJUST = 32769 --for making the umsg.shorts 1 to 65536
-//	internal stuff
+--	internal stuff
 local Vector_Default 	= Vector(0,0,0)
 local Angle_Default		= Angle(0,0,0)
 local NetworkVars 			= {}
@@ -53,26 +53,26 @@ local ExtraDelayedUpdates = {}
 local NextCleanup = CurTime()
 
 
-//	Stuff for RDbeamlib
+--	Stuff for RDbeamlib
 RDbeamlib = {}
 RDbeamlib.Version = ThisRDBeamLibVersion
-//	All beam data is stored here
-//Format is BeamData[ source_ent ][ dest_ent ]
+--	All beam data is stored here
+--Format is BeamData[ source_ent ][ dest_ent ]
 local BeamData = {}
-//Format is WireBeams[ wire_dev ].Inputs[ iname ].Nodes[ node_num ]
+--Format is WireBeams[ wire_dev ].Inputs[ iname ].Nodes[ node_num ]
 local WireBeams = {}
 
 
 
 if (SERVER) then
-	//we want this
-	//sv_usermessage_maxsize = 1024
+	--we want this
+	--sv_usermessage_maxsize = 1024
 	game.ConsoleCommand( "sv_usermessage_maxsize 1024\n" )
 end
 
 
 local meta = FindMetaTable( "Entity" )
-// Return if there's nothing to add on to
+-- Return if there's nothing to add on to
 if (!meta) then return end
 
 
@@ -80,7 +80,7 @@ if (!meta) then return end
 
 local function AttemptToSwitchTables( Ent, EntIndex )
 	if ( NetworkVars[ EntIndex ] == nil ) then return end
-	// We have an old entindex based entry! Move it over!
+	-- We have an old entindex based entry! Move it over!
 	NetworkVars[ Ent ] = NetworkVars[ EntIndex ]
 	NetworkVars[ EntIndex ] = nil
 end
@@ -95,7 +95,7 @@ local function GetNetworkTable( ent, name )
 		if ( NextCleanup < CurTime() ) then
 			NextCleanup	= CurTime() + 30
 			for k, v in pairs( NetworkVars ) do
-				if ( type( k ) != "number" && type( k ) != "string" ) then
+				if ( type( k ) ~= "number" and type( k ) ~= "string" ) then
 					if ( !k:IsValid() ) then
 						NetworkVars[ k ] = nil
 					end
@@ -105,9 +105,9 @@ local function GetNetworkTable( ent, name )
 	end
 	if ( !NetworkVars[ ent ] ) then
 		NetworkVars[ ent ] = {}
-		// This is the first time this entity has been created. 
-		// Check whether we previously had an entindex based table
-		if ( CLIENT && type( ent ) != "number" && type( ent ) != "string" ) then
+		-- This is the first time this entity has been created.
+		-- Check whether we previously had an entindex based table
+		if ( CLIENT and type( ent ) ~= "number" and type( ent ) ~= "string" ) then
 			AttemptToSwitchTables( ent, ent:EntIndex() )
 		end
 	end
@@ -118,9 +118,9 @@ end
 
 
 
-//
-//	checks if the source_ent and dest_ent are valid and will clear data as needed
-//
+--
+--	checks if the source_ent and dest_ent are valid and will clear data as needed
+--
 local function SourceAndDestEntValid( source_ent, dest_ent )
 	if (BeamData[ dest_ent ]) and (BeamData[ dest_ent ][ source_ent ]) then
 		RDbeamlib.ClearBeam( dest_ent, source_ent )
@@ -140,13 +140,13 @@ end
 
 
 local function SendNetworkUpdate( VarType, Index, Key, Value, Player )
-	if(Player and not (Player:IsValid() and Player:IsPlayer())) then return end // Be sure, Player is not a NULL-Entity, or the server will crash!
+	if(Player and not (Player:IsValid() and Player:IsPlayer())) then return end -- Be sure, Player is not a NULL-Entity, or the server will crash!
 	
 	if (!VarType or !Index or !Key or !Value) then return end
 	
-	//
-	//Beams
-	//
+	--
+	--Beams
+	--
 	if (VarType == "simple") then
 		if (!SourceAndDestEntValid( Key.source_ent, Key.dest_ent )) then return end
 		
@@ -184,7 +184,7 @@ local function SendNetworkUpdate( VarType, Index, Key, Value, Player )
 		umsg.End()
 		
 	elseif (VarType == "wirestart") then
-		//if (!info.wire_dev) or (!info.wire_dev:IsValid()) then return end
+		--if (!info.wire_dev) or (!info.wire_dev:IsValid()) then return end
 		
 		umsg.Start( "RcvRDWireBeamStart", Player )
 			--umsg.Entity(	Key.wire_dev )
@@ -230,9 +230,9 @@ local function SendNetworkUpdate( VarType, Index, Key, Value, Player )
 			umsg.Short( Key.wire_dev:EntIndex() )
 		umsg.End()
 	
-	//
-	//RD2
-	//
+	--
+	--RD2
+	--
 	elseif ( VarType == "OOO" ) then
 		umsg.Start( "RcvEntityVarBeam_OOO", Player )
 			umsg.Short( Index )
@@ -261,24 +261,24 @@ local function SendNetworkUpdate( VarType, Index, Key, Value, Player )
 			umsg.Short( Value )
 		umsg.End()
 	
-	//
-	//SB2
-	//
+	--
+	--SB2
+	--
 	elseif (VarType == "StarInfo") then
 		
 		umsg.Start( "AddStar", Player )
-			umsg.Short( Index ) //star.num
-			umsg.Vector( Value.pos ) //star.pos
-			umsg.Float( Value.radius ) //star.radius
+			umsg.Short( Index ) --star.num
+			umsg.Vector( Value.pos ) --star.pos
+			umsg.Float( Value.radius ) --star.radius
 		umsg.End()
 		
 	elseif (VarType == "PlanetInfo") then
 		
-		// add to the planet list on the client.
+		-- add to the planet list on the client.
 		umsg.Start( "AddPlanet", Player )
 			umsg.Vector( Value.pos )
 			umsg.Float( Value.radius )
-			umsg.Short( Key ) //planet.num
+			umsg.Short( Key ) --planet.num
 			if Value.Color == nil then
 				umsg.Bool (false)
 			else
@@ -309,9 +309,9 @@ local function SendNetworkUpdate( VarType, Index, Key, Value, Player )
 			end
 		umsg.End()
 	
-	//
-	//BeamNetVars
-	//
+	--
+	--BeamNetVars
+	--
 	else
 		umsg.Start( "RcvEntityVarBeam_"..VarType, Player )
 			umsg.Short( Index )
@@ -353,25 +353,25 @@ end
 
 
 
-//
-// make all the ent.Get/SetNetworkedBeamVarCrap
-//
+--
+-- make all the ent.Get/SetNetworkedBeamVarCrap
+--
 local function AddNetworkFunctions( name, SetFunction, GetFunction, Default )
 
 	NetworkFunction[ name ] = {}
 	NetworkFunction[ name ].SetFunction = SetFunction
 	NetworkFunction[ name ].GetFunction = GetFunction
 	
-	// SetNetworkedBlah
+	-- SetNetworkedBlah
 	meta[ "SetNetworkedBeam" .. name ] = function ( self, key, value, urgent )
 		
 		key = tostring(key)
 		
-		// The same - don't waste our time.
+		-- The same - don't waste our time.
 		if ( value == GetNetworkTable( self, name )[ key ] ) then return end
 		
-		// Clients can set this too, but they should only really be setting it
-		// when they expect the exact same result coming over the wire (ie prediction)
+		-- Clients can set this too, but they should only really be setting it
+		-- when they expect the exact same result coming over the wire (ie prediction)
 		GetNetworkTable( self, name )[key] = value
 			
 		if ( SERVER ) then
@@ -391,15 +391,15 @@ local function AddNetworkFunctions( name, SetFunction, GetFunction, Default )
 	
 	meta[ "SetNWB" .. name ] = meta[ "SetNetworkedBeam" .. name ]
 	
-	// GetNetworkedBlah
+	-- GetNetworkedBlah
 	meta[ "GetNetworkedBeam" .. name ] = function ( self, key, default )
 	
 		key = tostring(key)
 		
 		local out = GetNetworkTable( self, name )[ key ]
-		if ( out != nil ) then return out end
+		if ( out ~= nil ) then return out end
 		if ( default == nil ) then return Default end
-		//default = default or Default
+		--default = default or Default
 
 		return default
 		
@@ -408,7 +408,7 @@ local function AddNetworkFunctions( name, SetFunction, GetFunction, Default )
 	meta[ "GetNWB" .. name ] = meta[ "GetNetworkedBeam" .. name ]
 	
 	
-	// SetGlobalBlah
+	-- SetGlobalBlah
 	_G[ "SetGlobalBeam"..name ] = function ( key, value, urgent ) 
 
 		key = tostring(key)
@@ -427,38 +427,38 @@ local function AddNetworkFunctions( name, SetFunction, GetFunction, Default )
 	end
 	
 	
-	// GetGlobalBlah
+	-- GetGlobalBlah
 	_G[ "GetGlobalBeam"..name ] = function ( key ) 
 
 		key = tostring(key)
 	
 		local out = GetNetworkTable( "G", name )[key]
-		if ( out != nil ) then return out end
+		if ( out ~= nil ) then return out end
 		
 		return Default
 		
 	end
 	
-	// GetGlobalBlah
+	-- GetGlobalBlah
 	_G[ "GetGlobalBeam"..name ] = function ( key ) 
 
 		key = tostring(key)
 	
 		local out = GetNetworkTable( "G", name )[key]
-		if ( out != nil ) then return out end
+		if ( out ~= nil ) then return out end
 		
 		return Default
 		
 	end
 	
 	if ( SERVER ) then
-		// Pool the name of the function. 
-		// Makes it send a number representing the string rather than the string itself.
-		// Only do this with strings that you send quite a bit and always stay the same.
+		-- Pool the name of the function.
+		-- Makes it send a number representing the string rather than the string itself.
+		-- Only do this with strings that you send quite a bit and always stay the same.
 		umsg.PoolString( "RcvEntityBeamVar_"..name )
 	end
 	
-	// Client Receive Function
+	-- Client Receive Function
 	if ( CLIENT ) then
 		
 		local function RecvFunc( m )
@@ -471,12 +471,12 @@ local function AddNetworkFunctions( name, SetFunction, GetFunction, Default )
 				IndexKey = "G"
 			else
 				IndexKey = Entity( EntIndex )
-				// No entity yet - store using entindex
+				-- No entity yet - store using entindex
 				if ( IndexKey == NULL ) then IndexKey = EntIndex end
 			end
 			GetNetworkTable( IndexKey, name )[Key] = Value
 			
-			if (type(IndexKey) != "number") and (IndexKey.RecvBeamNetVar) and (IndexKey:IsValid()) then
+			if (type(IndexKey) ~= "number") and (IndexKey.RecvBeamNetVar) and (IndexKey:IsValid()) then
 				IndexKey:RecvBeamNetVar( name, Key, Value )
 			end
 			
@@ -498,8 +498,8 @@ AddNetworkFunctions( "String", 	"String", 	"ReadString", 	"" )
 
 --stuff will be changed and moved later from here down
 
-//	SetOOO (3 cap o's)
-// sets off/on/overdrive
+--	SetOOO (3 cap o's)
+-- sets off/on/overdrive
 meta[ "SetOOO" ] = meta.SetOOO or function ( self, value )
 	if ( value == GetNetworkTable( self, "OOO" )[1] ) then return end
 	
@@ -514,7 +514,7 @@ end
 
 meta[ "GetOOO" ] = meta.GetOOO or function ( self, default )
 	local out = GetNetworkTable( self, "OOO" )[ 1 ]
-	if ( out != nil ) then return out end
+	if ( out ~= nil ) then return out end
 	return default or {}
 end
 
@@ -528,7 +528,7 @@ local function RecvFunc( m )
 	
 	GetNetworkTable( IndexKey, "OOO" )[1] = Value
 	
-	if (type(IndexKey) != "number") and (IndexKey.RecvOOO) and (IndexKey:IsValid()) then
+	if (type(IndexKey) ~= "number") and (IndexKey.RecvOOO) and (IndexKey:IsValid()) then
 		IndexKey:RecvOOO(Value)
 	end
 	
@@ -537,9 +537,9 @@ usermessage.Hook( "RcvEntityVarBeam_OOO", RecvFunc )
 end
 
 
-//
-// SetNetworked NetInfo
-//
+--
+-- SetNetworked NetInfo
+--
 if (SERVER) then
 function BeamNetVars.SetNetAmount( net, value, priority )
 	value = math.floor( value )
@@ -555,18 +555,18 @@ function BeamNetVars.SetNetAmount( net, value, priority )
 		AddDelayedNetworkUpdate( "NetInfo", -2, net, value )
 	end
 end
-//
+--
 function BeamNetVars.ClearNetAmount( net )
 	GetNetworkTable( -2, "NetInfo" )[ net ] = nil
 end
 end
-// GetNetworked ShortFloat
+-- GetNetworked ShortFloat
 function BeamNetVars.GetNetAmount( net )
 	if (!net or net == 0) then return 0 end
 	return GetNetworkTable( -2, "NetInfo" )[ net ] or 0
 end
 
-//	Recvs ShortFloat
+--	Recvs ShortFloat
 if ( CLIENT ) then
 local function RecvFunc( m )
 	local net 	= m:ReadShort()
@@ -585,7 +585,7 @@ local ResNamesPrintByName = {}
 local ResUnitsPrint = {}
 
 if ( SERVER ) then
-// 
+--
 meta[ "SetResourceNetID" ] = function ( self, res, ID, urgent )
 	--Msg("sv==SetResourceNetID "..tostring(self).." res= "..tostring(res).." id= "..tostring(ID).."\n")
 	if ( ID == GetNetworkTable( self, "ResourceNetID" )[ res ] ) then return end
@@ -598,17 +598,17 @@ meta[ "SetResourceNetID" ] = function ( self, res, ID, urgent )
 	end
 end
 end
-// give a resouce id or name and get the ent's net's index
+-- give a resouce id or name and get the ent's net's index
 meta[ "GetResourceNetID" ] = function ( self, res )
-	if (type(res) != "number") then res = resnames[res] end
+	if (type(res) ~= "number") then res = resnames[res] end
 	if (!res) then return 0 end
 	local out = GetNetworkTable( self, "ResourceNetID" )[ res ]
 	return out or 0
 end
-// give a resouce id or name and get amount on that net
+-- give a resouce id or name and get amount on that net
 meta[ "GetResourceAmount" ] = function ( self, res )
 	--Msg("res = "..tostring(res).."\n")
-	if (type(res) != "number") then res = resnames[res] end
+	if (type(res) ~= "number") then res = resnames[res] end
 	--Msg("GetResourceAmount "..tostring(self).." res= "..tostring(res).."\n")
 	if (!res) then return 0 end
 	
@@ -617,23 +617,23 @@ meta[ "GetResourceAmount" ] = function ( self, res )
 	
 	return BeamNetVars.GetNetAmount( nn )
 end
-// give a resouce id or name and get amount on that net with units attached
+-- give a resouce id or name and get amount on that net with units attached
 meta[ "GetResourceAmountText" ] = function ( self, res )
-	if (type(res) != "number") then res = resnames[res] end
+	if (type(res) ~= "number") then res = resnames[res] end
 	if (!res) then return 0 end
 	local nn = GetNetworkTable( self, "ResourceNetID" )[ res ]
 	return BeamNetVars.GetNetAmount( nn )..ResUnitsPrint[res]
 end
 meta[ "GetResourceAmountTextPrint" ] = function ( self, res )
-	if (type(res) != "number") then res = resnames[res] end
+	if (type(res) ~= "number") then res = resnames[res] end
 	if (!res) then return "" end
 	return ResNamesPrint[res]..self.Entity:GetResourceAmountText( self, res )
 end
-// get all the ent's net's indexes keyed with the resource IDs
+-- get all the ent's net's indexes keyed with the resource IDs
 meta[ "GetResourceNetIDAll" ] = function ( self )
 	return GetNetworkTable( self, "ResourceNetID" )
 end
-//  get all the ent's net's indexes keyed with the resource names
+--  get all the ent's net's indexes keyed with the resource names
 meta[ "GetResourceNetIDAllNamed" ] = function ( self )
 	local rez = BeamNetVars.GetResourceNames() 
 	local out = {}
@@ -642,7 +642,7 @@ meta[ "GetResourceNetIDAllNamed" ] = function ( self )
 	end
 	return out
 end
-// get all amount of resouces on this ents nets key with resource names
+-- get all amount of resouces on this ents nets key with resource names
 meta[ "GetAllResourcesAmounts" ] = function ( self )
 	local rez = BeamNetVars.GetResourceNames() 
 	local amounts, units = {}, {}
@@ -652,7 +652,7 @@ meta[ "GetAllResourcesAmounts" ] = function ( self )
 	end
 	return amounts, units
 end
-// get all amount of resouces on this ents nets ready for overlay text readout
+-- get all amount of resouces on this ents nets ready for overlay text readout
 meta[ "GetAllResourcesAmountsText" ] = function ( self, GreaterThanOneOnly )
 	local out = {}
 	for k,v in pairs (GetNetworkTable( self, "ResourceNetID" )) do
@@ -690,7 +690,7 @@ function BeamNetVars.SetResourcePrintName( resname, printname )
 	ResNamesPrintByName[ resname ] = printname
 end
 if ( SERVER ) then
-// Tell clients the names of resources and their IDs
+-- Tell clients the names of resources and their IDs
 function BeamNetVars.SetResourceNames( id, name, unit, urgent ) 
 	local tab = {}
 	tab.name = name
@@ -698,7 +698,7 @@ function BeamNetVars.SetResourceNames( id, name, unit, urgent )
 	GetNetworkTable( -4, "ResNames" )[id] = tab
 	resnames[name] = id
 	ResNamesPrint[id] = string.upper(string.sub(name,1,1)) .. string.sub(name,2) .. ": " --makes "air" in to "Air: " for overlaytext
-	if ( unit and unit != "") then
+	if ( unit and unit ~= "") then
 		ResUnitsPrint[id] = " "..unit
 	else
 		ResUnitsPrint[id] = ""
@@ -710,13 +710,13 @@ function BeamNetVars.SetResourceNames( id, name, unit, urgent )
 	end
 end
 end
-// returns the name from given id
+-- returns the name from given id
 function BeamNetVars.GetResourceName( id ) 
 	local out = GetNetworkTable( -4, "ResNames" )[id]
-	if ( out != nil ) then return out.name, out.unit end
+	if ( out ~= nil ) then return out.name, out.unit end
 	return "", ""
 end
-// returns table of all name indexed by id
+-- returns table of all name indexed by id
 function BeamNetVars.GetResourceNames() 
 	return GetNetworkTable( -4, "ResNames" ) or {}
 end
@@ -735,7 +735,7 @@ local function RecvFunc( m )
 	else
 		ResNamesPrint[id] = string.upper(string.sub(name,1,1)) .. string.sub(name,2) .. ": " --makes "air" in to "Air: " for overlaytext
 	end
-	if ( unit and unit != "") then
+	if ( unit and unit ~= "") then
 		ResUnitsPrint[id] = " "..unit
 	else
 		ResUnitsPrint[id] = ""
@@ -747,16 +747,16 @@ end
 
 
 if ( SERVER ) then
-//
-// Updated SB2 planet info
-//
+--
+-- Updated SB2 planet info
+--
 function BeamNetVars.SB2UpdatePlanet( planet )
 	--TODO: Check for change
 	/*local currentvalue = GetNetworkTable( -11, "PlanetInfo" )[planet.num] or {}
 	
 	local nochange = true
 	for k,v in pairs(planet) do
-		if ( planet[k] != currentvalue[k] ) then
+		if ( planet[k] ~= currentvalue[k] ) then
 			nochange = false
 		end
 	end
@@ -766,16 +766,16 @@ function BeamNetVars.SB2UpdatePlanet( planet )
 	
 	SendNetworkUpdate( "PlanetInfo", -11, planet.num, planet )
 end
-//
-// Updated SB2 star info
-//
+--
+-- Updated SB2 star info
+--
 function BeamNetVars.SB2UpdateStar( star )
 	--TODO: Check for change
 	/*local currentvalue = GetNetworkTable( -11, "StarInfo" )[star.num] or {}
 	
 	local nochange = true
 	for k,v in pairs(star) do
-		if ( star[k] != currentvalue[k] ) then
+		if ( star[k] ~= currentvalue[k] ) then
 			nochange = false
 		end
 	end
@@ -791,13 +791,13 @@ end
 
 
 
-/////////////////////////////
-//	Server Side Functions
-/////////////////////////////
+----------------------------/
+--	Server Side Functions
+----------------------------/
 if (SERVER) then
-//
-// send the netvars queried in the stack
-//
+--
+-- send the netvars queried in the stack
+--
 local NextBeamVarsDelayedSendTime = 0
 local NormalOpMode = true
 local function NetworkVarsSend()
@@ -816,7 +816,7 @@ local function NetworkVarsSend()
 			for Index, a in pairs(DelayedUpdates) do
 				for VarType, b in pairs(a) do
 					for Key, Value in pairs(b) do
-						//SendNetworkUpdate( VarType, Index, Key, Value )
+						--SendNetworkUpdate( VarType, Index, Key, Value )
 						local NoFail, Result = pcall( SendNetworkUpdate, VarType, Index, Key, Value )
 						if ( !NoFail ) then
 							Error("BeamNetVars: SendNetworkUpdate send failed: "..tostring(Result).."\n")
@@ -828,12 +828,12 @@ local function NetworkVarsSend()
 			DelayedUpdates = {}
 		end
 		
-		//we send one entity's ExtraDelayedUpdates each tick
+		--we send one entity's ExtraDelayedUpdates each tick
 		local i = 0
 		for Index, a in pairs(ExtraDelayedUpdates) do
 			for VarType, b in pairs(a) do
 				for Key, data in pairs(b) do
-					//SendNetworkUpdate( VarType, Index, Key, data.Value, data.Player )
+					--SendNetworkUpdate( VarType, Index, Key, data.Value, data.Player )
 					local NoFail, Result = pcall( SendNetworkUpdate, VarType, Index, Key, data.Value, data.Player )
 					if ( !NoFail ) then
 						Error("BeamNetVars: ExtraDelayedUpdates send failed: "..tostring(Result).."\n")
@@ -859,10 +859,10 @@ hook.Add("Think", "NetBeamLib_Think", NetworkVarsSend)
 
 
 
-/////////////////////////////
-//	Player join stuff
-/////////////////////////////
-// Sends all net vars to player
+----------------------------/
+--	Player join stuff
+----------------------------/
+-- Sends all net vars to player
 local function FullUpdateEntityNetworkVars( ply )
 	Msg("==sending netbeamvar var data to "..tostring(ply).."\n")
 	--Msg("\n===Size: "..table.Count(NetworkVars).."\n")
@@ -870,7 +870,7 @@ local function FullUpdateEntityNetworkVars( ply )
 		for Type, TypeTable in pairs(EntTable) do
 			for Key, Value in pairs(TypeTable) do
 				local Index = Ent
-				if ( type(Ent) != "string" and type(Ent) != "number") then
+				if ( type(Ent) ~= "string" and type(Ent) ~= "number") then
 					Index = Ent:EntIndex()
 				end
 				--SendNetworkUpdate( Type, Index , Key, Value, ply )
@@ -879,7 +879,7 @@ local function FullUpdateEntityNetworkVars( ply )
 		end
 	end
 end
-// Sends all beams to player
+-- Sends all beams to player
 local function SendAllBeams( ply )
 	Msg("==sending Beam data to "..tostring(ply).." ==\n")
 	for source_ent, source_ent_table in pairs(BeamData) do
@@ -921,7 +921,7 @@ local function SendAllBeams( ply )
 		end
 	end
 end
-// Offset the sending of data a little after the player has join
+-- Offset the sending of data a little after the player has join
 local function DelayedFullUpdateEntityNetworkVars( ply )
 	--Msg("==starting timer for sending var data to "..tostring(ply).."\n")
 	timer.Simple(4, FullUpdateEntityNetworkVars, ply)
@@ -929,15 +929,15 @@ local function DelayedFullUpdateEntityNetworkVars( ply )
 	hook.Add("Think", "NetBeamLib_Think", NetworkVarsSend)
 end
 hook.Add( "PlayerInitialSpawn", "FullUpdateEntityNetworkBeamVars", DelayedFullUpdateEntityNetworkVars )
-// Allow players to resend them the data to themselves
+-- Allow players to resend them the data to themselves
 concommand.Add( "networkbeamvars_SendAllNow", FullUpdateEntityNetworkVars )
 concommand.Add( "RDBeamLib_SendAllEntityBeamVars",  SendAllBeams)
 
 
 
-//
-// Listen out for dead entities so we can remove their vars
-//
+--
+-- Listen out for dead entities so we can remove their vars
+--
 local function NetworkVarsCleanup( ent )
 	NetworkVars[ ent ] = nil
 end
@@ -947,12 +947,12 @@ hook.Add( "EntityRemoved", "NetworkBeamVarsCleanup", NetworkVarsCleanup )
 
 
 
-/////////////////////////////
-//	Save/Load hooks
-/////////////////////////////
-// Save net vars to file
+----------------------------/
+--	Save/Load hooks
+----------------------------/
+-- Save net vars to file
 local function Save( save )
-	// Remove baggage
+	-- Remove baggage
 	for k, v in pairs(NetworkVars) do
 		if ( k == NULL ) then
 			NetworkVars[k] = nil
@@ -962,13 +962,13 @@ local function Save( save )
 end
 local function Restore( restore )
 	NetworkVars = saverestore.ReadTable( restore )
-	//PrintTable(NetworkVars)
+	--PrintTable(NetworkVars)
 end
 saverestore.AddSaveHook( "EntityNetworkedBeamVars", Save )
 saverestore.AddRestoreHook( "EntityNetworkedBeamVars", Restore )
-//	includes the local BeamData in the save file
+--	includes the local BeamData in the save file
 local function RDSave( save )
-	// Remove baggage
+	-- Remove baggage
 	for k, v in pairs(BeamData) do
 		if ( k == NULL ) then
 			BeamData[k] = nil
@@ -986,7 +986,7 @@ local function RDRestore( restore )
 	BeamData = saverestore.ReadTable( restore )
 end
 local function WireSave( save )
-	// Remove baggage
+	-- Remove baggage
 	for k, v in pairs(WireBeams) do
 		if ( k == NULL ) then
 			WireBeams[k] = nil
@@ -1005,12 +1005,12 @@ saverestore.AddRestoreHook( "EntityRDWireBeamVars", WireRestore )
 
 
 
-/////////////////////////////
-//	RDbeamlib Server Side Stuff
-/////////////////////////////
+----------------------------/
+--	RDbeamlib Server Side Stuff
+----------------------------/
 
-//	checks the links' lengths and breaks if they're too long
-//		TODO: this should make some kinda snapping noise when the link is borken
+--	checks the links' lengths and breaks if they're too long
+--		TODO: this should make some kinda snapping noise when the link is borken
 for i=1,3 do
 	util.PrecacheSound( "physics/metal/metal_computer_impact_bullet"..i..".wav" )
 end
@@ -1044,17 +1044,17 @@ function RDbeamlib.CheckLength( source_ent )
 end
 
 
-//
-//	for duplicating
-//
+--
+--	for duplicating
+--
 function RDbeamlib.GetBeamTable( source_ent )
 	return BeamData[ source_ent ] or {}
 end
 
 
-//
-//	function to spam all the BeamData the server has
-//
+--
+--	function to spam all the BeamData the server has
+--
 local function spamBeamData()
 	Msg("\n\n================= BeamData ======================\n\n")
 	/*	PrintTable(BeamData)
@@ -1078,20 +1078,20 @@ concommand.Add( "RDBeamLib_PrintBeamData", spamBeamData )
 
 
 
-//just in case the duplicator gets a hold of a drawer
+--just in case the duplicator gets a hold of a drawer
 duplicator.RegisterEntityClass("Beam_Drawer", function() return end, "pl" )
 
 
-end //end SERVER olny
+end --end SERVER olny
 
 
 
 
 
 
-//
-//	Get the beam drawer or make one if none
-//
+--
+--	Get the beam drawer or make one if none
+--
 local function GetDrawer( source_ent, NoCheckLength )
 	if (SERVER) and ( !source_ent.RDbeamlibDrawer ) then
 		Drawer = ents.Create( "Beam_Drawer2b" )
@@ -1107,9 +1107,9 @@ local function GetDrawer( source_ent, NoCheckLength )
 	end
 	return source_ent.RDbeamlibDrawer
 end
-//	Set up the drawer for ent to ent beams
-//	reuse the an existing drawer or make one
-//	either ent can have the drawer, it doesn't matter
+--	Set up the drawer for ent to ent beams
+--	reuse the an existing drawer or make one
+--	either ent can have the drawer, it doesn't matter
 local function SetUpDrawer( source_ent, start_pos, dest_ent, dest_pos, NoCheckLength )
 	/*local Drawer
 	if (SERVER) and ( !source_ent.RDbeamlibDrawer ) and ( !dest_ent.RDbeamlibDrawer ) then
@@ -1131,10 +1131,10 @@ end
 
 
 
-/////////////////////////////
-//	RD Beams: ent to ent only
-/////////////////////////////
-//	makes a simple beam from a source ent to dest ent
+----------------------------/
+--	RD Beams: ent to ent only
+----------------------------/
+--	makes a simple beam from a source ent to dest ent
 function RDbeamlib.MakeSimpleBeam(source_ent, start_pos, dest_ent, dest_pos, material, color, width, NoCheckLength)
 	if (SERVER) then
 		if (!SourceAndDestEntValid( source_ent, dest_ent )) then return end
@@ -1164,13 +1164,13 @@ function RDbeamlib.MakeSimpleBeam(source_ent, start_pos, dest_ent, dest_pos, mat
 		info.dest_ent		= dest_ent
 		
 		AddDelayedNetworkUpdate( "simple", -3, info, BeamData[ source_ent ][ dest_ent ] )
-		//AddDelaySendBeamData( info, BeamData[ source_ent ][ dest_ent ], nil )
+		--AddDelaySendBeamData( info, BeamData[ source_ent ][ dest_ent ], nil )
 	end
 	
 end
 
-//
-//	Clears the beam between two ents
+--
+--	Clears the beam between two ents
 function RDbeamlib.ClearBeam( source_ent, dest_ent )
 	if (BeamData[ source_ent ]) then
 		BeamData[ source_ent ][ dest_ent ] = nil
@@ -1196,12 +1196,12 @@ function RDbeamlib.ClearBeam( source_ent, dest_ent )
 		info.dest_ent		= dest_ent
 		
 		AddDelayedNetworkUpdate( "clearbeam", -3, info, {} )
-		//AddDelaySendBeamData( info, {}, nil )
+		--AddDelaySendBeamData( info, {}, nil )
 	end
 end
 
-//
-//	Clears all beams from/to ent
+--
+--	Clears all beams from/to ent
 function RDbeamlib.ClearAllBeamsOnEnt( source_ent, DontUpdateCl )
 	if (BeamData[ source_ent ]) then
 		BeamData[ source_ent ] = nil
@@ -1228,17 +1228,17 @@ function RDbeamlib.ClearAllBeamsOnEnt( source_ent, DontUpdateCl )
 		info.source_ent		= source_ent
 		
 		AddDelayedNetworkUpdate( "clearallentbeams", -3, info, {} )
-		//AddDelaySendBeamData( info, {}, nil )
+		--AddDelaySendBeamData( info, {}, nil )
 	end
 end
 
 
 
-/////////////////////////////
-//	Wire Beams: ent to ent with mid point nodes
-/////////////////////////////
-//
-//	Start a wire beam
+----------------------------/
+--	Wire Beams: ent to ent with mid point nodes
+----------------------------/
+--
+--	Start a wire beam
 function RDbeamlib.StartWireBeam( wire_dev, iname, pos, material, color, width )
 	if (!wire_dev or wire_dev == NULL) then return end
 	
@@ -1248,7 +1248,7 @@ function RDbeamlib.StartWireBeam( wire_dev, iname, pos, material, color, width )
 	if ( SERVER ) then
 		Drawer = GetDrawer( wire_dev )
 		
-		//clients don't actually need to know the name of the input, use a index number instead
+		--clients don't actually need to know the name of the input, use a index number instead
 		local Idx
 		if ( WireBeams[wire_dev].Inputs[iname] and WireBeams[wire_dev].Inputs[iname].Idx) then
 			Idx = WireBeams[wire_dev].Inputs[iname].Idx --reuse the same index
@@ -1257,12 +1257,12 @@ function RDbeamlib.StartWireBeam( wire_dev, iname, pos, material, color, width )
 			Idx									= WireBeams[wire_dev].inameIdx
 		end
 		
-		//clear current data (i'm the server, i know what i'm doing)
+		--clear current data (i'm the server, i know what i'm doing)
 		WireBeams[wire_dev].Inputs[iname]		= {}
 		WireBeams[wire_dev].Inputs[iname].nodes	= {}
 		WireBeams[wire_dev].Inputs[iname].Idx	= Idx --set index for this iname
 	else
-		//client may not get the start data first, so don't clear it
+		--client may not get the start data first, so don't clear it
 		WireBeams[wire_dev].Inputs[iname]		= WireBeams[wire_dev].Inputs[iname] or {}
 		WireBeams[wire_dev].Inputs[iname].nodes	= WireBeams[wire_dev].Inputs[iname].nodes or {}
 	end
@@ -1287,18 +1287,18 @@ function RDbeamlib.StartWireBeam( wire_dev, iname, pos, material, color, width )
 		info.iname			= WireBeams[wire_dev].Inputs[iname].Idx
 		if (#DelayedUpdates < 550) then
 			AddDelayedNetworkUpdate( "wirestart", -3, info, WireBeams[wire_dev].Inputs[iname] )
-			//AddDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
+			--AddDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
 		else --being flooded (dupe paste), delay these some
 			AddExtraDelayedNetworkUpdate( "wirestart", -3, info, WireBeams[wire_dev].Inputs[iname] )
-			//AddExtraDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
+			--AddExtraDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
 		end
 		
 	end
 	
 end
 
-//
-//	Add a node to a wire beam
+--
+--	Add a node to a wire beam
 function RDbeamlib.AddWireBeamNode( wire_dev, iname, node_ent, pos, nodenum )
 	if (!wire_dev or wire_dev == NULL) or (!node_ent or node_ent == NULL) then return end
 	
@@ -1338,17 +1338,17 @@ function RDbeamlib.AddWireBeamNode( wire_dev, iname, node_ent, pos, nodenum )
 		
 		if (#DelayedUpdates < 500) then
 			AddDelayedNetworkUpdate( "wirenode", -3, info, WireBeams[wire_dev].Inputs[iname] )
-			//AddDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
+			--AddDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
 		else --being flooded (dupe paste), delay these some
 			AddExtraDelayedNetworkUpdate( "wirenode", -3, info, WireBeams[wire_dev].Inputs[iname] )
-			//AddExtraDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
+			--AddExtraDelaySendBeamData( info, WireBeams[wire_dev].Inputs[iname], nil )
 		end
 	end
 	
 end
 
-//
-//	Clears a wire beam
+--
+--	Clears a wire beam
 function RDbeamlib.ClearWireBeam( wire_dev, iname )
 	if (!wire_dev or !iname or !WireBeams[wire_dev] or !WireBeams[wire_dev].Inputs or !WireBeams[wire_dev].Inputs[iname] or !wire_dev:IsValid()) then return end
 	
@@ -1367,7 +1367,7 @@ function RDbeamlib.ClearWireBeam( wire_dev, iname )
 		info.iname		= WireBeams[wire_dev].Inputs[iname].Idx
 		
 		AddDelayedNetworkUpdate( "clearwirebeam", -3, info, {} )
-		//AddDelaySendBeamData( info, {}, nil )
+		--AddDelaySendBeamData( info, {}, nil )
 	end
 	
 	if (WireBeams[wire_dev]) and (WireBeams[wire_dev].Inputs) then
@@ -1379,8 +1379,8 @@ function RDbeamlib.ClearWireBeam( wire_dev, iname )
 	end
 end
 
-//
-//	Clears a wire beam
+--
+--	Clears a wire beam
 function RDbeamlib.ClearAllWireBeam( wire_dev )
 	if (!wire_dev) then return end 
 	
@@ -1404,21 +1404,21 @@ function RDbeamlib.ClearAllWireBeam( wire_dev )
 		info.wire_dev	= wire_dev
 		
 		AddDelayedNetworkUpdate( "clearallwirebeam", -3, info, {} )
-		//AddDelaySendBeamData( info, {}, nil )
+		--AddDelaySendBeamData( info, {}, nil )
 	end
 end
 
 
 
 
-/////////////////////////////
-//	Client Side Functions
-/////////////////////////////
+----------------------------/
+--	Client Side Functions
+----------------------------/
 if (CLIENT) then
 
-//
-//	check for any beam date for NULL ents and removes it
-//
+--
+--	check for any beam date for NULL ents and removes it
+--
 local function CleanupBeams()
 	--Msg("Running BeamVarsCleanup\n")
 	for source_ent, source_ent_table in pairs(BeamData) do
@@ -1452,9 +1452,9 @@ end
 local BEAM_SCROLL_SPEED = 0.5
 local DisableBeamRender = 0
 
-//
-//	renders all the beams on the source_ent
-//
+--
+--	renders all the beams on the source_ent
+--
 function RDbeamlib.BeamRender( source_ent )
     if ( !source_ent or !source_ent:IsValid() ) then return end
 	if (DisableBeamRender > 0) then return end
@@ -1560,9 +1560,9 @@ function RDbeamlib.BeamRender( source_ent )
 end
 
 
-//
-//	updates the render bounds on source_ent
-//		TODO: this should be run by the source_ent once in a while
+--
+--	updates the render bounds on source_ent
+--		TODO: this should be run by the source_ent once in a while
 function RDbeamlib.UpdateRenderBounds(source_ent)
 	if (!source_ent) or (type(source_ent) == "number") or (!source_ent:IsValid()) then return end
 	
@@ -1632,9 +1632,9 @@ function RDbeamlib.UpdateRenderBounds(source_ent)
 end
 
 
-//
-//	turns off beam rendering
-//
+--
+--	turns off beam rendering
+--
 local function BeamRenderDisable(pl, cmd, args)
 	if not args[1] then return end
 	DisableBeamRender = tonumber(args[1])
@@ -1642,9 +1642,9 @@ end
 concommand.Add( "RDBeamLib_DisableRender", BeamRenderDisable )
 
 
-//
-//	umsg Recv'r functions
-//
+--
+--	umsg Recv'r functions
+--
 local function RecvBeamSimple( m )
 	
 	--local source_ent	= m:ReadEntity()
@@ -1750,9 +1750,9 @@ usermessage.Hook( "RcvRDWireBeamClearAll", RecvClearAllWireBeam )
 
 
 
-//
-//	test function to clear BeamData, for testing FullUpdate function
-//
+--
+--	test function to clear BeamData, for testing FullUpdate function
+--
 local function ClearBeamData()
 	BeamData = {}
 	WireBeams = {}
@@ -1760,9 +1760,9 @@ end
 concommand.Add( "RDBeamLib_ClearBeamData", ClearBeamData )
 
 
-//
-//	function to spam all the BeamData the client has
-//
+--
+--	function to spam all the BeamData the client has
+--
 local function spamCLBeamData()
 	CleanupBeams()
 	/*Msg("\n\n================= CLBeamData ======================\n\n")
@@ -1786,7 +1786,7 @@ end
 concommand.Add( "RDBeamLib_PrintCLBeamData", spamCLBeamData )
 
 
-// Net vars dump
+-- Net vars dump
 local function Dump()
 	Msg("Networked Beam Vars...\n")
 	PrintTable( NetworkVars )

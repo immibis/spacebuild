@@ -97,7 +97,7 @@ function ENT:Destruct()
 		local blastradius = 3000
 		
 		for _,Ent in pairs( constraint.GetAllConstrainedEntities( self.Entity ) ) do
-			if Ent != self.Entity then
+			if Ent ~= self.Entity then
 				if (string.find(Ent.Entity:GetClass(),"prop") ~= nil) then
 					local delay = (math.random(300, 700) / 100)
 					Ent.Entity:SetSolid( SOLID_NONE ) --we don't need to be crunching the phys collisions too

@@ -60,9 +60,9 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:Think()
-	if CurTime() >= self.LTime && self.Loading && !self.Torp then
+	if CurTime() >= self.LTime and self.Loading and !self.Torp then
 		local Torp = ents.Create( "SF-TorpBig" )
-		if !Torp || !Torp:IsValid() then return end
+		if !Torp or !Torp:IsValid() then return end
 		Torp:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * -102 + self.Entity:GetUp() * 63 + self.Entity:GetForward() * -50)
 		Torp:SetAngles( self.Entity:GetAngles() )
 		Torp:Spawn()
@@ -78,7 +78,7 @@ function ENT:Think()
 		self.Loading = false
 	end
 	local LPercent = 0
-	if self.LTime > CurTime() && !self.Loaded then
+	if self.LTime > CurTime() and !self.Loaded then
 		LPercent = ( ( self.ReloadPeriod - ( self.LTime - CurTime() ) ) / self.ReloadPeriod ) * 100
 	else
 		LPercent = 0
@@ -88,7 +88,7 @@ function ENT:Think()
 	end
 	Wire_TriggerOutput( self.Entity, "ReloadProgress", LPercent )
 	
-	if self.Torp && self.Torp:IsValid() then
+	if self.Torp and self.Torp:IsValid() then
 		Wire_TriggerOutput( self.Entity, "Loaded", 1 )
 		self.Entity:SetLVar(100)
 	else
@@ -106,7 +106,7 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Touch( ent )
-	if (!self.Torp || !self.Torp:IsValid()) && ent:IsValid() && ent.BigTorp && !ent.Armed && !ent.Mounted then
+	if (!self.Torp or !self.Torp:IsValid()) and ent:IsValid() and ent.BigTorp and !ent.Armed and !ent.Mounted then
 		self.Torp = ent
 		ent:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * -102 + self.Entity:GetUp() * 63 + self.Entity:GetForward() * -50)
 		ent:SetAngles( self.Entity:GetAngles() )
@@ -120,7 +120,7 @@ function ENT:Touch( ent )
 		self.Loading = false
 	end
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 		self.Entity:SetParent()
 		self.Loading = true
@@ -128,18 +128,18 @@ function ENT:Touch( ent )
 end
 
 function ENT:OnRemove()
-	if self.Torp && self.Torp:IsValid() then
+	if self.Torp and self.Torp:IsValid() then
 		self.Torp:Remove()
 	end
 end
 
 function ENT:HPFire()
-	if self.Torp && self.Torp:IsValid() then
+	if self.Torp and self.Torp:IsValid() then
 		self.Torp:Arm()
 		self.Torp.ATime = CurTime() + 0.5
 		self.Torp:SetParent()
 		self.Torp.PFire2 = true
-		if self.BWeld && self.BWeld:IsValid() then self.BWeld:Remove() end
+		if self.BWeld and self.BWeld:IsValid() then self.BWeld:Remove() end
 		self.Torp:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * -102 + self.Entity:GetUp() * 63 + self.Entity:GetForward() * -200 )
 		--self.Torp.PhysObj:EnableCollisions(true)
 		--self.Torp.PhysObj:EnableGravity(false)

@@ -23,7 +23,7 @@ if( SERVER ) then
 	CreateConVar('sbox_maxdisplaydevices', 10)
 	
 	function Makedisplaydevices( ply, ang, pos, gentype, model, frozen )
-		if ( !ply:CheckLimit( "displaydevices" ) ) then return nil end
+		if ( not ply:CheckLimit( "displaydevices" ) ) then return nil end
 		
 		--Create generator
 		local ent = ents.Create( gentype )

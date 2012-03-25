@@ -111,12 +111,12 @@
             --self.dt.Energy = self.dt.Energy + Delta
             --self.LTT = CurTime()
             if self.dt.Mutation == 10 then
-                    if !(self.Sire && self.Sire:IsValid()) then
+                    if !(self.Sire and self.Sire:IsValid()) then
                             self:Remove()
                             return
                     end
            
-                    if !self.Sire.CurrentTarget || !self.Sire.CurrentTarget:IsValid() then
+                    if !self.Sire.CurrentTarget or !self.Sire.CurrentTarget:IsValid() then
                            
                             local Vec,Ang = WorldToLocal(self:GetPos(),self:GetAngles(),self.Sire:GetPos(),self.Sire:GetAngles())
                             local r = math.fmod((math.deg(math.atan2( Vec.z, Vec.y )) + 180) + 99,360)
@@ -142,7 +142,7 @@
             self:GetPhysicsObject():Wake()
             local Delta = CurTime() - self.LTT
             self:AddEn(Delta * self.EnergyGain)
-            if self.Perch && self.Perch:IsValid() then
+            if self.Perch and self.Perch:IsValid() then
                     if self.Perch.GetResourceAmount then
                             local e = self.Perch:GetResourceAmount( "energy" )
                             if e >= Delta * 10 then
@@ -181,7 +181,7 @@
             end
             if self.CurrentTarget then
                     self.TargetLength = math.Approach(self.TargetLength,0,Delta)
-                    if self.TargetLength <= 0 || !self.CurrentTarget:IsValid() || self.CurrentTarget:Health() <= 0 then
+                    if self.TargetLength <= 0 or !self.CurrentTarget:IsValid() or self.CurrentTarget:Health() <= 0 then
                             self.CurrentTarget = nil
                     end
                     if self.dt.Deploy == false then
@@ -225,9 +225,9 @@
                                    
                             local T = table.Count(ents.FindByClass("Infestor"))
                            
-                            if self.dt.Energy >= 15 && T < MaxInfestorLimit && self.ChildCount <= 5 then self:Reproduce() end
+                            if self.dt.Energy >= 15 and T < MaxInfestorLimit and self.ChildCount <= 5 then self:Reproduce() end
                            
-                            if !(self.Sire && self.Sire:IsValid()) && self:CCount() >= 10 && self.dt.Energy >= self.MaxEnergy * .7 then
+                            if !(self.Sire and self.Sire:IsValid()) and self:CCount() >= 10 and self.dt.Energy >= self.MaxEnergy * .7 then
                                     --self.dt.Energy = 0
                                     self.dt.Mutation = 3
                             end
@@ -239,11 +239,11 @@
                             self.EnergyGain = 2
                            
                             local T = table.Count(ents.FindByClass("Infestor"))
-                            if self.dt.Energy >= 15 && T < MaxInfestorLimit && self.ChildCount <= 5 then
+                            if self.dt.Energy >= 15 and T < MaxInfestorLimit and self.ChildCount <= 5 then
                                     self:Reproduce()
                             end
                                            
-                            if !(self.Sire && self.Sire:IsValid()) && self:CCount() >= 25 && self.dt.Energy >= self.MaxEnergy * .8 then
+                            if !(self.Sire and self.Sire:IsValid()) and self:CCount() >= 25 and self.dt.Energy >= self.MaxEnergy * .8 then
                                     --self.dt.Energy = 0
                                     self.dt.Mutation = 4
                                     self:AddEn(-100)
@@ -253,11 +253,11 @@
                            
                     elseif self.dt.Mutation == 3 then
                             local T = table.Count(ents.FindByClass("Infestor"))
-                            if self.dt.Energy >= 15 && T < MaxInfestorLimit && self.ChildCount <= 5 then
+                            if self.dt.Energy >= 15 and T < MaxInfestorLimit and self.ChildCount <= 5 then
                                     self:Reproduce()
                             end
                            
-                            if self.dt.Energy >= 10 && self:SCount() <= 3 then
+                            if self.dt.Energy >= 10 and self:SCount() <= 3 then
                                     --self:FreeSpawn(10)
                                     self:AddEn(-10)
                             end
@@ -266,7 +266,7 @@
                                     --print("Lets make something nasty...")
                                     local ent = table.Random( self.Children )
                                     --print(ent)
-                                    if ent && ent:IsValid() && ent != self then
+                                    if ent and ent:IsValid() and ent ~= self then
                                             --print("Looks good...")
                                             if ent.dt.Mutation == 1 then
                                                     --print("It's a spreader")
@@ -293,7 +293,7 @@
                             self.DeployTime = .5
                            
                             local T = table.Count(ents.FindByClass("Infestor"))
-                            if self.dt.Energy >= 15 && T < MaxInfestorLimit && self.ChildCount <= 5 then
+                            if self.dt.Energy >= 15 and T < MaxInfestorLimit and self.ChildCount <= 5 then
                                     --self:Reproduce()
                             end
                            
@@ -306,7 +306,7 @@
      
             if self.dt.Mutation == 20 then
                     local T = self:GetSire().CurrentTarget
-                    if self.dt.Deploy && T && T:IsValid() then
+                    if self.dt.Deploy and T and T:IsValid() then
                             self.dt.Target = (T:GetPos() + Vector(0,0,280))
                             if CurTime() >= self.NFTime then
                                     local Dmg = self.dt.Energy * 0.1
@@ -351,13 +351,13 @@
      
     function ENT:Tithe(eng)
             self.dt.Energy = self.dt.Energy - eng
-            if self.Sire && self.Sire:IsValid() then
+            if self.Sire and self.Sire:IsValid() then
                     self.Sire:AddEn(eng*self.TitheMul)
             end
     end
      
     function ENT:RequestResources()
-            if self.Sire && self.Sire:IsValid() then
+            if self.Sire and self.Sire:IsValid() then
                     if self.Sire.dt.Energy >= self.Sire.MaxEnergy * 0.8 then
                             local Gift = self.MaxEnergy * 0.1
                             self.Sire.dt.Energy = self.Sire.dt.Energy - Gift
@@ -375,7 +375,7 @@
     end
      
     function ENT:GetSire()
-            if self.Sire && self.Sire:IsValid() && self.Sire != self then
+            if self.Sire and self.Sire:IsValid() and self.Sire ~= self then
                     return self.Sire:GetSire()
             else
                     return self
@@ -393,7 +393,7 @@
             local tr = util.TraceLine( trace )
             if tr.Hit then
                     --print("First time lucky!")
-                    if !tr.HitWorld && tr.Entity:GetClass() != "Infestor" then return end
+                    if !tr.HitWorld and tr.Entity:GetClass() ~= "Infestor" then return end
                     --print("We hit either the world or something infestable...")
                     if !ZoneCheck(tr.HitPos,100) then return end
                     --print("Area seems clear...")
@@ -407,7 +407,7 @@
                     local tr2 = util.TraceLine( trace2 )
                     if tr2.Hit then
                     --      print("Second trace landed...")
-                            if !tr2.HitWorld && !tr2.Entity:GetClass() == "Infestor" then return end
+                            if !tr2.HitWorld and !tr2.Entity:GetClass() == "Infestor" then return end
                     --      print("We hit either the world or something infestable...")
                             if !ZoneCheck(tr2.HitPos,100) then return end
                     --      print("Area seems clear...")
@@ -474,7 +474,7 @@
      
     function ENT:OnTakeDamage( dmg )
             if dmg:GetAttacker():GetClass() == self:GetClass() then return end
-            if dmg:GetAttacker():IsPlayer() || dmg:GetAttacker():IsNPC() then
+            if dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():IsNPC() then
                     local Sire = self:GetSire()
                     Sire.CurrentTarget = dmg:GetAttacker()
                     Sire.TargetLength = math.Clamp(Sire.TargetLength + math.Rand(3,7),0,20)
@@ -488,7 +488,7 @@
      
     function ENT:PhysicsCollide( data, physobj )
             if self.dt.Mutation == 10 then
-                    if data.HitEntity:GetClass() != self:GetClass() then
+                    if data.HitEntity:GetClass() ~= self:GetClass() then
                             util.BlastDamage(self, self, self:GetPos(), 20, self.dt.Energy)
                             self:Remove()
                     end
@@ -501,7 +501,7 @@
                             --self:Remove()
                     end
             elseif self.dt.Mutation >= 1 then
-                    if ent:IsPlayer() || ent:IsNPC() then
+                    if ent:IsPlayer() or ent:IsNPC() then
                             if self.dt.Mutation == 10 then
                                     util.BlastDamage(self, self, self:GetPos(), 20, self.dt.Energy)
                                     self:Remove()
@@ -525,7 +525,7 @@
     function ENT:CCount()
             local Count = 0
             for k,e in pairs(self.Children) do
-                    if !e:IsValid() || e == self then
+                    if !e:IsValid() or e == self then
                             table.remove(self.Children,k)
                             --print("It's dead. Removing from our list...")
                     else
@@ -539,7 +539,7 @@
     function ENT:RandomSpreader()
             local Ent
             for k,e in pairs(self.Children) do
-                    if e && e:IsValid() && e != self && e.dt.Mutation == 1 then
+                    if e and e:IsValid() and e ~= self and e.dt.Mutation == 1 then
                             Ent = e
                             break
                     end
@@ -572,7 +572,7 @@
                     local EPL = WorldToLocal( EP, Angle(0,0,0), Pos, Angle(0,0,0))
                     local X,Y,Z = EPL.x, EPL.y, EPL.z
                    
-                    if X <= XB && X >= -XB && Y <= YB && Y >= -YB && Z <= ZB && Z >= -ZB then
+                    if X <= XB and X >= -XB and Y <= YB and Y >= -YB and Z <= ZB and Z >= -ZB then
                             Clear = false
                     end
             end
@@ -581,7 +581,7 @@
      
     function ENT:OnRemove()
             local Sire = self:GetSire()
-            if Sire && Sire:IsValid() && Sire != self then
+            if Sire and Sire:IsValid() and Sire ~= self then
                     --print("In our father we trust...")
                     for k,e in pairs(self.Children) do
                             e.Sire = Sire
@@ -591,15 +591,15 @@
                     local Successor = nil
                     for k,e in pairs(self.Children) do
                             --print("Looking for a responsible child...")
-                            if e:IsValid() && e != self then
+                            if e:IsValid() and e ~= self then
                                     --print("They're valid")
                                     Successor = e
                                     break
                             end
                     end
                    
-                    if Successor and Successor:IsValid() and Successor != self then
-                            if type(Successor.Children) == "table" && Successor.Children != self.Children then
+                    if Successor and Successor:IsValid() and Successor ~= self then
+                            if type(Successor.Children) == "table" and Successor.Children ~= self.Children then
                                     --print("They have children of their own")
                                     table.Add(Successor.Children,self.Children)
                                     for k,e in pairs(self.Children) do

@@ -172,7 +172,7 @@ hook.Add("JoystickInitialize","RoverJoystickControl",RoverJoystickControl)
 function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			local trace = {}
 			trace.start = self.CPL:GetShootPos()
 			trace.endpos = self.CPL:GetShootPos() + self.CPL:GetAimVector() * 10000
@@ -180,19 +180,19 @@ function ENT:Think()
 			self.Pod.Trace = util.TraceLine( trace )
 			self.Active = true
 			
-			if (self.CPL:KeyDown( IN_ATTACK ) || (joystick && joystick.Get(self.CPL, "rover_fire1"))) then
+			if (self.CPL:KeyDown( IN_ATTACK ) or (joystick and joystick.Get(self.CPL, "rover_fire1"))) then
 				for i = 1, self.HPC do
 					local HPC = self.CPL:GetInfo( "SBHP_"..i )
-					if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 						self.HP[i]["Ent"].Entity:HPFire()
 					end
 				end
 			end
 			
-			if (self.CPL:KeyDown( IN_ATTACK2 ) || (joystick && joystick.Get(self.CPL, "rover_fire2"))) then
+			if (self.CPL:KeyDown( IN_ATTACK2 ) or (joystick and joystick.Get(self.CPL, "rover_fire2"))) then
 				for i = 1, self.HPC do
 					local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-					if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 						self.HP[i]["Ent"].Entity:HPFire()
 					end
 				end
@@ -212,9 +212,9 @@ function ENT:Think()
 			mx = mx + Vector(2, 2, 2)
 			local T = ents.FindInBox(mn, mx)
 			for _,i in pairs( T ) do
-				if( i.Entity && i.Entity:IsValid() && i.Entity != self.Pod ) then
+				if( i.Entity and i.Entity:IsValid() and i.Entity ~= self.Pod ) then
 					if i.HasHardpoints then
-						if i.Cont && i.Cont:IsValid() then HPLink( i.Cont, i.Entity, self.Pod ) end
+						if i.Cont and i.Cont:IsValid() then HPLink( i.Cont, i.Entity, self.Pod ) end
 						self.Mounted = true
 						--self.Pod:SetParent()
 					end
@@ -239,31 +239,31 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Touch( ent )
-	if self.Linking && ent:IsValid()then
+	if self.Linking and ent:IsValid()then
 		self.CCObj = ent
 	end
 end
 
 function ENT:OnRemove()
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		self.Pod:Remove()
 	end
 end
 
 function ENT:HPFire()
-	if !self.CPL || !self.CPL:IsValid() then
+	if !self.CPL or !self.CPL:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger()
-		if ECPL && ECPL:IsValid() then
+		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()
 			ECPL:EnterVehicle( self.Pod )	
 		end
 	end
-	if self.Pod.HPWeld && self.Pod.HPWeld:IsValid() then
+	if self.Pod.HPWeld and self.Pod.HPWeld:IsValid() then
 		self.Pod.HPWeld:Remove()
 		self.Pod.HPWeld = nil
 	end
 	self.Pod:SetParent()
-	if self.Pod.Pod && self.Pod.Pod:IsValid() then
+	if self.Pod.Pod and self.Pod.Pod:IsValid() then
 		self.Pod.Pod.Cont.HP[self.Pod.HPN]["Ent"] = nil
 		local NC = constraint.NoCollide(self.Pod, self.Pod.Pod, 0, 0, 0, true)
 	end

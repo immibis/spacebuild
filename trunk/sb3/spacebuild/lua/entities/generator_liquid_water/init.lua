@@ -34,7 +34,7 @@ function ENT:TurnOn()
 		self.Active = 1
 		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
 		self.sequence = self.Entity:LookupSequence("walk")
-		if self.sequence and self.sequence != -1 then
+		if self.sequence and self.sequence ~= -1 then
 			self.Entity:SetSequence(self.sequence)
 			self:ResetSequence(self.sequence)
 			self:SetPlaybackRate( 1 )
@@ -57,7 +57,7 @@ function ENT:TurnOff()
 		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
 		self:SetOOO(0)
 		self.sequence = self.Entity:LookupSequence("idle")
-		if self.sequence and self.sequence != -1 then
+		if self.sequence and self.sequence ~= -1 then
 			self.Entity:SetSequence(self.sequence)
 			self:ResetSequence(self.sequence)
 			self:SetPlaybackRate( 1 )
@@ -93,7 +93,7 @@ end
 
 function ENT:SetActive( value )
 	if (value) then
-		if (value != 0 and self.Active == 0 ) then
+		if (value ~= 0 and self.Active == 0 ) then
 			self:TurnOn()
 		elseif (value == 0 and self.Active == 1 ) then
 			self:TurnOff()
@@ -177,7 +177,7 @@ function ENT:Pump_Water()
 	end
 	einc = (math.ceil(einc * self:GetMultiplier())) * self.Multiplier
 	if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "EnergyUsage", math.Round(einc)) end
-	if (waterlevel > 0 and energy >= einc) then //seems to be problem when welding(/freezing when not with CAF)
+	if (waterlevel > 0 and energy >= einc) then --seems to be problem when welding(/freezing when not with CAF)
 		local winc = (math.ceil(Pressure_Increment * (waterlevel / 3))) * self.Multiplier --Base water generation on the amount it is in the water
 		
 		if ( self.overdrive == 1 ) then
@@ -202,11 +202,11 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if self.sequence and self.sequence != -1 then
+	if self.sequence and self.sequence ~= -1 then
 		self:ResetSequence(self.sequence)
-		//self:SetSequence(self.sequence)
-		//self:SetPlaybackRate( 10 )
-		//self:ResetSequenceInfo( )
+		--self:SetSequence(self.sequence)
+		--self:SetPlaybackRate( 10 )
+		--self:ResetSequenceInfo( )
 		self:SetPlaybackRate( 1 )
 	end
 	self.thinkcount = self.thinkcount + 1

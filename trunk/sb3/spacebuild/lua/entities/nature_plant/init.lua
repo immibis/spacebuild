@@ -31,7 +31,7 @@ function ENT:Destruct()
 end
 
 function ENT:ShowOutput()
-	if self:GetNetworkedInt(1) != self.water then
+	if self:GetNetworkedInt(1) ~= self.water then
 		self.Entity:SetNetworkedInt( 1, self.water )
 	end
 end
@@ -41,7 +41,7 @@ function ENT:Damage()
 end
 
 function ENT:OnRemove()
- //nothing
+ --nothing
 end
 
 function ENT:Think()
@@ -111,7 +111,7 @@ function ENT:Think()
 			self:SupplyResource("oxygen", touse - co2left)
 		end
 	end
-	if self:GetNetworkedInt("OOO") != self.Active then
+	if self:GetNetworkedInt("OOO") ~= self.Active then
 		self:SetOOO(self.Active)
 	end
 	self:NextThink( CurTime() +  1 )

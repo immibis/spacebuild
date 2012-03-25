@@ -52,7 +52,7 @@ function ENT:Think()
 		self.PreLaunch = true
 	end
 	
-	if (self.Exploded != true) then
+	if (self.Exploded ~= true) then
 		self.CAng = self.Entity:GetAngles()
 	end
 	
@@ -113,7 +113,7 @@ end
 function ENT:PhysicsCollide( data, physobj )
 	if(!self.Exploded) then
 		--self.Exploded = true
-		if (data.HitEntity:IsWorld() || data.HitEntity:IsPlayer() || data.HitEntity:IsNPC()) then
+		if (data.HitEntity:IsWorld() or data.HitEntity:IsPlayer() or data.HitEntity:IsNPC()) then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 900, 500)
 			cbt_hcgexplode( self.Entity:GetPos(), 800, math.random(1500,2500), 8)
 			local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
@@ -143,7 +143,7 @@ function ENT:PhysicsCollide( data, physobj )
 			
 			ShakeIt:Fire("kill", "", 6)
 		else	
-			if (data.HitEntity != self.LastHit) then
+			if (data.HitEntity ~= self.LastHit) then
 				local attack = cbt_dealhcghit( data.HitEntity, 2500, self.PStr, self.Entity:GetPos() , self.Entity:GetPos())
 				if (attack == 0) then
 					self.Exploded = true
@@ -182,7 +182,7 @@ function ENT:PhysicsCollide( data, physobj )
 					self.Entity:SetPos( self.Entity:GetPos() + self.Entity:GetForward() * 30 )
 					self.PhysObj:SetVelocity(data.OurOldVelocity)
 					self.PStr = self.PStr - 1
-					if (self.DTimer != true) then
+					if (self.DTimer ~= true) then
 						self.DTimer = true
 						self.DTime = CurTime() + 1.5
 					end

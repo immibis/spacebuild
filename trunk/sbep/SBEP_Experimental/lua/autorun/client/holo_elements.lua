@@ -1,7 +1,7 @@
 holo = {}
 
 holo.Register = function( sName , heObject , sParent )
-					holo.Classes = holo.Classes || {}
+					holo.Classes = holo.Classes or {}
 					if sParent then
 						local P = holo.Classes[sParent]
 						if P then
@@ -15,7 +15,7 @@ holo.Register = function( sName , heObject , sParent )
 				end
 
 holo.Create = function( sName , heParent )
-					if !holo.Classes || !holo.Classes[sName] then ErrorNoHalt"Holo Class does not exist." return end
+					if !holo.Classes or !holo.Classes[sName] then ErrorNoHalt"Holo Class does not exist." return end
 					
 					local Obj = table.Copy( holo.Classes[sName] )
 						Obj:Initialize()
@@ -75,7 +75,7 @@ local function ClampColor( cC )
 end
 
 ---------------------------------------------------------------------------------------------------
-//	HRect										//
+--	HRect										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -226,7 +226,7 @@ end
 function OBJ:CheckPAlpha()
 	local P = self:GetPanel()
 		if P then
-			return P:GetAlpha() || 1
+			return P:GetAlpha() or 1
 		end
 	return 1
 end
@@ -296,7 +296,7 @@ end
 
 function OBJ:GetPanel()
 	local P = self.ePanel
-	if P && P:IsValid() then
+	if P and P:IsValid() then
 		return P
 	else
 		E = self:GetElement()
@@ -313,7 +313,7 @@ end
 function OBJ:SetParent( heParent )
 	self.heParent = heParent
 	
-	heParent.Children = heParent.Children || {}
+	heParent.Children = heParent.Children or {}
 		table.insert( heParent.Children, self )
 end
 
@@ -340,7 +340,7 @@ end*/
 holo.Register( "HRect" , OBJ )
 
 ---------------------------------------------------------------------------------------------------
-//	HCircle										//
+--	HCircle										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -391,7 +391,7 @@ end
 holo.Register( "HCircle" , OBJ , "HRect" )
 
 ---------------------------------------------------------------------------------------------------
-//	HLabel										//
+--	HLabel										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -428,7 +428,7 @@ function OBJ:SetAlign( enA )
 				}
 	
 	for n, EN in ipairs( en ) do
-		if enA == n - 1 || enA == EN then
+		if enA == n - 1 or enA == EN then
 			self.enAlign = EN
 		end
 	end
@@ -437,7 +437,7 @@ end
 holo.Register( "HLabel" , OBJ , "HRect" )
 
 ---------------------------------------------------------------------------------------------------
-//	HButton										//
+--	HButton										--
 ---------------------------------------------------------------------------------------------------
 
 local OBJ = {}
@@ -473,7 +473,7 @@ end
 
 function OBJ:Think()	
 	if self:GetToggle() then
-		if (LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) && !self.MTog)) and self:MouseCheck( self:MPos() ) then
+		if (LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and !self.MTog)) and self:MouseCheck( self:MPos() ) then
 			self:Toggle()
 			self.MTog = true
 		elseif !input.IsMouseDown(MOUSE_FIRST) then
@@ -541,7 +541,7 @@ end
 holo.Register( "HButton" , OBJ , "HRect" )
 
 ---------------------------------------------------------------------------------------------------
-//	HSBar										//
+--	HSBar										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -669,7 +669,7 @@ end
 holo.Register( "HSBar" , OBJ , "HRect" )
 
 ---------------------------------------------------------------------------------------------------
-//	HDSBar										//
+--	HDSBar										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -863,7 +863,7 @@ end
 holo.Register( "HDSBar" , OBJ , "HRect" )
 
 ---------------------------------------------------------------------------------------------------
-//	HRotator										//
+--	HRotator										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -972,7 +972,7 @@ holo.Register( "HRotator" , OBJ , "HCircle" )
 
 
 ---------------------------------------------------------------------------------------------------
-//	HVecView										//
+--	HVecView										--
 ---------------------------------------------------------------------------------------------------
 local OBJ = {}
 
@@ -1026,7 +1026,7 @@ function OBJ:Draw()
 		
 		--print(XEd,YEd)
 		
-		local RX,RY,AX,AY = XEd != 0 && x + (w * 0.5 * XEd) || self.VX,YEd != 0 && y + (t * 0.5 * YEd) || self.VY,-math.abs(XEd) + 1,-math.abs(YEd) + 1
+		local RX,RY,AX,AY = XEd ~= 0 and x + (w * 0.5 * XEd) or self.VX,YEd ~= 0 and y + (t * 0.5 * YEd) or self.VY,-math.abs(XEd) + 1,-math.abs(YEd) + 1
 		
 		surface.DrawLine( RX + (-5 * XEd), RY + (-5 * YEd), RX + (-30 * XEd), RY + (-30 * YEd) )
 		surface.DrawLine( RX + (-5 * XEd), RY + (-5 * YEd), RX + (-5 * XEd) + (-10 * AX) + (-10 * AY * XEd), RY + (-20 * YEd) + (-10 * AY) + (5 * AX * YEd) )
@@ -1036,7 +1036,7 @@ end
 
 function OBJ:Think()
 	local P = self:GetPanel()
-	if P && P:IsValid() then
+	if P and P:IsValid() then
 		local up = P:GetUp()
 		local eyepos = LocalPlayer():GetShootPos()
 			

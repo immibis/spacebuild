@@ -72,12 +72,12 @@ function PANEL:FindAndSelectButton( Value )
        
                 if ( Icon.Model == Value ) then
                
-                        // Remove the old overlay
+                        -- Remove the old overlay
                         if ( self.SelectedIcon ) then
                                 self.SelectedIcon.PaintOver = nil
                         end
                        
-                        // Add the overlay to this button
+                        -- Add the overlay to this button
                         Icon.PaintOver = HighlightedButtonPaint;
                         self.SelectedIcon = Icon
  

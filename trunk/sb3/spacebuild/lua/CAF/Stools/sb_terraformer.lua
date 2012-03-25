@@ -1,4 +1,4 @@
-//if not GAMEMODE.IsSpacebuildDerived then return end
+--if not GAMEMODE.IsSpacebuildDerived then return end
 
 TOOL.Category			= "Life Support"
 TOOL.Name				= "#Terraformers"
@@ -35,8 +35,8 @@ function TOOL:GetExtraCCVars()
 end
 
 local function gas_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
-	local base_volume = 284267 //Change to the actual base volume later on
+	local volume_mul = 1 --Change to be 0 by default later on
+	local base_volume = 284267 --Change to the actual base volume later on
 	local base_mass = 200
 	local base_health = 600
 	CAF.GetAddon("Resource Distribution").RegisterNonStorageDevice(ent)

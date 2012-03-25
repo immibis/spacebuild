@@ -126,7 +126,7 @@ local SBEP_SWeps = {
 						else
 							Mdl = Wep.SModel
 						end
-						if Mdl && Mdl:IsValid() then
+						if Mdl and Mdl:IsValid() then
 							DVec = Mdl:GetPos() + (Mdl:GetRight() * RDPos.x) + (Mdl:GetForward() * RDPos.y) + (Mdl:GetUp() * RDPos.z)
 							--print(Mdl:GetUp())
 						end
@@ -384,7 +384,7 @@ local SBEP_SWeps = {
 						else
 							Mdl = Wep.SModel
 						end
-						if Mdl && Mdl:IsValid() then
+						if Mdl and Mdl:IsValid() then
 							DVec = Mdl:GetPos() + (Mdl:GetRight() * RDPos.x) + (Mdl:GetForward() * RDPos.y) + (Mdl:GetUp() * RDPos.z)
 							--print(Mdl:GetUp())
 						end
@@ -507,7 +507,7 @@ local SBEP_SWeps = {
 										CrouchMod = 0.5
 									end
 									local AkimboPenalty = 1
-									if (Prime && Ply.Slots.Secondary[Ply.CSlot] > 0) || (!Prime && Ply.Slots.Primary[Ply.CSlot] > 0) then
+									if (Prime and Ply.Slots.Secondary[Ply.CSlot] > 0) or (!Prime and Ply.Slots.Primary[Ply.CSlot] > 0) then
 										AkimboPenalty = self.PData.AkimboPenalty * 1
 									end
 									local ISMod = 1
@@ -664,11 +664,11 @@ local SBEP_SWeps = {
 				CustomThink = function(Wep,Ply,Prime)
 					if SERVER then
 						Wep.PlasmaPower = Wep.PlasmaPower or 0
-						if ((Prime && Ply:KeyDown(IN_ATTACK)) || (!Prime && Ply:KeyDown(IN_ATTACK2))) && Wep.PlasmaPower < 251 then
+						if ((Prime and Ply:KeyDown(IN_ATTACK)) or (!Prime and Ply:KeyDown(IN_ATTACK2))) and Wep.PlasmaPower < 251 then
 							if Wep.PoweringUp then
 								Wep.PlasmaPower = math.Clamp(Wep.PlasmaPower + 1,0,255)
 							else
-								if !((Wep.PReloading || Wep:Clip1() == 0) && Prime) && !((Wep.SReloading || Wep:Clip2() == 0) && !Prime) then
+								if !((Wep.PReloading or Wep:Clip1() == 0) and Prime) and !((Wep.SReloading or Wep:Clip2() == 0) and !Prime) then
 									Wep.PoweringUp = true
 									Wep.PlasmaPower = 0
 								end
@@ -925,11 +925,11 @@ local SBEP_SWeps = {
 				CustomThink = function(Wep,Ply,Prime)
 					if SERVER then
 						Wep.PlasmaPower = Wep.PlasmaPower or 0
-						if ((Prime && Ply:KeyDown(IN_ATTACK)) || (!Prime && Ply:KeyDown(IN_ATTACK2))) && Wep.PlasmaPower < 251 then
+						if ((Prime and Ply:KeyDown(IN_ATTACK)) or (!Prime and Ply:KeyDown(IN_ATTACK2))) and Wep.PlasmaPower < 251 then
 							if Wep.PoweringUp then
 								Wep.PlasmaPower = math.Clamp(Wep.PlasmaPower + 1,0,255)
 							else
-								if !((Wep.PReloading || Wep:Clip1() == 0) && Prime) && !((Wep.SReloading || Wep:Clip2() == 0) && !Prime) then
+								if !((Wep.PReloading or Wep:Clip1() == 0) and Prime) and !((Wep.SReloading or Wep:Clip2() == 0) and !Prime) then
 									Wep.PoweringUp = true
 									Wep.PlasmaPower = 0
 								end
@@ -1137,7 +1137,7 @@ local SBEP_SWeps = {
 										CrouchMod = 0.5
 									end
 									local AkimboPenalty = 1
-									if (Prime && Ply.Slots.Secondary[Ply.CSlot] > 0) || (!Prime && Ply.Slots.Primary[Ply.CSlot] > 0) then
+									if (Prime and Ply.Slots.Secondary[Ply.CSlot] > 0) or (!Prime and Ply.Slots.Primary[Ply.CSlot] > 0) then
 										AkimboPenalty = Data.AkimboPenalty * 1
 									end
 									local ISMod = 1
@@ -1224,7 +1224,7 @@ local SBEP_SWeps = {
 										CrouchMod = 0.5
 									end
 									local AkimboPenalty = 1
-									if (Prime && Ply.Slots.Secondary[Ply.CSlot] > 0) || (!Prime && Ply.Slots.Primary[Ply.CSlot] > 0) then
+									if (Prime and Ply.Slots.Secondary[Ply.CSlot] > 0) or (!Prime and Ply.Slots.Primary[Ply.CSlot] > 0) then
 										AkimboPenalty = Data.AkimboPenalty * 1
 									end
 									local ISMod = 1
@@ -1340,7 +1340,7 @@ local SBEP_SWeps = {
 						else
 							Mdl = Wep.SModel
 						end
-						if Mdl && Mdl:IsValid() then
+						if Mdl and Mdl:IsValid() then
 							DVec = Mdl:GetPos() + (Mdl:GetRight() * RDPos.x) + (Mdl:GetForward() * RDPos.y) + (Mdl:GetUp() * RDPos.z)
 							--print(Mdl:GetUp())
 						end

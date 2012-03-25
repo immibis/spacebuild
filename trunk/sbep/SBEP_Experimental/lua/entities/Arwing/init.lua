@@ -208,7 +208,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:OnRemove()
-	if self.Body && self.Body:IsValid() then
+	if self.Body and self.Body:IsValid() then
 		self.Body:Remove()
 	end
 end
@@ -221,9 +221,9 @@ function ENT:Think()
 	--self.Entity:SetColor( 0, 0, 255, 255)
 	local Phys = self.Body:GetPhysicsObject()
 
-	if self.Body && self.Body:IsValid() then
+	if self.Body and self.Body:IsValid() then
 		self.CPL = self.Body:GetPassenger()
-		if self.CPL && self.CPL:IsValid() then
+		if self.CPL and self.CPL:IsValid() then
 			
 			self.AMul = 1
 			self.Active = true
@@ -289,7 +289,7 @@ function ENT:Think()
 			--	self.DYaw = 0
 			--	self.DPitch = 0
 			--end
-			if self.CPL.SBEPYaw == 0 && self.CPL.SBEPPitch == 0 then
+			if self.CPL.SBEPYaw == 0 and self.CPL.SBEPPitch == 0 then
 				if self.OPAng then
 					self.CPL:SetEyeAngles(self:WorldToLocalAngles(self.OPAng):Forward():Angle())
 				else
@@ -349,17 +349,17 @@ function ENT:Think()
 		RRo = self.Yaw * 0.1
 	end
 	
-	if self.LWing && self.LWing:IsValid() then
+	if self.LWing and self.LWing:IsValid() then
 		self.LWing:SetLocalAngles(Angle(self.Fwd + RRo,self.Strafe,0))
 	end
-	if self.RWing && self.RWing:IsValid() then
+	if self.RWing and self.RWing:IsValid() then
 		self.RWing:SetLocalAngles(Angle(self.Fwd - RRo,-self.Strafe,0))
 	end
 	
-	if self.TREng && self.TREng:IsValid() then
+	if self.TREng and self.TREng:IsValid() then
 		self.TREng:SetLocalAngles(Angle(self.Fwd - PRo,YRo, 90))
 	end
-	if self.TLEng && self.TLEng:IsValid() then
+	if self.TLEng and self.TLEng:IsValid() then
 		self.TLEng:SetLocalAngles(Angle(self.Fwd - PRo,YRo,-90))
 	end
 	
@@ -367,7 +367,7 @@ function ENT:Think()
 	
 	if Phys:IsValid() then
 		if self.Active then
-			if Phys && Phys:IsValid() then
+			if Phys and Phys:IsValid() then
 				Phys:EnableGravity(false)
 			end
 			Phys:SetVelocity(Phys:GetVelocity() * .96)
@@ -377,25 +377,25 @@ function ENT:Think()
 				--Phys:EnableGravity(true)
 			end
 			--local Lift =  math.Clamp(self:GetForward():DotProduct( Phys:GetVelocity() ) , 0 , 100 ) * 0.04
-			if self.RWingE && self.RWingE:IsValid() && self.LWingE && self.LWingE:IsValid() then
+			if self.RWingE and self.RWingE:IsValid() and self.LWingE and self.LWingE:IsValid() then
 				--Phys:ApplyForceOffset(self:GetUp() * (Lift * Phys:GetMass()), self:GetPos() + self:GetRight() * 50 )
 				--Phys:ApplyForceOffset(self.RWing:GetForward() * (self.Thrust * Phys:GetMass()), self:GetPos() + self:GetForward() * 86 + self:GetRight() * 50 )
 				Phys:ApplyForceCenter(self.RWing:GetForward() * (self.Thrust * Phys:GetMass()) )
 				--Phys:SetVelocity(self.RWing:GetForward() * self.Thrust)
 			end
 		else
-			if Phys && Phys:IsValid() then
+			if Phys and Phys:IsValid() then
 				Phys:EnableGravity(true)
 			end
 		end
 	end
 	
 	
-	if !self.Tail || !self.Tail:IsValid() then
-		if self.TREng && self.TREng:IsValid() then
+	if !self.Tail or !self.Tail:IsValid() then
+		if self.TREng and self.TREng:IsValid() then
 			self.TREng:Remove()
 		end
-		if self.TLEng && self.TLEng:IsValid() then
+		if self.TLEng and self.TLEng:IsValid() then
 			self.TLEng:Remove()
 		end
 	end

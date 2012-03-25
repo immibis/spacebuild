@@ -124,7 +124,7 @@ end
 hook.Add("PlayerInitialSpawn", "RD_Pump_info_Update", UserConnect)
 
 function ENT:Initialize()
-	//self.BaseClass.Initialize(self) --use this in all ents
+	--self.BaseClass.Initialize(self) --use this in all ents
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
@@ -196,15 +196,15 @@ function ENT:TriggerInput(iname, value)
 			self.WireConnectPump = value
 		end
 	elseif (iname == "Connect") then
-		if value != 0 and self.WireConnectPump >= 0 then
+		if value ~= 0 and self.WireConnectPump >= 0 then
 			local ent2 = ents.GetByIndex( self.WireConnectPump )
 			if not ent2 then return end
 			if ent2.IsPump then
 				if ent2.otherpump then
-					// Can't connect to the other pump, because it already is connected to a pump
+					-- Can't connect to the other pump, because it already is connected to a pump
 					self:EmitSound("RD/pump/beep-5.wav", 256)
 				elseif ent2:GetPos():Distance(self:GetPos()) > 512 then
-					// Can't connect to the other pump, because it is out of range
+					-- Can't connect to the other pump, because it is out of range
 					self:EmitSound("RD/pump/beep-5.wav", 256)
 				else
 					self:Connect(ent2)
@@ -249,7 +249,7 @@ function ENT:AcceptInput(name,activator,caller)
 	end
 end
 
-function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if the shield is installed(CDS)
+function ENT:OnTakeDamage(DmgInfo)--should make the damage go to the shield if the shield is installed(CDS)
 	if self.Shield then
 		self.Shield:ShieldDamage(DmgInfo:GetDamage())
 		CDS_ShieldImpact(self.Entity:GetPos())
@@ -275,7 +275,7 @@ function ENT:Think()
 		self.node = nil
 		self:SetNetwork(0)
 		self.netid = 0
-	elseif not self.node and self.netid != 0 then
+	elseif not self.node and self.netid ~= 0 then
 		self:SetNetwork(0)
 		self.netid = 0
 	end
@@ -340,7 +340,7 @@ function ENT:Disconnect()
 end
 
 function ENT:OnRemove()
-	//self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
+	--self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
 	self:Disconnect()
 	CAF.GetAddon("Resource Distribution").Unlink(self)
 	CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
@@ -348,12 +348,12 @@ function ENT:OnRemove()
 end
 
 function ENT:OnRestore()
-	//self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
+	--self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
 	if not (WireAddon == nil) then Wire_Restored(self.Entity) end
 end
 
 function ENT:PreEntityCopy()
-	//self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
+	--self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
 	local RD = CAF.GetAddon("Resource Distribution")
 	RD.BuildDupeInfo(self.Entity)
 	if not (WireAddon == nil) then
@@ -365,7 +365,7 @@ function ENT:PreEntityCopy()
 end
 
 function ENT:PostEntityPaste( Player, Ent, CreatedEntities )
-	//self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
+	--self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
 	local RD = CAF.GetAddon("Resource Distribution")
 	RD.ApplyDupeInfo(Ent, CreatedEntities)
 	if not (WireAddon == nil) and (Ent.EntityMods) and (Ent.EntityMods.WireDupeInfo) then

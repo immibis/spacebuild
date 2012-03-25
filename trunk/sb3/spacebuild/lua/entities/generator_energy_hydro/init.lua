@@ -63,7 +63,7 @@ function ENT:GenEnergy()
 			self.Active = 1
 			self:SetOOO(1)
 			self.sequence = self.Entity:LookupSequence("HydroFans")
-			if self.sequence and self.sequence != -1 then
+			if self.sequence and self.sequence ~= -1 then
 				self.Entity:SetSequence(self.sequence)
 				self:ResetSequence(self.sequence)
 				self:SetPlaybackRate( 1 )
@@ -79,7 +79,7 @@ function ENT:GenEnergy()
 			self.Active = 0
 			self:SetOOO(0)
 			self.sequence = self.Entity:LookupSequence("idle")
-			if self.sequence and self.sequence != -1 then
+			if self.sequence and self.sequence ~= -1 then
 				self.Entity:SetSequence(self.sequence)
 				self:ResetSequence(self.sequence)
 				self:SetPlaybackRate( 1 )
@@ -91,7 +91,7 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if self.sequence and self.sequence != -1 then
+	if self.sequence and self.sequence ~= -1 then
 		self:ResetSequence(self.sequence)
 		self:SetPlaybackRate( 1 )
 	end

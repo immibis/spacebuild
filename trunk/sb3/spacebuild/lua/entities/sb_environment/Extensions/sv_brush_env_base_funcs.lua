@@ -123,19 +123,19 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 	end
 
 	function ENT:ChangeAtmosphere(newatmosphere)
-		if not newatmosphere or type(newatmosphere) != "number" then return Error("Invalid parameter\n") end
+		if not newatmosphere or type(newatmosphere) ~= "number" then return Error("Invalid parameter\n") end
 		if newatmosphere < 0 then
 			newatmosphere = 0
 		elseif newatmosphere > 1 then
 			newatmosphere = 1
 		end
-		//Update the pressure since it's based on atmosphere and gravity
-		if self.sbenvironment.atmosphere != 0 then
+		--Update the pressure since it's based on atmosphere and gravity
+		if self.sbenvironment.atmosphere ~= 0 then
 			self.sbenvironment.pressure = self.sbenvironment.pressure * (newatmosphere/self.sbenvironment.atmosphere)
 		else
 			self.sbenvironment.pressure = self.sbenvironment.pressure * newatmosphere
 		end
-		//Update air values so they are correct again (
+		--Update air values so they are correct again (
 		if newatmosphere > self.sbenvironment.atmosphere then
 			self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * newatmosphere)
 			local tmp = self.sbenvironment.air.max - (self.sbenvironment.air.o2 + self.sbenvironment.air.co2 + self.sbenvironment.air.n + self.sbenvironment.air.h)
@@ -153,9 +153,9 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 	end
 
 	function ENT:ChangeGravity(newgravity)
-		if not newgravity or type(newgravity) != "number" then return "Invalid parameter" end
-		//Update the pressure since it's based on atmosphere and gravity
-		if self.sbenvironment.gravity != 0 then
+		if not newgravity or type(newgravity) ~= "number" then return "Invalid parameter" end
+		--Update the pressure since it's based on atmosphere and gravity
+		if self.sbenvironment.gravity ~= 0 then
 			self.sbenvironment.pressure = self.sbenvironment.pressure * (newgravity/self.sbenvironment.gravity)
 		else
 			self.sbenvironment.pressure = self.sbenvironment.pressure * newgravity
@@ -186,7 +186,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 
 	function ENT:Convert(air1, air2, value)
 		if not air1 or not air2 or not value then return end
-		if type(air1) != "number" or type(air2) != "number" or type(value) != "number" then return end 
+		if type(air1) ~= "number" or type(air2) ~= "number" or type(value) ~= "number" then return end
 		
 		air1 = math.Round(air1)
 		air2 = math.Round(air2)
@@ -354,15 +354,15 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 	end
 
 	function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h, name)
-		//Msg("CreateEnvironment: "..tostring(gravity).."\n")
-		//set Gravity if one is given
+		--Msg("CreateEnvironment: "..tostring(gravity).."\n")
+		--set Gravity if one is given
 		if gravity and type(gravity) == "number" then
 			if gravity < 0 then
 				gravity = 0
 			end
 			self.sbenvironment.gravity = gravity
 		end
-		//set atmosphere if given
+		--set atmosphere if given
 		if atmosphere and type(atmosphere) == "number" then
 			if atmosphere < 0 then
 				atmosphere = 0
@@ -371,17 +371,17 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 			end
 			self.sbenvironment.atmosphere = atmosphere
 		end
-		//set pressure if given
+		--set pressure if given
 		if pressure and type(pressure) == "number" and pressure >= 0 then
 			self.sbenvironment.pressure = pressure
 		else 
 			self.sbenvironment.pressure = math.Round(self.sbenvironment.atmosphere * self.sbenvironment.gravity)
 		end
-		//set temperature if given
+		--set temperature if given
 		if temperature and type(temperature) == "number" then
 			self.sbenvironment.temperature = temperature
 		end
-		//set o2 if given
+		--set o2 if given
 		if o2 and type(o2) == "number" and o2 > 0 then
 			if o2 < 0 then o2 = 0 end
 			if o2 > 100 then o2 = 100 end
@@ -392,7 +392,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 			self.sbenvironment.air.o2per = 0
 			self.sbenvironment.air.o2 = 0
 		end
-		//set co2 if given
+		--set co2 if given
 		if co2 and type(co2) == "number" and co2 > 0 then
 			if co2 < 0 then co2 = 0 end
 			if (100 - o2) < co2 then co2 = 100-o2 end
@@ -403,7 +403,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 			self.sbenvironment.air.co2per = 0
 			self.sbenvironment.air.co2 = 0
 		end
-		//set n if given
+		--set n if given
 		if n and type(n) == "number" and n > 0 then
 			if n < 0 then n = 0 end
 			if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
@@ -414,7 +414,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 			self.sbenvironment.air.n = 0
 			self.sbenvironment.air.n = 0
 		end
-		//set h if given
+		--set h if given
 		if h and type(h) == "number" and h > 0 then
 			if h < 0 then h = 0 end
 			if (((100 - o2)-co2)-n) < h then h = ((100-o2)-co2)-n end
@@ -464,12 +464,12 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 			end
 			self.sbenvironment.pressure = pressure
 		end
-		//set temperature if given
+		--set temperature if given
 		if temperature and type(temperature) == "number" then
 			self.sbenvironment.temperature = temperature
 		end
 		self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
-		//set o2 if given
+		--set o2 if given
 		if o2 and type(o2) == "number" then
 			if o2 < 0 then o2 = 0 end
 			if o2 > 100 then o2 = 100 end
@@ -478,7 +478,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 		else 
 			o2 = self:GetO2Percentage()
 		end
-		//set co2 if given
+		--set co2 if given
 		if co2 and type(co2) == "number" then
 			if co2 < 0 then co2 = 0 end
 			if (100 - o2) < co2 then co2 = 100-o2 end
@@ -487,7 +487,7 @@ function SB_Brush_Environment_Load_Base_Func_Extensions1(ENT) -- HAKZ! HAKZ! HAK
 		else 
 			co2 = self:GetCO2Percentage()
 		end
-		//set n if given
+		--set n if given
 		if n and type(n) == "number" then
 			if n < 0 then n = 0 end
 			if ((100 - o2)-co2) < n then n = (100-o2)-co2 end

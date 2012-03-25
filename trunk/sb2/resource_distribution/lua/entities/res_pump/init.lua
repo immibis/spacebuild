@@ -120,7 +120,7 @@ function ENT:Think()
 			local sockCenter = self.Entity:LocalToWorld( Vector(5,13,10) )
 			local local_ents = ents.FindInSphere( sockCenter, PLUG_IN_ATTACH_RANGE )
 			for key, plug in pairs(local_ents) do
-				// If we find a plug, try to attach it to us
+				-- If we find a plug, try to attach it to us
 				if ( plug:IsValid() and plug.is_plug) and (plug.MySocket == nil) then --found a plug and not it's not in another socket
 					self:AttachPlug(plug)
 				end
@@ -269,20 +269,20 @@ end
 
 function ENT:AttachPlug( plug )
 	
-	// Set references between them
+	-- Set references between them
 	plug.MySocket = self.Entity
 	self.MyPlug = plug
 	self.OtherSocket = plug.socket
 	plug.socket.OtherSocket = self
 	
-	// Position plug
+	-- Position plug
 	local phys = plug:GetPhysicsObject()
 		phys:EnableMotion( true )
 		plug:SetPos( self.Entity:LocalToWorld( Vector(5,13,10) ) )
 		plug:SetAngles( self.Entity:GetAngles() )
 	phys:Wake() --force plug to update
 	
-	// Constrain together
+	-- Constrain together
 	self.Weld = constraint.Weld( self.Entity, plug, 0, 0, PLUG_IN_SOCKET_CONSTRAINT_POWER, true, false )
 	if (not self.Weld) then
 		self.MyPlug = nil

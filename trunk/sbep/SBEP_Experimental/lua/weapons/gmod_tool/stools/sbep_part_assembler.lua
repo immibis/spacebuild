@@ -69,13 +69,13 @@ function TOOL:LeftClick( trace )
 	end
 	
 	local ent = trace.Entity
-	if !ent || !ent:IsValid() || ent:GetClass() ~= "sbep_base_sprite" then return end
+	if !ent or !ent:IsValid() or ent:GetClass() ~= "sbep_base_sprite" then return end
 	
 	if CPPI then
         if !ent:CPPICanTool(ply,"constraint") then return end
     end
 	
-	if self.E1 && self.E1:IsValid() && self:GetStage() == 1 then
+	if self.E1 and self.E1:IsValid() and self:GetStage() == 1 then
 		if self.E1:GetSpriteType() ~= SPD[ ent:GetSpriteType() ] then return end
 		
 		local pos = self.E1.SEO:GetPos()
@@ -174,10 +174,10 @@ if SERVER then
 	function TOOL:Think()
 		local ply = self:GetOwner()
 		local trace = ply:GetEyeTrace()
-		if !trace.Hit || trace.HitWorld || trace.HitSky then return end
+		if !trace.Hit or trace.HitWorld or trace.HitSky then return end
 		
 		local ent = trace.Entity
-		if !ent || !ent:IsValid() then return end
+		if !ent or !ent:IsValid() then return end
 		
 		if CPPI then
 			if !ent:CPPICanTool(ply,"constraint") then return end
@@ -191,7 +191,7 @@ if SERVER then
 
 		if !ent.SPR then ent.SPR = {} end
 		for k,v in ipairs( data ) do
-			if ent:GetClass() == "sbep_elev_housing" && (v.type == "ESML" || v.type == "ELRG") then break end
+			if ent:GetClass() == "sbep_elev_housing" and (v.type == "ESML" or v.type == "ELRG") then break end
 			local sprite = ents.Create( "sbep_base_sprite" )
 			sprite:Spawn()
 			
@@ -218,7 +218,7 @@ if SERVER then
 	function TOOL:Holster( wep )
 		if self.SPR then
 			for k,v in pairs( self.SPR ) do
-				if v && v:IsValid() then
+				if v and v:IsValid() then
 					v:Remove()
 				end
 			end

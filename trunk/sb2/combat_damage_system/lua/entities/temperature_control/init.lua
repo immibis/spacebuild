@@ -148,11 +148,11 @@ function ENT:GetNextPart(ent,EntTable,ConstraintTable)
     for key, ConstraintEntity in pairs( ent.Constraints ) do
         if ( !ConstraintTable[ ConstraintEntity ] ) then
             ConstraintTable[ ConstraintEntity ] = true
-            if ( ConstraintEntity[ "Ent" ] && ConstraintEntity[ "Ent" ]:IsValid() ) then
+            if ( ConstraintEntity[ "Ent" ] and ConstraintEntity[ "Ent" ]:IsValid() ) then
                 self:GetNextPart( ConstraintEntity[ "Ent" ].Entity, EntTable, ConstraintTable)
             else
                 for i=1, 6 do
-                    if ( ConstraintEntity[ "Ent"..i ] && ConstraintEntity[ "Ent"..i ]:IsValid() ) then
+                    if ( ConstraintEntity[ "Ent"..i ] and ConstraintEntity[ "Ent"..i ]:IsValid() ) then
                         self:GetNextPart( ConstraintEntity[ "Ent"..i ].Entity, EntTable, ConstraintTable)
                     end
                 end

@@ -14,8 +14,8 @@
  
  function EFFECT:Init( data ) 
  	 
- 	// This is how long the spawn effect  
- 	// takes from start to finish. 
+ 	-- This is how long the spawn effect
+ 	-- takes from start to finish.
  	self.Time = 12
  	self.PreSplode = 5
  	self.STime = CurTime()
@@ -95,7 +95,7 @@ function EFFECT:Think()
 		--self.PSS:Stop()
 	end
 	
-	if T > 1.03 && !self.ExpPlayed then
+	if T > 1.03 and !self.ExpPlayed then
 		self.ExpPlayed = true
 		WorldSound( "ambient/explosions/explode_5.wav", self.vOffset,  160,  100 )
 		WorldSound( "ambient/explosions/explode_6.wav", self.vOffset,  160,  100 )

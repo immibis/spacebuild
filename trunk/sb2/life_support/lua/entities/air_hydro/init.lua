@@ -41,7 +41,7 @@ function ENT:Damage()
 end
 
 function ENT:OnRemove()
- //nothing
+ --nothing
 end
 
 function ENT:Think()

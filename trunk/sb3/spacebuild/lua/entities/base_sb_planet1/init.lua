@@ -60,7 +60,7 @@ local function Extract_Bit(bit, field)
 end
 
 function ENT:SetFlags(flags)
-	if not flags or type(flags) != "number" then return end
+	if not flags or type(flags) ~= "number" then return end
 	self.sbenvironment.habitat = Extract_Bit(1, flags)
 	self.sbenvironment.unstable = Extract_Bit(2, flags)
 	self.sbenvironment.sunburn = Extract_Bit(3, flags)
@@ -79,7 +79,7 @@ function ENT:GetTemperature(ent)
 			SunAngle:Normalize()
 			local startpos = (entpos - (SunAngle * 4096))
 			trace.start = startpos
-			trace.endpos = entpos // + Vector(0,0,30)
+			trace.endpos = entpos -- + Vector(0,0,30)
 			local tr = util.TraceLine( trace )
 			if (tr.Hit) then
 				if (tr.Entity == ent) then
@@ -93,7 +93,7 @@ function ENT:GetTemperature(ent)
 					end
 					lit = true
 				else
-					//lit = false
+					--lit = false
 				end
 			else
 				lit = true
@@ -102,7 +102,7 @@ function ENT:GetTemperature(ent)
 	end
 	local startpos = (entpos - (SunAngle2 * 4096))
 	trace.start = startpos
-	trace.endpos = entpos // + Vector(0,0,30)
+	trace.endpos = entpos -- + Vector(0,0,30)
 	local tr = util.TraceLine( trace )
 	if (tr.Hit) then
 		if (tr.Entity == ent) then
@@ -116,7 +116,7 @@ function ENT:GetTemperature(ent)
 			end
 			lit = true
 		else
-			//lit = false
+			--lit = false
 		end
 	else
 		lit = true
@@ -137,7 +137,7 @@ function ENT:GetPriority()
 end
 
 function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, temperature, temperature2, flags)
-	if not ent then self:Remove() end //needs a parent!
+	if not ent then self:Remove() end --needs a parent!
 	self:SetParent(ent)
 	self:SetFlags(flags)
 	local o2 = 0
@@ -145,20 +145,20 @@ function ENT:CreateEnvironment(ent, radius, gravity, atmosphere, temperature, te
 	local n = 0
 	local h = 0
 	local pressure = atmosphere
-	//set Radius if one is given
+	--set Radius if one is given
 	if radius and type(radius) == "number" then
 		if radius < 0 then
 			radius = 0
 		end
 		self.sbenvironment.size = radius
 	end
-	//set temperature2 if given
-	if self.sbenvironment.habitat then //Based on values for earth
+	--set temperature2 if given
+	if self.sbenvironment.habitat then --Based on values for earth
 		o2 = 21
 		co2 = 0.45
 		n = 78
 		h = 0.55
-	else //Based on values for Venus
+	else --Based on values for Venus
 		o2 = 0
 		co2 = 96.5
 		n = 3.5
@@ -175,7 +175,7 @@ function ENT:UpdateEnvironment(radius, gravity, atmosphere, pressure, temperatur
 		self:SetFlags(flags)
 		self:UpdateSize(self.sbenvironment.size, radius)
 	end
-	//set temperature2 if given
+	--set temperature2 if given
 	if temperature2 and type(temperature2) == "number" then
 		self.sbenvironment.temperature2 = temperature2
 	end
@@ -207,9 +207,9 @@ end
 local function SendBloom(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddPlanet", ply )
-			//umsg.Entity( ent ) //planet.num
+			--umsg.Entity( ent ) --planet.num
 			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
+			umsg.Angle( ent:GetPos() ) --planet.num
 			umsg.Float( ent.sbenvironment.size )
 				umsg.Bool (false)
 				if table.Count(ent.sbenvironment.bloom) > 0 then
@@ -233,9 +233,9 @@ end
 local function SendColor(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddPlanet", ply )
-			//umsg.Entity( ent )
+			--umsg.Entity( ent )
 			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
+			umsg.Angle( ent:GetPos() ) --planet.num
 			umsg.Float( ent.sbenvironment.size )
 			if table.Count(ent.sbenvironment.color) > 0 then
 				umsg.Bool( true )

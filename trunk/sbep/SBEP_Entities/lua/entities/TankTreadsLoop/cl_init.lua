@@ -29,7 +29,7 @@ end
 
 function ENT:Think()
 	local Cont = self.Entity:GetCont()
-	if Cont && Cont:IsValid() then
+	if Cont and Cont:IsValid() then
 		self.Scroll = Cont.Scroll
 	else
 		
@@ -59,20 +59,20 @@ function ENT:Think()
 	local RModel = self.MTable[self.Entity:GetCSModel()]
 	local RAngle = Angle(0,0,0)
 			
-		//Setting up the origin points for the 4 sections of the tread.
+		--Setting up the origin points for the 4 sections of the tread.
 		local LowStrPos = (self.Entity:GetPos() - self.Entity:GetUp() * self.Entity:GetRadius())
 		local UppStrPos = (self.Entity:GetPos() + self.Entity:GetUp() * self.Entity:GetRadius())
 		local BaCircPos = (self.Entity:GetPos() - self.Entity:GetForward() * self.Entity:GetLength() * 0.5)
 		local FrCircPos = (self.Entity:GetPos() + self.Entity:GetForward() * self.Entity:GetLength() * 0.5)
 		
-		//Drawing the bottom straight section.
+		--Drawing the bottom straight section.
 		local Scale = self.Entity:GetSegSize()
 		local SDist = math.fmod(self.Scroll, Scale.x * self.ILock)
 		
 		RAngle = self.Entity:GetAngles()
 		
 		for i = 0 - ((self.ILock * Scale.x) * 0.25), self.Entity:GetLength() + ((self.ILock * Scale.x) * 0.25), Scale.x * self.ILock do
-			if self.LTable[RCount] == nil || !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			self.LTable[RCount]:SetPos( LowStrPos + (self.Entity:GetForward() * (self.Entity:GetLength() * 0.5)) + self.Entity:GetForward() * -i + self.Entity:GetForward() * SDist )
@@ -87,7 +87,7 @@ function ENT:Think()
 			end
 		end
 		
-		//Drawing the top straight section.
+		--Drawing the top straight section.
 		local Scale = self.Entity:GetSegSize()
 		local SDist = math.fmod(self.Scroll, Scale.x * self.ILock)
 		local TAng = OAng - Angle( 0.01, 0.01, 0.01 )
@@ -95,7 +95,7 @@ function ENT:Think()
 		RAngle = TAng
 		
 		for i = 0 - ((self.ILock * Scale.x) * 0.25), self.Entity:GetLength() + ((self.ILock * Scale.x) * 0.25), Scale.x * self.ILock do
-			if self.LTable[RCount] == nil || !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			self.LTable[RCount]:SetPos( UppStrPos + (self.Entity:GetForward() * (self.Entity:GetLength() * 0.5)) + self.Entity:GetForward() * -i + self.Entity:GetForward() * SDist )
@@ -110,7 +110,7 @@ function ENT:Think()
 			end
 		end
 		
-		//Drawing the front curved section.
+		--Drawing the front curved section.
 		local Pie = 3.14159265358 -- Yes, I know it's spelled wrong. Shut up.
 		local Scale = self.Entity:GetSegSize()
 		--local CircP = (2160 / (Pie * self.Entity:GetRadius()))
@@ -119,7 +119,7 @@ function ENT:Think()
 		local SDist = -1 * math.fmod(self.Scroll * DegPI, Scale.x * self.ILock )
 		
 		for i = 0 + (((self.ILock * Scale.x) * DegPI) * 0.25), 180 - (((self.ILock * Scale.x) * DegPI) * 0.25), CircP do
-			if self.LTable[RCount] == nil || !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			local NAng = OAng - Angle( 0.01, 0.01, 0.01 )
@@ -139,7 +139,7 @@ function ENT:Think()
 			end
 		end
 		
-		//Drawing the back curved section.
+		--Drawing the back curved section.
 		local Pie = 3.14159265358 -- Yes, I know it's spelled wrong. Shut up.
 		local Scale = self.Entity:GetSegSize()
 		--local CircP = (2160 / (Pie * self.Entity:GetRadius()))
@@ -148,7 +148,7 @@ function ENT:Think()
 		local SDist = -1 * math.fmod(self.Scroll * DegPI, Scale.x * self.ILock)
 		
 		for i = 180 + (((self.ILock * Scale.x) * DegPI) * 0.25), 359 - (((self.ILock * Scale.x) * DegPI) * 0.25), CircP do
-			if self.LTable[RCount] == nil || !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			local NAng = OAng - Angle( 0.01, 0.01, 0.01 )
@@ -169,7 +169,7 @@ function ENT:Think()
 		end
 		
 		for i = RCount, self.RLimit + 10, 1 do
-			if self.LTable[RCount] != nil && self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] ~= nil and self.LTable[RCount]:IsValid() then
 				self.LTable[i]:Remove()
 			end
 			self.LTable[i] = nil

@@ -1,29 +1,29 @@
-/*=================================
+--[[=================================
 	Resource Distribution 2
 	Rewritten by TAD2020
 	Backcompat w/ Shanjaq's RD1
-=================================*/
+=================================]]
 
 --global setting for links
 RD_MAX_LINK_LENGTH = 2048
 RD_EXTRA_LINK_LENGTH = 64
 
-//	== Network Tables Structures ==
-//	==== A New Method (TAD2020) ====
-// on ents:
-//	ent.resources2links[]	-- list of ents this ent is linked to, indexed with ent_IDs
-//	ent.resources2[]	-- table of resources infos on this ent, indexed with resID
-//		.capacity	-- capacity for this res on this ent
-//		.res_name	-- name of res
-//		.resID		-- the resID again
-//		.net			-- netID for network this ent is on. ID < 0 are local nets when ent is make and not linked to anything, used to cache any info for this ent while unlinked
-//	Networks[]		-- local table of network info, indexed by netID
-//		,ID			-- netID for this net
-//		.amount		-- amount of this resource on this net
-//		.max			-- capacity of this net
-//		.res_name	-- name of the resource stored
-//		.resID		-- resource ID
-//		.ents		-- list of ents on this net, indexed by ent_IDs
+--	== Network Tables Structures ==
+--	==== A New Method (TAD2020) ====
+-- on ents:
+--	ent.resources2links[]	-- list of ents this ent is linked to, indexed with ent_IDs
+--	ent.resources2[]	-- table of resources infos on this ent, indexed with resID
+--		.capacity	-- capacity for this res on this ent
+--		.res_name	-- name of res
+--		.resID		-- the resID again
+--		.net			-- netID for network this ent is on. ID < 0 are local nets when ent is make and not linked to anything, used to cache any info for this ent while unlinked
+--	Networks[]		-- local table of network info, indexed by netID
+--		,ID			-- netID for this net
+--		.amount		-- amount of this resource on this net
+--		.max			-- capacity of this net
+--		.res_name	-- name of the resource stored
+--		.resID		-- resource ID
+--		.ents		-- list of ents on this net, indexed by ent_IDs
 
 local Resource_Types = { }
 local Resource_Types_By_Name = { }
@@ -33,13 +33,13 @@ local next_netID = 1
 local Networks = {} --list of networks, nil didcarded ones and BeamNetVars.ClearNetAmount(  netID ) on the ID to remove it from net updates
 
 --	==notes==
-//BeamNetVars.SetNetAmount( net.ID, net.amount ) -- this updates client side of the ammount of res on this net
-//ent.Entity:SetResourceNetID( net1.resID, net1.ID, true ) -- this tells the client side of the ent what net it is on
+--BeamNetVars.SetNetAmount( net.ID, net.amount ) -- this updates client side of the ammount of res on this net
+--ent.Entity:SetResourceNetID( net1.resID, net1.ID, true ) -- this tells the client side of the ent what net it is on
 
 
-//
-//	Save/Load local data tabels
-//
+--
+--	Save/Load local data tabels
+--
 local function RD2Save( save )
 	local savetab					= {}
 	savetab.Resource_Types			= Resource_Types
@@ -61,7 +61,7 @@ saverestore.AddSaveHook( "RD2Save", RD2Save )
 saverestore.AddRestoreHook( "RD2Save", RD2Restore )
 
 
-//makes a new empty network. give entID as netID to make a new local net
+--makes a new empty network. give entID as netID to make a new local net
 function RD2.NewNet( resID, netID )
 	local net = table.Copy(Resource_Types[ resID ])
 	if (netID) then
@@ -102,7 +102,7 @@ function RD2.RemoveNet( netID ) --deletes a net
 end
 
 function RD2.GetRes( ent, resID )
-	if (!ent.resources2) then 
+	if (not ent.resources2) then
 		if ent:IsVehicle() then
 			RD2.SetUpPod( ent )
 		else
@@ -142,15 +142,15 @@ end
 
 function RD2.PutEntOnNet( ent, net1, net2 ) --like combine, but faster, puts one ent from a local net2 on to a normal net1
 	RD2.MoveEntToNet( ent, net1, net2 )
-	if (!ent.is_valve) then RD2.MoveNet( net1, net2 ) end --ent is not a valve
+	if (not ent.is_valve) then RD2.MoveNet( net1, net2 ) end --ent is not a valve
 end
 
 function RD2.PutEntsOnNewNet( resID, ent1, net1, ent2, net2 ) --puts two ents from their local nets on a normal net
 	local net = RD2.NewNet(resID)
 	RD2.MoveEntToNet( ent1, net, net1 )
 	RD2.MoveEntToNet( ent2, net, net2 )
-	if (!ent1.is_valve) then RD2.MoveNet( net, net1 ) end
-	if (!ent2.is_valve) then RD2.MoveNet( net, net2 ) end
+	if (not ent1.is_valve) then RD2.MoveNet( net, net1 ) end
+	if (not ent2.is_valve) then RD2.MoveNet( net, net2 ) end
 end
 
 function RD2.RebuildNet( net, resID, ent, restab, list )
@@ -168,7 +168,7 @@ function RD2.RebuildNet( net, resID, ent, restab, list )
 	ent.Entity:SetResourceNetID( net.resID, net.ID, true )
 	
 	for _,ent2 in pairs(restab.links) do
-		if (!net.ents[ ent2:EntIndex() ]) then --is this ent alread on this net?
+		if (not net.ents[ ent2:EntIndex() ]) then --is this ent alread on this net?
 			local restab2 = RD2.GetRes( ent2, resID )
 			if (restab2) then --just to be sure that is does has this res still
 				RD2.RebuildNet( net, resID, ent2, restab2, list ) --recurse
@@ -181,7 +181,7 @@ function RD2.RebuildNets( resID, ents, factor ) --ents is list of entities to re
 	local out = {} --list of nets new made
 	local list = {} --list of all ents linked, used to prevent inf. loop
 	for _,ent in pairs(ents) do
-		if (!list[ ent:EntIndex() ]) then --was this ent linked via another ent in a previous loop?
+		if (not list[ ent:EntIndex() ]) then --was this ent linked via another ent in a previous loop?
 			local restab = RD2.GetRes( ent, resID )
 			if (restab) then --this ent has this res
 				local net = RD2.NewNet( resID )
@@ -196,7 +196,7 @@ function RD2.RebuildNets( resID, ents, factor ) --ents is list of entities to re
 end
 
 function RD2.ModifyNetAmount( net, amount )
-	if (!net) then return 0 end
+	if (not net) then return 0 end
 	
 	local oldamount = net.amount
 	net.amount = math.Clamp( (net.amount + amount), 0, net.max )
@@ -209,7 +209,7 @@ function RD2.GetJuncRes( ent1, class, ent2, recurse_res )
 	if ((class == "res_pump") or (class == "res_valve") or (class == "res_junction")) then
 		for resID,restab in pairs( ent2.resources2 ) do
 			RD_AddResource(ent1, restab.res_name, 0)
-			//Msg( "Adding " .. restab.res_name .. "\n" )
+			--Msg( "Adding " .. restab.res_name .. "\n" )
 			recurse_res[resID] = restab.res_name
 		end
 	end
@@ -220,8 +220,8 @@ end
 function RD2.RecurseJunc( ent, recurse_res, done )
 	done = done or {}
 	for ent1ID,ent1 in pairs(ent.resources2links) do
-		if (!done[ent1]) then
-			if (!ent1:IsValid()) then
+		if (not done[ent1]) then
+			if (not ent1:IsValid()) then
 				ent.resources2links[ent1ID] = nil
 			else
 				done[ent1] = ent1
@@ -282,7 +282,7 @@ local function PrintTable2(t,tabs,dt,tn)
 	tn = tn + 1
 	for k,v in pairs(t) do
 		if type(v) == "table" then
-			if !dt[tostring(v)] then
+			if not dt[tostring(v)] then
 				Msg(string.rep("\t",tabs)..k.."\t=\t"..tostring(v).." t: "..tn.."\n")
 				tn = PrintTable2(v,tabs+1,dt,tn)
 			else
@@ -301,7 +301,7 @@ local function PrintTable1(t)
 end
 
 function RD_PrintResources(ent)
-	if (!ent.resources2) then Msg("ent has no resources\n") return end
+	if (not ent.resources2) then Msg("ent has no resources\n") return end
 	Msg("=== ent.resources2 on "..tostring(ent).." ===\n")
 	local tn = PrintTable1( ent.resources2 )
 	Msg("num tables: "..tn.."\n=== networks ===\n")
@@ -339,9 +339,9 @@ function RD2_DefineResource( resname, unit )
 	Resource_Types_By_Name[ resname ]	= net.resID
 	
 	BeamNetVars.SetResourceNames( net.resID, resname, unit, true )
-	//Use these client side to get names
-	//BeamNetVars.GetResourceName( id ) --from id
-	//BeamNetVars.GetResourceNames() --gets whole table
+	--Use these client side to get names
+	--BeamNetVars.GetResourceName( id ) --from id
+	--BeamNetVars.GetResourceNames() --gets whole table
 	
 	return net.resID
 end
@@ -412,10 +412,10 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 	if (net1.max == net1.amount and net2.max == net2.amount) or (net1.amount == 0 and net2.amount == 0) then return 0 end --nothing to do
 	
 	--TODO: fix this code to work :V
-	/*local pullnet, pushnet = net1, net2
+	--[[local pullnet, pushnet = net1, net2
 	if (pump and rate < 0) then pullnet, pushnet = net2, net1 end
-	//local pullnetfactor = net1.amount / net1.max
-	//local pushnetfactor = net2.amount / net2.max
+	--local pullnetfactor = net1.amount / net1.max
+	--local pushnetfactor = net2.amount / net2.max
 	local pullnetfactor = RD2.GetNetFactor( net1 )
 	local pushnetfactor = RD2.GetNetFactor( net1 )
 	local pressure = pushnetfactor - pullnetfactor
@@ -427,18 +427,18 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 			local energyneeded = math.abs(math.floor(math.max(take, 50) / 100 * Pump_Energy_Increment))
 			if (energyneeded >= 0) then --going to need energy to do this
 				if (pullnet.res_name == "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded + take)
-				 or (pullnet.res_name != "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded) then
+				 or (pullnet.res_name ~= "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded) then
 					energyused = RD_ConsumeResource( self, "energy", energyneeded )
-				else --not enought energy!!!
+				else --not enought energy!not !
 					return 0
 				end
 			end
 		end
-	elseif (!pump and pressure < 0) then --are we crazy, we can't pump that if we can't pump!
+	elseif (not pump and pressure < 0) then --are we crazy, we can't pump that if we can't pump!
 		return 0
 	elseif (pressure > 0) then
-		//local pullnetfactorafter = (net1.amount - take) / net1.max
-		//local pushnetfactorafter = (net2.amount + take) / net2.max
+		--local pullnetfactorafter = (net1.amount - take) / net1.max
+		--local pushnetfactorafter = (net2.amount + take) / net2.max
 		local pullnetfactorafter = RD2.GetFactor( (net1.amount - take), net1.max )
 		local pushnetfactorafter = RD2.GetFactor( (net2.amount + take), net2.max )
 		local pressureafter = pushnetfactorafter - pullnetfactorafter
@@ -448,7 +448,7 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 					local energyneeded = math.abs(math.floor(math.max(take * (pressureafter - pressure), 50) / 100 * Pump_Energy_Increment))
 					if (energyneeded >= 0) then --going to need energy to do this
 						if (pullnet.res_name == "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded + take)
-						 or (pullnet.res_name != "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded) then
+						 or (pullnet.res_name ~= "energy" and RD_GetResourceAmount(self, "energy") >= energyneeded) then
 							energyused = RD_ConsumeResource( self, "energy", energyneeded )
 						else --not enought energy!!!
 							take = take * (pressure - pressureafter)
@@ -464,10 +464,10 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 	
 	local result = RD2.SupplyResource( pushnet, RD2.ConsumeResource( pullnet, take ) ) --pump
 	
-	if (rate > 0) then return result else return -1 * result end*/
+	if (rate > 0) then return result else return -1 * result end]]
 	
 	--TODO: fuckit, this will work for now
-	if (pump and rate != 0) then
+	if (pump and rate ~= 0) then
 		local pullnet, pushnet = net1, net2
 		if (rate < 0) then pullnet, pushnet = net2, net1 end
 		if (pullnet.amount <= 0 or pushnet.amount >= pushnet.max) then return 0 end --net1 must have soemthing and net2 must have some room
@@ -477,12 +477,12 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 		local result = RD2.ModifyNetAmount( pushnet, (-1 * RD2.ModifyNetAmount( pullnet, (-1 * take) )) ) --pump
 		if (rate > 0) then return result else return -1 * result end
 	else --equalize nets
-		//local factor1 = net1.amount / net1.max
-		//local factor2 = net2.amount / net2.max
+		--local factor1 = net1.amount / net1.max
+		--local factor2 = net2.amount / net2.max
 		local factor1 = RD2.GetNetFactor( net1 )
 		local factor2 = RD2.GetNetFactor( net1 )
 		
-		if (pump and rate == 0 and factor1  > factor2) or (!pump) then --one way or equalize
+		if (pump and rate == 0 and factor1  > factor2) or (not pump) then --one way or equalize
 			local oldamount = net1.amount
 			local factor = (net1.amount + net2.amount) / (net1.max + net2.max) --average factor
 			net1.amount = math.Round(net1.max * factor)
@@ -492,7 +492,7 @@ function RD2_PumpResource( net1, net2, pump, rate, ispump )
 			return oldamount - net1.amount --chage from net1 to net2
 		end
 	end
-	//return 0
+	--return 0
 end
 
 function RD2_Pump( Socket, OtherSocket )
@@ -540,7 +540,7 @@ function RD2_EqualizeNets( ent )
 				max = max + net.max
 			end
 		end
-		//if (max > 0) then factor = amount / max end
+		--if (max > 0) then factor = amount / max end
 		local factor = RD2.GetFactor( amount, max )
 		--Msg("amount= "..amount.." max= "..max.." factor= "..factor.."\n")
 		for _,netID in pairs( restab.nets ) do
@@ -600,7 +600,7 @@ function Dev_Link( ent1, ent2, LPos1, LPos2, material, color, width )
 	if (ent1:IsVehicle()) then RD2.SetUpPod( ent1 ) end
 	if (ent2:IsVehicle()) then RD2.SetUpPod( ent2 ) end
 	
-	if (!ent1 or !ent1.resources2) or (!ent2 or !ent2.resources2) then
+	if (not ent1 or not ent1.resources2) or (not ent2 or not ent2.resources2) then
 		Error("Dev_link: One or both entities are not valid!\n")
 		return
 	end
@@ -619,14 +619,14 @@ function Dev_Link( ent1, ent2, LPos1, LPos2, material, color, width )
 	
 	RD2.CheckEntsOnLink( ent1, ent2 )
 	
-	//links to other ents on top level for dupe'n
+	--links to other ents on top level for dupe'n
 	ent1.resources2links[ ent2:EntIndex() ] = ent2
 	ent2.resources2links[ ent1:EntIndex() ] = ent1
 	
 	for _,resID in pairs( RD2.GetCommonRes( ent1, ent2 ) ) do
 		local restab1 = RD2.GetRes( ent1, resID )
 		local restab2 = RD2.GetRes( ent2, resID )
-		//Msg("linking resID "..resID.."  net1= "..restab1.net.."  net2= "..restab2.net.."\n")
+		--Msg("linking resID "..resID.."  net1= "..restab1.net.."  net2= "..restab2.net.."\n")
 		
 		restab1.links[ ent2:EntIndex() ] = ent2
 		restab2.links[ ent1:EntIndex() ] = ent1
@@ -639,20 +639,20 @@ function Dev_Link( ent1, ent2, LPos1, LPos2, material, color, width )
 		if (net1.ID < 0) then ent1localnet = true end
 		if (net2.ID < 0) then ent2localnet = true end
 		
-		if (ent1localnet and ent2localnet) then //both are on local nets, make net net and put both on
-			//Msg("RD2 Link: making new net\n")
+		if (ent1localnet and ent2localnet) then --both are on local nets, make net net and put both on
+			--Msg("RD2 Link: making new net\n")
 			RD2.PutEntsOnNewNet( resID, ent1, net1, ent2, net2 )
-		elseif (!ent1localnet and ent2localnet) then //ent2 on local net, put it on ent1's net
-			//Msg("RD2 Link: joining ent to net\n")
+		elseif (not ent1localnet and ent2localnet) then --ent2 on local net, put it on ent1's net
+			--Msg("RD2 Link: joining ent to net\n")
 			RD2.PutEntOnNet( ent2, net1, net2 )
-		elseif (ent1localnet and !ent2localnet) then //ent1 on local net, put it on ent2's net
-			//Msg("RD2 Link: joining ent to net\n")
+		elseif (ent1localnet and not ent2localnet) then --ent1 on local net, put it on ent2's net
+			--Msg("RD2 Link: joining ent to net\n")
 			RD2.PutEntOnNet( ent1, net2, net1 )
-		elseif (!ent1localnet and !ent2localnet and net1.ID != net2.ID) then //both have own net, put net2 on net1 and remove net2
-			//Msg("RD2 Link: combining 2 nets\n")
+		elseif (not ent1localnet and not ent2localnet and net1.ID ~= net2.ID) then --both have own net, put net2 on net1 and remove net2
+			--Msg("RD2 Link: combining 2 nets\n")
 			RD2.CombineNets( net1, net2 )
-		elseif (net1.ID == net2.ID) then //both are on the same net already, don't do anything more.
-			//Msg("RD2 Link: redundant link made\n")
+		elseif (net1.ID == net2.ID) then --both are on the same net already, don't do anything more.
+			--Msg("RD2 Link: redundant link made\n")
 		end
 	end
 	
@@ -662,7 +662,7 @@ end
 function Dev_Unlink_All( ent1 )
 	RDbeamlib.ClearAllBeamsOnEnt( ent1 )
 	
-	if (!ent1 or !ent1.resources2) then
+	if (not ent1 or not ent1.resources2) then
 		Error("Dev_Unlink_All: Entity is not valid!\n")
 		return
 	end
@@ -707,9 +707,9 @@ function Dev_Unlink_All( ent1 )
 			--build new nets for all connected ents
 			local newnets = RD2.RebuildNets( resID, ents, factor )
 			
-			/*Msg("=== new nets ===\n")
+			--[[Msg("=== new nets ===\n")
 			PrintTable1(newnets)
-			Msg("=== = ===\n")*/
+			Msg("=== = ===\n")]]
 		end
 	end
 
@@ -719,7 +719,7 @@ end
 function Dev_Unlink( ent1, ent2 )
 	RDbeamlib.ClearBeam( ent1, ent2 )
 	
-	if (!ent1 or !ent1.resources2) or (!ent2 or !ent2.resources2) then
+	if (not ent1 or not ent1.resources2) or (not ent2 or not ent2.resources2) then
 		Error("Dev_Unlink: One or both entities are not valid!\n")
 		return
 	end
@@ -744,7 +744,7 @@ function Dev_Unlink( ent1, ent2 )
 				restab2.nets[ oldnet.ID ] = nil
 			end
 			
-			if (oldnet.ID != oldnet2.ID) then Error("Dev_Unlink: nets missmatch!!!\n") return end
+			if (oldnet.ID ~= oldnet2.ID) then Error("Dev_Unlink: nets missmatch!!!\n") return end
 			local factor = RD2.GetNetFactor( oldnet )
 			
 			--kill our old net, we'll be making new ones
@@ -766,9 +766,9 @@ function Dev_Unlink( ent1, ent2 )
 			--build new nets for all connected ents
 			local newnets = RD2.RebuildNets( resID, ents, factor )
 			
-			/*Msg("=== new nets ===\n")
+			--[[Msg("=== new nets ===\n")
 			PrintTable1(newnets)
-			Msg("=== = ===\n")*/
+			Msg("=== = ===\n")]]
 		end
 	end
 	
@@ -778,7 +778,7 @@ end
 --TAD2020: duplicator support
 --build the DupeInfo table and save it as an entity mod
 function RD_BuildDupeInfo( ent )
-	if (!ent.resources2) then return end
+	if (not ent.resources2) then return end
 	
 	local info = {}
 	info.devices = {}

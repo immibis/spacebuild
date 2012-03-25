@@ -8,13 +8,13 @@ time = amount of time the entity remains frozen
 		if not server_settings.Bool("CDS_Damage_Enabled") then return false end
 		if not time then time = 1 end
 		if not radius then
-			if pos:IsValid() and ! CDS_IsWorldEnt(pos) then
+			if pos:IsValid() and  not  CDS_IsWorldEnt(pos) then
 			cds_freezeent(pos, time)
 			end
 		else
 			local stuff = ents.FindInSphere(pos, radius)
 			for _, ent in pairs(stuff) do
-				if ent:IsValid() and ! CDS_IsWorldEnt(ent) then
+				if ent:IsValid() and  not  CDS_IsWorldEnt(ent) then
 				cds_freezeent(ent, time)
 				end
 			end

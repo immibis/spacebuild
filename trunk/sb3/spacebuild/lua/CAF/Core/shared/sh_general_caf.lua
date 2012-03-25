@@ -77,7 +77,7 @@ end
 CAF2.currentlanguage = CAF2.LoadVar("CAF_LANGUAGE", DefaultLang)
 
 function CAF3.Think()
-	if CAF != CAF2 then
+	if CAF ~= CAF2 then
 		CAF = CAF2
 	end
 	for k , v in pairs(hooks["think"]) do

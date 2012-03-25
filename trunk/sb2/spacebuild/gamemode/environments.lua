@@ -5,7 +5,7 @@
 local environments = {}
 local Backup = {}
 
-//Compatibility
+--Compatibility
 function SB_Add_Environment(ent, radius, gravity, habitat, atmosphere, ltemperature, stemperature, unstable, sunburn, isplanet, bloom, color)
 	local air = 0
 	local co2 = 0
@@ -62,7 +62,7 @@ function SB_Add_Environment2(ent, radius, gravity, habitat, air, co2, n, atmosph
 		hash.unstable = unstable
 		hash.Bloom = bloom
 		hash.Color = color
-		hash.pos = ent:GetPos() //RD2 update needed
+		hash.pos = ent:GetPos() --RD2 update needed
 		Backup[hash.num] = hash
 	else
 		hash.prior = 2
@@ -77,7 +77,7 @@ function SB_Add_Environment2(ent, radius, gravity, habitat, air, co2, n, atmosph
 	return hash.num
 end
 
-//Compatibility
+--Compatibility
 function SB_Update_Environment(num, radius, gravity, habitat, atmosphere, ltemperature, stemperature, unstable, sunburn, ok, bloom, color)
 	local air = nil
 	local co2 = nil
@@ -159,7 +159,7 @@ end
 
 function SB_OnEnvironment(pos, art,  extra, ignoredata)
 	if not extra then extra = 0 end
-	local radius = 10000 //max is about 4096(planets) stars = 8500
+	local radius = 10000 --max is about 4096(planets) stars = 8500
 	local found = false
 	local env_num = 0
 	local env_prior = 0
@@ -182,7 +182,7 @@ function SB_OnEnvironment(pos, art,  extra, ignoredata)
 end
 
 function SB_Bloom(ent, Col_r, Col_g, Col_b, SizeX, SizeY, Passes, Darken, Multiply, Color)
-	local bloom = {} //bloomid in init combine to planet
+	local bloom = {} --bloomid in init combine to planet
 	if SB_DEBUG then
 		Msg("Creating bloom for "..tostring(ent).."\n")
 		Msg("Col_r/b/g: "..tostring(Col_r).."/"..tostring(Col_b).."/"..tostring(Col_g).."\n")
@@ -206,7 +206,7 @@ function SB_Bloom(ent, Col_r, Col_g, Col_b, SizeX, SizeY, Passes, Darken, Multip
 end
 
 function SB_Color(ent, AddColor_r, AddColor_g, AddColor_b, MulColor_r, MulColor_g, MulColor_b, Brightness, Contrast, Color)
-	local color = {}//colorid in init combine to planet
+	local color = {}--colorid in init combine to planet
 	if SB_DEBUG then
 		Msg("Creating color for "..tostring(ent).."\n")
 		Msg("AddColor_r/b/g: "..tostring(AddColor_r).."/"..tostring(AddColor_b).."/"..tostring(AddColor_g).."\n")
@@ -234,12 +234,12 @@ function SB_Terraform_Step(ent, num, lt, st, hab,atm)
 		local tmp = 0
 		local hb = 0
 		local at = 0
-		if ent.health < (ent.maxhealth/2) then //unstable terraforming when damaged!
+		if ent.health < (ent.maxhealth/2) then --unstable terraforming when damaged!
 			tmp = math.random(-50, 50)
 			hb = math.random(-10, 0)
 			at = math.random(-10, 10)
 		end
-		//ltemperature
+		--ltemperature
 		if environments[num].ltemperature < lt then
 			if environments[num].ltemperature + 2 < lt then
 				environments[num].ltemperature =environments[num].ltemperature + 4 + (tmp/10)
@@ -255,7 +255,7 @@ function SB_Terraform_Step(ent, num, lt, st, hab,atm)
 				environments[num].ltemperature = lt + (tmp/10)
 			end
 		end
-		//stemperature
+		--stemperature
 		if environments[num].stemperature < st then
 			if environments[num].stemperature + 2 < st then
 				environments[num].stemperature = environments[num].stemperature + 2 + (tmp/10)
@@ -271,7 +271,7 @@ function SB_Terraform_Step(ent, num, lt, st, hab,atm)
 				environments[num].stemperature = st + (tmp/10)
 			end
 		end
-		// habitat
+		-- habitat
 		if environments[num].habitat < hab then
 			if environments[num].habitat + 0.05 < hab then
 				environments[num].habitat = environments[num].habitat + 0.05 + (hb/100)
@@ -287,7 +287,7 @@ function SB_Terraform_Step(ent, num, lt, st, hab,atm)
 				environments[num].habitat = hab + (hb/100)
 			end
 		end
-		//atmosphere
+		--atmosphere
 		if environments[num].atmosphere < atm then
 			if environments[num].atmosphere + 0.05 < atm then
 				environments[num].atmosphere = environments[num].atmosphere + 0.05 + (at/100)
@@ -319,7 +319,7 @@ function SB_Terraform_UnStep(ent, num, other)
 		local tmp = 0
 		local hb = 0
 		local at = 0
-		//ltemperature
+		--ltemperature
 		if environments[num].ltemperature < lt then
 			if environments[num].ltemperature + 2 < lt then
 				environments[num].ltemperature =environments[num].ltemperature + 2 + (tmp/10)
@@ -335,7 +335,7 @@ function SB_Terraform_UnStep(ent, num, other)
 				environments[num].ltemperature = lt + (tmp/10)
 			end
 		end
-		//stemperature
+		--stemperature
 		if environments[num].stemperature < st then
 			if environments[num].stemperature + 2 < st then
 				environments[num].stemperature = environments[num].stemperature + 2 + (tmp/10)
@@ -351,7 +351,7 @@ function SB_Terraform_UnStep(ent, num, other)
 				environments[num].stemperature = st + (tmp/10)
 			end
 		end
-		// habitat
+		-- habitat
 		if environments[num].habitat < hab then
 			if environments[num].habitat + 0.05 < hab then
 				environments[num].habitat = environments[num].habitat + 0.05 + (hb/100)
@@ -367,7 +367,7 @@ function SB_Terraform_UnStep(ent, num, other)
 				environments[num].habitat = hab + (hb/100)
 			end
 		end
-		//atmosphere
+		--atmosphere
 		if environments[num].atmosphere < atm then
 			if environments[num].atmosphere + 0.05 < atm then
 				environments[num].atmosphere = environments[num].atmosphere + 0.05 + (at/100)
@@ -478,20 +478,20 @@ function SB_GetEnvNumRadPlan()
 		hash[num].planet = env.IsPlanet	
 	end
 	PrintTable(hash)
-	return hash //will return a table will all the current environment numbers, radius and if it's a planet.
+	return hash --will return a table will all the current environment numbers, radius and if it's a planet.
 end
 
 function SB_GetEnvPos(num)
 	if not environments[num] then return 0 end
-	return environments[num].ent:GetPos() //will return the current position of an environment
+	return environments[num].ent:GetPos() --will return the current position of an environment
 end
 
 function SB_GetPlanetRad(num)
 	if not environments[num] then return 0 end
-	return environments[num].radius //will return the radius of an environment
+	return environments[num].radius --will return the radius of an environment
 end
 
 function SB_IsPlanet(num)
 	if not environments[num] then return false end
-	return environments[num].IsPlanet //will return the if the environment is a planet or not
+	return environments[num].IsPlanet --will return the if the environment is a planet or not
 end

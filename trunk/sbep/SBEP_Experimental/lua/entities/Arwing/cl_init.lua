@@ -11,7 +11,7 @@ end
 
 function ENT:Think()
 	local Pod = self:GetNetworkedEntity("Pod")
-	if Pod && Pod:IsValid() then
+	if Pod and Pod:IsValid() then
 		Pod.CalcView = {OffsetUp = 100, OffsetOut = 500}
 		--Pod.CalcView.OffsetUp = 5000
 		--print(Pod.CalcView)

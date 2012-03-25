@@ -74,7 +74,7 @@ function ENT:Touch( ent )
 		local distance = 100000
 		for k,v in pairs(ent.Bay) do
 			local tdis = self.Entity:GetPos():Distance(ent:LocalToWorld(v.pos))
-			if (!v.EP || tdis < distance) then
+			if (!v.EP or tdis < distance) then
 				distance = tdis
 				closest = v
 			end
@@ -84,7 +84,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:Use( ply )
-	if self.Vec && self.Vec:IsValid() then
+	if self.Vec and self.Vec:IsValid() then
 		if (CurTime() >= self.CDown) then
 			ply:EnterVehicle( self.Vec )
 		end

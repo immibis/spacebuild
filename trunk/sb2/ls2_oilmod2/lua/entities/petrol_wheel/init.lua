@@ -51,7 +51,7 @@ function ENT:SetBaseTorque( base )
 	self.BaseTorque = base
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque )
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 end
 
@@ -149,11 +149,11 @@ end
 ---------------------------------------------------------*/
 function ENT:Forward( mul )
 
-	// Is this key invalid now? If so return false to remove it
+	-- Is this key invalid now? If so return false to remove it
 	if ( !self.Entity:IsValid() ) then return false end
 	local Motor = self:GetMotor()
 	if ( !Motor:IsValid() ) then
-		//Msg("Wheel doesn't have a motor!\n"); 
+		--Msg("Wheel doesn't have a motor!\n");
 		return false
 	end
 
@@ -162,7 +162,7 @@ function ENT:Forward( mul )
 	local Speed = mdir * mul * self.TorqueScale * (1 + self.SpeedMod)
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque ) .. "\nSpeed: " .. (mdir * mul * (self.SpeedMod)) .. "\nBreak: " .. self.Breaking .. "\nSpeedMod: " .. math.floor( self.SpeedMod * 100 ) .. "%"
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 	
 	Motor:Fire( "Scale", Speed, 0 )
@@ -208,9 +208,9 @@ end
 function ENT:PhysicsUpdate( physobj )
 	local vel = physobj:GetVelocity()
 	
-	if (self.Breaking > 0) then // to prevent badness
-		if (self.Breaking >= 100) then //100% breaking!!!
-			vel.x = 0 //full stop!
+	if (self.Breaking > 0) then -- to prevent badness
+		if (self.Breaking >= 100) then --100% breaking!!!
+			vel.x = 0 --full stop!
 			vel.y = 0
 		else		
 			vel.x = vel.x * ((100.0 - self.Breaking)/100.0)
@@ -231,11 +231,11 @@ function ENT:SetTorque( torque )
 	self.TorqueScale = torque / self.BaseTorque
 	
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if (!Motor or !Motor:IsValid()) then return end
 	Motor:Fire( "Scale", Motor:GetTable().direction * Motor:GetTable().forcescale * self.TorqueScale , 0 )
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque )
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 end
 
@@ -245,7 +245,7 @@ end
 function ENT:DoDirectionEffect()
 
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if (!Motor or !Motor:IsValid()) then return end
 
 	local effectdata = EffectData()
 		effectdata:SetOrigin( self.Axis )
@@ -291,7 +291,7 @@ function ENT:Think()
 	--Msg("Requiring " .. self.petrolpertick .. " petrol per tick\n")
 	--Msg(torquething)
 
-	if self.Go != 0 || self:CanRun() then
+	if self.Go ~= 0 or self:CanRun() then
 		RD_ConsumeResource(self.Entity, "Petrol", self.petrolpertick)
 		RD_SupplyResource(self.Entity, "12V Energy", 1)
 		--Msg("a'ight\n")
@@ -330,7 +330,7 @@ end
    
  end 
  
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

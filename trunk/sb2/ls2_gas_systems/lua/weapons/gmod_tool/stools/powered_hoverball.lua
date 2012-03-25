@@ -59,10 +59,10 @@ if( SERVER ) then
 end
 
 local pow_hov_models = {
-		{ "Energy Hoverball", "models//props_wasteland/laundry_washer001a.mdl", "energy_hoverball" },
-		{ "Propane Hoverball", "models//props_wasteland/laundry_washer001a.mdl", "propane_hoverball" },
-		{ "Methane Hoverball", "models//props_wasteland/laundry_washer001a.mdl", "methane_hoverball" },
-		{ "Nitrous Oxide Hoverball", "models//props_wasteland/laundry_washer001a.mdl", "nitrous_hoverball" },
+		{ "Energy Hoverball", "models/props_wasteland/laundry_washer001a.mdl", "energy_hoverball" },
+		{ "Propane Hoverball", "models/props_wasteland/laundry_washer001a.mdl", "propane_hoverball" },
+		{ "Methane Hoverball", "models/props_wasteland/laundry_washer001a.mdl", "methane_hoverball" },
+		{ "Nitrous Oxide Hoverball", "models/props_wasteland/laundry_washer001a.mdl", "nitrous_hoverball" },
 }
 
 RD2_ToolRegister( TOOL, pow_hov_models, Makepowered_hoverball, "powered_hoverball" )

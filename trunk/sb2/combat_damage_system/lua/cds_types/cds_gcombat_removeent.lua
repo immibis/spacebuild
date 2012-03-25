@@ -43,7 +43,7 @@ end
 
 function cds_gcombat_removeent(ent)
 	if(!ent.IsGettingRemoved) then ent.IsGettingRemoved = false end
-	if(ent.IsGettingRemoved == true || !ent:IsValid() || ent:IsWorld() || ent:IsPlayer() || ent:IsNPC() || CDS_IsWorldEntity(ent)) then return end
+	if(ent.IsGettingRemoved == true or !ent:IsValid() or ent:IsWorld() or ent:IsPlayer() or ent:IsNPC() or CDS_IsWorldEntity(ent)) then return end
 	ent.IsGettingRemoved = true
 	timer.Simple(math.random(.1, .9), Explode1, ent)
 	timer.Simple(math.random(.1, .9), Explode1, ent)

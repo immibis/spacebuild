@@ -124,7 +124,7 @@ function ENT:Think()
 		Wire_TriggerOutput(self.Entity, "CanFire", 0) 
 	end
 	
-	if self.Pod && self.Pod:IsValid() && !self.WireG && self.Pod.Trace then
+	if self.Pod and self.Pod:IsValid() and !self.WireG and self.Pod.Trace then
 		local HPos = self.Pod.Trace.HitPos
 		self.XCo = HPos.x
 		self.YCo = HPos.y
@@ -146,7 +146,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
@@ -175,9 +175,9 @@ function ENT:FFire( CCD )
 	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 5000)
 	NewShell:Fire("kill", "", 30)
 	local Trace = nil
-	if self.Pod && self.Pod:IsValid() && self.Pod:IsVehicle() then
+	if self.Pod and self.Pod:IsValid() and self.Pod:IsVehicle() then
 		local CPL = self.Pod:GetPassenger()
-		if CPL && CPL:IsValid() then
+		if CPL and CPL:IsValid() then
 			--CPL.CamCon = true
 			--CPL:SetViewEntity( NewShell )
 		end

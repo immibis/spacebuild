@@ -23,7 +23,7 @@ if( SERVER ) then
 	CreateConVar('sbox_maxtransitdevices', 10)
 	
 	function Maketransitdevices( ply, ang, pos, gentype, model, frozen )
-		if ( !ply:CheckLimit( "transitdevices" ) ) then return nil end
+		if ( not ply:CheckLimit( "transitdevices" ) ) then return nil end
 		
 		--Create generator
 		local ent = ents.Create( gentype )

@@ -22,7 +22,7 @@ function ENT:Initialize()
 
 	if not (WireAddon == nil) then self.Outputs = Wire_CreateOutputs(self.Entity, { "Natural Gas", "Max Natural Gas" }) end
 	
-	//self.timer = CurTime() +  1
+	--self.timer = CurTime() +  1
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:SetMass(400)

@@ -48,10 +48,10 @@ TOOL.ClientConVar[ "toggle" ] = "0"
 cleanup.Register( "gas_thrusters" )
 
 function TOOL:LeftClick( trace )
-	if trace.Entity && trace.Entity:IsPlayer() then return false end
+	if trace.Entity and trace.Entity:IsPlayer() then return false end
 	
-	// If there's no physics object then we can't constraint it!
-	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	-- If there's no physics object then we can't constraint it!
+	if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
 	if (CLIENT) then return true end
 	
@@ -74,8 +74,8 @@ function TOOL:LeftClick( trace )
 	
 	if ( !trace.Entity:IsValid() ) then nocollide = false end
 	
-	// If we shot a gas_thruster change its force
-	if ( trace.Entity:IsValid() && trace.Entity:GetClass() == "gas_thruster" && trace.Entity.pl == ply ) then
+	-- If we shot a gas_thruster change its force
+	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == "gas_thruster" and trace.Entity.pl == ply ) then
 		trace.Entity:SetEffect( effect )
 		trace.Entity:Setup(force, multiplier, force_min, force_max, effect, bidir, sound, massless, resource, key, key_bk, trace.Entity.pl, toggle)
 		
@@ -108,7 +108,7 @@ function TOOL:LeftClick( trace )
 	local min = gas_thruster:OBBMins()
 	gas_thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
 	
-	// Don't weld to world
+	-- Don't weld to world
 	local const = WireLib.Weld(gas_thruster, trace.Entity, trace.PhysicsBone, true, nocollide)
 
 	undo.Create("GasThruster")
@@ -175,7 +175,7 @@ function TOOL:UpdateGhostGasThruster( ent, player )
 	local trace 	= util.TraceLine( tr )
 	if (!trace.Hit) then return end
 	
-	if (trace.Entity && trace.Entity:GetClass() == "gas_thruster" || trace.Entity:IsPlayer()) then
+	if (trace.Entity and trace.Entity:GetClass() == "gas_thruster" or trace.Entity:IsPlayer()) then
 	
 		ent:SetNoDraw( true )
 		return
@@ -194,7 +194,7 @@ end
 
 
 function TOOL:Think()
-	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != self:GetClientInfo( "model" )) then
+	if (!self.GhostEntity or !self.GhostEntity:IsValid() or self.GhostEntity:GetModel() ~= self:GetClientInfo( "model" )) then
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector(0,0,0), Angle(0,0,0) )
 	end
 	

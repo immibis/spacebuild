@@ -1,9 +1,9 @@
 local a = joystick
-if !a || !type(a) == "table" then
+if not a or type(a) ~= "table" then
 	return
 end
 b = tonumber(a.binaryversion)
-if !b then
+if not b then
 	return
 end
 if b > 1.1 then
@@ -15,7 +15,7 @@ SBEP = SBEP or {}
 function SBEP.JoystickReorder(category,order)
 	local oldCatTab = jcon.reg.cat[category]
 	local newCatTab = {}
-	if #oldCatTab != #order then
+	if #oldCatTab ~= #order then
 		ErrorNoHalt("New order hasn't got the same number of entries as old order")
 		return
 	end

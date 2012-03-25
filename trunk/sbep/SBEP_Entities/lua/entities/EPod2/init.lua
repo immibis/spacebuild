@@ -57,7 +57,7 @@ function ENT:Think()
 	end
 	if self.NPod and self.NPod:IsValid() then
 		self.CPL = self.NPod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			Wire_TriggerOutput( self.Entity, "Occupied", 1 )
 			if (self.CPL:KeyDown( IN_RELOAD )) then		
 				if (self.WD and self.WD:IsValid()) then
@@ -77,7 +77,7 @@ end
 local PodOffset = Vector(-55,0,-55)
 
 function ENT:Use(activator)
-	if (self.NPod == nil || !self.NPod:IsValid()) then
+	if (self.NPod == nil or !self.NPod:IsValid()) then
 		self.NPod = ents.Create( "prop_vehicle_prisoner_pod" )
 		if ( !self.NPod:IsValid() ) then return end
 		self.NPod:SetModel( "models/SmallBridge/Vehicles/SBVdroppod1.mdl" )

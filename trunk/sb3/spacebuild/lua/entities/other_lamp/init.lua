@@ -79,25 +79,25 @@ function ENT:Think()
 		end
 	end
 	if self.Active == 1 and not self.flashlight then
-		//self:SetOn(true)
+		--self:SetOn(true)
 		local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
 
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self.Entity )
 
-		// The local positions are the offsets from parent..
+		-- The local positions are the offsets from parent..
 		self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.flashlight:SetLocalAngles( Angle(90,90,90) )
 
-		// Looks like only one flashlight can have shadows enabled!
+		-- Looks like only one flashlight can have shadows enabled!
 		self.flashlight:SetKeyValue( "enableshadows", 1 )
 		self.flashlight:SetKeyValue( "farz", 2048 )
 		self.flashlight:SetKeyValue( "nearz", 8 )
 
-		//the size of the light
+		--the size of the light
 		self.flashlight:SetKeyValue( "lightfov", 50 )
 
-		// Color.. white is default
+		-- Color.. white is default
 		self.flashlight:SetKeyValue( "lightcolor", "255 255 255" )
 		self.flashlight:Spawn()
 		self.flashlight:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )

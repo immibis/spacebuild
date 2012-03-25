@@ -4,7 +4,7 @@ CAF = CAF2;
 local CAF3 = {}
 CAF2.StartingUp = false;
 CAF2.HasInternet = false;
-CAF2.InternetEnabled = true //Change this to false if you crash when CAF2 loads clientside
+CAF2.InternetEnabled = true --Change this to false if you crash when CAF2 loads clientside
 
 
 surface.CreateFont( "Verdana", 15, 600, true, false, "GModCAFNotify" ) 
@@ -80,7 +80,7 @@ end
 
 local function OnAddonConstruct(name)
 	if not name then return end
-	if(!CAF2.GetAddonStatus(name)) then
+	if(not CAF2.GetAddonStatus(name)) then
 		if Addons[name] then
 			local test, err = pcall(Addons[name].__Construct);
 			if not test then
@@ -141,14 +141,14 @@ end
 function CAF2.ConstructAddon(Message)
 	local name = Message:ReadString()
 	OnAddonConstruct(name)
-	//RunConsoleCommand("Main_CAF_Menu");
+	--RunConsoleCommand("Main_CAF_Menu");
 end
 usermessage.Hook("CAF_Addon_Construct", CAF2.ConstructAddon)
 
 function CAF2.DestructAddon(Message)
 	local name = Message:ReadString()
 	OnAddonDestruct(name)
-	//RunConsoleCommand("Main_CAF_Menu");
+	--RunConsoleCommand("Main_CAF_Menu");
 end
 usermessage.Hook("CAF_Addon_Destruct", CAF2.DestructAddon)
 
@@ -171,7 +171,7 @@ CAF2.HTTP = {
 };
 
 CAF2.LATEST_VERSION = version;
-if(!CAF2.HasInternet and CAF2.InternetEnabled) then
+if(not CAF2.HasInternet and CAF2.InternetEnabled) then
 	http.Get(CAF2.HTTP.INTERNET,"",
 		function(html,size)
 			if(html) then
@@ -183,12 +183,12 @@ if(!CAF2.HasInternet and CAF2.InternetEnabled) then
 end
 
 local isuptodatecheck;
-//Performs the CAF update check
+--Performs the CAF update check
 local function IsUpToDate(callBackfn)
 	if not CAF2.HasInternet then
 		return
 	end
-	if isuptodatecheck != nil then
+	if isuptodatecheck ~= nil then
 		callBackfn(isuptodatecheck);
 		return
 	end
@@ -352,19 +352,19 @@ local function GetHelpPanel(frame)
 		end
 	end
 	LeftTree:Clear()
-	//Fill the Tree
+	--Fill the Tree
 	if table.Count(MainInfoMenuData) > 0 then
 		for k, v in pairs(MainInfoMenuData) do
-			//Addon Info
+			--Addon Info
 			local title = k;
 			local node = LeftTree:AddNode(title)
-			//node.Icon:SetImage(devlist.icon)
+			--node.Icon:SetImage(devlist.icon)
 			for l, w in pairs(v) do
-				//Sub Menu's
+				--Sub Menu's
 				local Node = node:AddNode(l)
 				function Node.DoClick(btn)
 					if(w.hasmenu) then
-						//To Implement
+						--To Implement
 					elseif (CAF2.HasInternet and w.interneturl) then
 						local HTMLTest = vgui.Create("HTML", RightPanel)   
 						HTMLTest:StretchToParent( 10, 10, 10, 10 ) 
@@ -376,14 +376,14 @@ local function GetHelpPanel(frame)
 					end
 				end
 				function Node.DoRightClick(btn)
-					// To Implement
+					-- To Implement
 				end
 				for m, x in pairs(w) do
-					//Links in submenu
+					--Links in submenu
 					local cnode = Node:AddNode(m)
 					function cnode.DoClick(btn)
 						if(x.hasmenu) then
-							//To Implement
+							--To Implement
 						elseif (CAF2.HasInternet and x.interneturl) then
 							RightPanel:Clear();
 							local HTMLTest = vgui.Create("HTML", RightPanel)  
@@ -397,7 +397,7 @@ local function GetHelpPanel(frame)
 						end
 					end
 					function cnode.DoRightClick(btn)
-						// To Implement
+						-- To Implement
 					end
 				end
 			end
@@ -489,12 +489,12 @@ local function AddCAFInfoToStatus(List)
 	end
 	
 	function v.GetDisplayImage()
-		return "gui/silkicons/application"; //Change to something else later on?
+		return "gui/silkicons/application"; --Change to something else later on?
 	end
 	
 	local cat = vgui.Create("DCAFCollapsibleCategory") 
 	cat:Setup("Custom Addon Framework", v);
-	//cat:SetExtraButtonAction(function() frame:Close()  end)
+	--cat:SetExtraButtonAction(function() frame:Close()  end)
 	
 	local contentpanel = vgui.Create("DPanelList", cat)
 	contentpanel:SetWide(List:GetWide())
@@ -543,7 +543,7 @@ local function AddCAFInfoToStatus(List)
 	end
 	
 	--Description
-	if descriptiontxt != nil then
+	if descriptiontxt ~= nil then
 		local list = vgui.Create("DPanelList",contentpanel)
 		list:SetPos(x, y);
 		local size = 1;
@@ -599,13 +599,13 @@ local function GetStatusPanel(frame)
 				local descriptiontxt = nil
 				if v.GetDescription then
 					descriptiontxt = v.GetDescription()
-				//else
-				//	descriptiontxt = {CAF.GetLangVar("No Description")};
+				--else
+				--	descriptiontxt = {CAF.GetLangVar("No Description")};
 				end
 				
 				local cat = vgui.Create("DCAFCollapsibleCategory") 
 				cat:Setup(k, v);
-				//cat:SetExtraButtonAction(function() frame:Close()  end)
+				--cat:SetExtraButtonAction(function() frame:Close()  end)
 				
 				local contentpanel = vgui.Create("DPanelList", cat)
 				contentpanel:SetWide(List:GetWide())
@@ -655,7 +655,7 @@ local function GetStatusPanel(frame)
 				end
 				
 				--Description
-				if descriptiontxt != nil then
+				if descriptiontxt ~= nil then
 					local list = vgui.Create("DPanelList",contentpanel)
 					list:SetPos(x, y);
 					local size = 1;
@@ -696,7 +696,7 @@ local function GetStatusPanel(frame)
 end
 
 function GetMessageLogPanel(frame)
-	//TODO Create it
+	--TODO Create it
 	local panel = vgui.Create("DPanel", frame)
 	panel:StretchToParent( 6, 36, 6, 6 )
 	local mylist = vgui.Create("DListView", panel)
@@ -826,7 +826,7 @@ local Files = file.FindInLua( "CAF/Core/client/*.lua" )
 for k, File in ipairs(Files) do
 	Msg(CAF.GetLangVar("Loading")..": "..File.."...")
 	local ErrorCheck, PCallError = pcall(include, "CAF/Core/client/"..File)
-	if(!ErrorCheck) then
+	if(not ErrorCheck) then
 		ErrorOffStuff(PCallError)
 	else
 		Msg("Loaded: Successfully\n")
@@ -837,7 +837,7 @@ Files = file.FindInLua("CAF/LanguageVars/*.lua")
 for k, File in ipairs(Files) do
 	Msg(CAF.GetLangVar("Loading")..": "..File.."...")
 	local ErrorCheck, PCallError = pcall(include, "CAF/LanguageVars/"..File)
-	if(!ErrorCheck) then
+	if(not ErrorCheck) then
 		ErrorOffStuff(PCallError)
 	else
 		Msg("Sent: Successfully\n")
@@ -849,7 +849,7 @@ local Files = file.FindInLua( "CAF/Addons/client/*.lua" )
 for k, File in ipairs(Files) do
 	Msg(CAF.GetLangVar("Loading")..": "..File.."...")
 	local ErrorCheck, PCallError = pcall(include, "CAF/Addons/client/"..File)
-	if(!ErrorCheck) then
+	if(not ErrorCheck) then
 		ErrorOffStuff(PCallError)
 	else
 		Msg("Loaded: Successfully\n")

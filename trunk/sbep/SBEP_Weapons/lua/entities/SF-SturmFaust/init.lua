@@ -41,13 +41,13 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	--if (!self.Exploded && self.Armed) then
+	--if (!self.Exploded and self.Armed) then
 		--self:Splode()
 	--end
 end

@@ -37,9 +37,9 @@ function ENT:Think()
 end
 
 function ENT:Shoot(NoCoolDown)
-	if(NoCoolDown == true and self.Cooldown != -1) then
+	if(NoCoolDown == true and self.Cooldown ~= -1) then
 		self.Cooldown = -1
-	elseif(self.Cooldown != 0.16) then --old: 0.08
+	elseif(self.Cooldown ~= 0.16) then --old: 0.08
 		self.Cooldown = 0.16 --old: 0.08
 	end
 	if(!self.BaseClass.Shoot(self)) then return end

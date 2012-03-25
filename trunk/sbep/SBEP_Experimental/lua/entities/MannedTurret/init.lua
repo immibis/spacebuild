@@ -142,21 +142,21 @@ end
 function ENT:Think()
 	--self.Entity:SetColor( 0, 0, 255, 255)
 
-	if self.Pod2 && self.Pod2:IsValid() && self.Pod2:IsVehicle() then
+	if self.Pod2 and self.Pod2:IsValid() and self.Pod2:IsVehicle() then
 		for i = 1, self.HPC do
-			if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+			if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 				self.HP[i]["Ent"]:GetPhysicsObject():SetMass(1)
 			end
 		end
 					
 		self.CPL = self.Pod2:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 						
 			self.CPL:CrosshairEnable()
 					
 			local CPLA = self.Pod2:WorldToLocalAngles(self.CPL:EyeAngles())
 			
-			if self.CPL.SBEPYaw != 0 && self.CPL.SBEPPitch != 0 then
+			if self.CPL.SBEPYaw ~= 0 and self.CPL.SBEPPitch ~= 0 then
 				self.MTime = CurTime() + .2
 			end
 			
@@ -183,11 +183,11 @@ function ENT:Think()
 			
 			
 			if ( self.CPL:KeyDown( IN_ATTACK ) ) then
-				if self.HPC && self.HPC > 0 then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i )
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()
@@ -198,11 +198,11 @@ function ENT:Think()
 			end
 			
 			if (self.CPL:KeyDown( IN_ATTACK2 ) ) then
-				if self.HPC && self.HPC > 0 then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()

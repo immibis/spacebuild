@@ -3,10 +3,10 @@ LocalPlayer().SBEP_FOV_MUL = CreateClientConVar("SBEP_FOV_MUL", 1, true, true)
 
 function FOV()
 	--print(LocalPlayer().SBEP_FOV:GetInt())
-	if LocalPlayer().SBEP_FOV && LocalPlayer().SBEP_FOV:GetInt() == 1 then
+	if LocalPlayer().SBEP_FOV and LocalPlayer().SBEP_FOV:GetInt() == 1 then
 		--print("Running...")
 		local Vec = LocalPlayer():GetVehicle()
-		if Vec && Vec:IsValid() then
+		if Vec and Vec:IsValid() then
 			local Vel = Vec:GetVelocity() + LocalPlayer():GetPos()
 			local FDist = Vel:Distance( LocalPlayer():GetPos() + LocalPlayer():GetAimVector() * 2000 )
 			local BDist = Vel:Distance( LocalPlayer():GetPos() + LocalPlayer():GetAimVector() * -2000 )

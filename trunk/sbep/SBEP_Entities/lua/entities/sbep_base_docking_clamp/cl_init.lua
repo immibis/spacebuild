@@ -13,11 +13,11 @@ function ENT:Draw()
 	self.Entity:DrawModel()
 	
 	if self.STime > CurTime() + 5 then return end
-	if self.EfPoints && table.getn(self.EfPoints) > 0 then
+	if self.EfPoints and table.getn(self.EfPoints) > 0 then
 		--print("We have points...")
 		local DMode = self.Entity:GetNWInt("DMode")
 	
-		if DMode == 2 || DMode == 3 then
+		if DMode == 2 or DMode == 3 then
 			for x = 1,table.getn(self.EfPoints),1 do
 				render.SetMaterial( self.SMat )	
 				local color = Color( 100, 100, 150, 100 )
@@ -45,14 +45,14 @@ function ENT:Draw()
 		end
 		if DMode == 3 then
 			local LinkLock = self.Entity:GetNetworkedEntity( "LinkLock" )
-			if LinkLock && LinkLock:IsValid() then
+			if LinkLock and LinkLock:IsValid() then
 				for x = 1,table.getn(self.EfPoints),1 do
 					render.SetMaterial( self.SMat )	
 					local color = Color( 100, 100, 150, 100 )
 					render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * self.EfPoints[x].x + self.Entity:GetForward() * self.EfPoints[x].y + self.Entity:GetUp() * self.EfPoints[x].z, 20, 20, color )
 					
 					local NP = self.EfPoints[x].sp
-					if NP != 0 then				
+					if NP ~= 0 then
 						render.SetMaterial( self.CMat )
 						local Scroll = math.fmod(CurTime()*10,128)
 						render.DrawBeam( self.Entity:GetPos() + self.Entity:GetRight() * self.EfPoints[x].x + self.Entity:GetForward() * self.EfPoints[x].y + self.Entity:GetUp() * self.EfPoints[x].z, LinkLock:GetPos() + LinkLock:GetRight() * LinkLock.EfPoints[NP].x + LinkLock:GetForward() * LinkLock.EfPoints[NP].y + LinkLock:GetUp() * LinkLock.EfPoints[NP].z, 10, Scroll + 10, Scroll, Color( 255, 255, 255, 255 ) ) 
@@ -72,7 +72,7 @@ end
 function ENT:Think()
 	for i = 1,10 do
 		local Vec = self.Entity:GetNetworkedVector("EfVec"..i)
-		if Vec && Vec != Vector(0,0,0) then
+		if Vec and Vec ~= Vector(0,0,0) then
 			self.EfPoints[i] = {}
 			self.EfPoints[i].x = Vec.x
 			self.EfPoints[i].y = Vec.y

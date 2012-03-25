@@ -51,12 +51,12 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if (CurTime() >= self.CDown && self.Entity:GetNetworkedInt("Charge") >= 5000) then
+			if (CurTime() >= self.CDown and self.Entity:GetNetworkedInt("Charge") >= 5000) then
 				self.Entity:MACFire()
 			end
 		end
 	elseif (iname == "ChargeCannon") then
-		if ( value > 0 && CurTime() >= self.CDown ) then
+		if ( value > 0 and CurTime() >= self.CDown ) then
 			self.Entity:SetNetworkedBool("Charging",true)
 		else
 			self.Entity:SetNetworkedBool("Charging",false)
@@ -74,7 +74,7 @@ function ENT:Think()
 	--self.val1 = RD_GetResourceAmount(self.Entity, "energy")
 	self.val1 = 10000
 	
-	if Charging && self.val1 > 100 && Charge <= 5100 && CurTime() >= self.CDown then
+	if Charging and self.val1 > 100 and Charge <= 5100 and CurTime() >= self.CDown then
 		--self.Entity:EmitSound("SB/Charging.wav", 150 )
 		--RD_ConsumeResource(self.Entity, "energy", 100)
 		Charge = Charge + 100
@@ -88,7 +88,7 @@ function ENT:Think()
 	
 	Wire_TriggerOutput(self.Entity, "ChargeLevel", Charge)
 	
-	if Charge >= 5000 && CurTime() >= self.CDown then
+	if Charge >= 5000 and CurTime() >= self.CDown then
 		Wire_TriggerOutput(self.Entity, "CanFire", 1)
 	else
 		Wire_TriggerOutput(self.Entity, "CanFire", 0)
@@ -150,7 +150,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

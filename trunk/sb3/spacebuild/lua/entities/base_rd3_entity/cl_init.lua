@@ -13,7 +13,7 @@ local client_chosen_hold = CreateClientConVar( "number_to_hold", "1", true, fals
 function ENT:Draw( bDontDrawModel )
 	self:DoNormalDraw()
 
-	//draw beams by MadDog
+	--draw beams by MadDog
 	CAF.GetAddon("Resource Distribution").Beam_Render( self.Entity )
 
 	if (Wire_Render) then
@@ -32,7 +32,7 @@ end
 
 function ENT:DoNormalDraw( bDontDrawModel )
 	local mode = self:GetNetworkedInt("overlaymode")
-	if RD_OverLay_Mode and mode != 0 then -- Don't enable it if disabled by default!
+	if RD_OverLay_Mode and mode ~= 0 then -- Don't enable it if disabled by default!
 		if RD_OverLay_Mode.GetInt then
 			local nr = math.Round(RD_OverLay_Mode:GetInt())
 			if nr >= 0 and nr <= 2 then
@@ -49,7 +49,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 			end
 		end
 	end
-	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode != 0) then
+	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode ~= 0) then
 		--overlaysettings
 		local OverlaySettings = list.Get( "LSEntOverlayText" )[self.Entity:GetClass()]
 		local HasOOO = OverlaySettings.HasOOO
@@ -70,7 +70,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		-- 1 = default overlaytext
 		-- 2 = new overlaytext
 		local empty_value = {value = 0, maxvalue = 0 }
-		if not mode or mode != 2 then
+		if not mode or mode ~= 2 then
 			local OverlayText = ""
 				OverlayText = OverlayText ..self.PrintName.."\n"
 			if nettable.network == 0 then
@@ -216,7 +216,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 									end
 								end
 								if genresnames and table.Count(genresnames) > 0 then
-									if stringUsage != "" then
+									if stringUsage ~= "" then
 										surface.SetTextPos(textStartPos+15,TempY)
 										surface.DrawText("   "..stringUsage)
 										TempY = TempY + 70

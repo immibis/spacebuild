@@ -41,30 +41,30 @@ function TOOL:GetExtraCCVars()
 end
 
 local function environmental_control_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
-	local base_volume = 4084 //Change to the actual base volume later on
+	local volume_mul = 1 --Change to be 0 by default later on
+	local base_volume = 4084 --Change to the actual base volume later on
 	local base_mass = 10
 	local base_health = 100
 	if type == "other_dispenser" then
-		base_volume = 4084 //This will need changed
+		base_volume = 4084 --This will need changed
 	elseif type == "base_air_exchanger" then
 		base_volume = 4084
 		base_mass = 100
 		base_health = 600
-		//TODO: MAke it volume based or a tool setting??
+		--TODO: MAke it volume based or a tool setting??
 		if(sub_type == "small_air_exchanger") then
 			ent:SetRange(256)
 		else
-			ent:SetRange(768) //right value??
+			ent:SetRange(768) --right value??
 		end
 	elseif type == "base_temperature_exchanger" then
-		base_volume = 4084 //Change to the actual base volume later on
+		base_volume = 4084 --Change to the actual base volume later on
 		base_mass = 100
 		base_health = 500
 		if(sub_type == "small_temp_exchanger") then
 			ent:SetRange(256)
 		else
-			ent:SetRange(768) //right value??
+			ent:SetRange(768) --right value??
 		end
 	elseif type == "base_climate_control" then
 		base_volume = 4084

@@ -111,7 +111,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 		end
 	end
@@ -125,7 +125,7 @@ function ENT:HPFire()
 			self.Prefire = true
 		end
 	end
-	if !self.FreeSpin && self.CRS < 1 then
+	if !self.FreeSpin and self.CRS < 1 then
 		self.CRS = 1
 	end
 end
@@ -133,11 +133,11 @@ end
 function ENT:MainFire()
 	local i = self.CGun
 	--print(self.CGun)
-	if i >= 1 && i <= 8 then
-		if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+	if i >= 1 and i <= 8 then
+		if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 			self.HP[i]["Ent"]:HPFire()
 			self.CGun = i + 1
-			if self.CGun > self.OGuns && self.OGuns > 1 then
+			if self.CGun > self.OGuns and self.OGuns > 1 then
 				self.CGun = 1
 			end
 			--print(self.LastFired)
@@ -159,7 +159,7 @@ end
 
 function ENT:Think()
 	local Delta = CurTime() - self.LTT
-	if !self.Barrel || !self.Barrel:IsValid() then
+	if !self.Barrel or !self.Barrel:IsValid() then
 		local ent = ents.Create( "Prop_Physics" )
 		ent:SetModel("models/Slyfo/sat_rfg.mdl")
 		ent:SetPos(self:GetPos())
@@ -173,7 +173,7 @@ function ENT:Think()
 		self.Barrel = ent
 	end
 	
-	if !self.FClip || !self.FClip:IsValid() then
+	if !self.FClip or !self.FClip:IsValid() then
 		local ent = ents.Create( "Prop_Physics" )
 		ent:SetModel("models/Slyfo/sat_grappler.mdl")
 		ent:SetPos(self:GetPos())
@@ -190,18 +190,18 @@ function ENT:Think()
 	local TGuns = 0
 	for i = 8,1,-1 do
 		--print("Gun", i, self.HP[i]["Ent"])
-		if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+		if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 			TGuns = i
 			break
 		end
 	end
-	if TGuns != self.OGuns then
+	if TGuns ~= self.OGuns then
 		self:GunReorder(TGuns)
 		self.OGuns = TGuns
 	end
 	--print(TGuns)
 	
-	if self.CGun > self.OGuns && self.OGuns > 1 then
+	if self.CGun > self.OGuns and self.OGuns > 1 then
 		self.CGun = 1
 	end
 	
@@ -209,7 +209,7 @@ function ENT:Think()
 		self.CGun = 1
 	end
 	
-	if self.Accel || self.ACyc then
+	if self.Accel or self.ACyc then
 		self.CRS = math.Approach(self.CRS,10,0.005)
 	elseif self.FreeSpin then
 		self.CRS = math.Approach(self.CRS,0,0.03)
@@ -221,7 +221,7 @@ function ENT:Think()
 		self.Accel = true
 	end
 		
-	if self.FreeSpin && !self.Prefire then
+	if self.FreeSpin and !self.Prefire then
 		self.CRA = math.fmod(self.CRA + self.CRS,360)
 		print(self.CRA / (360 / TGuns))
 		self.CGun = math.floor(self.CRA / (360 / TGuns)) + 1
@@ -229,7 +229,7 @@ function ENT:Think()
 			self.Accel = false
 		end
 		--print(self.Accel, self.CRS)
-		if !self.Accel && self.CRS <= 0.3 then
+		if !self.Accel and self.CRS <= 0.3 then
 			local CTrg = (360 / TGuns) * (self.CGun - 1)
 			print(CTrg,self.CGun,self.CRA)
 			self.CRS = 0.3
@@ -247,7 +247,7 @@ function ENT:Think()
 			--print(math.AngleDifference(self.CRA,CTrg))
 			if math.AngleDifference(self.CRA,CTrg) >= self.CRS then
 				self.CRA = CTrg
-				if !self.FreeSpin || self.CRS <= 0.1 then
+				if !self.FreeSpin or self.CRS <= 0.1 then
 					self.CRS = 0
 					self.Rotating = false
 				else
@@ -299,7 +299,7 @@ function ENT:GunReorder(TGuns)
 	--print(SDeg)
 	for i = 1,8 do
 		--print("Checking number", i)
-		if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+		if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 			--print("Valid at", i)
 			local CDeg = (i - 1) * SDeg
 			local CRad = math.rad(CDeg)

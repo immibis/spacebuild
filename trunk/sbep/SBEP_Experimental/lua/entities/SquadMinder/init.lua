@@ -59,18 +59,18 @@ end
 function ENT:Think()
 	if CurTime() >= self.NSortTime then
 		if self.Members and type(self.Members) == "table" then
-			if self.Members[1] != self.Alpha then
+			if self.Members[1] ~= self.Alpha then
 				print("The alpha ain't first")
 				table.sort(self.Members, function(a, b) return a == self.Alpha end)
 				for k,e in pairs(self.Members) do
-					if e && e:IsValid() then
+					if e and e:IsValid() then
 						--e.SquadNumber = k
 					else
 						table.remove(self.Members,k)
 					end
 				end
 				for k,e in pairs(self.Members) do
-					if e && e:IsValid() then
+					if e and e:IsValid() then
 						e.SquadNumber = k
 					end
 				end

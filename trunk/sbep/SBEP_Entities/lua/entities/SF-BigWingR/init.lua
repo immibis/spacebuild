@@ -60,7 +60,7 @@ function ENT:Initialize()
 	self.Entity:SetFold( false )
 	
 	
-	if fintool && type(fintool) == "table" && 1==0 then
+	if fintool and type(fintool) == "table" and 1==0 then
 		local fin = ents.Create( "fin_2" )
 			--fin:SetPos(Entity:LocalToWorld(Data.pos))
 			fin:SetPos(self.Entity:GetPos()) --its pos doesn't matter
@@ -83,7 +83,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 	
-	if !fintool || type(fintool) != "table" then
+	if !fintool or type(fintool) ~= "table" then
 		ply:PrintMessage( HUD_PRINTCENTER, "You need the fin tool installed" )	
 		return nil
 	end
@@ -144,7 +144,7 @@ function ENT:Think()
 		end
 	end
 	
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		local SwivPos = ( Vector(-28,-223,18) )
 		local NAng = self.Entity:GetAngles()
 		NAng:RotateAroundAxis( self.Entity:GetForward(), self.WingAngle + -90 )
@@ -154,7 +154,7 @@ function ENT:Think()
 		self.HP[1]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * 18 + RAng:Forward() * 28 )--( self.Entity:GetRight() * CoSine ) + ( self.Entity:GetUp() * Sine ) )
 	end
 	
-	if self.HP[2]["Ent"] && self.HP[2]["Ent"]:IsValid() then
+	if self.HP[2]["Ent"] and self.HP[2]["Ent"]:IsValid() then
 		local SwivPos = ( Vector(-28,-223,18) )
 		local NAng = self.Entity:GetAngles()
 		NAng:RotateAroundAxis( self.Entity:GetForward(), -self.WingAngle + -90 )
@@ -164,7 +164,7 @@ function ENT:Think()
 		self.HP[2]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * -18 + RAng:Forward() * 28 )--( self.Entity:GetRight() * CoSine ) + ( self.Entity:GetUp() * Sine ) )
 	end
 	
-	if self.HP[5]["Ent"] && self.HP[5]["Ent"]:IsValid() then
+	if self.HP[5]["Ent"] and self.HP[5]["Ent"]:IsValid() then
 		local NAng = self.Entity:GetAngles()
 		NAng:RotateAroundAxis( self.Entity:GetForward(), -90 )
 		NAng:RotateAroundAxis( NAng:Up(), 180 )
@@ -190,12 +190,12 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
-	--if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	--if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 	--	self.HP[1]["Ent"]:HPFire()
 	--end
 end

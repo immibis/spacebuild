@@ -39,8 +39,8 @@ function TOOL:GetExtraCCVars()
 end
 
 local function light_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
-	local base_volume = 11829 //Change to the actual base volume later on
+	local volume_mul = 1 --Change to be 0 by default later on
+	local base_volume = 11829 --Change to the actual base volume later on
 	local base_mass = 5
 	local base_health = 10
 	CAF.GetAddon("Resource Distribution").RegisterNonStorageDevice(ent)

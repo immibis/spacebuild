@@ -41,7 +41,7 @@ function ENT:Initialize()
 	
 end
 
-//call only once and only before ent:Spawn()
+--call only once and only before ent:Spawn()
 function ENT:Setup( large )
 	self.Large = large
 	
@@ -88,8 +88,8 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	//???: Think it needs to comsume energy
-	//TODO: it should only "drill" when on ground
+	--???: Think it needs to comsume energy
+	--TODO: it should only "drill" when on ground
 	-- Remark: Yup....
 	if ( self.Large ) then
 		RD_SupplyResource(self.Entity, "Crude Oil", 2000) --large

@@ -69,7 +69,7 @@ function ENT:Think()
 			TVec = Vector(self.XCo, self.YCo, self.ZCo)
 			
 		elseif self.GType == 2 then
-			if self.ParL && self.ParL:IsValid() then
+			if self.ParL and self.ParL:IsValid() then
 				self.XCo = self.ParL.XCo
 				self.YCo = self.ParL.YCo
 				self.ZCo = self.ParL.ZCo
@@ -77,12 +77,12 @@ function ENT:Think()
 			TVec = Vector(self.XCo, self.YCo, self.ZCo)
 			
 		elseif self.GType == 4 then
-			if type(self.TEnt) == "Entity" && self.TEnt && self.TEnt:IsValid() then
+			if type(self.TEnt) == "Entity" and self.TEnt and self.TEnt:IsValid() then
 				TVec = self.TEnt:GetPos()
 			end
 			
 		elseif self.GType == 3 then
-			if self.Target && self.Target:IsValid() then
+			if self.Target and self.Target:IsValid() then
 				TVec = self.Target:GetPos()
 			else
 				local targets = ents.FindInCone( self.Entity:GetPos(), self.Entity:GetForward(), 5000, 65)
@@ -91,7 +91,7 @@ function ENT:Think()
 				local CT = nil
 							
 				for _,i in pairs(targets) do
-					if i:GetPhysicsObject() && i:GetPhysicsObject():IsValid() && !i.Autospawned then
+					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.Autospawned then
 						local IMass = i:GetPhysicsObject():GetMass()
 						local IDist = (self.Entity:GetPos() - i:GetPos()):Length()
 						if i.IsFlare == true then IMass = 5000 end
@@ -104,9 +104,9 @@ function ENT:Think()
 				self.Target = CT
 			end
 			
-		elseif self.GType == 5 || self.GType == 6 then
-			if self.ParL && self.ParL:IsValid() then
-				if self.ParL.Primary && self.ParL.Primary:IsValid() then
+		elseif self.GType == 5 or self.GType == 6 then
+			if self.ParL and self.ParL:IsValid() then
+				if self.ParL.Primary and self.ParL.Primary:IsValid() then
 					if self.ParL.Primary == self then
 						local Ang = self.ParL.MAngle or Angle(0,0,0)
 						self.Pitch = Ang.p
@@ -126,7 +126,7 @@ function ENT:Think()
 			end
 		end
 		
-		if (self.GType > 0 && self.GType < 5) || (self.GType == 5 && self.Tertiary) then
+		if (self.GType > 0 and self.GType < 5) or (self.GType == 5 and self.Tertiary) then
 			if TVec then
 				local Pos = self:GetPos()
 				self.Pitch = math.Clamp(self:GetUp():DotProduct( TVec - Pos ) * -0.1,-self.TSClamp,self.TSClamp)
@@ -152,7 +152,7 @@ function ENT:Think()
 			physi:SetVelocity( self.Entity:GetForward() * 1000 )
 		end
 		
-		if self.ParL && self.ParL then
+		if self.ParL and self.ParL then
 			if self.ParL.Detonating then
 				self:Splode()
 			end
@@ -176,14 +176,14 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		self:Splode()
 	end
 	self.Exploded = true
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		--self:Splode()
 	end
 	--self.Exploded = true
@@ -227,8 +227,8 @@ function ENT:Splode()
 end
 
 function ENT:Touch( ent )
-	if ent.HasHardpoints && !self.Armed then
-		--if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+	if ent.HasHardpoints and !self.Armed then
+		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

@@ -41,10 +41,10 @@ function EFFECT:Think( )
 			
 			if trace.Hit then
 				Npos = trace.HitPos
-				// calculate the dotproduct of the normal 
+				-- calculate the dotproduct of the normal
 				local dot = trace.HitNormal:Dot( trace.Normal * -1 ); 
 	      
-				// direction
+				-- direction
 				self.Ptable[k].RanVec = ( 2 * trace.HitNormal * dot ) + trace.Normal;
 				self.Ptable[k].RSpeed = self.Ptable[k].RSpeed / 1.1
 				if self.Ptable[k].RSpeed < 0 then self.Ptable[k].RSpeed = 0; end

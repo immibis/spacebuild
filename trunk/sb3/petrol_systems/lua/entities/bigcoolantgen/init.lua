@@ -88,7 +88,7 @@ function ENT:Think()
 		self.oil = RD.GetResourceAmount(self.Entity, "Oil")
 		self.petrol = RD.GetResourceAmount(self.Entity, "Petrol")
 	-- 4 = pertol. 3 = Oil,  2 = 12v
-		if(self.petrol > 50 && self.oil > 30 && self.energy > 2) then
+		if(self.petrol > 50 and  self.oil> 30 and self.energy > 2) then
 			-- Code when on
 			RD.ConsumeResource(self, "12V Energy", 2)
 			RD.ConsumeResource(self, "Oil", 30)

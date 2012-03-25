@@ -19,7 +19,7 @@ ENT.Loading			= false
 
 function ENT:SetLVar( val )
 	local CVal = self.Entity:GetNetworkedInt( "Loading" )
-	if CVal != val then
+	if CVal ~= val then
 		self.Entity:SetNetworkedInt( "Loading", val )
 	end
 end

@@ -16,7 +16,7 @@ function ENT:GetOverlayText()
 	end
 	
 	local PlayerName = self:GetPlayerName()
-	if ( !SinglePlayer() and PlayerName != "") then
+	if ( !SinglePlayer() and PlayerName ~= "") then
 		txt = txt .. "\n- " .. PlayerName .. " -"
 	end
 	

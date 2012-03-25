@@ -68,7 +68,7 @@ function ENT:Think()
 			end
 		end
 		for _,i in pairs(targets) do
-			if i:GetClass() == self.Entity:GetClass() && !i:IsPuddle() then
+			if i:GetClass() == self.Entity:GetClass() and !i:IsPuddle() then
 				i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self.Entity:GetPos()):GetNormal() * Power)
 			end
 		end
@@ -94,7 +94,7 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, phys )
-	if !self.Entity:IsPuddle() && !self.Ignition && !self.Ignited && self.CanPuddle then
+	if !self.Entity:IsPuddle() and !self.Ignition and !self.Ignited and self.CanPuddle then
 		self.PuddlePrep = true
 		self.PudNorm = data.HitNormal * -1
 		self.PudEnt = data.HitEntity
@@ -148,7 +148,7 @@ function ENT:Whomph()
 	self.Entity:EmitSound("Fire.Engulf")
 	self.Ignited = true
 	self.Entity:Burn()
-	if self.efct && self.efct:IsValid() then
+	if self.efct and self.efct:IsValid() then
 		self.efct:Remove()
 	end
 	self.Entity:Fire("kill", "", math.Rand(2,4))
@@ -166,7 +166,7 @@ function ENT:Whomph()
 			local Force = i:GetPhysicsObject():GetMass() * (Power * 2)
 			i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * Force, self.Entity:GetPos() )
 			gcombat.devhit( i, math.random(Power * 0.1,Power * 5), 4 )
-		elseif i:IsPlayer() || i:IsNPC() then
+		elseif i:IsPlayer() or i:IsNPC() then
 			local Force = Power * 10
 			i:SetVelocity( i.Entity:GetPos() - self.Entity:GetPos():Normalize() * Force )
 		end

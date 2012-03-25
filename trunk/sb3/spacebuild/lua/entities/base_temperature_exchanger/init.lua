@@ -26,21 +26,21 @@ function ENT:IsActive()
 end
 
 function ENT:SetStartSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.startsound = sound
 	return true
 end
 
 function ENT:SetStopSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.stopsound = sound
 	return true
 end
 
 function ENT:SetAlarmSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.alarmsound = sound
 	return true
@@ -58,7 +58,7 @@ function ENT:SetDefault()
 end
 
 function ENT:SetRange(amount)
-	if not amount or type(amount) != "number" then return false end
+	if not amount or type(amount) ~= "number" then return false end
 	self.range = amount
 	return true
 end
@@ -68,17 +68,17 @@ function ENT:GetRange()
 end
 
 function ENT:SetTempGiven(amount)
-	if not amount or type(amount) != "number" then return false end
+	if not amount or type(amount) ~= "number" then return false end
 	self.gtemp = amount
 	return true
 end
 
 function ENT:CoolDown(temp)
-	if not temp or type(temp) != "number" then return false end
+	if not temp or type(temp) ~= "number" then return false end
 	local tmp = 0
 	if temp < 288 then
 		local dif = 288 - temp
-		while(self.gtemp != 0 and tmp < dif and self.Active == 1) do
+		while(self.gtemp ~= 0 and tmp < dif and self.Active == 1) do
 			for k , v in pairs(self.resources2) do
 				self:ConsumeResource(k, v)
 			end
@@ -87,7 +87,7 @@ function ENT:CoolDown(temp)
 		end
 	elseif temp > 303 then
 		local dif = 303 - temp
-		while(self.gtemp != 0 and tmp > dif and self.Active == 1) do
+		while(self.gtemp ~= 0 and tmp > dif and self.Active == 1) do
 			for k , v in pairs(self.resources) do
 				self:ConsumeResource(k, v)
 			end
@@ -104,7 +104,7 @@ function ENT:GetLSClass()
 end
 
 function ENT:AddBaseResource(resource, amount)
-	if not resource or type(resource) != "string" or not amount or type(amount) != "number" then return false end
+	if not resource or type(resource) ~= "string" or not amount or type(amount) ~= "number" then return false end
 	if not self.baseresources then
 		self.baseresources = {}
 	end
@@ -114,7 +114,7 @@ function ENT:AddBaseResource(resource, amount)
 end
 
 function ENT:AddResourceToCool(resource, amount)
-	if not resource or type(resource) != "string" or not amount or type(amount) != "number" then return false end
+	if not resource or type(resource) ~= "string" or not amount or type(amount) ~= "number" then return false end
 	if not self.resources then
 		self.resources = {}
 	end
@@ -124,7 +124,7 @@ function ENT:AddResourceToCool(resource, amount)
 end
 
 function ENT:AddResourceToHeat(resource, amount)
-	if not resource or type(resource) != "string" or not amount or type(amount) != "number" then return false end
+	if not resource or type(resource) ~= "string" or not amount or type(amount) ~= "number" then return false end
 	if not self.resources2 then
 		self.resources2 = {}
 	end

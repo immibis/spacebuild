@@ -18,7 +18,7 @@ end
 
 function ENT:Think()
 	
-	if self:GetActive() && self:GetPod() && self:GetPod():IsValid() then
+	if self:GetActive() and self:GetPod() and self:GetPod():IsValid() then
 		local Pod = self:GetPod()
 		local dlight = DynamicLight( self:EntIndex() )
 		if ( dlight ) then

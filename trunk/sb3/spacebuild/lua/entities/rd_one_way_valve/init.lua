@@ -5,7 +5,7 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
 function ENT:Initialize()
-	//self.BaseClass.Initialize(self) --use this in all ents
+	--self.BaseClass.Initialize(self) --use this in all ents
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
@@ -126,7 +126,7 @@ end
 --override to do overdrive
 --AcceptInput (use action) calls this function with value = nil
 function ENT:SetActive( value, caller )
-	if ((not(value == nil) and value != 0) or (value == nil)) and self.Active == 0 then
+	if ((not(value == nil) and value ~= 0) or (value == nil)) and self.Active == 0 then
 		if self.TurnOn then self:TurnOn( nil, caller ) end
 	elseif ((not(value == nil) and value == 0) or (value == nil)) and self.Active == 1 then
 		if self.TurnOff then self:TurnOff( nil, caller ) end
@@ -147,7 +147,7 @@ function ENT:AcceptInput(name,activator,caller)
 	end
 end
 
-function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if the shield is installed(CDS)
+function ENT:OnTakeDamage(DmgInfo)--should make the damage go to the shield if the shield is installed(CDS)
 	if self.Shield then
 		self.Shield:ShieldDamage(DmgInfo:GetDamage())
 		CDS_ShieldImpact(self.Entity:GetPos())
@@ -191,19 +191,19 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-	//self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
+	--self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
 	self:TurnOff()
-	//CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
+	--CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
 	if not (WireAddon == nil) then Wire_Remove(self.Entity) end
 end
 
 function ENT:OnRestore()
-	//self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
+	--self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
 	if not (WireAddon == nil) then Wire_Restored(self.Entity) end
 end
 
 function ENT:PreEntityCopy()
-	//self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
+	--self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
 	local RD = CAF.GetAddon("Resource Distribution")
 	RD.BuildDupeInfo(self.Entity)
 	if not (WireAddon == nil) then
@@ -215,7 +215,7 @@ function ENT:PreEntityCopy()
 end
 
 function ENT:PostEntityPaste( Player, Ent, CreatedEntities )
-	//self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
+	--self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
 	local RD = CAF.GetAddon("Resource Distribution")
 	RD.ApplyDupeInfo(Ent, CreatedEntities)
 	if not (WireAddon == nil) and (Ent.EntityMods) and (Ent.EntityMods.WireDupeInfo) then

@@ -23,7 +23,7 @@ if ( CLIENT ) then
 end
 
 function TOOL:LeftClick( trace )
-	if trace.Entity && (trace.Entity:IsPlayer() ) then return false end
+	if trace.Entity and (trace.Entity:IsPlayer() ) then return false end
 	if (CLIENT) then return true end
 	
 	if ( !self:GetSWEP():CheckLimit( "cutoffvalves" ) ) then return false end

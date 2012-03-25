@@ -68,7 +68,7 @@ local Files = file.FindInLua("core/*.lua")
 for k, File in ipairs(Files) do
 	Msg("Loading: " .. File .. "...")
 	local ErrorCheck, PCallError = pcall(include, "core/" .. File)
-	if ( ! ErrorCheck) then
+	if (  not  ErrorCheck) then
 	ErrorOffStuff(PCallError)
 	else
 		Msg("Loaded: Successfully\n")
@@ -79,7 +79,7 @@ Files = file.FindInLua("plugins/*.lua")
 for k, File in ipairs(Files) do
 	Msg("Loading: " .. File .. "...")
 	local ErrorCheck, PCallError = pcall(include, "plugins/" .. File)
-	if ( ! ErrorCheck) then
+	if (  not  ErrorCheck) then
 	ErrorOffStuff(PCallError)
 	else
 		Msg("Loaded: Successfully\n")

@@ -8,7 +8,7 @@
 		License(s): GPL-3.0 - http://www.gnu.org/licenses/gpl.html
 ]]
 
-//Simple cache mechanism using the LRU Strategy
+--Simple cache mechanism using the LRU Strategy
 
 local table 	= table
 local setmetatable 	= setmetatable
@@ -47,7 +47,7 @@ function list:remove(key)
 	return nil;
 end
 
-function list:create(ttl, remove) //#max amount of elements in the cache table, Time to Live in seconds 
+function list:create(ttl, remove) --#max amount of elements in the cache table, Time to Live in seconds
 	self.ttl = ttl;
 	self.contents = {}
 	self.should_remove = remove
@@ -97,7 +97,7 @@ function list:clear()
 	self.contents = {}
 end
 
-//Debug
+--Debug
 function list:getList()
 	return self.contents;
 end

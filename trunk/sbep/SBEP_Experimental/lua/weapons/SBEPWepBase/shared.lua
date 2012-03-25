@@ -1,5 +1,5 @@
 
-// Variables that are used on both client and server
+-- Variables that are used on both client and server
 
 SWEP.Author			= ""
 SWEP.Contact		= ""
@@ -68,7 +68,7 @@ local SWEPData = list.Get( "SBEP_SWeaponry" )
 ---------------------------------------------------------*/
 function SWEP:Reload()
 	print("Reloading")
-	if !self.PReloading && !self.SReloading && (self:Ammo1() > 0 || self:Ammo2() > 0) && (self:Clip1() < self.Primary.ClipSize || self:Clip2() < self.Secondary.ClipSize) then
+	if !self.PReloading and !self.SReloading and (self:Ammo1() > 0 or self:Ammo2() > 0) and (self:Clip1() < self.Primary.ClipSize or self:Clip2() < self.Secondary.ClipSize) then
 		print("Can Reload")
 		if self.Primary.ClipSize > 0 then
 			if self.Secondary.ClipSize > 0 then
@@ -92,7 +92,7 @@ function SWEP:Reload()
 end
 
 function SWEP:PReload()
-	if !self.PReloading && !self.SReloading then
+	if !self.PReloading and !self.SReloading then
 		self:SetNetworkedFloat( "PRTime", CurTime(), true )
 		self.PReloading = true
 		self.PRTime = CurTime()
@@ -101,7 +101,7 @@ function SWEP:PReload()
 end
 
 function SWEP:SReload()
-	if !self.PReloading && !self.SReloading then
+	if !self.PReloading and !self.SReloading then
 		self:SetNetworkedFloat( "SRTime", CurTime(), true )
 		self.SReloading = true
 		self.SRTime = CurTime()
@@ -135,7 +135,7 @@ function SWEP:Think()
 			self.Owner.IronSightMode = false
 		end
 		
-		if self.Owner:KeyDown( IN_USE ) && self.Owner:KeyDown( IN_WALK ) then
+		if self.Owner:KeyDown( IN_USE ) and self.Owner:KeyDown( IN_WALK ) then
 			self.Owner:SelectWeapon( "weapon_crowbar" )
 		end
 		
@@ -153,7 +153,7 @@ function SWEP:Think()
 				self.SData = SWEPData[ "Empty" ]
 			end
 		end
-		if !self.PData || !self.SData then return end
+		if !self.PData or !self.SData then return end
 		--PrintTable(self.PData)
 		self.Primary.ClipSize		= self.PData.ClipSize
 		self.Primary.Automatic		= self.PData.Auto
@@ -166,7 +166,7 @@ function SWEP:Think()
 		self.SReloadLength			= self.SData.ReloadLength
 			
 		
-		if self.PReloading && self.Owner.Slots.Primary[self.Owner.CSlot] > 0 then
+		if self.PReloading and self.Owner.Slots.Primary[self.Owner.CSlot] > 0 then
 			local CAmmo = self:Clip1()
 			local RAmmo = self.Primary.ClipSize - CAmmo
 			if CurTime() > self.PRTime + self.PReloadLength then
@@ -183,7 +183,7 @@ function SWEP:Think()
 			end
 		end
 		
-		if self.SReloading && self.Owner.Slots.Secondary[self.Owner.CSlot] > 0 then
+		if self.SReloading and self.Owner.Slots.Secondary[self.Owner.CSlot] > 0 then
 			local CAmmo = self:Clip2()
 			local RAmmo = self.Secondary.ClipSize - CAmmo
 			if CurTime() > self.SRTime + self.SReloadLength then
@@ -214,7 +214,7 @@ function SWEP:Think()
 		end
 		
 		self.RecWalkA = self.RecWalkA + (math.AngleDifference(self.RecWalkA,self.RecWalkT) * self.CRecoil * -0.1)
-		if math.AngleDifference(self.RecWalkA,self.RecWalkT) < 1 && math.AngleDifference(self.RecWalkA,self.RecWalkT) > -1 then
+		if math.AngleDifference(self.RecWalkA,self.RecWalkT) < 1 and math.AngleDifference(self.RecWalkA,self.RecWalkT) > -1 then
 			self.RecWalkT = math.random(0,360)
 		end
 		local PAng = self.Owner:EyeAngles()
@@ -338,7 +338,7 @@ function SWEP:Think()
 			end
 		end
 		if NSlot > 0 then
-			if !self.WSTog && NSlot != self.Owner.CSlot && ( self.Owner.Slots.Primary[NSlot].Inv > 0 || self.Owner.Slots.Secondary[NSlot].Inv > 0  ) then
+			if !self.WSTog and NSlot ~= self.Owner.CSlot and ( self.Owner.Slots.Primary[NSlot].Inv > 0 or self.Owner.Slots.Secondary[NSlot].Inv > 0  ) then
 				self.Owner:ConCommand("SBEPChangeSlot "..NSlot)
 				self.WSTog = true
 			end
@@ -377,7 +377,7 @@ function SWEP:PrimaryAttack()
 			if type(self.PData.CustomPrimary) == "function" then
 				self.PData.CustomPrimary(self,self.Owner,true,self.PData)
 			else
-				if self:Clip1() != 0 && !self.PReloading then
+				if self:Clip1() ~= 0 and !self.PReloading then
 					
 					self:EmitSound(self.PData.Sound)
 						
@@ -445,7 +445,7 @@ function SWEP:SecondaryAttack()
 			if type(self.SData.CustomPrimary) == "function" then
 				self.SData.CustomPrimary(self,self.Owner,false,self.SData)
 			else
-				if self:Clip2() > 0 && !self.SReloading then
+				if self:Clip2() > 0 and !self.SReloading then
 					self:EmitSound(self.SData.Sound)
 												
 					if self.SData.Bullets > 0 then
@@ -526,7 +526,7 @@ function SWEP:StandardMuzzleFlash(Prime)
 end
 
 function SWEP:FireCheck(Prime)
-	if !((self.PReloading || self:Clip1() == 0) && Prime) && !((self.SReloading || self:Clip2() == 0) && !Prime) then
+	if !((self.PReloading or self:Clip1() == 0) and Prime) and !((self.SReloading or self:Clip2() == 0) and !Prime) then
 		return true
 	else
 		return false
@@ -575,9 +575,9 @@ function SWEP:GetViewModelPosition( pos, ang )
 		self.SData = SWEPData[ "Empty" ]
 	end
 	
-	if !self.PData || !self.SData then return end
+	if !self.PData or !self.SData then return end
 	
-	if self.OPModel != self.PData.Model then
+	if self.OPModel ~= self.PData.Model then
 		--print("New Primary")
 		if self.PModel then 
 			self.PModel:Remove()
@@ -586,7 +586,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 		end
 		self:SetNetworkedFloat( "PRTime", CurTime() - (self.PData.ReloadLength * .5), true )
 	end
-	if self.OSModel != self.SData.Model then
+	if self.OSModel ~= self.SData.Model then
 		--print("New Secondary")
 		if self.SModel then 
 			self.SModel:Remove()
@@ -799,10 +799,10 @@ function SWEP:GetTracerOrigin()
 		Data = self.SData
 	end
 	local MzPos = Data.MuzzlePos or Vector(0,0,0)
-	if Mdl && Mdl:IsValid() then
+	if Mdl and Mdl:IsValid() then
 		DVec = Mdl:GetPos() + (Mdl:GetRight() * MzPos.x) + (Mdl:GetForward() * MzPos.y) + (Mdl:GetUp() * MzPos.z)
 	end
-	if DVec != Vector(0,0,0) then
+	if DVec ~= Vector(0,0,0) then
 		return DVec
 	end
     return EVec or self.Owner:EyePos()
@@ -925,12 +925,12 @@ if SERVER then
 		Wep.SReloading = false
 		
 		--print(Wep)
-		if Wep.PData && Wep.PData.ClipSize > 0 then--&& Wep.PData.Model != "models/props_junk/PopCan01a.mdl" then
+		if Wep.PData and Wep.PData.ClipSize > 0 then-- and  Wep.PData.Model ~= "models/props_junk/PopCan01a.mdl" then
 			Wep:SetNetworkedFloat( "PRTime", CurTime() - (Wep.PData.ReloadLength * .5), true )
 			Wep:SetClip1(player.Inventory[ player.Slots.Primary[player.CSlot] ].Ammo)
 		end
 		--PrintTable(Wep.SData)
-		if Wep.SData && Wep.SData.ClipSize > 0 then--Wep.SData.Model != "models/props_junk/PopCan01a.mdl" then
+		if Wep.SData and Wep.SData.ClipSize > 0 then--Wep.SData.Model ~= "models/props_junk/PopCan01a.mdl" then
 			Wep:SetNetworkedFloat( "SRTime", CurTime() - (Wep.SData.ReloadLength * .5), true )
 			Wep:SetClip2(player.Inventory[ player.Slots.Secondary[player.CSlot] ].Ammo)
 		end
@@ -1089,10 +1089,10 @@ if CLIENT then
 		ModelDisp:SetLookAt( Vector(0,1,0) )
 		ModelDisp.Inv = 0
 		function ModelDisp:Think()
-			if ModelDisp.Inv <= 0 || !LocalPlayer().Inventory[ModelDisp.Inv] then return end
+			if ModelDisp.Inv <= 0 or !LocalPlayer().Inventory[ModelDisp.Inv] then return end
 			local InfoData = SWEPData[ LocalPlayer().Inventory[ModelDisp.Inv].Type ]
 			if InfoData then
-				if ModelDisp.Entity && ModelDisp.Entity:IsValid() then
+				if ModelDisp.Entity and ModelDisp.Entity:IsValid() then
 					local DVec = InfoData.IVec or Vector(0,20,0)
 					local Ang = ModelDisp.Entity:GetAngles() or Angle(0,0,0)
 					--print(Ang)
@@ -1130,8 +1130,8 @@ if CLIENT then
 				InfoName:SizeToContents()
 				
 				local Dmg = ""
-				if InfoData.Damage && InfoData.Damage > 0 then
-					if InfoData.Bullets && InfoData.Bullets > 1 then
+				if InfoData.Damage and InfoData.Damage > 0 then
+					if InfoData.Bullets and InfoData.Bullets > 1 then
 						Dmg = "Damage: "..InfoData.Damage.." x "..InfoData.Bullets.."\n"
 					else
 						Dmg = "Damage: "..InfoData.Damage.."\n"
@@ -1139,12 +1139,12 @@ if CLIENT then
 				end
 				
 				local ClpSz = ""
-				if InfoData.ClipSize && InfoData.ClipSize > 0 then
+				if InfoData.ClipSize and InfoData.ClipSize > 0 then
 					ClpSz = "Clip-Size: "..InfoData.ClipSize.."\n"
 				end
 				
 				local ROF = ""
-				if InfoData.Refire && InfoData.Refire > 0 then
+				if InfoData.Refire and InfoData.Refire > 0 then
 					local SPS = tostring(60 / InfoData.Refire)
 					local SPSStr = string.Left(SPS, 4)
 					ROF = "Rate-of-Fire: "..SPSStr.." Rounds/m\n"
@@ -1156,13 +1156,13 @@ if CLIENT then
 				end
 				
 				local Acc = ""
-				if InfoData.Cone && InfoData.Cone >= 0 then
+				if InfoData.Cone and InfoData.Cone >= 0 then
 					local Prc = math.Clamp((1 - (InfoData.Cone * 3)) * 100,0,100)
 					Acc = "Accuracy: "..Prc.."%\n"
 				end
 				
 				local Rec = ""
-				if InfoData.Recoil && InfoData.Recoil >= 0 then
+				if InfoData.Recoil and InfoData.Recoil >= 0 then
 					Rec = "Recoil: "..InfoData.Recoil.."\n"
 				end
 				
@@ -1405,7 +1405,7 @@ if CLIENT then
 							HIcon:MoveToFront()
 							HIcon.InvPos = i
 							function HIcon:Think()
-								--if !MouseCC(Frame:GetBounds()) && !MouseCC(InfoPanel:GetBounds()) then
+								--if !MouseCC(Frame:GetBounds()) and !MouseCC(InfoPanel:GetBounds()) then
 									--print("Hovering")
 									--local Vec = gui.ScreenToVector( gui.MousePos() )
 									--LocalPlayer():ConCommand("SBEPItemDrop "..i.." "..Vec.x.." "..Vec.y.." "..Vec.z)
@@ -1414,7 +1414,7 @@ if CLIENT then
 									local PX,PY = HIcon:GetParent():GetPos()
 									HIcon:SetPos( (gui.MouseX() - 32) - PX, (gui.MouseY() - 32) - PY )
 								else
-									if !MouseCC(Frame:GetBounds()) && !MouseCC(InfoPanel:GetBounds()) && !MouseCC(WSlot:GetBounds()) then
+									if !MouseCC(Frame:GetBounds()) and !MouseCC(InfoPanel:GetBounds()) and !MouseCC(WSlot:GetBounds()) then
 										--print("Dropping, Stage 1")
 										local Vec = gui.ScreenToVector( gui.MousePos() )
 										LocalPlayer():ConCommand("SBEPItemDrop "..i.." "..Vec.x.." "..Vec.y.." "..Vec.z)
@@ -1430,7 +1430,7 @@ if CLIENT then
 												local NewData = SWEPData[ LocalPlayer().Inventory[i].Type ]
 												local SecData = SWEPData[ LocalPlayer().Slots.Secondary[n].Inv ]
 												if NewData then
-													if (SecData && SecData.TwoHanded) || LocalPlayer().Slots.Secondary[n].Inv == i then
+													if (SecData and SecData.TwoHanded) or LocalPlayer().Slots.Secondary[n].Inv == i then
 														print("Can't equip!")
 													else
 														LocalPlayer().Slots.Primary[n].Inv = i
@@ -1444,7 +1444,7 @@ if CLIENT then
 												local NewData = SWEPData[ LocalPlayer().Inventory[i].Type ]
 												local PrmData = SWEPData[ LocalPlayer().Slots.Primary[n].Inv ]
 												if NewData then
-													if (PrmData && PrmData.TwoHanded) || LocalPlayer().Slots.Primary[n].Inv == i then
+													if (PrmData and PrmData.TwoHanded) or LocalPlayer().Slots.Primary[n].Inv == i then
 														print("Can't equip!")
 													else
 														LocalPlayer().Slots.Secondary[n].Inv = i
@@ -1484,8 +1484,8 @@ if CLIENT then
 	
 	--Just a quick function to check if the mouse is in a given rect.
 	function MouseCC(X,Y,W,H)
-		if gui.MouseX() >= X && gui.MouseX() <= X + W then
-			if gui.MouseY() >= Y && gui.MouseY() <= Y + H then
+		if gui.MouseX() >= X and gui.MouseX() <= X + W then
+			if gui.MouseY() >= Y and gui.MouseY() <= Y + H then
 				return true
 			end
 		end
@@ -1617,7 +1617,7 @@ if CLIENT then
 	
 	
 	function SWEP:DrawHUD()
-		if !self.Owner.Slots || !self.PData then return end --This just gets rid of that rather annoying error when first spawned
+		if !self.Owner.Slots or !self.PData then return end --This just gets rid of that rather annoying error when first spawned
 		--print("Drawing")
 		
 		if !self.Owner.IronSightMode then
@@ -1626,7 +1626,7 @@ if CLIENT then
 				CrouchMod = 0.5
 			end
 			local AkimboPenalty = 1
-			if self.Owner.Slots.Primary[self.Owner.CSlot].Inv > 0 && self.Owner.Slots.Secondary[self.Owner.CSlot].Inv > 0 then
+			if self.Owner.Slots.Primary[self.Owner.CSlot].Inv > 0 and self.Owner.Slots.Secondary[self.Owner.CSlot].Inv > 0 then
 				AkimboPenalty = self.SData.AkimboPenalty * 1
 			end
 			--self:ShootBullet( self.SData.Damage, self.SData.Bullets, math.Clamp(self.SData.Cone * CrouchMod * AkimboPenalty,0,.5) )
@@ -1786,8 +1786,8 @@ if CLIENT then
 	
 	function SWEP:HUDShouldDraw( element )
 		if (element == "CHudCrosshair") then
-			if self.PData && self.SData then
-				if self.PData.Crosshair || self.SData.Crosshair then
+			if self.PData and self.SData then
+				if self.PData.Crosshair or self.SData.Crosshair then
 					return true
 				end
 			end

@@ -33,10 +33,10 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:Think()
-	if self.Code == self.StrValue && CurTime() - self.InputTime <= self.RHoldLength then
+	if self.Code == self.StrValue and CurTime() - self.InputTime <= self.RHoldLength then
 		Wire_TriggerOutput( self, "CorrectCode", 1 )
 		Wire_TriggerOutput( self, "IncorrectCode", 0 )
-	elseif self.Code != self.StrValue && CurTime() - self.InputTime <= self.WHoldLength then
+	elseif self.Code ~= self.StrValue and CurTime() - self.InputTime <= self.WHoldLength then
 		Wire_TriggerOutput( self, "IncorrectCode", 1 )
 		Wire_TriggerOutput( self, "CorrectCode", 0 )
 	else
@@ -54,7 +54,7 @@ end
 
 function HoloPadSetVar(player,commandName,args)
 	local Pad = ents.GetByIndex(tonumber(args[1]))
-	if Pad && Pad:IsValid() then
+	if Pad and Pad:IsValid() then
 		Pad.KeyValue = tonumber(args[2])
 		Pad.StrValue = args[2]
 		Pad.InputTime = CurTime()

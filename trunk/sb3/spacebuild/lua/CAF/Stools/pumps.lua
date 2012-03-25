@@ -29,7 +29,7 @@ function TOOL:GetExtraCCVars()
 end
 
 local function resource_pump_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras)
-	local volume_mul = 1 //Change to be 0 by default later on
+	local volume_mul = 1 --Change to be 0 by default later on
 	local base_volume = 2272
 	local base_mass = 10
 	local base_health = 50

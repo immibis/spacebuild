@@ -6,9 +6,9 @@ local resources = {}
 
 local status = false
 
-local rd_cache = cache.create(1, true) //Store data for 1 second
+local rd_cache = cache.create(1, true) --Store data for 1 second
 
-//Local functions/variables
+--Local functions/variables
 
 --Precache some sounds for snapping
 for i=1,3 do
@@ -18,9 +18,9 @@ util.PrecacheSound( "physics/metal/metal_box_impact_soft2.wav" )
 
 local nextnetid = 1;
 
-//These functions send all needed info the client
+--These functions send all needed info the client
 
-//nettable
+--nettable
 --[[local function CreateEmptyNetwork(netid, ply)
 	umsg.Start("RD_AddNet", ply)
 		umsg.Short(netid)
@@ -36,7 +36,7 @@ local function SendResoureDataToNetwork(netid, resource, maxvalue, value, ply)
 	umsg.End()
 end
 
-//Needed?
+--Needed?
 local function AddConToNetwork(netid, conid, ply)
 	umsg.Start("RD_AddConToNet", ply)
 		umsg.Short(netid)
@@ -44,7 +44,7 @@ local function AddConToNetwork(netid, conid, ply)
 	umsg.End()
 end
 
-//Needed?
+--Needed?
 local function ClearCons(netid, ply)
 	umsg.Start("RD_RemoveNetCons", ply)
 		umsg.Short(netid)
@@ -57,7 +57,7 @@ local function RemoveNetWork(netid, ply)
 	umsg.End()
 end
 
-	//ent_table
+	--ent_table
 
 local function CreateEmptyEntity(entid, ply)
 	umsg.Start("RD_AddEnt", ply)
@@ -87,18 +87,18 @@ local function RemoveEnt(entid, ply)
 	umsg.End()
 end]]
 
-// End: These functions send all needed info the client
+-- End: These functions send all needed info the client
 
 --[[local function UpdateNetworksAndEntities()
-	//Sentd ent_table first
-	if table.Count(ent_table) != 0 then
+	--Sentd ent_table first
+	if table.Count(ent_table) ~= 0 then
 		for k, v in pairs(ent_table) do
 			if v.clear then
 				RemoveEnt(k)
 				ent_table[k] = nil
 			elseif v.new then
 				CreateEmptyEntity(k)
-				if v.network != 0 then
+				if v.network ~= 0 then
 					ChangeNetWorkOnEntity(k, v.network)
 				end
 				if table.Count(v.resources) > 0 then
@@ -122,8 +122,8 @@ end]]
 			end
 		end
 	end
-	//now lets send the nettable
-	if table.Count(nettable) != 0 then
+	--now lets send the nettable
+	if table.Count(nettable) ~= 0 then
 		for k, v in pairs(nettable) do
 			if v.clear then
 				RemoveNetWork(k)
@@ -165,12 +165,12 @@ end]]
 end
 
 local function SendEntireNetWorkToClient(ply)
-	//Sentd ent_table first
-	if table.Count(ent_table) != 0 then
+	--Sentd ent_table first
+	if table.Count(ent_table) ~= 0 then
 		for k, v in pairs(ent_table) do
 			if not v.clear then
 				CreateEmptyEntity(k, ply)
-				if v.network != 0 then
+				if v.network ~= 0 then
 					ChangeNetWorkOnEntity(k, v.network, ply)
 				end
 				if table.Count(v.resources) > 0 then
@@ -181,8 +181,8 @@ local function SendEntireNetWorkToClient(ply)
 			end
 		end
 	end
-	//now lets send the nettable
-	if table.Count(nettable) != 0 then
+	--now lets send the nettable
+	if table.Count(nettable) ~= 0 then
 		for k, v in pairs(nettable) do
 			if not v.clear then
 				CreateEmptyNetwork(k, ply)
@@ -203,12 +203,12 @@ end]]
 
 local function sendEntityData(ply, entid, rddata)
 	umsg.Start("RD_Entity_Data", ply)
-		umsg.Short(entid) //send key to update
-		umsg.Bool(false) //Update
-		umsg.Short(rddata.network) //send network used in entity
+		umsg.Short(entid) --send key to update
+		umsg.Bool(false) --Update
+		umsg.Short(rddata.network) --send network used in entity
 		
 		local nr_of_resources = table.Count(rddata.resources);
-		umsg.Short(nr_of_resources) //How many resources are going to be send?
+		umsg.Short(nr_of_resources) --How many resources are going to be send?
 		if nr_of_resources > 0 then
 			for l, w in pairs(rddata.resources) do
 				umsg.String(l)
@@ -222,11 +222,11 @@ end
 
 local function sendNetworkData(ply, netid, rddata)
 	umsg.Start("RD_Network_Data", ply)
-		umsg.Short(netid) //send key to update
-		umsg.Bool(false) //Update
+		umsg.Short(netid) --send key to update
+		umsg.Bool(false) --Update
 		
 		local nr_of_resources = table.Count(rddata.resources);
-		umsg.Short(nr_of_resources) //How many resources are going to be send?
+		umsg.Short(nr_of_resources) --How many resources are going to be send?
 		if nr_of_resources > 0 then
 			for l, w in pairs(rddata.resources) do
 				umsg.String(l)
@@ -236,7 +236,7 @@ local function sendNetworkData(ply, netid, rddata)
 		end
 		
 		local nr_of_cons = #rddata.cons;
-		umsg.Short(nr_of_cons) //How many connections are going to be send?
+		umsg.Short(nr_of_cons) --How many connections are going to be send?
 		if nr_of_cons > 0 then
 			for l, w in pairs(rddata.cons) do
 				umsg.Short(w)
@@ -305,12 +305,12 @@ concommand.Add( "RD_REQUEST_RESOURCE_DATA", RequestResourceData )
 
 
 
-//Remove All Entities that are registered by RD, without RD they won't work anyways!
+--Remove All Entities that are registered by RD, without RD they won't work anyways!
 local function ClearEntities()
-	if table.Count(ent_table) != 0 then
+	if table.Count(ent_table) ~= 0 then
 		for k, v in pairs(ent_table) do
 			local ent = ents.GetByIndex( k );
-			if ent and ValidEntity(ent) and ent != NULL then
+			if ent and ValidEntity(ent) and ent ~= NULL then
 				ent:Remove()
 			end
 		end
@@ -326,7 +326,7 @@ local function RD_Initial_Spawn( ply )
 	--SendEntireNetWorkToClient(ply)
 end
 
-//End local functions
+--End local functions
 
 /**
 	The Constructor for this Custom Addon Class
@@ -413,12 +413,12 @@ CAF.RegisterAddon("Resource Distribution", RD, "1")
 function RD.RemoveRDEntity(ent)
 	if not ent or not ValidEntity(ent) then return end
 	if ent.IsNode then
-		//RemoveNetWork(ent.netid)
-		//nettable[ent.netid].clear = true
+		--RemoveNetWork(ent.netid)
+		--nettable[ent.netid].clear = true
 		nettable[ent.netid] = nil;
 	elseif ent_table[ent:EntIndex()] then
-		//RemoveEnt(ent:EntIndex())
-		//ent_table[ent:EntIndex()].clear = true
+		--RemoveEnt(ent:EntIndex())
+		--ent_table[ent:EntIndex()].clear = true
 		ent_table[ent:EntIndex()] = nil
 	end
 end
@@ -441,7 +441,7 @@ function RD.RegisterNonStorageDevice(ent)
 		index.haschanged = false;
 		index.new = true;
 		index.ent = ent
-	elseif ent_table[ent:EntIndex( )].ent != ent then
+	elseif ent_table[ent:EntIndex( )].ent ~= ent then
 		ent_table[ent:EntIndex()] = {}
 		local index = ent_table[ent:EntIndex( )];
 		index.resources = {}
@@ -472,7 +472,7 @@ function RD.AddResource(ent, resource, maxamount, defaultvalue)
 	if ent_table[ent:EntIndex( )] and ent_table[ent:EntIndex( )].ent == ent then
 		local index = ent_table[ent:EntIndex( )];
 		if index.resources[resource] then
-			if index.network != 0 then
+			if index.network ~= 0 then
 				nettable[index.network].resources[resource].maxvalue = nettable[index.network].resources[resource].maxvalue - index.resources[resource].maxvalue;
 				if nettable[index.network].resources[resource].value > nettable[index.network].resources[resource].maxvalue then
 					nettable[index.network].resources[resource].value = nettable[index.network].resources[resource].maxvalue;
@@ -484,7 +484,7 @@ function RD.AddResource(ent, resource, maxamount, defaultvalue)
 		index.resources[resource].maxvalue = maxamount
 		index.resources[resource].value = defaultvalue
 		index.resources[resource].haschanged = true
-		if index.network != 0 then
+		if index.network ~= 0 then
 			nettable[index.network].resources[resource].maxvalue = nettable[index.network].resources[resource].maxvalue + maxamount;
 			nettable[index.network].resources[resource].value = nettable[index.network].resources[resource].value + defaultvalue;
 			if nettable[index.network].resources[resource].value > nettable[index.network].resources[resource].maxvalue then
@@ -580,11 +580,11 @@ function RD.ConsumeNetResource(netid, resource, amount)
 			consumed = amount
 		end
 	end
-	if consumed != origamount then
+	if consumed ~= origamount then
 		if table.Count(nettable[index.network].cons) > 0 then
 			for k, v in pairs(RD.getConnectedNets(index.network)) do
 				amount = origamount - consumed
-				if v != index.network then
+				if v ~= index.network then
 					if nettable[v] and nettable[v].resources and nettable[v].resources[resource]  then
 						if nettable[v].resources[resource].maxvalue > 0 then
 							if nettable[v].resources[resource].value >= amount then
@@ -686,7 +686,7 @@ function RD.SupplyNetResource(netid, resource, amount)
 		if table.Count(nettable[index.network].cons) > 0 then
 			for k, v in pairs(RD.getConnectedNets(index.network)) do
 				amount = left
-				if v != index.network then
+				if v ~= index.network then
 					if nettable[v] and nettable[v].resources and nettable[v].resources[resource]  then
 						if nettable[v].resources[resource].maxvalue > nettable[v].resources[resource].value + amount then
 							nettable[v].resources[resource].value = nettable[v].resources[resource].value + amount
@@ -757,7 +757,7 @@ end
 
 ]]
 function RD.Link(ent, netid)
-	RD.Unlink(ent) //Just to be sure
+	RD.Unlink(ent) --Just to be sure
 	if ent_table[ent:EntIndex( )] then
 		if nettable[netid] then
 			local index = ent_table[ent:EntIndex( )]
@@ -795,7 +795,7 @@ end
 function RD.Unlink(ent)
 	if ent_table[ent:EntIndex( )] then
 		local index = ent_table[ent:EntIndex( )]
-		if index.network != 0 then
+		if index.network ~= 0 then
 			if nettable[index.network] then
 				for k, v in pairs(index.resources) do
 					if index.resources[k].maxvalue > 0 then
@@ -814,7 +814,7 @@ function RD.Unlink(ent)
 					if v == ent then
 						table.remove(nettable[index.network].entities, k)
 
-						//remove beams
+						--remove beams
 						RD.Beam_clear( ent )
 						break
 					end
@@ -847,7 +847,7 @@ function RD.UnlinkAllFromNode(netid)
 		end
 		for l, w in pairs(nettable[netid].entities) do
 			RD.Unlink(w)
-			//table.remove(nettable[netid].entities, l)
+			--table.remove(nettable[netid].entities, l)
 		end
 		/*for l, w in pairs(nettable[netid].resources) do
 			w.value = 0
@@ -980,11 +980,11 @@ saverestore.AddRestoreHook( "caf_rd_save", MyRestoreFunction )
 --[[ Dupe Stuff]]
 
 function RD.BuildDupeInfo( ent )
-	//save any beams
+	--save any beams
 	RD.Beam_dup_save( ent )
 	
 	if ent.IsPump then
-		if ent.netid != 0 then
+		if ent.netid ~= 0 then
 			local nettable = RD.GetNetTable(ent.netid)
 			if nettable.nodeent then
 				local info = {}
@@ -998,7 +998,7 @@ function RD.BuildDupeInfo( ent )
 	if not ent.IsNode then return end
 	local nettable = RD.GetNetTable(ent.netid)
 	local info = {}
-	//info.resources = table.Copy(nettable.resources)
+	--info.resources = table.Copy(nettable.resources)
 	local entids = {}
 	if table.Count(nettable.entities) > 0 then
 		for k, v in pairs(nettable.entities) do
@@ -1021,7 +1021,7 @@ function RD.BuildDupeInfo( ent )
 	end
 end
 
-//apply the DupeInfo
+--apply the DupeInfo
 function RD.ApplyDupeInfo( ent, CreatedEntities )
 	if (ent.EntityMods) and (ent.EntityMods.RDDupeInfo) and (ent.EntityMods.RDDupeInfo.entities) then
 		local RDDupeInfo = ent.EntityMods.RDDupeInfo
@@ -1041,7 +1041,7 @@ function RD.ApplyDupeInfo( ent, CreatedEntities )
 				end
 			end
 		end
-		ent.EntityMods.RDDupeInfo = nil //trash this info, we'll never need it again
+		ent.EntityMods.RDDupeInfo = nil --trash this info, we'll never need it again
 	elseif ent.EntityMods and ent.EntityMods.RDPumpDupeInfo and ent.EntityMods.RDPumpDupeInfo.node then
 		--This entity is a pump and has a network to connect to 
 		local ent2 = CreatedEntities[ ent.EntityMods.RDPumpDupeInfo.node ] --Get the new node entity
@@ -1051,7 +1051,7 @@ function RD.ApplyDupeInfo( ent, CreatedEntities )
 		end
 	end
 
-	//restore any beams
+	--restore any beams
 	RD.Beam_dup_build( ent, CreatedEntities )
 end
 
@@ -1222,9 +1222,9 @@ function RD.PrintDebug(ent)
 			local nettable = RD.GetNetTable(ent.netid)
 			PrintTable(nettable)
 		elseif ent.IsValve then
-			//
+			--
 		elseif ent.IsPump then
-			//
+			--
 		else
 			local enttable = RD.GetEntityTable(ent)
 			PrintTable(enttable)
@@ -1233,133 +1233,133 @@ function RD.PrintDebug(ent)
 end
 
 
-//---------------------------------------
-//START BEAMS BY MADDOG
-//---------------------------------------
+-----------------------------------------
+--START BEAMS BY MADDOG
+-----------------------------------------
 
-//Name: RD.Beam_settings
-//Desc: Sends beam info to the clientside.
-//Args:
-//	beamMaterial -  the material to use (defualt cable/cable2)
-//	beamSize - the size of the beam, design 2
-//	beamColor - the beam color (default: Color(255, 255, 255, 255)
+--Name: RD.Beam_settings
+--Desc: Sends beam info to the clientside.
+--Args:
+--	beamMaterial -  the material to use (defualt cable/cable2)
+--	beamSize - the size of the beam, design 2
+--	beamColor - the beam color (default: Color(255, 255, 255, 255)
 function RD.Beam_settings( ent, beamMaterial, beamSize, beamColor )
-	//get beam color
+	--get beam color
 	local beamR, beamG, beamB, beamA = beamColor.R or 255, beamColor.G or 255, beamColor.B or 255, beamColor.A or 255
 
-	//send beam info to ent/clientside
+	--send beam info to ent/clientside
 	ent:SetNWString( "BeamInfo", ((beamMaterial or "cable/cable2") .. ";" .. tostring(beamSize or 2) .. ";" .. tostring(beamR or 255) .. ";" .. tostring(beamG or 255) .. ";" .. tostring(beamB or 255) .. ";" .. tostring(beamA or 255)) )
 end
 
-//Name: RD.Beam_add
-//Desc: Add a beam to a ent
-//Args:
-//	sEnt: The ent to save the beam to
-//	eEnt: The entity to base the vector off
-//	beamVec: The local vector (based on eEnt) to place the beam
+--Name: RD.Beam_add
+--Desc: Add a beam to a ent
+--Args:
+--	sEnt: The ent to save the beam to
+--	eEnt: The entity to base the vector off
+--	beamVec: The local vector (based on eEnt) to place the beam
 function RD.Beam_add(sEnt, eEnt, beamVec)
-	//get how many beams there currently are
+	--get how many beams there currently are
 	local iBeam = (sEnt:GetNWInt( "Beams" ) or 0) + 1
 
-	//send beam data
-	//clicked entity
+	--send beam data
+	--clicked entity
 	sEnt:SetNWEntity( "BeamEnt" .. tostring(iBeam), eEnt )
-	//clicked local vector
+	--clicked local vector
 	sEnt:SetNWVector( "Beam" .. tostring(iBeam), beamVec or Vector(0, 0, 0) )
-	//how many beams (points)
+	--how many beams (points)
 	sEnt:SetNWInt( "Beams", iBeam )
 end
 
-//Name: RD.Beam_switch
-//Desc: Switches the beam settings from one ent to another.
-//Args:
-//	Ent1: The ent to get the current beams from
-//	Ent2: Where to send the beam settings to
+--Name: RD.Beam_switch
+--Desc: Switches the beam settings from one ent to another.
+--Args:
+--	Ent1: The ent to get the current beams from
+--	Ent2: Where to send the beam settings to
 function RD.Beam_switch( Ent1, Ent2 )
-	//transfer beam data
+	--transfer beam data
 	Ent2:SetNWString( "BeamInfo", Ent1:GetNWString( "BeamInfo" ))
 
-	//loop through all beams
+	--loop through all beams
 	for i=1, Ent1:GetNWInt( "Beams" ) do
-		//transfer beam data
+		--transfer beam data
 		Ent2:SetNWVector("Beam"..tostring(i), Ent1:GetNWVector( "Beam"..tostring(i) ))
 		Ent2:SetNWEntity("BeamEnt"..tostring(i), Ent1:GetNWEntity( "BeamEnt" .. tostring(i) ))
 	end
 
-	//how many beam points
+	--how many beam points
 	Ent2:SetNWInt( "Beams", Ent1:GetNWInt( "Beams" ) )
 
-	//set beams to zero
+	--set beams to zero
 	Ent1:SetNWInt( "Beams", 0 )
 end
 
-//Name: RD.Beam_clear
-//Desc: Sets beams to zero to stop from them rendering
-//Args:
-//	ent - the ent to clean the beams from
+--Name: RD.Beam_clear
+--Desc: Sets beams to zero to stop from them rendering
+--Args:
+--	ent - the ent to clean the beams from
 function RD.Beam_clear( ent )
 	ent:SetNWInt( "Beams", 0 )
 end
 
-//Name: Rd.Beam_get_table
-//Desc: Used to return a table of beam info for adv dup support
-//Args:
-//	ent - the ent to get the beam info from
+--Name: Rd.Beam_get_table
+--Desc: Used to return a table of beam info for adv dup support
+--Args:
+--	ent - the ent to get the beam info from
 function RD.Beam_dup_save( ent )
-	//the table to return
+	--the table to return
 	local beamTable = {}
 
-	//amount of beams to draw
+	--amount of beams to draw
 	beamTable.Beams = ent:GetNWInt( "Beams" )
 
-	//if we have beams, then create them
-	if beamTable.Beams & beamTable.Beams != 0 then
-		//store beam info
+	--if we have beams, then create them
+	if beamTable.Beams & beamTable.Beams ~= 0 then
+		--store beam info
 		beamTable.BeamInfo = ent:GetNWString("BeamInfo")
 
-		//loop through all beams
+		--loop through all beams
 		for i=1,beamTable.Beams do
-			//store beam vector
+			--store beam vector
 			beamTable["Beam" .. tostring(i)] = ent:GetNWVector( "Beam" .. tostring(i) )
-			//store beam entity
+			--store beam entity
 			beamTable["BeamEnt" .. tostring(i)] = ent:GetNWEntity( "BeamEnt" .. tostring(i) ):EntIndex()
 		end
 	else
-		return	//no beams to save
+		return	--no beams to save
 	end
 
-	//store beam table into duplicator
+	--store beam table into duplicator
 	duplicator.StoreEntityModifier( ent, "RDBeamDupeInfo", beamTable )
 end
 
-//Name: Rd.Beam_set_table
-//Desc: Sets beams from a table
-//Args:
-//	ent - the ent to get the beam info from
+--Name: Rd.Beam_set_table
+--Desc: Sets beams from a table
+--Args:
+--	ent - the ent to get the beam info from
 function RD.Beam_dup_build( ent, CreatedEntities )
-	//exit if no beam dup info
-	if !ent.EntityMods || !ent.EntityMods.RDBeamDupeInfo then return end
+	--exit if no beam dup info
+	if !ent.EntityMods or !ent.EntityMods.RDBeamDupeInfo then return end
 
-	//get the beam info table
+	--get the beam info table
 	local beamTable = ent.EntityMods.RDBeamDupeInfo
 
-	//transfer beam data
+	--transfer beam data
 	ent:SetNWString( "BeamInfo", beamTable.BeamInfo)
 
-	//loop through all beams
+	--loop through all beams
 	for i=1, beamTable.Beams do
-		//transfer beam data
+		--transfer beam data
 		ent:SetNWVector("Beam"..tostring(i), beamTable["Beam"..tostring(i) ])
 		ent:SetNWEntity("BeamEnt"..tostring(i), CreatedEntities[ beamTable[ "BeamEnt" .. tostring(i) ] ])
 	end
 
-	//how many beam points
+	--how many beam points
 	ent:SetNWInt( "Beams", beamTable.Beams )
 end
 
-//---------------------------------------
-//END BEAMS BY MADDOG
-//---------------------------------------
+-----------------------------------------
+--END BEAMS BY MADDOG
+-----------------------------------------
 
 --Alternate use code--
 local hookcount = 0

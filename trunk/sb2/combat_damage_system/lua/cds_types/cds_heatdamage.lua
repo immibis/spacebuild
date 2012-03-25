@@ -12,8 +12,8 @@ function cds_heatent(ent, heat)
 	heat = math.Round(heat)
 	if ent.Shield and not ent.Shield.CDS_Allow_Heat then
 		ent.Shield:ShieldDamage(math.abs(heat)/10)
-		//FUCKEN ANNOYING!
-		//CDS_ShieldImpact(ent:GetPos())
+		--FUCKEN ANNOYING!
+		--CDS_ShieldImpact(ent:GetPos())
 		return
 	end
 	ent.heat = ent.heat + heat

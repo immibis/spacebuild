@@ -97,7 +97,7 @@ function ENT:Think()
 	self.val1 = RD_GetResourceAmount(self.Entity, "12V Energy")
 	
 	-- We can only beon if we flicked teh switchz0rs
-	if(self.toggle == true || self.active == 1) then
+	if(self.toggle == true or self.active == 1) then
 		if(self.val1 > 1) then
 		 -- Take the NRG
 		 RD_ConsumeResource(self, "12V Energy", 1)
@@ -136,7 +136,7 @@ function ENT:OnRemove()
 	Dev_Unlink_All(self.Entity)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

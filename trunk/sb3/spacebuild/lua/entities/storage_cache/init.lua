@@ -28,55 +28,55 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Expel Energy") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.venten = false
 		else
 			self.venten = true
 		end
 	elseif (iname == "Vent Oxygen") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.ventoxy = false
 		else
 			self.ventoxy = true
 		end
 	elseif (iname == "Vent Co2") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.ventco2 = false
 		else
 			self.ventco2 = true
 		end
 	elseif (iname == "Vent Hydrogen") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.venthyd = false
 		else
 			self.venthyd = true
 		end
 	elseif (iname == "Vent Nitrogen") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.ventnit = false
 		else
 			self.ventnit = true
 		end
 	elseif (iname == "Leak Water") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.ventwat = false
 		else
 			self.ventwat = true
 		end
 	elseif (iname == "Leak Heavy Water") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.venthwwat = false
 		else
 			self.venthwat = true
 		end
 	elseif (iname == "Leak Liquid Nitrogen") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.ventlnit = false
 		else
 			self.ventlnit = true
 		end
 	elseif (iname == "Vent Amount") then
-		if (value != 0) then
+		if (value ~= 0) then
 			self.ventamount = math.abs(value)
 		else
 			self.ventamount = 1000
@@ -128,7 +128,7 @@ function ENT:LeakHvyWater()
 		self:ConsumeResource("heavy water", self.ventamount)
 	else
 		self:ConsumeResource("heavy water", heavywater)
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new Liquid Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new Liquid Vent/Escaping Sound
 	end	
 end	
 
@@ -138,7 +138,7 @@ function ENT:LeakLqdNitrogen()
 		self:ConsumeResource("liquid nitrogen", self.ventamount)
 	else
 		self:ConsumeResource("liquid nitrogen", liquidnitrogen)
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new Liquid Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new Liquid Vent/Escaping Sound
 	end	
 end
 	
@@ -154,7 +154,7 @@ function ENT:VentCo2()
 		if self.environment then
 			self.environment:Convert(-1, 1, co2)
 		end
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new co2 Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new co2 Vent/Escaping Sound
 	end
 end
 
@@ -188,7 +188,7 @@ function ENT:VentHydrogen()
 		if self.environment then
 			self.environment:Convert(-1, 3, hydrogen)
 		end
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	end
 end
 	
@@ -204,7 +204,7 @@ function ENT:VentNitrogen()
 		if self.environment then
 			self.environment:Convert(-1, 2,  nitrogen)
 		end
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	end	
 end
 	
@@ -259,10 +259,10 @@ function ENT:UpdateMass()
 	/*local RD = CAF.GetAddon("Resource Distribution")
 	local mul = 0.5
 	local div = math.Round(RD.GetNetworkCapacity(self, "carbon dioxide")/self.MAXRESOURCE)
-	local mass = self.mass + ((RD.GetResourceAmount(self, "carbon dioxide") * mul)/div) // self.mass = default mass + need a good multiplier
+	local mass = self.mass + ((RD.GetResourceAmount(self, "carbon dioxide") * mul)/div) -- self.mass = default mass + need a good multiplier
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

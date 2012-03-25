@@ -62,7 +62,7 @@ function ENT:Think()
 		self.PreLaunch = true
 	end
 	
-	if (self.Exploded != true) then
+	if (self.Exploded ~= true) then
 		self.CAng = self.Entity:GetAngles()
 	end
 	

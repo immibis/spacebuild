@@ -25,21 +25,21 @@ function ENT:IsActive()
 end
 
 function ENT:SetStartSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.startsound = sound
 	return true
 end
 
 function ENT:SetStopSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.stopsound = sound
 	return true
 end
 
 function ENT:SetAlarmSound(sound)
-	if not sound or type(sound) != "string" then return false end
+	if not sound or type(sound) ~= "string" then return false end
 	util.PrecacheSound( sound )
 	self.alarmsound = sound
 	return true
@@ -57,7 +57,7 @@ function ENT:SetDefault()
 end
 
 function ENT:SetRange(amount)
-	if not amount or type(amount) != "number" then return false end
+	if not amount or type(amount) ~= "number" then return false end
 	self.range = amount
 	return true
 end
@@ -67,7 +67,7 @@ function ENT:GetRange()
 end
 
 function ENT:SetAirGiven(amount)
-	if not amount or type(amount) != "number" then return false end
+	if not amount or type(amount) ~= "number" then return false end
 	self.gair = amount
 	return true
 end
@@ -82,7 +82,7 @@ function ENT:UsePerson()
 end
 
 function ENT:UsePersonPressure(pressure)
-	if not pressure or type(pressure) != "number" then return end
+	if not pressure or type(pressure) ~= "number" then return end
 	if pressure <= 0 then
 		return 0
 	end
@@ -105,7 +105,7 @@ function ENT:GetLSClass()
 end
 
 function ENT:AddBaseResource(resource, amount)
-	if not resource or type(resource) != "string" or not amount or type(amount) != "number" then return false end
+	if not resource or type(resource) ~= "string" or not amount or type(amount) ~= "number" then return false end
 	if not self.baseresources then
 		self.baseresources = {}
 	end
@@ -115,7 +115,7 @@ function ENT:AddBaseResource(resource, amount)
 end
 
 function ENT:AddUseResource(resource, amount)
-	if not resource or type(resource) != "string" or not amount or type(amount) != "number" then return false end
+	if not resource or type(resource) ~= "string" or not amount or type(amount) ~= "number" then return false end
 	if not self.resources then
 		self.resources = {}
 	end

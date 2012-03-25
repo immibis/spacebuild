@@ -9,7 +9,7 @@ local SB_AIR_N = 2
 local SB_AIR_H = 3
 
 function ENT:Initialize()
-	//self.BaseClass.Initialize(self) --use this in all ents
+	--self.BaseClass.Initialize(self) --use this in all ents
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
@@ -99,7 +99,7 @@ function ENT:ConvertResource(res1, res2, amount)
 		if not self.sbenvironment.air[res2] then
 			self:AddExtraResource(res2)
 		end
-		if res1 != -1 then
+		if res1 ~= -1 then
 			amount = self:Convert(res1, -1, amount)
 		else
 			local available = self:GetEmptyAir()
@@ -120,7 +120,7 @@ function ENT:ConvertResource(res1, res2, amount)
 		end
 		self.sbenvironment.air[res1] = self.sbenvironment.air[res1] - amount
 		self.sbenvironment.air.empty = self.sbenvironment.air.empty + amount
-		if res2 != -1 then
+		if res2 ~= -1 then
 			local amount2 = amount
 			amount = self:Convert(-1, res2, amount)
 			if amount2 > amount then
@@ -171,7 +171,7 @@ end
 --override to do overdrive
 --AcceptInput (use action) calls this function with value = nil
 function ENT:SetActive( value, caller )
-	if ((not(value == nil) and value != 0) or (value == nil)) and self.Active == 0 then
+	if ((not(value == nil) and value ~= 0) or (value == nil)) and self.Active == 0 then
 		if self.TurnOn then self:TurnOn( nil, caller ) end
 	elseif ((not(value == nil) and value == 0) or (value == nil)) and self.Active == 1 then
 		if self.TurnOff then self:TurnOff( nil, caller ) end
@@ -193,7 +193,7 @@ function ENT:AcceptInput(name,activator,caller)
 	end
 end
 
-function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if the shield is installed(CDS)
+function ENT:OnTakeDamage(DmgInfo)--should make the damage go to the shield if the shield is installed(CDS)
 	if self.Shield then
 		self.Shield:ShieldDamage(DmgInfo:GetDamage())
 		CDS_ShieldImpact(self.Entity:GetPos())
@@ -205,7 +205,7 @@ function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if t
 end
 
 function ENT:Think()
-	//self.BaseClass.Think(self) --use this in all ents that use standard setoverlaytext
+	--self.BaseClass.Think(self) --use this in all ents that use standard setoverlaytext
 	if (self.NextOverlayTextTime) and (CurTime() >= self.NextOverlayTextTime) then
 		if (self.NextOverlayText) then
 			self.Entity:SetNetworkedString( "GModOverlayText", self.NextOverlayText )
@@ -216,7 +216,7 @@ function ENT:Think()
 end
 
 function ENT:OnRemove()
-	//self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
+	--self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
 	if CAF and CAF.GetAddon("Resource Distribution") then
 		CAF.GetAddon("Resource Distribution").Unlink(self)
 		CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
@@ -225,12 +225,12 @@ function ENT:OnRemove()
 end
 
 function ENT:OnRestore()
-	//self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
+	--self.BaseClass.OnRestore(self) --use this if you have to use OnRestore
 	if not (WireAddon == nil) then Wire_Restored(self.Entity) end
 end
 
 function ENT:PreEntityCopy()
-	//self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
+	--self.BaseClass.PreEntityCopy(self) --use this if you have to use PreEntityCopy
 	if CAF and CAF.GetAddon("Resource Distribution") then
 		local RD = CAF.GetAddon("Resource Distribution")
 		RD.BuildDupeInfo(self.Entity)
@@ -244,7 +244,7 @@ function ENT:PreEntityCopy()
 end
 
 function ENT:PostEntityPaste( Player, Ent, CreatedEntities )
-	//self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
+	--self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities ) --use this if you have to use PostEntityPaste
 	if CAF and CAF.GetAddon("Resource Distribution") then
 		local RD = CAF.GetAddon("Resource Distribution")
 		RD.ApplyDupeInfo(Ent, CreatedEntities)
@@ -367,7 +367,7 @@ function ENT:IsOnPlanet()
 end
 
 function ENT:SetEnvironmentID(id)
-	if not id or type(id) != "number" then return false end
+	if not id or type(id) ~= "number" then return false end
 	self.sbenvironment.id = id
 end
 
@@ -437,19 +437,19 @@ end
 
 --Updates the atmosphere and the pressure based on it together with values of air
 function ENT:ChangeAtmosphere(newatmosphere)
-	if not newatmosphere or type(newatmosphere) != "number" then return "Invalid parameter" end
+	if not newatmosphere or type(newatmosphere) ~= "number" then return "Invalid parameter" end
 	if newatmosphere < 0 then
 		newatmosphere = 0
 	elseif newatmosphere > 1 then
 		newatmosphere = 1
 	end
-	//Update the pressure since it's based on atmosphere and gravity
-	if self.sbenvironment.atmosphere != 0 then
+	--Update the pressure since it's based on atmosphere and gravity
+	if self.sbenvironment.atmosphere ~= 0 then
 		self.sbenvironment.pressure = self.sbenvironment.pressure * (newatmosphere/self.sbenvironment.atmosphere)
 	else
 		self.sbenvironment.pressure = self.sbenvironment.pressure * newatmosphere
 	end
-	//Update air values so they are correct again (
+	--Update air values so they are correct again (
 	if newatmosphere > self.sbenvironment.atmosphere then
 		self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * newatmosphere)
 		local tmp = self.sbenvironment.air.max - (self.sbenvironment.air.o2 + self.sbenvironment.air.co2 + self.sbenvironment.air.n + self.sbenvironment.air.h)
@@ -468,9 +468,9 @@ end
 
 --Updates the gravity and the pressure based on it
 function ENT:ChangeGravity(newgravity)
-	if not newgravity or type(newgravity) != "number" then return "Invalid parameter" end
-	//Update the pressure since it's based on atmosphere and gravity
-	if self.sbenvironment.gravity != 0 then
+	if not newgravity or type(newgravity) ~= "number" then return "Invalid parameter" end
+	--Update the pressure since it's based on atmosphere and gravity
+	if self.sbenvironment.gravity ~= 0 then
 		self.sbenvironment.pressure = self.sbenvironment.pressure * (newgravity/self.sbenvironment.gravity)
 	else
 		self.sbenvironment.pressure = self.sbenvironment.pressure * newgravity
@@ -500,11 +500,11 @@ function ENT:UpdatePressure(ent)
 	end
 end
 
-//Converts air1 to air2 for the max amount of the specified value
-//Returns the actual amount of converted airtype
+--Converts air1 to air2 for the max amount of the specified value
+--Returns the actual amount of converted airtype
 function ENT:Convert(air1, air2, value)
 	if not air1 or not air2 or not value then return 0 end
-	if type(air1) != "number" or type(air2) != "number" or type(value) != "number" then return 0 end 
+	if type(air1) ~= "number" or type(air2) ~= "number" or type(value) ~= "number" then return 0 end
 	air1 = math.Round(air1)
 	air2 = math.Round(air2)
 	value = math.Round(value)
@@ -514,7 +514,7 @@ function ENT:Convert(air1, air2, value)
 	if value < 1 then return 0 end
 	if server_settings.Bool( "SB_StaticEnvironment" ) then
 		return value;
-		//Don't do anything else anymore
+		--Don't do anything else anymore
 	end
 	if air1 == -1 then
 		if self.sbenvironment.air.empty < value then
@@ -662,15 +662,15 @@ function ENT:GetH()
 end
 
 function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h, name)
-	//Msg("CreateEnvironment: "..tostring(gravity).."\n")
-	//set Gravity if one is given
+	--Msg("CreateEnvironment: "..tostring(gravity).."\n")
+	--set Gravity if one is given
 	if gravity and type(gravity) == "number" then
 		if gravity < 0 then
 			gravity = 0
 		end
 		self.sbenvironment.gravity = gravity
 	end
-	//set atmosphere if given
+	--set atmosphere if given
 	if atmosphere and type(atmosphere) == "number" then
 		if atmosphere < 0 then
 			atmosphere = 0
@@ -679,17 +679,17 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		end
 		self.sbenvironment.atmosphere = atmosphere
 	end
-	//set pressure if given
+	--set pressure if given
 	if pressure and type(pressure) == "number" and pressure >= 0 then
 		self.sbenvironment.pressure = pressure
 	else 
 		self.sbenvironment.pressure = math.Round(self.sbenvironment.atmosphere * self.sbenvironment.gravity)
 	end
-	//set temperature if given
+	--set temperature if given
 	if temperature and type(temperature) == "number" then
 		self.sbenvironment.temperature = temperature
 	end
-	//set o2 if given
+	--set o2 if given
 	if o2 and type(o2) == "number" and o2 > 0 then
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
@@ -700,7 +700,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.o2per = 0
 		self.sbenvironment.air.o2 = 0
 	end
-	//set co2 if given
+	--set co2 if given
 	if co2 and type(co2) == "number" and co2 > 0 then
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
@@ -711,7 +711,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.co2per = 0
 		self.sbenvironment.air.co2 = 0
 	end
-	//set n if given
+	--set n if given
 	if n and type(n) == "number" and n > 0 then
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
@@ -722,7 +722,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		self.sbenvironment.air.n = 0
 		self.sbenvironment.air.n = 0
 	end
-	//set h if given
+	--set h if given
 	if h and type(h) == "number" and h > 0 then
 		if h < 0 then h = 0 end
 		if (((100 - o2)-co2)-n) < h then h = ((100-o2)-co2)-n end
@@ -830,23 +830,23 @@ function ENT:UpdateSize(oldsize, newsize)
 end
 
 function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
-	//set Gravity if one is given
+	--set Gravity if one is given
 	self:ChangeGravity(gravity)
-	//set atmosphere if given
+	--set atmosphere if given
 	self:ChangeAtmosphere(newatmosphere)
-	//set pressure if given (Should never be updated manualy like this in most cases!)
+	--set pressure if given (Should never be updated manualy like this in most cases!)
 	if pressure and type(pressure) == "number" then
 		if pressure < 0 then
 			pressure = 0
 		end
 		self.sbenvironment.pressure = pressure
 	end
-	//set temperature if given
+	--set temperature if given
 	if temperature and type(temperature) == "number" then
 		self.sbenvironment.temperature = temperature
 	end
 	self.sbenvironment.air.max = math.Round(100 * 5 * (self:GetVolume()/1000) * self.sbenvironment.atmosphere)
-	//set o2 if given
+	--set o2 if given
 	if o2 and type(o2) == "number" then
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
@@ -855,7 +855,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	else 
 		o2 = self:GetO2Percentage()
 	end
-	//set co2 if given
+	--set co2 if given
 	if co2 and type(co2) == "number" then
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
@@ -864,7 +864,7 @@ function ENT:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	else 
 		co2 = self:GetCO2Percentage()
 	end
-	//set n if given
+	--set n if given
 	if n and type(n) == "number" then
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
@@ -934,16 +934,16 @@ function ENT:OnEnvironment(ent, environment, space)
 	if dist < self:GetSize() then
 		if environment == space then
 			environment = self
-			//self:UpdateGravity(ent)
+			--self:UpdateGravity(ent)
 		else
 			if environment:GetPriority() < self:GetPriority() then
 				environment = self
-				//self:UpdateGravity(ent)
+				--self:UpdateGravity(ent)
 			elseif environment:GetPriority() == self:GetPriority() then
-				if environment:GetSize() != 0 then
+				if environment:GetSize() ~= 0 then
 					if self:GetSize() <= environment:GetSize() then
 						environment = self
-						//self:UpdateGravity(ent)
+						--self:UpdateGravity(ent)
 					else
 						if dist < pos:Distance(environment:GetPos()) then
 							environment = self
@@ -951,7 +951,7 @@ function ENT:OnEnvironment(ent, environment, space)
 					end
 				else
 					environment = self
-					//self:UpdateGravity(ent)
+					--self:UpdateGravity(ent)
 				end
 			end
 		end

@@ -64,8 +64,8 @@ end
 ---------------------------------------------------------*/
 function PANEL:Think()
 
-	// Hmm.. This needs to really just be done in one place
-	// and made available to everyone.
+	-- Hmm.. This needs to really just be done in one place
+	-- and made available to everyone.
 	local FrameRate = VGUIFrameTime() - self.FrameTime
 	self.FrameTime = VGUIFrameTime()
 

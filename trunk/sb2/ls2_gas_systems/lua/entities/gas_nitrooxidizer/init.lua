@@ -39,7 +39,7 @@ function ENT:Initialize()
 	if not (WireAddon == nil) then self.Inputs = Wire_CreateInputs(self.Entity, { "On", "Overdrive", "Disable Use" }) end
 	if not (WireAddon == nil) then self.Outputs = Wire_CreateOutputs(self.Entity, { "On", "Overdrive", "Energy Consumption", "Nitrogen Consumption", "Nitrous Oxide Production"}) end
 	
-	//self.timer = CurTime() +  1
+	--self.timer = CurTime() +  1
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:SetMass(75)
@@ -194,7 +194,7 @@ end
 function ENT:CanRun()
     local energy = RD_GetResourceAmount(self, "energy")
     local nitrogen = RD_GetResourceAmount(self, "nitrogen")
-    if (energy >= self.energycon && nitrogen >= self.nitrocon) then
+    if (energy >= self.energycon and nitrogen >= self.nitrocon) then
         return true
     else
         return false

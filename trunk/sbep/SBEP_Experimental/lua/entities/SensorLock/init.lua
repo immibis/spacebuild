@@ -62,7 +62,7 @@ function ENT:Think()
 	if self.V3C == self.V3T then self.V3T = Vector(math.Rand(-9,9),math.Rand(-9,9),math.Rand(-9,9)) end
 	
 	local TPos = Vector(0,0,0)
-	if self.Cnt && self.Cnt:IsValid() then
+	if self.Cnt and self.Cnt:IsValid() then
 		TPos = self.Cnt:GetPos()
 	else
 		print("The contact's no longer valid. Removing the lock.")
@@ -72,7 +72,7 @@ function ENT:Think()
 	
 	local SPos = Vector(0,0,0)
 	local Str = 0
-	if self.Sns && self.Sns:IsValid() then
+	if self.Sns and self.Sns:IsValid() then
 		SPos = self.Sns:GetPos()
 		Str = self.Sns.SensorStrength or 0
 		--print(Str)

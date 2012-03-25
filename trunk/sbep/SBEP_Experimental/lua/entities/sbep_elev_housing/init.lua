@@ -123,14 +123,14 @@ end
 function ENT:TriggerInput(k,v)
 	if table.getn( self.PD.WI ) > 1 then
 		for m,n in ipairs( self.PD.WI ) do
-			if k == n && v == 1 then
-				if !self.PD.SD.MFT && self.Cont && self.Cont:IsValid() then
+			if k == n and v == 1 then
+				if !self.PD.SD.MFT and self.Cont and self.Cont:IsValid() then
 					self.Entity:CallLift( m )
 				end
 			end
 		end
-	elseif k == "Call" && v == 1 then
-		if !self.PD.SD.MFT && self.Cont && self.Cont:IsValid() then
+	elseif k == "Call" and v == 1 then
+		if !self.PD.SD.MFT and self.Cont and self.Cont:IsValid() then
 			self.Entity:CallLift()
 		end
 	end
@@ -147,7 +147,7 @@ function ENT:SetPartType( type )
 	self.PD.TC 	= string.Left( type , 1)
 	self.PD.TF 	= string.sub( type , 2)
 	self.PD.AT 	= table.Copy( self.PD.AT )
-	self.PD.Usable  = self.Cont.Usable && !self.PD.SD.IsShaft && !self.PD.SD.MFT
+	self.PD.Usable  = self.Cont.Usable and !self.PD.SD.IsShaft and !self.PD.SD.MFT
 	self.Entity:SetModel( self.PD.model )
 	self.Entity:CheckSkin( self.Cont.Skin )
 end
@@ -242,7 +242,7 @@ function ENT:CallLift( m )
 end
 
 function ENT:Use()
-	if !self.PD.Usable || self.PD.SD.MFT || !self.Cont || !self.Cont:IsValid() then return end
+	if !self.PD.Usable or self.PD.SD.MFT or !self.Cont or !self.Cont:IsValid() then return end
 	self.Entity:CallLift()
 end
 
@@ -273,7 +273,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 		end
 	end
 	self:MakeWire()
-	if(Ent.EntityMods && DI.WireData) then
+	if(Ent.EntityMods and DI.WireData) then
 		WireLib.ApplyDupeInfo( pl, Ent, DI.WireData, function(id) return CreatedEntities[id] end)
 	end
 end

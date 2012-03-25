@@ -6,13 +6,13 @@
 
 include( 'shared.lua' )
 include( 'cl_sun.lua' )
-local planets = {} //Clients hasn't been updated yet
+local planets = {} --Clients hasn't been updated yet
 
-// enabled?
+-- enabled?
 local Color_Enabled = false;
 local Bloom_Enabled = false;
 local timer = CurTime() + 0.2
-// Color Variables.
+-- Color Variables.
 local ColorModify = {
 	[ "$pp_colour_addr" ] = 0,
 	[ "$pp_colour_addg" ] = 0,
@@ -25,7 +25,7 @@ local ColorModify = {
 	[ "$pp_colour_mulb" ] = 0,
 };
 
-// Bloom Variables
+-- Bloom Variables
 local Bloom = {
 	darken = 0,
 	multiply = 0,
@@ -39,14 +39,14 @@ local Bloom = {
 		b = 0,
 	},
 };
-// Color receive message
+-- Color receive message
 local function SetColor(planet)
-	// don't support colormod?
+	-- don't support colormod?
 	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// enabled?
+	-- enabled?
 	Color_Enabled = planet.color
 	if( !Color_Enabled ) then return; end
-	// read attributes
+	-- read attributes
 	ColorModify[ "$pp_colour_addr" ] 	= planet.AddColor_r
 	ColorModify[ "$pp_colour_addg" ] 	= planet.AddColor_g
 	ColorModify[ "$pp_colour_addb" ] 	= planet.AddColor_b
@@ -58,14 +58,14 @@ local function SetColor(planet)
 	ColorModify[ "$pp_colour_mulb" ] 	= planet.AddColor_b
 end
 
-// Bloom receive message
+-- Bloom receive message
 local function SetBloom(planet)
-	// don't support bloom?
+	-- don't support bloom?
 	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// enabled?
+	-- enabled?
 	Bloom_Enabled = planet.bloom
 	if( !Bloom_Enabled ) then return; end
-	// read attributes
+	-- read attributes
 	Bloom.darken 	= planet.Darken
 	Bloom.multiply 	= planet.Multiply
 	Bloom.sizex 	= planet.SizeX
@@ -77,14 +77,14 @@ local function SetBloom(planet)
 	Bloom.col.b 	= planet.Col_b
 end
 
-// render.
+-- render.
 local function Render( )
 	if( Color_Enabled ) then
-		// draw colormod.
+		-- draw colormod.
 		DrawColorModify( ColorModify );
 	end
 	if( Bloom_Enabled ) then
-		// draw bloom.
+		-- draw bloom.
 		DrawBloom(
 			Bloom.darken, 
 			Bloom.multiply, 
@@ -150,7 +150,7 @@ function GM:Space_Affect_Cl ()
 			return
 		end
 	end
-	if (ply.planet != 0) then
+	if (ply.planet ~= 0) then
 		Color_Enabled = false
 		Bloom_Enabled = false
 		ply.planet = 0

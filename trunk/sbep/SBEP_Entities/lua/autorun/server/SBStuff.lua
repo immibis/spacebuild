@@ -3,7 +3,7 @@ SBEP = SBEP or {}
 
 -- This function basically deals with stuff that happens when a player hops out of a vehicle
 function SetExPoint(player, vehicle)
-	if vehicle.ExitPoint && vehicle.ExitPoint:IsValid() then
+	if vehicle.ExitPoint and vehicle.ExitPoint:IsValid() then
 		local EPP = vehicle.ExitPoint:GetPos()
 		local VP = vehicle:GetPos()
 		local Dist = EPP:Distance(VP)
@@ -44,9 +44,9 @@ SBEP.CCC = SBEPCCC
 --This is all the hardpointing stuff
 function HPLink( cont, pod, weap )
 	if weap.Mounted then return false end
-	if !cont.HPC then return false end
+	if not cont.HPC then return false end
 	for i = 1, cont.HPC do
-		if !cont.HP[i]["Ent"] || !cont.HP[i]["Ent"]:IsValid() then
+		if not cont.HP[i]["Ent"] or not cont.HP[i]["Ent"]:IsValid() then
 			local TypeMatch = false
 			if type(cont.HP[i]["Type"]) == "string" then
 				if type(weap.HPType) == "string" then
@@ -102,7 +102,7 @@ function HPLink( cont, pod, weap )
 				weap.HPWeld = constraint.Weld(pod, weap, 0, 0, 0, true)
 				weap:SetParent( pod )
 				pod:SetNetworkedEntity( "HPW_"..i, weap )
-				if pod.Pod && pod.Pod:IsValid() then 
+				if pod.Pod and pod.Pod:IsValid() then
 					pod.Pod:SetNetworkedEntity( "HPW_"..i, weap )
 				end
 				cont.HP[i]["Ent"] = weap
@@ -128,7 +128,7 @@ function SBGCSplash( position, radius, damage, pierce, filter )
 	for _,i in pairs(targets) do
 		--print(filter)
 		--print(i:GetClass())
-		if !table.HasValue( filter, i:GetClass() ) then
+		if not table.HasValue( filter, i:GetClass() ) then
 			--print("Not Matching")
 			local tracedata = {}
 			tracedata.start = position

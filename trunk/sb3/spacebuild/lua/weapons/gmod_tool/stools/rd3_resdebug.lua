@@ -30,6 +30,6 @@ end
 function TOOL:Reload( trace )
 	if ( !trace.Entity:IsValid() ) then return false end
 	if (CLIENT) then return true end
-	//for something else
+	--for something else
 	return true
 end

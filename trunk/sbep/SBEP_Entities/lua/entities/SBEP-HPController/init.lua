@@ -72,12 +72,12 @@ function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		
 		local CHP = self.Pod:GetNetworkedInt( "HPC" )
-		if CHP != self.HPC then
+		if CHP ~= self.HPC then
 			self.Pod:SetNetworkedInt( "HPC", self.HPC )
 		end
 		
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			self.Active = true			
 			
 			local trace = {}
@@ -92,18 +92,18 @@ function ENT:Think()
 			for i = 1, self.HPC do
 				local HPCP = self.CPL:GetInfo( "SBHP_"..i )
 				local HPCA = self.CPL:GetInfo( "SBHP_"..i.."a" )
-				if string.byte(HPCP) == 49 && self.CPL:KeyDown( IN_ATTACK ) then
+				if string.byte(HPCP) == 49 and self.CPL:KeyDown( IN_ATTACK ) then
 					Wire_TriggerOutput(self.Entity, "HP"..i, 1)
-				elseif string.byte(HPCA) == 49 && self.CPL:KeyDown( IN_ATTACK2 ) then
+				elseif string.byte(HPCA) == 49 and self.CPL:KeyDown( IN_ATTACK2 ) then
 					Wire_TriggerOutput(self.Entity, "HP"..i, 1)
 				else
 					Wire_TriggerOutput(self.Entity, "HP"..i, 0)
 				end
 			end
 			
-			if ( self.CPL:KeyDown( IN_ATTACK ) && self.BMode ) then
+			if ( self.CPL:KeyDown( IN_ATTACK ) and self.BMode ) then
 				local trace = self.CPL:GetEyeTrace()
-				if trace.Entity && trace.Entity:IsValid() then
+				if trace.Entity and trace.Entity:IsValid() then
 					trace.Entity:Use(self.CPL, self.CPL)
 				end				
 			end

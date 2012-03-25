@@ -30,7 +30,7 @@ function cds_damageent(ent, damage, pierce, inflictor, heat, gcombat)
 	if pierce then
 		pierce = math.Round(pierce)
 	end
-	/ / Msg("Damaged: ", ent, "\n Health: " .. tostring(ent.health) .. "\nArmor: " .. tostring(ent.armor) .. "\nDamage: " .. tostring(damage) .. "\nPierce: " .. tostring(pierce) .. "\n")
+	-- Msg("Damaged: ", ent, "\n Health: " .. tostring(ent.health) .. "\nArmor: " .. tostring(ent.armor) .. "\nDamage: " .. tostring(damage) .. "\nPierce: " .. tostring(pierce) .. "\n")
 	if ent.Shield then
 		if pierce then
 			ent.Shield:ShieldDamage((pierce / 10) * damage)

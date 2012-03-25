@@ -52,7 +52,7 @@ function ENT:OnRemove()
 	Dev_Unlink_All(self.Entity)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

@@ -73,7 +73,7 @@ if CLIENT then
 			LDT.SFrame:MakePopup()
 		
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//					MENU CONTROLS
+		--					MENU CONTROLS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		LDT.SButtons = {}
@@ -100,7 +100,7 @@ if CLIENT then
 											end
 		
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//					MODEL CONTROLS
+		--					MODEL CONTROLS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		LDT.PButtons = {}
@@ -149,7 +149,7 @@ if CLIENT then
 												end
 
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//					CONSTRUCTION CONTROLS
+		--					CONSTRUCTION CONTROLS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		LDT.BButtons = {}
@@ -224,7 +224,7 @@ if CLIENT then
 										end
 		
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//					CAMERA CONTROLS
+		--					CAMERA CONTROLS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		LDT.CButtons = {}
@@ -338,7 +338,7 @@ if CLIENT then
 	end
 
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//					CLIENT FUNCTIONS
+		--					CLIENT FUNCTIONS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		function LD.SBEP_OpenLiftDesignMenu( entLift )
@@ -350,7 +350,7 @@ if CLIENT then
 			CL.LiftDes.SBEPLDDM.Frame:SetVisible( true )
 
 			CL.LiftDes.LiftSystem 	= entLift
-			CL.LiftDes.StartPos 	= (CL.LiftDes.LiftSystem:GetPos() + 60.45*CL.LiftDes.LiftSystem:GetUp()) || Vector(0,0,0)
+			CL.LiftDes.StartPos 	= (CL.LiftDes.LiftSystem:GetPos() + 60.45*CL.LiftDes.LiftSystem:GetUp()) or Vector(0,0,0)
 			
 			LD.SetBaseViewAngles()
 			CL.LiftDes.CVYaw   		= CL.LiftDes.MVYaw
@@ -387,11 +387,11 @@ if CLIENT then
 			CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 )
 			CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( pos == 1 )
 			CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2]:SetDisabled( pos == 1 )
-			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( CL.LiftDes.PC == 1 || (pos == 1 && BEM[type2]) )
-			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( pos == 1 && (!CanDown) )
+			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( CL.LiftDes.PC == 1 or (pos == 1 and BEM[type2]) )
+			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( pos == 1 and (!CanDown) )
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( pos == CL.LiftDes.PC )
 			CL.LiftDes.SBEPLDDM.BButtons.Construct:SetDisabled( pos ~= CL.LiftDes.PC )
-			CL.LiftDes.SBEPLDDM.SButtons.finish:SetDisabled( (CL.LiftDes.PC < 3) || BEM[type1] || BEM[typeC] )
+			CL.LiftDes.SBEPLDDM.SButtons.finish:SetDisabled( (CL.LiftDes.PC < 3) or BEM[type1] or BEM[typeC] )
 		end
 		usermessage.Hook("SBEPDisableButtons_cl", LD.SBEPDisableButtons)
 		
@@ -406,7 +406,7 @@ if CLIENT then
 			if um then
 				CL.LiftDes.MBRange = um:ReadFloat()
 			end
-			CL.LiftDes.StartPos 	= (CL.LiftDes.LiftSystem:GetPos() + 60.45*CL.LiftDes.LiftSystem:GetUp()) || Vector(0,0,0)
+			CL.LiftDes.StartPos 	= (CL.LiftDes.LiftSystem:GetPos() + 60.45*CL.LiftDes.LiftSystem:GetUp()) or Vector(0,0,0)
 		end
 		usermessage.Hook("SBEP_ReCalcViewAngles_LiftDesignMenu_cl", LD.ReCalcViewAngles)
 		
@@ -421,7 +421,7 @@ if CLIENT then
 		usermessage.Hook("SBEP_SetPHOffsetLiftDesignMenu_cl", LD.SBEPSetPHOffset)
 		
 		local function SBEP_LiftCalcView( ply, origin, angles, fov )
-			if CL.LiftDes.SBEPLDDM && CL.LiftDes.SBEPLDDM.Frame && CL.LiftDes.SBEPLDDM.Frame.visible then
+			if CL.LiftDes.SBEPLDDM and CL.LiftDes.SBEPLDDM.Frame and CL.LiftDes.SBEPLDDM.Frame.visible then
 				local view = {}
 					CL.LiftDes.CVYaw   	= CL.LiftDes.CVYaw   	+ math.Clamp( CL.LiftDes.MVYaw   	- CL.LiftDes.CVYaw   	, -2.5 	, 2.5	)
 					CL.LiftDes.CVPitch 	= CL.LiftDes.CVPitch 	+ math.Clamp( CL.LiftDes.MVPitch 	- CL.LiftDes.CVPitch 	, -2.5 	, 2.5	)
@@ -480,7 +480,7 @@ function TOOL:Think()
 	if CLIENT then
 		if CL.LiftDes.SBEPLDDM then
 			for n,B in pairs( CL.LiftDes.SBEPLDDM.CButtons ) do
-				if B.Hold && B.Pressed then
+				if B.Hold and B.Pressed then
 					B:DoClick()
 				end
 			end
@@ -489,7 +489,7 @@ function TOOL:Think()
 end
 
 	---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	//					SERVER FUNCTIONS
+	--					SERVER FUNCTIONS
 	---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 if SERVER then
@@ -550,7 +550,7 @@ if SERVER then
 			umsg.Float( LiftSystem_SER.PT[ n ]:OBBMaxs():Length() )
 		umsg.End()
 		LiftSystem_SER.CanDown = false
-		if n == 1 && LiftSystem_SER.MDB then
+		if n == 1 and LiftSystem_SER.MDB then
 			local tracedata = {}
 				tracedata.start = LiftSystem_SER.PT[1]:GetPos()
 				if LiftSystem_SER.PT[1].PD.Inv then
@@ -577,7 +577,7 @@ if SERVER then
 		local type = ply:GetInfo( "sbep_lift_designer_type" )
 		local n = tonumber( args[1] )
 		local D = args[2]
-		--[[if n == 1 && D == "DOWN" then
+		--[[if n == 1 and D == "DOWN" then
 			local NP = LiftSystem_SER:CreatePart()
 		end]]
 		
@@ -603,7 +603,7 @@ if SERVER then
 	
 	function SBEP_LiftDeletePart( ply , cmd , args )
 		local n = LiftSystem_SER.dt.ActivePart
-		if n == 1 && BEM[LiftSystem_SER.PT[2]:GetPartType()] then return end
+		if n == 1 and BEM[LiftSystem_SER.PT[2]:GetPartType()] then return end
 
 		LiftSystem_SER:RemovePartFromTable( n )
 		LiftSystem_SER:RefreshParts( 1 )

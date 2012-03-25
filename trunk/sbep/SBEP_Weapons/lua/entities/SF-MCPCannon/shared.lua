@@ -19,7 +19,7 @@ ENT.APAng			= Angle(0,0,180)
 
 function ENT:SetShots( val )
 	local CVal = self.Entity:GetNetworkedInt( "Shots" )
-	if CVal != val then
+	if CVal ~= val then
 		self.Entity:SetNetworkedInt( "Shots", val )
 	end
 end

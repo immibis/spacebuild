@@ -11,11 +11,11 @@ function ENT:Initialize()
 end
 
 function ENT:PhysicsUpdate(PhysObj)
-	if(!self.Fuel || !self.FuelUse || self.Fuel == 0) then
+	if(!self.Fuel or !self.FuelUse or self.Fuel == 0) then
 		self.BaseClass.MissileNoFuel(self)
 		self.BaseClass.CheckTrailEnt(self)
 		return
-	elseif(self.Target != false and self.Target:IsValid()) then
+	elseif(self.Target ~= false and self.Target:IsValid()) then
 		local Target_Angle = (self.Target:GetPos() - self.Entity:GetPos()):Angle()
 		Target_Angle.pitch = Target_Angle.pitch + 90
 		

@@ -75,8 +75,8 @@ function ENT:Think()
 	local phy = self.Entity:GetPhysicsObject()
 	if self.Armed then
 		if self.Homer then
-			if self.Target && self.Target:IsValid() then
-				--if self.Target && self.Target:IsValid() then
+			if self.Target and self.Target:IsValid() then
+				--if self.Target and self.Target:IsValid() then
 					local IMass = self.Target:GetPhysicsObject():GetMass()
 					local IDist = (self.Entity:GetPos() - self.Target:GetPos()):Length()
 					local TVal = (IMass * 3) - IDist				
@@ -96,7 +96,7 @@ function ENT:Think()
 				local CT = nil
 							
 				for _,i in pairs(targets) do
-					if i:GetPhysicsObject() && i:GetPhysicsObject():IsValid() && !i.MineProof && !i:IsPlayer() then
+					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
 						local IMass = i:GetPhysicsObject():GetMass()
 						local IDist = (self.Entity:GetPos() - i:GetPos()):Length()
 						local TVal = (IMass * 3) - IDist
@@ -117,13 +117,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		--self:Explode()
 	end
 	--self.Exploded=true
@@ -167,7 +167,7 @@ function ENT:Splode()
 		targets = ents.FindInSphere( self.Entity:GetPos(), 2000)
 	
 		for _,i in pairs(targets) do
-			if i:GetPhysicsObject() && i:GetPhysicsObject():IsValid() && !i.MineProof && !i:IsPlayer() then
+			if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
 				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * 500000, self.Entity:GetPos() )
 			end
 		end
@@ -198,14 +198,14 @@ function ENT:Splode()
 end
 
 function ENT:Touch( ent )
-	if ent.HasHardpoints && !self.Armed then
-		--if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+	if ent.HasHardpoints and !self.Armed then
+		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
 	self.Entity:SetParent()
-	if self.HPWeld && self.HPWeld:IsValid() then self.HPWeld:Remove() end
+	if self.HPWeld and self.HPWeld:IsValid() then self.HPWeld:Remove() end
 	self.Entity:Arm()
 	self.PhysObj:EnableCollisions(true)
 	self.PhysObj:EnableGravity(false)

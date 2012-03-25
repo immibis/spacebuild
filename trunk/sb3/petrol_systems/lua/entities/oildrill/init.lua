@@ -7,7 +7,7 @@ function ENT:Initialize()
 	self.BaseClass.Initialize(self)	
 end
 
-//call only once and only before ent:Spawn()
+--call only once and only before ent:Spawn()
 function ENT:Setup()
 	-- Create a thumper
 	local thump = ents.Create( "prop_thumper" )

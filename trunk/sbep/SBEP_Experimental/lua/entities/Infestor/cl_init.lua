@@ -25,7 +25,7 @@ function ENT:Think()
         local Delta = CurTime() - self.LTT
         --self.AccIn = 0
         local Mutation = self.dt.Mutation
-        if Mutation != self.OldMutation then
+        if Mutation ~= self.OldMutation then
                 --self.VEn = 0
         end
         local Dist = math.abs(self.dt.Energy - self.VEn)

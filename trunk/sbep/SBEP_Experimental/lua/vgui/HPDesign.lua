@@ -191,16 +191,16 @@ function PANEL:Think()
 
 	end
    
-	if ( self.Hovered &&
-		self.m_bSizable &&
-			gui.MouseX() > (self.x + self:GetWide() - 20) &&
+	if ( self.Hovered  and
+		self.m_bSizable  and
+			gui.MouseX() > (self.x + self:GetWide() - 20)  and
 			gui.MouseY() > (self.y + self:GetTall() - 20) ) then      
 
 		self:SetCursor( "sizenwse" )
 		return
 	end
    
-	if ( self.Hovered && self:GetDraggable() ) then
+	if ( self.Hovered and self:GetDraggable() ) then
 			self:SetCursor( "sizeall" )
 	end
 end

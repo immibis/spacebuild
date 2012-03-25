@@ -5,8 +5,8 @@ local matRefraction	= Material( "refract_ring" )
  ---------------------------------------------------------*/ 
  function EFFECT:Init( data ) 
  	 
- 	// This is how long the spawn effect  
- 	// takes from start to finish. 
+ 	-- This is how long the spawn effect
+ 	-- takes from start to finish.
  	
  	self.Refract = 0 
  	 

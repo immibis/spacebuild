@@ -66,9 +66,9 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 		
 			local FSpeed = 0
 			local SSpeed = 0
@@ -96,7 +96,7 @@ function ENT:Think()
 				SSpeed = -100
 			end
 			
-			if (self.CPL:KeyDown( IN_JUMP ) || (joystick && joystick.Get(self.CPL, "rover_jump"))) then
+			if (self.CPL:KeyDown( IN_JUMP ) or (joystick and joystick.Get(self.CPL, "rover_jump"))) then
 				HOffset = 200
 			end
 			
@@ -106,7 +106,7 @@ function ENT:Think()
 				elseif (joystick.Get(self.CPL, "rover_strafe_left")) then
 					self.StrafeSpeed = -200
 				elseif (joystick.Get(self.CPL, "rover_strafe")) then
-					if (joystick.Get(self.CPL, "rover_strafe") > 128 || joystick.Get(self.CPL, "rover_strafe") < 127) then
+					if (joystick.Get(self.CPL, "rover_strafe") > 128 or joystick.Get(self.CPL, "rover_strafe") < 127) then
 						self.StrafeSpeed = (joystick.Get(self.CPL, "rover_strafe")/127.5-1)*200
 					end
 				else
@@ -115,7 +115,7 @@ function ENT:Think()
 				
 				if (joystick.Get(self.CPL, "rover_turn")) then
 					local turn = joystick.Get(self.CPL, "rover_turn")
-					if (turn > 128 || turn < 127) then
+					if (turn > 128 or turn < 127) then
 						if self.Side == "Left" then
 							HOffset = turn/12.75-10
 						elseif self.Side == "Right" then
@@ -128,7 +128,7 @@ function ENT:Think()
 				--Acceleration, greater than halfway accelerates, less than decelerates
 				if (joystick.Get(self.CPL, "rover_accelerate")) then
 					local accelerate = joystick.Get(self.CPL, "rover_accelerate")
-					if (accelerate > 128 || accelerate < 127) then
+					if (accelerate > 128 or accelerate < 127) then
 						FSpeed = (accelerate/127.5-1)*400
 					end
 				end
@@ -186,14 +186,14 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent.HasWheels && !self.Mounted then
-		if ent.Cont && ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
+	if ent.HasWheels and !self.Mounted then
+		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
 function ENT:WLink( Cont, Pod )
 	for i = 1, Cont.WhC do
-		if !Cont.Wh[i]["Ent"] || !Cont.Wh[i]["Ent"]:IsValid() then
+		if !Cont.Wh[i]["Ent"] or !Cont.Wh[i]["Ent"]:IsValid() then
 			local Offset = 0
 			if Cont.Wh[i]["Side"] == "Left" then
 				Offset = 10
@@ -219,7 +219,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	if !self.Hovering then return SIM_NOTHING end
 	
 	/*
-	if ( self.ZVelocity != 0 ) then
+	if ( self.ZVelocity ~= 0 ) then
 	
 		self.TargetZ = self.TargetZ + (self.ZVelocity * deltatime * self.HSpeed)
 		self.Entity:GetPhysicsObject():Wake()
@@ -248,9 +248,9 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	--local zVel = physVel.z
 	
 	Exponent = Exponent - ( zVel * deltatime * 600 )
-	// The higher you make this 300 the less it will flop about
-	// I'm thinking it should actually be relative to any objects we're connected to
-	// Since it seems to flop more and more the heavier the object
+	-- The higher you make this 300 the less it will flop about
+	-- I'm thinking it should actually be relative to any objects we're connected to
+	-- Since it seems to flop more and more the heavier the object
 	
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 	

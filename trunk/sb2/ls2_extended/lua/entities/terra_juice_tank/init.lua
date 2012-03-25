@@ -48,12 +48,12 @@ function ENT:Leak()
 end
 
 function ENT:UpdateMass()
-	//change mass
+	--change mass
 	if(!self.mass) then return end
 	local mass = self.mass  + (RD_GetResourceAmount(self, "terrajuice") * 1.25)
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

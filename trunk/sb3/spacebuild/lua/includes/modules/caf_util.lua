@@ -1,11 +1,11 @@
-//=============================================================================//
-// 			Addon: CAF
-// 			Author: SnakeSVx									 
-//			Version: 0.1
-//
-//  A really simple module to allow the creation of Java like ArrayLists
-//
-//=============================================================================//
+--=============================================================================--
+-- 			Addon: CAF
+-- 			Author: SnakeSVx
+--			Version: 0.1
+--
+--  A really simple module to allow the creation of Java like ArrayLists
+--
+--=============================================================================--
 
 local ValidEntity = ValidEntity
 local util = util

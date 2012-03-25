@@ -12,7 +12,7 @@ if not (WireAddon == nil) then
 end
 
 function ENT:Initialize()
-	self.Entity:SetModel("models//props_wasteland/gaspump001a.mdl")
+	self.Entity:SetModel("models/props_wasteland/gaspump001a.mdl")
     self.BaseClass.Initialize(self)
 
     local phys = self.Entity:GetPhysicsObject()
@@ -196,7 +196,7 @@ end
 function ENT:CanRun()
     local energy = RD_GetResourceAmount(self, "energy")
     local oil = RD_GetResourceAmount(self, "Crude Oil")
-    if (energy >= self.energycon && oil >= self.oilcon) then
+    if (energy >= self.energycon and oil >= self.oilcon) then
         return true
     else
         return false

@@ -6,7 +6,7 @@ TOOL.ConfigName		= ""
 TOOL.ent = {}
 TOOL.LT  = {}
 
-// Add Default Language translation (saves adding it to the txt files)
+-- Add Default Language translation (saves adding it to the txt files)
 if ( CLIENT ) then
 
 	language.Add( "Tool_gpod_name", "Gyro-Pod" )
@@ -22,7 +22,7 @@ function TOOL:LeftClick( trace )
 
 if ( !trace.Hit ) then return end
 	
-	--if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	--if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	--if (CLIENT) then return true end
 	
 	if (!trace.Entity.GPod) and (trace.Entity:IsValid()) then
@@ -63,9 +63,9 @@ end
 
 function TOOL:RightClick( trace )
 	
-if !trace.Hit || self:GetStage() == 1 then return end
+if !trace.Hit or self:GetStage() == 1 then return end
 	
-	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	if (CLIENT) then return true end
 		
 	local SpawnPos = trace.HitPos + trace.HitNormal * 20

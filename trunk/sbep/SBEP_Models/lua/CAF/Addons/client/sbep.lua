@@ -49,7 +49,7 @@ end
 /**
 	Gets a menu from this Custom Addon Class
 */
-function RD.GetMenu(menutype, menuname)//Name is nil for main menu, String for others
+function RD.GetMenu(menutype, menuname)--Name is nil for main menu, String for others
 	local data = {}
 	return data
 end

@@ -67,14 +67,14 @@ function ENT:Think()
 		self.Targets = {}
 		local ScanResult = ents.FindInSphere(self:GetPos(), self.Radius)
 		for k,e in pairs( ScanResult ) do
-			if e != self then
+			if e ~= self then
 				--print(e:GetClass())
 				if e:IsPlayer() then
-					if e.GravCon && e.GravCon:IsValid() then
+					if e.GravCon and e.GravCon:IsValid() then
 						e.GravCon.GravMode = 1
 						e.GravCon.GravGen = self
 					else
-						if !(e:GetVehicle() && e:GetVehicle():IsValid()) && e:GetMoveType() != 8 then
+						if !(e:GetVehicle() and e:GetVehicle():IsValid()) and e:GetMoveType() ~= 8 then
 							local NGrav = ents.Create( "GravRotator" )
 							NGrav:SetPos( e:GetPos() )
 							NGrav:Spawn()
@@ -85,7 +85,7 @@ function ENT:Think()
 							NGrav.GravMode = 1
 						end
 					end
-				elseif e:GetClass() != "gravrotator" then
+				elseif e:GetClass() ~= "gravrotator" then
 					table.insert(self.Targets,e)
 				end
 			end
@@ -94,9 +94,9 @@ function ENT:Think()
 	end
 	
 	for k,e in pairs (self.Targets) do
-		if e && e:IsValid() then
+		if e and e:IsValid() then
 			local Phys = e:GetPhysicsObject()
-			if Phys && Phys:IsValid() then
+			if Phys and Phys:IsValid() then
 				Phys:ApplyForceCenter((self:GetPos() - e:GetPos()):GetNormal() * self.Strength * Phys:GetMass())
 			end
 		end

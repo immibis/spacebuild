@@ -56,9 +56,9 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 		
 			local FSpeed = 0
 			local SSpeed = 0
@@ -119,14 +119,14 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent.HasWheels && !self.Mounted then
-		if ent.Cont && ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
+	if ent.HasWheels and !self.Mounted then
+		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
 function ENT:WLink( Cont, Pod )
 	for i = 1, Cont.WhC do
-		if !Cont.Wh[i]["Ent"] || !Cont.Wh[i]["Ent"]:IsValid() then
+		if !Cont.Wh[i]["Ent"] or !Cont.Wh[i]["Ent"]:IsValid() then
 			local Offset = {0, 0, 10}
 			local AOffset = 0
 			local ZVecAngle = Angle(0, 90, 0)

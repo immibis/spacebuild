@@ -2,8 +2,8 @@ include('shared.lua')
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 function ENT:Initialize()
 	
- 	// This is how long the spawn effect
- 	// takes from start to finish.
+ 	-- This is how long the spawn effect
+ 	-- takes from start to finish.
  	self.Time = 15
  	self.ESTime = CurTime() + 3.5
  	self.EFTime = CurTime() + 14

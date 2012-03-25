@@ -198,7 +198,7 @@ end
 function ENT:CanRun()
     local energy = RD_GetResourceAmount(self, "energy")
     local nitro = RD_GetResourceAmount(self, "nitrogen")
-    if (energy >= self.energycon && nitro >= self.nitrocon) then
+    if (energy >= self.energycon and nitro >= self.nitrocon) then
         return true
     else
         return false

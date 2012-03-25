@@ -7,7 +7,7 @@ include('shared.lua')
 
 local Energy_Increment = 150
 local Water_Increment = 500
-local Generator_Effect = 1 //Less than one means that this generator "leak" resources
+local Generator_Effect = 1 --Less than one means that this generator "leak" resources
 
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
@@ -81,7 +81,7 @@ end
 
 function ENT:SetActive( value )
 	if (value) then
-		if (value != 0 and self.Active == 0 ) then
+		if (value ~= 0 and self.Active == 0 ) then
 			self:TurnOn()
 		elseif (value == 0 and self.Active == 1 ) then
 			self:TurnOff()

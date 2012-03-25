@@ -205,7 +205,7 @@ end
 function ENT:Think()
 	self.BaseClass.Think(self)
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self, self.resource, self.consumption)
 		self.outputon = 1
 	else

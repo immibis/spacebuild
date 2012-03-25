@@ -154,7 +154,7 @@ function ENT:PhysicsInitialize()
 end
 
 function ENT:SetDoorType( strType , nClass )
-	if !strType ||(strType == self.type && nClass == self.DClass) then 
+	if !strType or (strType == self.type and nClass == self.DClass) then
 		print( "Invalid Door Type: "..tostring(strType) )
 		return false 
 	end
@@ -166,9 +166,9 @@ function ENT:SetDoorType( strType , nClass )
 end
 
 function ENT:SetDoorVars( strType , nClass )
-	if !strType || ( nClass && !DTT[strType][nClass] ) then return end
+	if !strType or ( nClass and !DTT[strType][nClass] ) then return end
 	self.type  = strType
-	self.DClass = nClass || 1
+	self.DClass = nClass or 1
 	self.D = DTT[ strType ][ self.DClass ]
 end
 
@@ -188,7 +188,7 @@ function ENT:GetDoorClass()
 end
 
 function ENT:Attach( ent , V , A )
-	self.Entity.D = self.Entity.D || {}
+	self.Entity.D = self.Entity.D or {}
 	
 	local Voff = Vector(0,0,0)
 	if V then Voff = Vector( V.x , V.y , V.z ) end
@@ -212,7 +212,7 @@ function ENT:Attach( ent , V , A )
 end
 
 function ENT:SetController( cont , sysnum )
-	if cont && cont:IsValid() then
+	if cont and cont:IsValid() then
 		self.Cont = cont
 	end
 	if sysnum then
@@ -291,27 +291,27 @@ end
 
 function ENT:Think()
 	if !(self.OpenTrigger == nil) then
-		if self.OpenTrigger && !self.Entity:IsOpen() && !self.OpenStatus then
+		if self.OpenTrigger and !self.Entity:IsOpen() and !self.OpenStatus then
 			self.Entity:Open()
-		elseif !self.OpenTrigger && self.Entity:IsOpen() && self.OpenStatus then
+		elseif !self.OpenTrigger and self.Entity:IsOpen() and self.OpenStatus then
 			self.Entity:Close()
 		end
 	end
-	if (self.ATEnt && self.ATEnt:IsValid() ) && (!self.ATWeld || !self.ATWeld:IsValid()) then
+	if (self.ATEnt and self.ATEnt:IsValid() ) and (!self.ATWeld or !self.ATWeld:IsValid()) then
 		local wt = constraint.FindConstraints( self.Entity , "Weld" )
 		for n,C in ipairs( wt ) do
-			if C.Ent2 == self.ATEnt || C.Ent1 == self.ATEnt then
+			if C.Ent2 == self.ATEnt or C.Ent1 == self.ATEnt then
 				self.ATWeld = C.Constraint
 			end
 		end
-		if !self.Duped && (!self.ATWeld || !self.ATWeld:IsValid()) then
+		if !self.Duped and (!self.ATWeld or !self.ATWeld:IsValid()) then
  			self:Attach( self.ATEnt , self.VecOff , self.AngOff )
 		else
 			if self.ATWeld then self.Duped=nil end
 		end
 	end
 	if self.Cont then
-		if self.Entity:GetSkin() != self.Cont.Skin then
+		if self.Entity:GetSkin() ~= self.Cont.Skin then
 			self.Entity:SetSkin( self.Cont.Skin )
 		end
 	end
@@ -321,16 +321,16 @@ end
 
 function ENT:IsOpen()
 
-	if self.Entity:GetSequence() == self.OSeq then --&& self.OpenStatus then 
+	if self.Entity:GetSequence() == self.OSeq then -- and  self.OpenStatus then
 		return true
-	elseif self.Entity:GetSequence() == self.CSeq then --&& !self.OpenStatus then 
+	elseif self.Entity:GetSequence() == self.CSeq then -- and  !self.OpenStatus then
 		return false
 	end	
 
 end
 
 function ENT:Use()
-	if self.Cont && self.Cont then
+	if self.Cont and self.Cont then
 		self.Cont:Use()
 	end
 end

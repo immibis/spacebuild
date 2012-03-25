@@ -18,28 +18,28 @@ ENT.OOOActive = 0
 ENT.OverlayTextOOO = BasicOOO[ 0 ]
 ENT.OverlayText = ""
 
-//
-//	=OverLayTextOutput=
-//list.Set( "LSEntOverlayText" , "entclass", {HasOOO = [true/false/nil], num = [number],, strings = {list of strings},resnames = {list of res names}} )
-//
-//to have it print all resources on all it's nets, use:
-//num = -1
-//list.Set( "LSEntOverlayText" , "class", {num = -1} )
-//and to have a title on the overlay, use:
-//num = -2
-//list.Set( "LSEntOverlayText" , "class", {num = -2, strings = {"some title:\n"}} )
-//num = -3 -- same as above, but only shows resources that are >1
-//don't use -2 or -3 with HasOOO
-//num = -4, like -1 but only shows resources that are >1 (HasOOO ok)
-//
-//HasOOO = true
-//string[1] .. [(off)/(on)/(OVERDRIVE)] .. (rest)
-//use num = 0 to just use OOO
-//
-//Override MakeOverlayText function
-//either do it in your ent's shared or do this
-//list.Set( "LSEntOverlayText" , "entclass", {func = function( ent ) return txt end} )
-//
+--
+--	=OverLayTextOutput=
+--list.Set( "LSEntOverlayText" , "entclass", {HasOOO = [true/false/nil], num = [number],, strings = {list of strings},resnames = {list of res names}} )
+--
+--to have it print all resources on all it's nets, use:
+--num = -1
+--list.Set( "LSEntOverlayText" , "class", {num = -1} )
+--and to have a title on the overlay, use:
+--num = -2
+--list.Set( "LSEntOverlayText" , "class", {num = -2, strings = {"some title:\n"}} )
+--num = -3 -- same as above, but only shows resources that are >1
+--don't use -2 or -3 with HasOOO
+--num = -4, like -1 but only shows resources that are >1 (HasOOO ok)
+--
+--HasOOO = true
+--string[1] .. [(off)/(on)/(OVERDRIVE)] .. (rest)
+--use num = 0 to just use OOO
+--
+--Override MakeOverlayText function
+--either do it in your ent's shared or do this
+--list.Set( "LSEntOverlayText" , "entclass", {func = function( ent ) return txt end} )
+--
 
 function ENT:SetOverlayText( txt )
 	self.OverlayText = txt
@@ -69,8 +69,8 @@ function ENT:MakeOverlayText( OverlaySettings )
 		for n,resname in pairs(resnames) do
 			txt = txt .. strings[n + o] .. self.Entity:GetResourceAmountText( resname )
 		end
-	elseif (num < 0) then //print all resources on ent
-		if (num == -2 or num == -3) then //has a name
+	elseif (num < 0) then --print all resources on ent
+		if (num == -2 or num == -3) then --has a name
 			txt = txt .. strings[1]
 		end
 		txt = txt .. self.Entity:GetAllResourcesAmountsText( (num == -3 or num == -4) )
@@ -99,7 +99,7 @@ function ENT:GetOverlayText()
 	end
 	
 	local PlayerName = self:GetPlayerName()
-	if ( !SinglePlayer() and PlayerName != "") then
+	if ( !SinglePlayer() and PlayerName ~= "") then
 		txt = txt .. "\n- " .. PlayerName .. " -"
 	end
 	

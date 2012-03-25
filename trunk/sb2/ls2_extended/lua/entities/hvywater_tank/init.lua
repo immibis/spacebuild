@@ -51,7 +51,7 @@ function ENT:UpdateMass()
 	local mass = self.mass + (RD_GetResourceAmount(self, "heavy water"))
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

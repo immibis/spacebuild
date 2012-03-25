@@ -19,7 +19,7 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Vent") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.vent = false
 		else
 			self.vent = true
@@ -30,14 +30,14 @@ end
 function ENT:Damage()
 	if (self.damaged == 0) then
 		self.damaged = 1
-		self.Entity:EmitSound( "PhysicsCannister.ThrusterLoop" )//Change to a new Liquid Vent/Escaping Sound
+		self.Entity:EmitSound( "PhysicsCannister.ThrusterLoop" )--Change to a new Liquid Vent/Escaping Sound
 	end
 end
 
 function ENT:Repair()
 	self.BaseClass.Repair(self)
 	self.Entity:SetColor(255, 255, 255, 255)
-	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	self.damaged = 0
 end
 
@@ -49,7 +49,7 @@ end
 
 function ENT:OnRemove()
 	self.BaseClass.OnRemove(self)
-	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new Liquid Vent/Escaping Sound
+	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new Liquid Vent/Escaping Sound
 end
 
 function ENT:Leak()
@@ -58,17 +58,17 @@ function ENT:Leak()
 		self:ConsumeResource("hot liquid nitrogen", 100)
 	else
 		self:ConsumeResource("hot liquid nitrogen", coolant)
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new Liquid Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new Liquid Vent/Escaping Sound
 	end
 end
 
 function ENT:UpdateMass()
 	local mul = 0.12
 	local div = math.Round(self:GetNetworkCapacity("hot liquid nitrogen")/self.MAXRESOURCE)
-	local mass = self.mass + ((self:GetResourceAmount("hot liquid nitrogen") * mul)/div) // self.mass = default mass + need a good multiplier
+	local mass = self.mass + ((self:GetResourceAmount("hot liquid nitrogen") * mul)/div) -- self.mass = default mass + need a good multiplier
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

@@ -1,17 +1,17 @@
-/*
+--[[
 --Incinerate Effect
 local effectdata = EffectData()
 	effectdata:SetStart	(self.Entity:GetPos()+  self.Entity:GetUp() * 25)
 	effectdata:SetScale(50)
 	effectdata:SetMagnitude(0.15)
 util.Effect( "rts_explode", effectdata )
-*/
+]]
 local matRefraction	= Material( "refract_ring" )
 matRefraction:SetMaterialInt("$nocull",1)
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Init( data table )
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function EFFECT:Init( data )
 
 	self.Position = data:GetStart()
@@ -39,9 +39,9 @@ function EFFECT:Init( data )
 				
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    THINK
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function EFFECT:Think( )
 	local HowFast = self.Scale / 15
 	local LifeSpan = self.LifeSpan - CurTime()

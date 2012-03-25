@@ -7,16 +7,16 @@ SBEP_Sensor_Package = true
 local S = SBEP_S
 
 function SBEP_S.TrackInSphere( Pos, Sensor, Filter )
-	if !(Sensor && Sensor:IsValid()) then return {} end
+	if !(Sensor and Sensor:IsValid()) then return {} end
 	--local Results = {}
 	for k,e in pairs(ents.FindByClass("SensorContact")) do
-		if e && e:IsValid() then
+		if e and e:IsValid() then
 			--print(k,e)
 			--PrintTable(e)
 			local Prelocked = false
 			for k2,e2 in pairs(ents.FindByClass("SensorLock")) do
 				--print(e2.Cnt.Pos, e.Pos, e2.Sns, Sensor)
-				if e2.Cnt == e && e2.Sns == Sensor then
+				if e2.Cnt == e and e2.Sns == Sensor then
 					Prelocked = true
 				end
 			end
@@ -39,16 +39,16 @@ function SBEP_S.TrackInSphere( Pos, Sensor, Filter )
 end
 
 function SBEP_S.TrackInCone( Pos, Sensor, Filter, Angle )
-	if !(Sensor && Sensor:IsValid()) then return {} end
+	if !(Sensor and Sensor:IsValid()) then return {} end
 	--local Results = {}
 	for k,e in pairs(ents.FindByClass("SensorContact")) do
-		if e && e:IsValid() then
+		if e and e:IsValid() then
 			--print(k,e)
 			--PrintTable(e)
 			local Prelocked = false
 			for k2,e2 in pairs(ents.FindByClass("SensorLock")) do
 				--print(e2.Cnt.Pos, e.Pos, e2.Sns, Sensor)
-				if e2.Cnt == e && e2.Sns == Sensor then
+				if e2.Cnt == e and e2.Sns == Sensor then
 					Prelocked = true
 				end
 			end
@@ -109,7 +109,7 @@ function SBEP_S.AddContact( Pos, Str, Type )
 	e:Spawn()
 	e:Activate()
 	if type(Pos) == "Entity" then
-		if Pos && Pos:IsValid() then
+		if Pos and Pos:IsValid() then
 			e:SetParent( Pos )
 		end
 	end
@@ -125,7 +125,7 @@ function SBEP_S.AddLock( Sensor, Contact, Strength )
 	e.Str = Strength
 	e:Spawn()
 	e:Activate()
-	if Sensor && Sensor:IsValid() then
+	if Sensor and Sensor:IsValid() then
 		e:SetPos( Sensor:GetPos() )
 		e:SetParent( Sensor )
 	end
@@ -161,7 +161,7 @@ function SBEP_S.Think()
 		if e.V3C == e.V3T then e.V3T = Vector(math.Rand(-9,9),math.Rand(-9,9),math.Rand(-9,9)) end
 		
 		local TPos = Vector(0,0,0)
-		if e.Cnt && e.Cnt:IsValid() then
+		if e.Cnt and e.Cnt:IsValid() then
 			TPos = e.Cnt:GetPos()
 		else
 			print("The contact's no longer valid. Removing the lock.")
@@ -171,7 +171,7 @@ function SBEP_S.Think()
 		
 		local SPos = Vector(0,0,0)
 		local Str = 0
-		if e.Sns && e.Sns:IsValid() then
+		if e.Sns and e.Sns:IsValid() then
 			SPos = e.Sns:GetPos()
 			Str = e.Sns.SensorStrength or 0
 			--print(Str)

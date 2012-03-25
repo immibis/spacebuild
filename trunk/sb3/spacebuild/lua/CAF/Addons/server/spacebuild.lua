@@ -44,7 +44,7 @@ CreateConVar( "SB_StaticEnvironment", "0" )
 local VolCheckIterations = CreateConVar( "SB_VolumeCheckIterations", "11",{ FCVAR_CHEAT, FCVAR_ARCHIVE } )
 local ForceModel = CreateConVar( "SB_Force_Model", "0",{ FCVAR_ARCHIVE } )
 
-//Think + Environments
+--Think + Environments
 local Environments = {}
 local Planets = {}
 local Stars = {}
@@ -123,7 +123,7 @@ local function SendSunBeam(ent, ply)
 		umsg.End()
 end
 
-local function PlayerInitialSpawn(ply) //Send the player info about the Stars and Planets for Effects
+local function PlayerInitialSpawn(ply) --Send the player info about the Stars and Planets for Effects
 	if Planets and table.Count(Planets) > 0 then
 		for k, v in pairs(Planets) do
 			SendColorAndBloom(v, ply)
@@ -167,11 +167,11 @@ local function Register_Sun()
 					local targets = ents.FindByName( "sun_target" )
 					for _, target in pairs( targets ) do
 						SunAngle = (target:GetPos() - ent:GetPos()):Normalize()
-						return //Sunangle set, all that was needed
+						return --Sunangle set, all that was needed
 					end
 				end
 			end
-			//Sun angle still not set, but sun found
+			--Sun angle still not set, but sun found
 		    local ang = ent:GetAngles()
 			ang.p = ang.p - 180
 			ang.y = ang.y - 180
@@ -183,7 +183,7 @@ local function Register_Sun()
 			return
 		end
 	end
-	//no sun found, so just set a default angle
+	--no sun found, so just set a default angle
 	if not SunAngle then SunAngle = Vector(0,0,-1) end	
 end
 
@@ -194,7 +194,7 @@ function sb_space.Get()
 	end
 	local space = {}
 	function space:CheckAirValues()
-		// Do nothing
+		-- Do nothing
 	end
 
 	function space:IsOnPlanet()
@@ -202,7 +202,7 @@ function sb_space.Get()
 	end
 
 	function space:AddExtraAirResource(resource, start, ispercentage)
-		// Do nothing
+		-- Do nothing
 	end
 
 	function space:PrintVars()
@@ -226,7 +226,7 @@ function sb_space.Get()
 	end
 
 	function space:SetEnvironmentName(value)
-		//not implemented
+		--not implemented
 	end
 
 	function space:Convert(air1, air2, value)
@@ -238,7 +238,7 @@ function sb_space.Get()
 	end
 
 	function space:SetSize(size)
-		//not implemented
+		--not implemented
 	end
 
 	function space:GetGravity()
@@ -246,7 +246,7 @@ function sb_space.Get()
 	end
 
 	function space:UpdatePressure(ent)
-		// not implemented
+		-- not implemented
 	end
 
 	function space:GetO2Percentage()
@@ -330,15 +330,15 @@ function sb_space.Get()
 	end
 
 	function space:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n)
-		//Not implemented
+		--Not implemented
 	end
 
 	function space:UpdateSize(oldsize, newsize)
-		//not implemented
+		--not implemented
 	end
 
 	function space:UpdateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n)
-		//not implemented
+		--not implemented
 	end
 
 	function space:GetVolume()
@@ -367,7 +367,7 @@ local function Register_Environments()
 	local Planets = {}
 	local Planetscolor = {}
 	local Planetsbloom = {}
-	//Load the planets/stars/bloom/color
+	--Load the planets/stars/bloom/color
 	local entities = ents.FindByClass( "logic_case" )
 	local case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, hash
 	for _, ent in ipairs( entities ) do
@@ -425,7 +425,7 @@ local function Register_Environments()
 				end
 				case15 = tonumber(case15) --disabled
 				case16 = tonumber(case16) -- flags
-				if case15 != 1 then
+				if case15 ~= 1 then
 					local planet = ents.Create( "base_sb_planet1" )
 					planet:SetModel("models/props_lab/huladoll.mdl")
 					planet:SetAngles( ent:GetAngles() )
@@ -839,11 +839,11 @@ end
 function SB.PerformEnvironmentCheckOnEnt(ent)
 	if not ent then return end
 	if not ent:IsPlayer() or SB.PlayerOverride == 0 then
-		//if ent.environment != sb_space.Get() then
+		--if ent.environment ~= sb_space.Get() then
 		local space = sb_space.Get()
-		local environment = space //restore to default before doing the Environment checks
+		local environment = space --restore to default before doing the Environment checks
 		local oldenvironment = ent.environment
-		//end
+		--end
 		for k, v in pairs(Planets) do
 			if v and v:IsValid() then
 				--Msg("Checking planet\n")
@@ -868,11 +868,11 @@ function SB.PerformEnvironmentCheckOnEnt(ent)
 				table.remove(Environments, k)
 			end
 		end
-		if oldenvironment != environment then
+		if oldenvironment ~= environment then
 			--Msg("Changing environment\n")
 			ent.environment = environment
 			SB.OnEnvironmentChanged(ent)
-		elseif oldenvironment != ent.environment then
+		elseif oldenvironment ~= ent.environment then
 			ent.environment = oldenvironment
 		end
 		ent.environment:UpdateGravity(ent) --Always update gravity!!
@@ -940,9 +940,9 @@ function SB.GetPlanets()
 	local tmp = {}
 	if table.Count(Planets) > 0 then
 		for k, v in pairs(Planets) do
-			//if v.IsPlanet and v:IsPlanet() then
+			--if v.IsPlanet and v:IsPlanet() then
 			table.insert(tmp, v)
-			//end
+			--end
 		end
 	end
 	return tmp
@@ -952,28 +952,28 @@ function SB.GetStars()
 	local tmp = {}
 	if table.Count(Stars) > 0 then
 		for k, v in pairs(Stars) do
-			//if v.IsStar and v:IsStar() then
+			--if v.IsStar and v:IsStar() then
 			table.insert(tmp, v)
-			//end
+			--end
 		end
 	end
 	return tmp
 end
 
-function SB.GetArtificialEnvironments() //not 100 sure this is correct
+function SB.GetArtificialEnvironments() --not 100 sure this is correct
 	local tmp = {}
 	if table.Count(Environments) > 0 then
 		for k, v in pairs(Environments) do
-			//if v.IsStar and not v:IsStar() and v.IsPlanet and not v:IsPlanet() then
+			--if v.IsStar and not v:IsStar() and v.IsPlanet and not v:IsPlanet() then
 				table.insert(tmp, v)
-			//end
+			--end
 		end
 	end
 	return tmp
 end
 
 function SB.OnEnvironmentChanged(ent)
-	if not ent.oldsbtmpenvironment or ent.oldsbtmpenvironment != ent.environment then
+	if not ent.oldsbtmpenvironment or ent.oldsbtmpenvironment ~= ent.environment then
 		local tmp = ent.oldsbtmpenvironment
 		ent.oldsbtmpenvironment = ent.environment
 		if tmp then
@@ -987,8 +987,8 @@ function SB.GetSpace()
 end
 
 function SB.AddEnvironment(env)
-	if not env or not env.GetEnvClass or env:GetEnvClass() != "SB ENVIRONMENT" then return 0 end
-	//if v.IsStar and not v:IsStar() and v.IsPlanet and not v:IsPlanet() then
+	if not env or not env.GetEnvClass or env:GetEnvClass() ~= "SB ENVIRONMENT" then return 0 end
+	--if v.IsStar and not v:IsStar() and v.IsPlanet and not v:IsPlanet() then
 	if env.IsStar and env:IsStar() then
 		if not table.HasValue(Stars, env) then
 			table.insert(Stars, env)
@@ -1013,7 +1013,7 @@ function SB.AddEnvironment(env)
 end
 
 function SB.RemoveEnvironment(env)
-	if not env or not env.GetEnvClass or env:GetEnvClass() != "SB ENVIRONMENT" then return end
+	if not env or not env.GetEnvClass or env:GetEnvClass() ~= "SB ENVIRONMENT" then return end
 	if env.IsStar and env:IsStar() then
 		for k, v in pairs(Stars) do
 			if env == v then

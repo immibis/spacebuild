@@ -85,14 +85,14 @@ function ENT:Think()
 	local InRange = 0	
 	local Firing = 0
 
-	if self.Master && self.Master:IsValid()  then
+	if self.Master and self.Master:IsValid()  then
 		if self.Master.TFound then
 			local RAng = (self.Master.TVec - self.Entity:GetPos()):Angle()
 			local SAng = self.Entity:GetAngles()
-			if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc && math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc && self.Entity:GetPos():Distance(self.Master.TVec) < self.Range then
+			if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.Master.TVec) < self.Range then
 				Wire_TriggerOutput( self.Entity, "TVec", self.Master.TVec )
 				InRange = 1
-				if self.Master.Stance > 1 && self.FReady then
+				if self.Master.Stance > 1 and self.FReady then
 					Firing = 1
 				end
 				--print("Main Target Available")
@@ -101,11 +101,11 @@ function ENT:Think()
 				for i = 1,5 do
 					--print("Alternate "..i)
 					RAng = (self.Master.Alternates[i] - self.Entity:GetPos()):Angle()
-					if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc && math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc && self.Entity:GetPos():Distance(self.Master.TVec) < self.Range && self.Master.Targets > i then
+					if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.Master.TVec) < self.Range and self.Master.Targets > i then
 						--print("Found one")
 						Wire_TriggerOutput( self.Entity, "TVec", self.Master.Alternates[i] )
 						InRange = 1
-						if self.Master.Stance > 1 && self.FReady then
+						if self.Master.Stance > 1 and self.FReady then
 							Firing = 1
 						end
 						break
@@ -141,7 +141,7 @@ end
 
 function ENT:Touch( ent )
 	--print("Touching")
-	if ent.IsShipController && (!self.Master || !self.Master:IsValid()) then
+	if ent.IsShipController and (!self.Master or !self.Master:IsValid()) then
 		table.insert(ent.Weaponry,self.Entity)
 		self.Master = ent
 		--print("Linking")
@@ -154,7 +154,7 @@ end
 
 function ENT:PreEntityCopy()
 	local DI = {}
-		if self.Master && self.Master:IsValid() then
+		if self.Master and self.Master:IsValid() then
 			DI.master = self.Master:EntIndex()
 		end
 	if WireAddon then

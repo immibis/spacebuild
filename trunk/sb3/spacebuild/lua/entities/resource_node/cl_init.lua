@@ -8,7 +8,7 @@ surface.CreateFont( "arial", 40, 600, true, false, "Flavour" )
 function ENT:Draw( bDontDrawModel )
 	self:DoNormalDraw()
 
-	//draw beams by MadDog
+	--draw beams by MadDog
 	CAF.GetAddon("Resource Distribution").Beam_Render( self )
 
 	if (Wire_Render) then
@@ -23,7 +23,7 @@ end
 
 function ENT:DoNormalDraw( bDontDrawModel )
 	local mode = self:GetNetworkedInt("overlaymode")
-	if RD_OverLay_Mode and mode != 0 then -- Don't enable it if disabled by default!
+	if RD_OverLay_Mode and mode ~= 0 then -- Don't enable it if disabled by default!
 		if RD_OverLay_Mode.GetInt then
 			local nr = math.Round(RD_OverLay_Mode:GetInt())
 			if nr >= 0 and nr <= 3 then
@@ -40,7 +40,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 			end
 		end
 	end
-	if ( EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode != 0 ) and ( (mode != 1 and not string.find(self:GetModel(),"s_small_res") ) or LocalPlayer():GetEyeTrace().Entity == self.Entity) then
+	if ( EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode ~= 0 ) and ( (mode ~= 1 and not string.find(self:GetModel(),"s_small_res") ) or LocalPlayer():GetEyeTrace().Entity == self.Entity) then
 		local trace = LocalPlayer():GetEyeTrace()
 		if ( !bDontDrawModel ) then self:DrawModel() end
 		local netid = self:GetNetworkedInt("netid")
@@ -59,7 +59,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		if not mode or mode == 1 or string.find(self:GetModel(),"s_small_res") then
 			local OverlayText = ""
 			OverlayText = OverlayText .. "Network " .. netid .."\n"
-			if nodename != "" then
+			if nodename ~= "" then
 				OverlayText = OverlayText .. "Networkname " .. nodename .."\n"
 			end
 			OverlayText = OverlayText .. "Owner: " .. playername .."\n"
@@ -136,7 +136,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 					surface.DrawText("Owner: "..playername)
 					TempY = TempY + extra
 					
-					if nodename != "" then
+					if nodename ~= "" then
 						surface.SetFont("Flavour")
 						surface.SetTextColor(200,200,255,255)
 						surface.SetTextPos(textStartPos+15,TempY)
@@ -210,7 +210,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 									end
 								end
 							end
-							if mode != 3 then
+							if mode ~= 3 then
 								surface.SetTextPos(textStartPos+15,TempY)
 								surface.DrawText("   "..stringUsage)
 								TempY = TempY + 70

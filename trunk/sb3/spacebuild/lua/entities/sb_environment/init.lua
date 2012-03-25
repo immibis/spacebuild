@@ -56,7 +56,7 @@ function ENT:EndTouch(entity)
 		if self.Debugging then
 			Msg("...and has started touching our parent, ", SB_Environments_Brush_List[self.ParentID], " in unusual places....\n")
 		end
-	else //SPACE TEH BASTERD
+	else --SPACE TEH BASTERD
 		entity.IsInBrushEnv = false
 		entity.environment = nil
 		

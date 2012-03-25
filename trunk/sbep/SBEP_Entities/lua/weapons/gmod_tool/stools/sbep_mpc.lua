@@ -71,7 +71,7 @@ function TOOL:LeftClick( tr )
 		MPCEnt.PasteDelay = false
 		MPCEnt:Think()
 		
-		if MPCEnt.Plat && MPCEnt.Plat:IsValid() then
+		if MPCEnt.Plat and MPCEnt.Plat:IsValid() then
 			MPCEnt:SetPos( pos - Vector(0,0,MPCEnt.Plat:OBBMins().z ) )
 			MPCEnt.Plat:SetPos( MPCEnt:GetPos() )
 		end
@@ -92,7 +92,7 @@ function TOOL:RightClick( tr )
 	local ply   = self:GetOwner()
 	
 	if self:GetOwner():KeyDown( IN_SPEED ) then
-		if !tr.Hit || !tr.Entity || !tr.Entity:IsValid() then return end
+		if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
 
 		local model = tr.Entity:GetModel()
 		if self:CheckBadModel( model ) then return end
@@ -125,7 +125,7 @@ function TOOL:RightClick( tr )
 		
 		return true
 	else
-		if ( !tr.Hit || !tr.Entity || !tr.Entity:IsValid() ) then return end
+		if ( !tr.Hit or !tr.Entity or !tr.Entity:IsValid() ) then return end
 		
 		local PlModel = tr.Entity:GetModel()
 		local skin	  = tr.Entity:GetSkin()
@@ -155,7 +155,7 @@ function TOOL:Reload( tr )
 
 	if CLIENT then return end
 	
-	if !tr.Hit || !tr.Entity || !tr.Entity:IsValid() then return end
+	if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
 	local mp = tr.Entity
 	local class = mp:GetClass()
 	

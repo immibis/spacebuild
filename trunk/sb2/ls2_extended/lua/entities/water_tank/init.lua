@@ -48,11 +48,11 @@ function ENT:Leak()
 end
 
 function ENT:UpdateMass()
-	//change mass
-	local mass = self.mass + (RD_GetResourceAmount(self, "water")/2) // self.mass = default mass
+	--change mass
+	local mass = self.mass + (RD_GetResourceAmount(self, "water")/2) -- self.mass = default mass
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

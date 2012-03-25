@@ -44,7 +44,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	
 	if (iname == "Vent1") then
-		if self.HP[1].Ent && self.HP[1].Ent:IsValid() then
+		if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
 			if (value > 0) then	
 				self.HP[1].Ent.Venting = true
 			else
@@ -53,7 +53,7 @@ function ENT:TriggerInput(iname, value)
 		end
 		
 	elseif (iname == "Vent2") then
-		if self.HP[2].Ent && self.HP[2].Ent:IsValid() then
+		if self.HP[2].Ent and self.HP[2].Ent:IsValid() then
 			if (value > 0) then
 				self.HP[2].Ent.Venting = true
 			else
@@ -62,7 +62,7 @@ function ENT:TriggerInput(iname, value)
 		end
 		
 	elseif (iname == "Disengage1") then
-		if self.HP[1].Ent && self.HP[1].Ent:IsValid() then
+		if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
 			if (value > 0) then
 				self.Venting = true
 			else
@@ -71,7 +71,7 @@ function ENT:TriggerInput(iname, value)
 		end
 		
 	elseif (iname == "Disengage2") then
-		if self.HP[1].Ent && self.HP[1].Ent:IsValid() then
+		if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
 			if (value > 0) then
 				self.Venting = true
 			else
@@ -80,11 +80,11 @@ function ENT:TriggerInput(iname, value)
 		end
 		
 	elseif (iname == "Eject1") then
-		if self.HP[1].Ent && self.HP[1].Ent:IsValid() then
+		if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
 			if (value > 0) then
 				--print("Ejecting...")
 				self.HP[1].Ent:SetParent()
-				if self.HP[1].Ent.HPWeld && self.HP[1].Ent.HPWeld:IsValid() then self.HP[1].Ent.HPWeld:Remove() end
+				if self.HP[1].Ent.HPWeld and self.HP[1].Ent.HPWeld:IsValid() then self.HP[1].Ent.HPWeld:Remove() end
 				self.HP[1].Ent.THealth = 0
 				local phys = self.HP[1].Ent:GetPhysicsObject()
 				phys:EnableGravity(true)
@@ -94,10 +94,10 @@ function ENT:TriggerInput(iname, value)
 		end
 		
 	elseif (iname == "Eject2") then
-		if self.HP[2].Ent && self.HP[2].Ent:IsValid() then
+		if self.HP[2].Ent and self.HP[2].Ent:IsValid() then
 			if (value > 0) then
 				self.HP[2].Ent:SetParent()
-				if self.HP[2].Ent.HPWeld && self.HP[2].Ent.HPWeld:IsValid() then self.HP[2].Ent.HPWeld:Remove() end
+				if self.HP[2].Ent.HPWeld and self.HP[2].Ent.HPWeld:IsValid() then self.HP[2].Ent.HPWeld:Remove() end
 				self.HP[2].Ent.THealth = 0
 				local phys = self.HP[2].Ent:GetPhysicsObject()
 				phys:EnableGravity(true)
@@ -128,13 +128,13 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if self.HP[1].Ent && self.HP[1].Ent:IsValid() then
+	if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
 		Wire_TriggerOutput( self.Entity, "Tank1Fuel", self.HP[1].Ent.Fuel )
 	else
 		Wire_TriggerOutput( self.Entity, "Tank1Fuel", -1 )
 	end
 	
-	if self.HP[2].Ent && self.HP[2].Ent:IsValid() then
+	if self.HP[2].Ent and self.HP[2].Ent:IsValid() then
 		Wire_TriggerOutput( self.Entity, "Tank2Fuel", self.HP[2].Ent.Fuel )
 	else
 		Wire_TriggerOutput( self.Entity, "Tank2Fuel", -1 )

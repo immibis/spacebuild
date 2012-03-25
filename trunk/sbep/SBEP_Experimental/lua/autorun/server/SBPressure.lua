@@ -7,7 +7,7 @@ function SBEPPrsCheck()
 	--PrintTable(MasterPressureTable)
 	for i,e in pairs(MasterPressureTable) do
 		--print("Check 1")
-		if e && e:IsValid() then
+		if e and e:IsValid() then
 			--print("Check 2")
 			local model = string.lower( e:GetModel() )
 			local data = PAD[ model ]
@@ -29,7 +29,7 @@ function SBEPPrsCheck()
 						trace.endpos = e:LocalToWorld( data[k].pos ) + (e:LocalToWorldAngles( data[k].dir ):Up() * 60) + (e:LocalToWorldAngles( data[k].dir ):Forward() * 10)
 						trace.filter = e
 						local tr = util.TraceLine( trace )
-						if tr.Entity && tr.Entity:IsValid() then
+						if tr.Entity and tr.Entity:IsValid() then
 							--print("Check 4")
 							local TEnt = tr.Entity
 							local TDat = PAD[ string.lower( TEnt:GetModel() ) ]
@@ -64,13 +64,13 @@ function SBEPPrsCheck()
 				local Breached = true
 				--if e.IsDoorController then
 					--print("Doorcheck1")
-					if e.Door && e.Door[1] && e.Door[1]:GetClass() == "sbep_base_door" then
+					if e.Door and e.Door[1] and e.Door[1]:GetClass() == "sbep_base_door" then
 						if !e.Door[1].OpenStatus then
 							--print("Doorcheck3")
 							Breached = false
 						end
 					end					
-					if e.Doors && e.Doors[1] && e.Doors[1]:GetClass() == "sbep_base_door" then
+					if e.Doors and e.Doors[1] and e.Doors[1]:GetClass() == "sbep_base_door" then
 						--print("Doorcheck2")
 						if !e.Doors[1].OpenStatus then
 							--print("Doorcheck3")
@@ -93,9 +93,9 @@ function SBEPPrsCheck()
 							mx = mx - Vector(2, 2, 2)
 							local T = ents.FindInBox(mn, mx)
 							for _,i in pairs( T ) do
-								if( i.Entity && i.Entity:IsValid() && i.Entity != e ) then
+								if( i.Entity and i.Entity:IsValid() and i.Entity ~= e ) then
 									local phys = i:GetPhysicsObject()
-									if phys && phys:IsValid() then
+									if phys and phys:IsValid() then
 										phys:ApplyForceCenter(e:LocalToWorldAngles( data[v].dir ):Forward() * 1000)
 									end
 								end
@@ -104,13 +104,13 @@ function SBEPPrsCheck()
 					end
 					for k,v in pairs(e.BreachConnections) do
 						local TEnt = v[1]
-						if TEnt && TEnt:IsValid() then
+						if TEnt and TEnt:IsValid() then
 							TEnt.CPressure = TEnt.CPressure or 0
 							local PDif = (TEnt.CPressure - e.CPressure) / 2
-							if e.CPressure <= 0 && math.abs(PDif) < 15 then
+							if e.CPressure <= 0 and math.abs(PDif) < 15 then
 								e.CPressure = TEnt.CPressure
 								TEnt.CPressure = 0
-							elseif TEnt.CPressure <= 0 && math.abs(PDif) < 15 then
+							elseif TEnt.CPressure <= 0 and math.abs(PDif) < 15 then
 								TEnt.CPressure = e.CPressure
 								e.CPressure = 0
 							else
@@ -128,9 +128,9 @@ function SBEPPrsCheck()
 									mx = mx - Vector(2, 2, 2)
 									local T = ents.FindInBox(mn, mx)
 									for _,i in pairs( T ) do
-										if( i.Entity && i.Entity:IsValid() && i.Entity != e ) then
+										if( i.Entity and i.Entity:IsValid() and i.Entity ~= e ) then
 											local phys = i:GetPhysicsObject()
-											if phys && phys:IsValid() then
+											if phys and phys:IsValid() then
 												phys:ApplyForceCenter(e:LocalToWorldAngles( data[v[2]].dir ) * math.Clamp(PDif * 10,-1000,1000))
 											end
 										end

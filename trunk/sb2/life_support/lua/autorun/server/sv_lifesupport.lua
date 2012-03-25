@@ -1,12 +1,12 @@
 /********************************************************************
-//Types are:
-//1) Storage --> Default
-//2) Generator  --> not really used yet, but something could be done with it in the future
-//3) Air
-//4) Heat
-//5) Climate
-//6) TerraForm => makes planets habitable(while they are on, requires lots of resource at start, but decreases after time till it reaches a minimum)
-//             => only used in Spacebuild (the new one)
+--Types are:
+--1) Storage --> Default
+--2) Generator  --> not really used yet, but something could be done with it in the future
+--3) Air
+--4) Heat
+--5) Climate
+--6) TerraForm => makes planets habitable(while they are on, requires lots of resource at start, but decreases after time till it reaches a minimum)
+--             => only used in Spacebuild (the new one)
 ********************************************************************/
 
 AddCSLuaFile( "autorun/client/cl_lifesupport.lua" )
@@ -44,7 +44,7 @@ local function registerPF()
 		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "Get your Link tool and left click the Wind generator and then left click the link junction and continue to do this until all the devices and storage devices are linked together. ")
 		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "You will notice that you are getting some energy in the energy cell now, this energy is probably from your wind generator and solar panel. ")
 		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "You say your Solar panel is off? Well your solar panel must be aimed at the sun on the map to work correctly. ")
-		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "Move the solar panel around a bit with your Physics gun until it says the device is “ON” You have just built your first Energy Collecting system. ")
+		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "Move the solar panel around a bit with your Physics gun until it says the device is ï¿½ONï¿½ You have just built your first Energy Collecting system. ")
 		PF_AddHelpToSection("Life Support 2", "Collecting Energy!", "However the Wind generator will not work on all planets and will not work in space.")
 		
 		PF_AddHelpSection("Life Support 2", "Collecting Coolant!")
@@ -64,7 +64,7 @@ local function registerPF()
 		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "First spawn 1 Air compressor and 1 Large Air storage device and link both to the link junction using the link tool. ")
 		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "You should have more than enough energy to keep the device active if the fusion generator is working correctly.")
 		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "Now press the E button on your keyboard while looking at the air compressor and standing fairly close to it. ")
-		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "You should hear it making a noise and in the overlay it should say “ON” and you should see some air coming into the Air storage device. ")
+		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "You should hear it making a noise and in the overlay it should say ï¿½ONï¿½ and you should see some air coming into the Air storage device. ")
 		PF_AddHelpToSection("Life Support 2", "Collecting Air !", "However Air Compressors will not work in space. ")
 		
 		PF_AddHelpSection("Life Support 2", "Collecting Air in Space or a planet without Air!")
@@ -88,7 +88,7 @@ local function registerPF()
 		PF_AddHelpSection("Life Support 2", "Water Devices !")
 		PF_AddHelpToSection("Life Support 2", "Water Devices !", "Water Devices !")
 		PF_AddHelpToSection("Life Support 2", "Water Devices !", "You will not need water for much as not many devices use it at all so you do not need to read this.")
-		PF_AddHelpToSection("Life Support 2", "Water Devices !", "You may have noticed that the fusion generator has the “Heavy Water” option on its overlay if you give the fusion generator heavy water it will produce more energy I do not know if it s a lot more or a little more as I have never tested it.")
+		PF_AddHelpToSection("Life Support 2", "Water Devices !", "You may have noticed that the fusion generator has the ï¿½Heavy Waterï¿½ option on its overlay if you give the fusion generator heavy water it will produce more energy I do not know if it s a lot more or a little more as I have never tested it.")
 		PF_AddHelpToSection("Life Support 2", "Water Devices !", "You can also extract Air from from water by using the water pump and putting it in water ( the pole thing in the water the little bit on top of the water fiddle around with it until it stays on ) and spawn a huge water tank and link all the pumps and the water tank to the link junction and you will start to get water and link a water air extractor to the link junction and turn it on and you will start to convert water into air.")
 		PF_AddHelpToSection("Life Support 2", "Water Devices !", "This is good on uninhabitable planets with water as oxygen scrubbers aren't that good at producing air.")
 		PF_AddHelpToSection("Life Support 2", "Water Devices !", "")
@@ -107,8 +107,8 @@ local function registerPF()
 end
 timer.Simple(5, registerPF)--Needed to make sure the Plugin Framework gets loaded first
 
-FairTemp_Min = 288 //15°C
-FairTemp_Max = 303 //30°C
+FairTemp_Min = 288 --15ï¿½C
+FairTemp_Max = 303 --30ï¿½C
 local DrownDamage = 10
 local res_req = 5
 local LSents = {}
@@ -120,9 +120,9 @@ function LSEntCheck()
 	for i ,a in pairs(LSents) do
 		if (a:IsValid()) then
 			local pos = a:GetPos()
-			if (a.environment.lastpos == nil) or (a.environment.lastpos != pos) then --if it hasn't moved, it could not have entered/left any water
+			if (a.environment.lastpos == nil) or (a.environment.lastpos ~= pos) then --if it hasn't moved, it could not have entered/left any water
 				a.environment.lastpos = pos
-				if (a:GetPhysicsObject():IsValid() and a:GetPhysicsObject():IsMoveable() and a.environment.inwater != nil) then --causes it to do the trace method the first time
+				if (a:GetPhysicsObject():IsValid() and a:GetPhysicsObject():IsMoveable() and a.environment.inwater ~= nil) then --causes it to do the trace method the first time
 					a.environment.inwater = a:WaterLevel() --this doesn't look like it works when ent is welded to world
 				else
 					local trace = {}
@@ -147,9 +147,9 @@ function LSEntCheck()
 				end
 				if a.Active == 1 then
 					if a.planet and not a.planetset then
-						//planet, gravity(0 - 1), atmosphere(1 = safe), temperature(shadow), temperature(light), flags) => see Spacebuild
+						--planet, gravity(0 - 1), atmosphere(1 = safe), temperature(shadow), temperature(light), flags) => see Spacebuild
 						SB_Terraform_Step(a, a.planet, 288, 288, 1, 1)
-						//todo : add bloom/color changing
+						--todo : add bloom/color changing
 						a.planetset = true
 					end
 				else
@@ -164,7 +164,7 @@ function LSEntCheck()
 					local tmp = ents.FindInSphere(a:GetPos(), a.environment.radius)
 					for _, b in ipairs(tmp) do
 						if (b:IsPlayer())then
-							//player needs air?
+							--player needs air?
 							if not(b.HasAir) then
 								if (a.HasAir) then
 									b.HasAir = true
@@ -180,7 +180,7 @@ function LSEntCheck()
 					local tmp = ents.FindInSphere(a:GetPos(), a.environment.radius)
 					for _, b in ipairs(tmp) do
 						if (b:IsPlayer())then
-							//player needs heat?
+							--player needs heat?
 							if not(b.HasHeat) then
 								if (a.HasHeat) then
 									b.HasHeat = true
@@ -190,7 +190,7 @@ function LSEntCheck()
 					end
 				end 
 			else
-				//the rest here
+				--the rest here
 			end
 		else
 			table.remove(LSents, i)
@@ -223,7 +223,7 @@ function LS_RegisterEnt( ent, lstype, radius )
 		Msg("Invalid LS type (or radius not set) for "..tostring(ent.PrintName)..": Device not registered!\n")
 		return	
 	end
-	//Msg("DEBUG: "..tostring(lstype).." registered: "..tostring(ent.PrintName).."\n")
+	--Msg("DEBUG: "..tostring(lstype).." registered: "..tostring(ent.PrintName).."\n")
 	local hash = {}
 	hash.temperature = FairTemp_Min
 	hash.atmosphere = 1
@@ -265,7 +265,7 @@ function Player_Register( ply )
 	hash.energy = 100
 	hash.coolant = 100
 	hash.recover = 0
-	//Msg ( "Adding Player\n" )
+	--Msg ( "Adding Player\n" )
 	ply.suit = hash
 	ply.HasAir = true
 	ply.HasHeat = true
@@ -423,11 +423,11 @@ function Life_Support_Update ()
 		if ply:Health() <= 0 then
 			Suit_Reset(ply.suit)
 		end
-		//check if a player is in the water
+		--check if a player is in the water
 		ply.suit.inwater = ply:WaterLevel()
 		if not ply.suit.habitat then ply.suit.habitat = 1 end
 		if (ply.suit.inwater > 2) or (ply.suit.habitat < 1) then
-			if ply.suit.inwater > 2 and (not ply.onplanet and InSpace and InSpace == 1) and ply.suit.habitat == 1 then //= player is in an Art Env
+			if ply.suit.inwater > 2 and (not ply.onplanet and InSpace and InSpace == 1) and ply.suit.habitat == 1 then --= player is in an Art Env
 				ply.HasAir = true
 				if (ply.suit.air < 100) then
 					ply.suit.air = 100
@@ -466,7 +466,7 @@ function Life_Support_Update ()
 		if (pod:IsValid()) then
 			ply.NoCrush = true
 			if pod.environment then
-				//air
+				--air
 				if not(ply.hasAir) then
 					local air = RD_GetResourceAmount(pod, "air")
 					if (ply.suit.air < 100) then
@@ -487,7 +487,7 @@ function Life_Support_Update ()
 						end
 					end
 				end
-				//heat
+				--heat
 				if not ply.HasHeat then
 					if pod.environment.temperature >= FairTemp_Min and pod.environment.temperature <= FairTemp_Max then 
 						ply.HasHeat = true 

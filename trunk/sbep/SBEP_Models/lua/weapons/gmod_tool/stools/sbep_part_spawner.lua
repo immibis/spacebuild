@@ -108,7 +108,7 @@ function TOOL.BuildCPanel( panel )
 			GlassCheckBox:SizeToContents()
 		MCPS:AddItem( GlassCheckBox )
 	
-		if CAF && CAF.GetAddon("Spacebuild") && CAF.GetAddon("Spacebuild").GetStatus() then
+		if CAF and CAF.GetAddon("Spacebuild") and CAF.GetAddon("Spacebuild").GetStatus() then
 			local HabCheckBox = vgui.Create( "DCheckBoxLabel" )
 				HabCheckBox:SetText( "Habitable Module" )
 				HabCheckBox:SetConVar( "sbep_part_spawner_hab_mod" )

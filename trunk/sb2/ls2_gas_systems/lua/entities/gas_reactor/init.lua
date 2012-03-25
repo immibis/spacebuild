@@ -202,7 +202,7 @@ end
 function ENT:CanRun()
     local propane = RD_GetResourceAmount(self, "propane")
     local methane = RD_GetResourceAmount(self, "methane")
-    if (propane >= self.propanecon && methane >= self.methanecon) then
+    if (propane >= self.propanecon and methane >= self.methanecon) then
         return true
     else
         return false

@@ -7,7 +7,7 @@ heat = amount of heat to be done
 		function cds_heatpos(pos, heat, radius, attacking_ent)
 		if not server_settings.Bool("CDS_Damage_Enabled") then return false end
 		if not radius then
-			if pos:IsValid() and ! CDS_IsWorldEnt(pos) then
+			if pos:IsValid() and  not  CDS_IsWorldEnt(pos) then
 			local stuff = ents.FindInSphere(pos:GetPos(), pos:BoundingRadius() + 50)
 			for _, ent in pairs(stuff) do
 				if ent:IsValid() then
@@ -20,7 +20,7 @@ heat = amount of heat to be done
 		else
 			local stuff = ents.FindInSphere(pos, radius)
 			for _, ent in pairs(stuff) do
-				if ent:IsValid() and ! CDS_IsWorldEnt(ent) then
+				if ent:IsValid() and  not  CDS_IsWorldEnt(ent) then
 				local ht = math.ceil(math.abs(heat * (1.1 - (radius / (pos:Distance(ent:GetPos()) + 0.01)))))
 				if ht > heat then ht = heat end
 				cds_heatent(ent, ht)

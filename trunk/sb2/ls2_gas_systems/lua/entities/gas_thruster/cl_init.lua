@@ -804,7 +804,7 @@ function ENT:EffectThink_jetflame_advanced()
 	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
 	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
 
-	//vOffset = vOffset + VectorRand() * 5
+	--vOffset = vOffset + VectorRand() * 5
 
 	local r,g,b
 	if self.Entity:GetVelocity():Length() < 1700 then
@@ -881,7 +881,7 @@ function ENT:EffectThink_jetflame()
 	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
 	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
 
-	//vOffset = vOffset + VectorRand() * 5
+	--vOffset = vOffset + VectorRand() * 5
 
 	local emitter = ParticleEmitter( vOffset )
 	local speed = math.Rand(90,252)
@@ -936,7 +936,7 @@ function ENT:EffectThink_jetflame_purple()
 	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
 	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
 
-	//vOffset = vOffset + VectorRand() * 5
+	--vOffset = vOffset + VectorRand() * 5
 
 	local emitter = ParticleEmitter( vOffset )
 	local speed = math.Rand(90,252)
@@ -991,7 +991,7 @@ function ENT:EffectThink_jetflame_red()
 	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
 	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
 
-	//vOffset = vOffset + VectorRand() * 5
+	--vOffset = vOffset + VectorRand() * 5
 
 	local emitter = ParticleEmitter( vOffset )
 	local speed = math.Rand(90,252)
@@ -1045,7 +1045,7 @@ function ENT:EffectThink_jetflame_blue()
 	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
 	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
 
-	//vOffset = vOffset + VectorRand() * 5
+	--vOffset = vOffset + VectorRand() * 5
 
 	local emitter = ParticleEmitter( vOffset )
 	local speed = math.Rand(90,252)

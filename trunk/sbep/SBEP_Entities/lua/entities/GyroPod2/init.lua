@@ -153,7 +153,7 @@ function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			self.Active = true
 			if (self.CPL:KeyDown( IN_FORWARD )) then
 				if self.MCC then
@@ -209,7 +209,7 @@ function ENT:Think()
 				self.MTog = false
 			end
 			
-			if (self.CPL:KeyDown( IN_JUMP ) || (joystick && joystick.Get(self.CPL, "gyro_launch"))) then
+			if (self.CPL:KeyDown( IN_JUMP ) or (joystick and joystick.Get(self.CPL, "gyro_launch"))) then
 				if !self.LTog then
 					if self.Launchy then
 						self.Launchy = false
@@ -255,7 +255,7 @@ function ENT:Think()
 						self.TarSpeed = (joystick.Get(self.CPL, "gyro_thrust")/127.5-1)*2000
 					elseif (joystick.Get(self.CPL, "gyro_thrust") < 127) then
 						self.TarSpeed = (joystick.Get(self.CPL, "gyro_thrust")/127.5-1)*40
-					elseif (joystick.Get(self.CPL, "gyro_thrust") < 128 && joystick.Get(self.CPL, "gyro_thrust") > 127) then
+					elseif (joystick.Get(self.CPL, "gyro_thrust") < 128 and joystick.Get(self.CPL, "gyro_thrust") > 127) then
 						self.TarSpeed = 0
 					end
 					if (self.TarSpeed > self.Speed) then
@@ -271,7 +271,7 @@ function ENT:Think()
 						self.Pitch = -(joystick.Get(self.CPL, "gyro_pitch")/127.5-1)*90
 					elseif (joystick.Get(self.CPL, "gyro_pitch") < 127) then
 						self.Pitch = -(joystick.Get(self.CPL, "gyro_pitch")/127.5-1)*90
-					elseif (joystick.Get(self.CPL, "gyro_pitch") < 128 && joystick.Get(self.CPL, "gyro_pitch") > 127) then
+					elseif (joystick.Get(self.CPL, "gyro_pitch") < 128 and joystick.Get(self.CPL, "gyro_pitch") > 127) then
 						self.Pitch = 0
 					end
 				end
@@ -294,7 +294,7 @@ function ENT:Think()
 						self.Yaw = -(joystick.Get(self.CPL, yaw)/127.5-1)*90
 					elseif (joystick.Get(self.CPL, yaw) < 127) then
 						self.Yaw = -(joystick.Get(self.CPL, yaw)/127.5-1)*90
-					elseif (joystick.Get(self.CPL, yaw) < 128 && joystick.Get(self.CPL, yaw) > 127) then
+					elseif (joystick.Get(self.CPL, yaw) < 128 and joystick.Get(self.CPL, yaw) > 127) then
 						self.Yaw = 0
 					end
 				end
@@ -304,7 +304,7 @@ function ENT:Think()
 						self.Roll = (joystick.Get(self.CPL, roll)/127.5-1)*90
 					elseif (joystick.Get(self.CPL, roll) < 127) then
 						self.Roll = (joystick.Get(self.CPL, roll)/127.5-1)*90
-					elseif (joystick.Get(self.CPL, roll) < 128 && joystick.Get(self.CPL, roll) > 127) then
+					elseif (joystick.Get(self.CPL, roll) < 128 and joystick.Get(self.CPL, roll) > 127) then
 						self.Roll = 0
 					end
 				end

@@ -26,30 +26,30 @@ TOOL.ClientConVar[ "color_b" ] = "255"
 TOOL.ClientConVar[ "color_a" ] = "255"
 
 function TOOL:LeftClick( tr )
-	//if not valid or player, exit
-	if ( tr.Entity:IsValid() && tr.Entity:IsPlayer() ) then return end
-	//if client exit
+	--if not valid or player, exit
+	if ( tr.Entity:IsValid() and tr.Entity:IsPlayer() ) then return end
+	--if client exit
 	if ( CLIENT ) then return true end
 
-	// If there's no physics object then we can't constraint it!
+	-- If there's no physics object then we can't constraint it!
 	if ( !util.IsValidPhysicsObject( tr.Entity, tr.PhysicsBone ) ) then return false end
 
-	//how many objects stored
+	--how many objects stored
 	local iNum = self:NumObjects() + 1
 
-	//save clicked postion
+	--save clicked postion
 	self:SetObject( iNum, tr.Entity, tr.HitPos, tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone ), tr.PhysicsBone, tr.HitNormal )
 
 
-	//first clicked object
+	--first clicked object
 	if iNum == 1 then
-		//remove from any LS system since we are changing its link
+		--remove from any LS system since we are changing its link
 		CAF.GetAddon("Resource Distribution").Unlink(self:GetEnt(1))
 		if self:GetEnt(1).IsNode then
 			CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 		end
 
-		//save beam settings
+		--save beam settings
 		CAF.GetAddon("Resource Distribution").Beam_settings( self:GetEnt(1), self:GetClientInfo("material"), self:GetClientInfo("width"), Color(self:GetClientInfo("color_r"), self:GetClientInfo("color_g"), self:GetClientInfo("color_b"), self:GetClientInfo("color_a")) )
 	end
 	if iNum == 2 then
@@ -58,13 +58,13 @@ function TOOL:LeftClick( tr )
 		end
 	end
 
-	//add beam point
+	--add beam point
 	CAF.GetAddon("Resource Distribution").Beam_add(self:GetEnt(1), tr.Entity, tr.Entity:WorldToLocal(tr.HitPos+tr.HitNormal))
 
-	//if finishing, run StartTouch on Resource Node to do link
+	--if finishing, run StartTouch on Resource Node to do link
 	if ( iNum > 1 ) then
-		local Ent1 = self:GetEnt(1) 	//get first ent
-		local Ent2 = self:GetEnt(iNum) 	//get last ent
+		local Ent1 = self:GetEnt(1) 	--get first ent
+		local Ent2 = self:GetEnt(iNum) 	--get last ent
 		local length = ( self:GetPos(1) - self:GetPos(iNum)):Length()
 
 		if Ent1.IsNode and Ent2.IsNode then
@@ -73,11 +73,11 @@ function TOOL:LeftClick( tr )
 			else
 				self:GetOwner():SendLua( "GAMEMODE:AddNotify('These 2 Nodes are to far appart!', NOTIFY_GENERIC, 7);" )
 
-				//clear beam points
+				--clear beam points
 				CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-				self:ClearObjects()	//clear objects
-				return			//failure
+				self:ClearObjects()	--clear objects
+				return			--failure
 			end
 		elseif Ent1.IsNode and table.Count(CAF.GetAddon("Resource Distribution").GetEntityTable(Ent2)) > 0 then
 			if length <= Ent1.range then
@@ -85,11 +85,11 @@ function TOOL:LeftClick( tr )
 			else
 				self:GetOwner():SendLua( "GAMEMODE:AddNotify('The Entity and the Node are to far appart!', NOTIFY_GENERIC, 7);" )
 
-				//clear beam points
+				--clear beam points
 				CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-				self:ClearObjects()	//clear objects
-				return			//failure
+				self:ClearObjects()	--clear objects
+				return			--failure
 			end
 		elseif Ent2.IsNode and table.Count(CAF.GetAddon("Resource Distribution").GetEntityTable(Ent1)) > 0 then
 			if length <= Ent2.range then
@@ -97,11 +97,11 @@ function TOOL:LeftClick( tr )
 			else
 				self:GetOwner():SendLua( "GAMEMODE:AddNotify('The Entity and the Node are to far appart!', NOTIFY_GENERIC, 7);" )
 
-				//clear beam points
+				--clear beam points
 				CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-				self:ClearObjects()	//clear objects
-				return			//failure
+				self:ClearObjects()	--clear objects
+				return			--failure
 			end
 		elseif Ent1.IsNode and Ent2.IsPump then
 			if length <= Ent1.range then
@@ -110,11 +110,11 @@ function TOOL:LeftClick( tr )
 			else
 				self:GetOwner():SendLua( "GAMEMODE:AddNotify('The Pump and the Node are to far appart!', NOTIFY_GENERIC, 7);" )
 
-				//clear beam points
+				--clear beam points
 				CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-				self:ClearObjects()	//clear objects
-				return			//failure
+				self:ClearObjects()	--clear objects
+				return			--failure
 			end
 		elseif Ent2.IsNode and Ent1.IsPump then
 			if length <= Ent1.range then
@@ -123,63 +123,63 @@ function TOOL:LeftClick( tr )
 			else
 				self:GetOwner():SendLua( "GAMEMODE:AddNotify('The Pump and the Node are to far appart!', NOTIFY_GENERIC, 7);" )
 
-				//clear beam points
+				--clear beam points
 				CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-				self:ClearObjects()	//clear objects
-				return			//failure
+				self:ClearObjects()	--clear objects
+				return			--failure
 			end
 		else
 			self:GetOwner():SendLua( "GAMEMODE:AddNotify('Invalid Combination!', NOTIFY_GENERIC, 7);" )
 
-			//clear beam points
+			--clear beam points
 			CAF.GetAddon("Resource Distribution").Beam_clear( self:GetEnt(1) )
 
-			self:ClearObjects()	//clear objects
-			return			//failure
+			self:ClearObjects()	--clear objects
+			return			--failure
 		end
 
-		//if first ent is the node, transfer beam info to last ent
+		--if first ent is the node, transfer beam info to last ent
 		if Ent1.IsNode then CAF.GetAddon("Resource Distribution").Beam_switch( self:GetEnt(1), self:GetEnt(iNum) ) end
 	else
 		self:SetStage( iNum )
 	end
 
-	//clear objects on 2nd click
+	--clear objects on 2nd click
 	if (iNum > 1) then
 		self:ClearObjects()
 	end
 
-	//success!
+	--success!
 	return true
 end
 
 function TOOL:RightClick( tr )
-	//if not valid, exit
-	if (!tr.Entity) || (!tr.Entity:IsValid()) || (tr.Entity:IsPlayer()) || (tr.Entity:IsWorld()) then return false end
-	//if client exit
+	--if not valid, exit
+	if (!tr.Entity) or (!tr.Entity:IsValid()) or (tr.Entity:IsPlayer()) or (tr.Entity:IsWorld()) then return false end
+	--if client exit
 	if ( CLIENT ) then return true end
 
-	// If there's no physics object then we can't constraint it!
+	-- If there's no physics object then we can't constraint it!
 	if ( !util.IsValidPhysicsObject( tr.Entity, tr.PhysicsBone ) ) then return false end
 
-	//how many objects stored
+	--how many objects stored
 	local iNum = self:NumObjects() + 1
 
-	//save clicked postion
+	--save clicked postion
 	self:SetObject( iNum, tr.Entity, tr.HitPos, tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone ), tr.PhysicsBone, tr.HitNormal )
 
-	//add beam point
+	--add beam point
 	CAF.GetAddon("Resource Distribution").Beam_add(self:GetEnt(1), tr.Entity, tr.Entity:WorldToLocal(tr.HitPos+tr.HitNormal))
 
-	//success!
+	--success!
 	return true
 end
 
 function TOOL:Reload(trace)
-	//if not valid or player, exit
-	if ( trace.Entity:IsValid() && trace.Entity:IsPlayer() ) then return end
-	//if client exit
+	--if not valid or player, exit
+	if ( trace.Entity:IsValid() and trace.Entity:IsPlayer() ) then return end
+	--if client exit
 	if ( CLIENT ) then return true end
 
 	if trace.Entity.IsNode then
@@ -200,7 +200,7 @@ function TOOL:Reload(trace)
 		CAF.GetAddon("Resource Distribution").Unlink(trace.Entity)
 	end
 
-	self:ClearObjects()	//clear objects
+	self:ClearObjects()	--clear objects
 	return true
 end
 

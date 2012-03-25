@@ -1,11 +1,11 @@
-//=============================================================================//
-// 			Addon: CAF
-// 			Author: SnakeSVx									 
-//			Version: 1.0
-//
-//  Module to create the data required for an entity for use in an RDNetwork
-//
-//=============================================================================//
+--=============================================================================--
+-- 			Addon: CAF
+-- 			Author: SnakeSVx
+--			Version: 1.0
+--
+--  Module to create the data required for an entity for use in an RDNetwork
+--
+--=============================================================================--
 
 local table 	= table
 local setmetatable 	= setmetatable

@@ -11,7 +11,7 @@ if not (WireAddon == nil) then
 end
 
 function ENT:Initialize()
-	self.Entity:SetModel( "models//props_combine/headcrabcannister01a.mdl" )
+	self.Entity:SetModel( "models/props_combine/headcrabcannister01a.mdl" )
     self.BaseClass.Initialize(self)
     self.Entity:SetColor(85, 0, 0, 255)
 

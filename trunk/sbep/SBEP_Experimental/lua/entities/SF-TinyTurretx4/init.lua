@@ -194,7 +194,7 @@ function ENT:Think()
 	end
 
 	for i = 1,self.HPC do
-		if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+		if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 			local Weap = self.HP[i]["Ent"]
 			Weap:GetPhysicsObject():SetMass(1)
 			
@@ -233,7 +233,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 		local ent = self.HP[1]["Ent"]
-		if ent && ent:IsValid() then
+		if ent and ent:IsValid() then
 			DI.gun = ent:EntIndex()
 		end
 	if WireAddon then

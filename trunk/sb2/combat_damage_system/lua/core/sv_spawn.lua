@@ -45,7 +45,7 @@ function setEntActive(ent)
 	end
 end 
 
-function CDS_Spawned( ent, ply ) //ply = bool (player or npc)
+function CDS_Spawned( ent, ply ) --ply = bool (player or npc)
 	--not server_settings.Bool( "CDS_Enabled" )
 	--Entitys are still regeistered even if the damage system is disabled so it'll use them when they'll be enabled
 	if not (ent and ent.IsValid and ent:IsValid()) or CDS_IsWorldEnt(ent) or ent.CDSIgnore or CDS_Ignore(ent) then return false end
@@ -67,7 +67,7 @@ function CDS_Spawned( ent, ply ) //ply = bool (player or npc)
 		maxhealth = 0
 	end
 	local phys = ent:GetPhysicsObject()
-	if phys:IsValid() or ply then //player and npc check is used incase phys would return false
+	if phys:IsValid() or ply then --player and npc check is used incase phys would return false
 		ent.CDS_SpawnedReged = true --so it won't be registerd twice for some reason
 		local Mat = CDS_GetMatType(ent)
 		if not ent.maxhealth then
@@ -86,7 +86,7 @@ function CDS_Spawned( ent, ply ) //ply = bool (player or npc)
 		end
 		if not ply and ent.maxhealth < minhealth then
 			ent.maxhealth = minhealth
-		elseif ply and ent.maxhealth != 0 then
+		elseif ply and ent.maxhealth ~= 0 then
 			ent.maxhealth = 0 --Edit: Spacetech
 		end
 		if not ent.health then
@@ -112,7 +112,7 @@ function CDS_Spawned( ent, ply ) //ply = bool (player or npc)
 		if not ent.armor or ent.armor > ent.maxarmor then
 			ent.armor = ent.maxarmor
 		end
-		//add heat
+		--add heat
 		if not ent.heat then
 			ent.heat = 0
 		end

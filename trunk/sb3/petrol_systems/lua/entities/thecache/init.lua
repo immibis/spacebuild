@@ -29,7 +29,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 	-- Check the trace is OK
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 
 	-- Create our entity
 	local ent = ents.Create( "thecache" )
@@ -47,7 +47,7 @@ function ENT:OnRemove()
 	self.BaseClass.OnRemove(self)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD.BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

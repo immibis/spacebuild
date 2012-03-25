@@ -65,7 +65,7 @@ end
 
 function ENT:Think()
 	
-	if (self.Active == true || self.FTime > CurTime() ) then	
+	if (self.Active == true or self.FTime > CurTime() ) then
 	
 		local vStart = self.Entity:LocalToWorld(Vector(150,0,40))-- + (self.Entity:GetForward() * 20) + (self.Entity:GetUp() * BUp) + (self.Entity:GetRight() * BRi)
 		local vForward = self.Entity:GetForward()
@@ -84,7 +84,7 @@ function ENT:Think()
 			if (tr.Entity and tr.Entity:IsValid()) then
 				local  gdmg = math.random(10,20)
 				attack = cbt_dealdevhit(tr.Entity, gdmg, 5)
-				if (attack != nil) then
+				if (attack ~= nil) then
 					if (attack == 2) then
 						local wreck = ents.Create( "wreckedstuff" )
 						wreck:SetModel( tr.Entity:GetModel() )
@@ -128,7 +128,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

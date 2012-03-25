@@ -66,7 +66,7 @@ TOOL.Renamed = {
 
 
 /*
-	TOOL.AdminOnly 			= true //Make the Stool admin only
+	TOOL.AdminOnly 			= true --Make the Stool admin only
 	TOOL.EnableFunc  = function(ply) return true or false end (Optional)
 	
 	
@@ -81,7 +81,7 @@ TOOL.Renamed = {
 		MakeFuncReturn	= true, --skips rest of make rd2 ent function and returns ent (optional)
 		EnableFunc  = function(ply) return true or false end (Optional)
 		func			= function(ent,type,sub_type,devinfo,Extra_Data,ent_extras) addres(ent) return mass, maxhealth end (optional)
-		AdminOnly		= true/false //Make the Device group Admin only
+		AdminOnly		= true/false --Make the Device group Admin only
 		devices = {
 			sub_type = {
 				Name		= "Print Name for this sub_type in tool",
@@ -96,7 +96,7 @@ TOOL.Renamed = {
 				legacy	= true, --if ent is from ls2 (optional)
 				hide		= true, --if this sub_type should be hidden on the control panel (optional)
 				ent_extras	= {}, --table of exra info to copy to ent (optional)
-				AdminOnly		= true/false //Make the Device Admin only
+				AdminOnly		= true/false --Make the Device Admin only
 			},
 			sub_type = {
 				Name		= "Print Name for this sub_type in tool",

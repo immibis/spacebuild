@@ -70,7 +70,7 @@ function ENT:TriggerInput(iname, value)
 		end	
 	end
 	if(iname == "Resource Type") then
-		if ((value >= 0) and (value <= (table.getn(self.ResTable))) and (value != self.resourcetype) and (self.charging == 0)) then
+		if ((value >= 0) and (value <= (table.getn(self.ResTable))) and (value ~= self.resourcetype) and (self.charging == 0)) then
 			--Chage resource type if value is within range, and it isn't the same resource type
 			--and it isn't charging a packet
 			if (value == 0) then value = 1 end

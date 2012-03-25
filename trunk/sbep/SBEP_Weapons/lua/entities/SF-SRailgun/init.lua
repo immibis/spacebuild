@@ -74,7 +74,7 @@ function ENT:RGFire()
 	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 10000)
 	trace.filter = self.Entity
 	local tr = util.TraceLine( trace )
-	if tr.Hit && !tr.HitSky then
+	if tr.Hit and !tr.HitSky then
 		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge * 2.5, self.Charge * 5)
 		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge, self.Charge * 100)
 		local effectdata = EffectData()
@@ -83,7 +83,7 @@ function ENT:RGFire()
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetScale(self.Charge)
 		util.Effect( "SmallRailImpact", effectdata )
-		if tr.Entity && tr.Entity:IsValid() then
+		if tr.Entity and tr.Entity:IsValid() then
 			local Phys = tr.Entity:GetPhysicsObject()
 			if Phys:IsValid() then			
 				Phys:ApplyForceOffset( self.Entity:GetForward() * (self.Charge * 200000), tr.HitPos )
@@ -92,7 +92,7 @@ function ENT:RGFire()
 			end
 			local gdmg = math.random(self.Charge * 10,self.Charge * 20)
 			attack = cbt_dealdevhit(tr.Entity, gdmg, 5 + (self.Charge * 0.1))
-			if (attack != nil) then
+			if (attack ~= nil) then
 				if (attack == 2) then
 					local wreck = ents.Create( "wreckedstuff" )
 					wreck:SetModel( tr.Entity:GetModel() )
@@ -125,7 +125,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 		end
 	end
@@ -142,7 +142,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if (CurTime() < self.FTime || self.WCharge) && CurTime() >= self.CDown then
+	if (CurTime() < self.FTime or self.WCharge) and CurTime() >= self.CDown then
 		--self.Entity:RGFire()
 		self.Charge = math.Clamp( self.Charge + 1, 0, 50 )
 	else

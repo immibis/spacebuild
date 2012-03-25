@@ -73,7 +73,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 		end
 	end
@@ -99,7 +99,7 @@ function ENT:Arm()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end

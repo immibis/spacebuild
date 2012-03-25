@@ -188,7 +188,7 @@ function ENT:CanRun()
 	local energy = RD_GetResourceAmount(self, "energy")
 	local coolant = RD_GetResourceAmount(self, "coolant")
 	
-	if (air >= self.aircon && energy >= self.energycon && coolant >= self.coolantcon) then
+	if (air >= self.aircon and energy >= self.energycon and coolant >= self.coolantcon) then
 		return true
 	else
 		return false
@@ -201,7 +201,7 @@ end
 	self.coolantcon = math.abs(math.ceil(self.force/self.coolantdiv))
 	self.energycon = math.abs(math.ceil(self.force/self.energydiv))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "air", self.aircon)
 		RD_ConsumeResource(self.Entity, "coolant", self.coolantcon)
 		RD_ConsumeResource(self.Entity, "energy", self.energycon)

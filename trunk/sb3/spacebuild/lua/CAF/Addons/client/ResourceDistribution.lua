@@ -5,7 +5,7 @@ local resourcenames = {}
 local resources = {}
 local status = false
 
-local rd_cache = cache.create(1, false) //Store data for 1 second
+local rd_cache = cache.create(1, false) --Store data for 1 second
 --[[
 
 ]]
@@ -193,19 +193,19 @@ umsg.Start("RD_ClearNets")
 	umsg.End()
 ]]
 local function ClearNets( um )
-	//nettable = {}
-	//ent_table = {}
+	--nettable = {}
+	--ent_table = {}
 	rd_cache:clear();
 end
 usermessage.Hook("RD_ClearNets", ClearNets)
 
 --[[
 umsg.Start("RD_Entity_Data", ply)
-	umsg.Short(entid) //send key to update
-	umsg.Short(rddata.network) //send network used in entity
+	umsg.Short(entid) --send key to update
+	umsg.Short(rddata.network) --send network used in entity
 	
 	local nr_of_resources = table.Count(rddata.resources);
-	umsg.Short(nr_of_resources) //How many resources are going to be send?
+	umsg.Short(nr_of_resources) --How many resources are going to be send?
 	if nr_of_resources > 0 then
 		for l, w in pairs(rddata.resources) do
 			umsg.String(l)
@@ -220,23 +220,23 @@ umsg.End()
 local function AddEntityToCache( um )
 	local data = {}
 
-	data.entid = um:ReadShort() //Key
+	data.entid = um:ReadShort() --Key
 	local up_to_date = um:ReadBool();
 	if up_to_date then
 		rd_cache:update("entity_"..tostring(data.entid))
 	end
-	data.network = um:ReadShort() //network key
+	data.network = um:ReadShort() --network key
 	
 	data.resources = {}
 	local i = 0;
 	local nr_of_resources = um:ReadShort();
 	if (nr_of_resources > 0) then
-		//print("nr_of_sources", nr_of_resources)
+		--print("nr_of_sources", nr_of_resources)
 		local resource 
 		local maxvalue 
 		local value
 		for i = 1, nr_of_resources do
-			//print(i)
+			--print(i)
 			resource = um:ReadString()
 			maxvalue = um:ReadLong()
 			value = um:ReadLong()
@@ -251,10 +251,10 @@ usermessage.Hook("RD_Entity_Data", AddEntityToCache)
 
 --[[
 umsg.Start("RD_Network_Data", ply)
-		umsg.Short(netid) //send key to update
+		umsg.Short(netid) --send key to update
 		
 		local nr_of_resources = table.Count(rddata.resources);
-		umsg.Short(nr_of_resources) //How many resources are going to be send?
+		umsg.Short(nr_of_resources) --How many resources are going to be send?
 		if nr_of_resources > 0 then
 			for l, w in pairs(rddata.resources) do
 				umsg.String(l)
@@ -264,7 +264,7 @@ umsg.Start("RD_Network_Data", ply)
 		end
 		
 		local nr_of_cons = table.Count(rddata.cons);
-		umsg.Short(nr_of_cons) //How many connections are going to be send?
+		umsg.Short(nr_of_cons) --How many connections are going to be send?
 		if nr_of_cons > 0 then
 			for l, w in pairs(rddata.cons) do
 				umsg.Short(w)
@@ -278,7 +278,7 @@ umsg.Start("RD_Network_Data", ply)
 local function AddNetworkToCache( um )
 	local data = {}
 	
-	data.netid = um:ReadShort() //network key
+	data.netid = um:ReadShort() --network key
 	local up_to_date = um:ReadBool();
 	if up_to_date then
 		rd_cache:update("network_"..tostring(data.netid))
@@ -288,12 +288,12 @@ local function AddNetworkToCache( um )
 	local i = 0;
 	local nr_of_resources = um:ReadShort();
 	if (nr_of_resources > 0) then
-		//print("nr_of_sources", nr_of_resources)
+		--print("nr_of_sources", nr_of_resources)
 		local resource 
 		local maxvalue 
 		local value
 		for i = 1, nr_of_resources do
-			//print(i)
+			--print(i)
 			resource = um:ReadString()
 			maxvalue = um:ReadLong()
 			value = um:ReadLong()
@@ -320,58 +320,58 @@ usermessage.Hook("RD_Network_Data", AddNetworkToCache)
 --end local functions
 
 --The Class
-/**
+--[[
 	The Constructor for this Custom Addon Class
-*/
+]]
 function RD.__Construct()
 	status = true
 	return true
-	//return false , "No Implementation yet"
+	--return false , "No Implementation yet"
 end
 
-/**
+--[[
 	The Destructor for this Custom Addon Class
-*/
+]]
 function RD.__Destruct()
 	status = false
 	return true
-	//return false , "No Implementation yet"
+	--return false , "No Implementation yet"
 end
 
-/**
+--[[
 	Get the required Addons for this Addon Class
-*/
+]]
 function RD.GetRequiredAddons()
 	return {}
 end
 
-/**
+--[[
 	Get the Boolean Status from this Addon Class
-*/
+]]
 function RD.GetStatus()
 	return status
 end
 
-/**
+--[[
 	Get the Version of this Custom Addon Class
-*/
+]]
 function RD.GetVersion()
 	return 3.1, "Alpha"
 end
 
 local isuptodatecheck;
-/**
+--[[
 	Update check
-*/
+]]
 function RD.IsUpToDate(callBackfn)
 	if not CAF.HasInternet then
 		return
 	end
-	if isuptodatecheck != nil then
+	if isuptodatecheck ~= nil then
 		callBackfn(isuptodatecheck);
 		return
 	end
-	http.Get("http://www.snakesvx.net/versions/rd.txt","",
+	--[[http.Get("http://www.snakesvx.net/versions/rd.txt","",
 		function(html,size)
 			local version = tonumber(html);
 			if(version) then
@@ -385,34 +385,34 @@ function RD.IsUpToDate(callBackfn)
 				end
 			end
 		end
-	);
+	); ]]
 end
 
-/**
+--[[
 	Get any custom options this Custom Addon Class might have
-*/
+]]
 function RD.GetExtraOptions()
 	return {}
 end
 
-/**
+--[[
 	Gets a menu from this Custom Addon Class
-*/
-function RD.GetMenu(menutype, menuname)//Name is nil for main menu, String for others
+]]
+function RD.GetMenu(menutype, menuname) --Name is nil for main menu, String for others
 	local data = {}
 	return data
 end
 
-/**
+--[[
 	Get the Custom String Status from this Addon Class
-*/
+]]
 function RD.GetCustomStatus()
 	return ; --CAF.GetLangVar("Not Implemented Yet")
 end
 
-/**
+--[[
 	Returns a table containing the Description of this addon
-*/
+]]
 function RD.GetDescription()
 	return {
 				"Resource Distribution",
@@ -429,7 +429,7 @@ CAF.RegisterAddon("Resource Distribution", RD, "1")
 --RD.GetEntityTable(ent)
 --RD.GetNetTable(netid)
 
---[[function RD.getConnectedNets(netid) // NEEDED ANYWHERE?
+--[[function RD.getConnectedNets(netid) -- NEEDED ANYWHERE?
 	local contable = {}
 	local tmpcons = { netid}
 	while(table.Count(tmpcons) > 0) do
@@ -452,7 +452,7 @@ end]]
 
 --[[function RD.GetNetResourceAmount(netid, resource)
 	if not resource then return 0, "No resource given" end
-	/*if not nettable[netid] then return 0, "Not a valid network" end
+	--[[if not nettable[netid] then return 0, "Not a valid network" end
 	
 	local amount = 0
 	local index = {}
@@ -468,7 +468,7 @@ end]]
 			amount = nettable[index.network].resources[resource].value
 		end
 	end
-	return amount*/
+	return amount
 	local data = GetNetTable(netid);
 	if not data then return false end
 	local amount = 0;
@@ -546,7 +546,7 @@ function RD.GetNetworkCapacity(ent, resource)
 end]]
 
 local requests = {}
-local ttl = 0.2; //Wait 0.2 second before doing a new request
+local ttl = 0.2; --Wait 0.2 second before doing a new request
 
 function RD.GetEntityTable(ent)
 	local entid = ent:EntIndex( )
@@ -554,12 +554,12 @@ function RD.GetEntityTable(ent)
 	local data, needs_update = rd_cache:get(id);
 	if not data or needs_update then
 		if not requests[id] or requests[id] < CurTime() then
-			//Do (new) request
+			--Do (new) request
 			requests[id] = CurTime() + ttl;
 			RunConsoleCommand("RD_REQUEST_RESOURCE_DATA", "ENT", entid, needs_update and "UPDATE");
 		end
 	end
-	//PrintTable(data)
+	--PrintTable(data)
 	return data or {}
 end
 
@@ -568,7 +568,7 @@ function RD.GetNetTable(netid)
 	local data, needs_update = rd_cache:get(id);
 	if not data or needs_update then
 		if not requests[id] or requests[id] < CurTime() then
-			//Do (new) request
+			--Do (new) request
 			requests[id] = CurTime() + ttl;
 			RunConsoleCommand("RD_REQUEST_RESOURCE_DATA", "NET", netid, needs_update and "UPDATE");
 		end
@@ -605,7 +605,7 @@ function RD.GetRegisteredResources()
 	return table.Copy(resources)
 end
 
-/*function RD.GetNetworkIDs() //NEEDED FOR SOMEONE?
+--[[function RD.GetNetworkIDs() --NEEDED FOR SOMEONE?
 	local ids = {}
 	if table.Count(nettable) > 0 then
 		for k, v in pairs(nettable) do
@@ -615,7 +615,7 @@ end
 		end
 	end
 	return ids
-end*/
+end]]
 
 function RD.PrintDebug(ent)
 	if ent then
@@ -623,9 +623,9 @@ function RD.PrintDebug(ent)
 			local nettable = RD.GetNetTable(ent.netid)
 			PrintTable(nettable)
 		elseif ent.IsValve then
-			//
+			--
 		elseif ent.IsPump then
-			//
+			--
 		else
 			local enttable = RD.GetEntityTable(ent)
 			PrintTable(enttable)
@@ -641,69 +641,69 @@ list.Add( "BeamMaterials", "cable/blue_elec" )
 list.Add( "BeamMaterials", "cable/physbeam" )
 list.Add( "BeamMaterials", "cable/hydra" )
 
-//holds the materials
+--holds the materials
 beamMat = {}
 
 for _,mat in pairs(list.Get( "BeamMaterials" )) do
 	beamMat[mat] = Material(mat)
 end
 
-//---------------------------------------
-//START BEAMS BY MADDOG
-//---------------------------------------
+-----------------------------------------
+--START BEAMS BY MADDOG
+-----------------------------------------
 
-// Desc: draws beams on ents
+-- Desc: draws beams on ents
 function RD.Beam_Render( ent )
 
-	//get the number of beams to use
+	--get the number of beams to use
 	local intBeams = ent:GetNWInt( "Beams" )
 
-	//if we have beams, then create them
-	if intBeams & intBeams != 0 then
-		//make some vars we are about to use
+	--if we have beams, then create them
+	if intBeams & intBeams ~= 0 then
+		--make some vars we are about to use
 		local i, start, scroll = 1, ent:GetNWVector( "Beam1" ), CurTime() * 0.5
 
-		//get beam info and explode into a table
+		--get beam info and explode into a table
 		local beamInfo = string.Explode(";", ent:GetNWString("BeamInfo"))
 
-		//get beam info from table (1: beamMaterial 2: beamSize 3: beamR 4: beamG 5: beamB 6: beamAlpha)
+		--get beam info from table (1: beamMaterial 2: beamSize 3: beamR 4: beamG 5: beamB 6: beamAlpha)
 		local beamMaterial, beamSize, color = (beamMat[beamInfo[1]] or Material("cable/xbeam")), (beamInfo[2] or 2), Color( beamInfo[3], beamInfo[4], beamInfo[5], beamInfo[6] )
 
-		// set material
+		-- set material
 		render.SetMaterial( beamMaterial )
-		render.StartBeam( intBeams )	//how many links (points) the beam has
+		render.StartBeam( intBeams )	--how many links (points) the beam has
 
-		//loop through all beams
+		--loop through all beams
 		for i=1,intBeams do
-			//get beam data
+			--get beam data
 			local beam, ent = ent:GetNWVector( "Beam" .. tostring(i) ), ent:GetNWEntity( "BeamEnt" .. tostring(i) )
 
-			//if no beam break for statement
-			if !beam || beam == nil || !ent || !ent:IsValid() then
+			--if no beam break for statement
+			if not beam or  not ent or not ent:IsValid() then
 				ent:SetNWInt( "Beams", 0 )
 				break
 			end
 
-			//get beam world vector
+			--get beam world vector
 			local pos = ent:LocalToWorld(beam)
 
-			//update scroll
+			--update scroll
 			scroll = scroll - (pos-start):Length()/10
 
-			// add point
+			-- add point
 			render.AddBeam(pos, beamSize, scroll, color)
 
-			//reset start postion
+			--reset start postion
 			start = pos
 		end
 
-		//beam done
+		--beam done
 		render.EndBeam()
 	end
 end
-//---------------------------------------
-//END BEAMS BY MADDOG
-//---------------------------------------
+-----------------------------------------
+--END BEAMS BY MADDOG
+-----------------------------------------
 
 --Alternate Use Code--
 

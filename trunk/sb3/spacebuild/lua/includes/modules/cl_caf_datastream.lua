@@ -1,11 +1,11 @@
-//=============================================================================//
-// 			Addon: CAF
-// 			Author: SnakeSVx									 
-//			Version: 0.1
-//
-//  
-//
-//=============================================================================//
+--=============================================================================--
+-- 			Addon: CAF
+-- 			Author: SnakeSVx
+--			Version: 0.1
+--
+--
+--
+--=============================================================================--
 
 local table = table
 local string = string
@@ -107,7 +107,7 @@ end
 local function DSStart(data)
 	ErrorNoHalt("DSSTART\n");
 	local code = data:ReadShort();
-	if code != 0 then
+	if code ~= 0 then
 		_bytesin = _bytesin + 2 --short
 		ErrorNoHalt("Error in DSStart: Faulty Code"..code);
 		return;
@@ -142,7 +142,7 @@ usermessage.Hook("caf_ds_start", DSStart)
 local function DSPacket(data)
 	ErrorNoHalt("DSPACKET\n");
 	local code = data:ReadShort();
-	if code != 1 then
+	if code ~= 1 then
 		_bytesin = _bytesin + 2 --short
 		ErrorNoHalt("Error in DSPacket: Faulty Code"..code);
 		return;
@@ -184,7 +184,7 @@ usermessage.Hook("caf_ds_packet",DSPacket)
 local function DSClear(data)
 	ErrorNoHalt("DSCLEAR\n");
 	local code = data:ReadShort();
-	if code != 2 then
+	if code ~= 2 then
 		_bytesin = _bytesin + 2 --short
 		ErrorNoHalt("Error in DSClear: Faulty Code..code");
 		return;

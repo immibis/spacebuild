@@ -72,7 +72,7 @@ TOOL.Renamed = {
 }
 
 local function gas_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
+	local volume_mul = 1 --Change to be 0 by default later on
 	local base_volume = 4084
 	local base_mass = 200
 	local base_health = 600
@@ -81,25 +81,25 @@ local function gas_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extra
 		base_volume = 284267
 		res = "oxygen"
 	elseif type == "generator_gas_h" then
-		base_volume = 284267 //Change to the actual base volume later on 
+		base_volume = 284267 --Change to the actual base volume later on
 		res = "hydrogen"
 	elseif type == "generator_gas_n" then
-		base_volume = 284267 //Change to the actual base volume later on 
+		base_volume = 284267 --Change to the actual base volume later on
 		res = "nitrogen"
 	elseif type == "generator_gas_co2" then
-		base_volume = 284267 //Change to the actual base volume later on 
+		base_volume = 284267 --Change to the actual base volume later on
 		res = "carbon dioxide"
 	elseif type == "generator_gas_steam" then
-		base_volume = 57804 //Change to the actual base volume later on
+		base_volume = 57804 --Change to the actual base volume later on
 		base_mass = 150
 		base_health = 300
 		res = "steam"
 	elseif type == "generator_gas_o2h_water" then
-		base_volume = 49738 //Change to the actual base volume later on
+		base_volume = 49738 --Change to the actual base volume later on
 		base_mass = 120
 		base_health = 350
 	elseif type == "generator_recycler_nitrogen" then
-		base_volume = 284267 //Change to the actual base volume later on
+		base_volume = 284267 --Change to the actual base volume later on
 		base_mass = 160
 		base_health = 400
 	elseif type == "generator_n_ramscoop" then
@@ -124,8 +124,8 @@ local function gas_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extra
 end
 
 local function liquid_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
-	local base_volume = 4084 //Change to the actual base volume later on
+	local volume_mul = 1 --Change to be 0 by default later on
+	local base_volume = 4084 --Change to the actual base volume later on
 	local base_mass = 60
 	local base_health = 200
 	if type == "generator_liquid_water" then
@@ -134,7 +134,7 @@ local function liquid_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 		base_volume = 27929
 		base_mass = 80
 	elseif type == "generator_liquid_hvywater" then
-		base_volume = 284267 //Change to the actual base volume later on
+		base_volume = 284267 --Change to the actual base volume later on
 		base_mass = 500
 		base_health = 800
 	elseif type == "generator_liquid_nitrogen" then
@@ -162,8 +162,8 @@ local function liquid_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 end
 
 local function energy_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras) 
-	local volume_mul = 1 //Change to be 0 by default later on
-	local base_volume = 4084 //Change to the actual base volume later on
+	local volume_mul = 1 --Change to be 0 by default later on
+	local base_volume = 4084 --Change to the actual base volume later on
 	local base_mass = 10
 	local base_health = 50
 	local phys = ent:GetPhysicsObject()
@@ -175,7 +175,7 @@ local function energy_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 	end
 	if type == "generator_energy_fusion" then
 		base_volume = 339933 * 3 --3399325  
-		if volume != -1 then
+		if volume ~= -1 then
 			volume_mul = volume/base_volume
 		end
 		base_mass = 1000
@@ -185,7 +185,7 @@ local function energy_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 		ent:AddResource("water", math.ceil(volume_mul * 0.08 * 45));
 	elseif type == "generator_energy_hydro" then
 		base_volume = 69897
-		if volume != -1 then
+		if volume ~= -1 then
 			volume_mul = volume/base_volume
 		end
 		local base_mass = 100
@@ -193,13 +193,13 @@ local function energy_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 		ent:AddResource("energy", math.ceil(volume_mul * 100));
 	elseif type == "generator_energy_solar" then
 		base_volume = 1982 --2950 --1014
-		if volume != -1 then
+		if volume ~= -1 then
 			volume_mul = volume/base_volume
 		end
 		ent:AddResource("energy", math.ceil(volume_mul * 8));
 	elseif type == "generator_energy_wind" then
 		base_volume = 34586 --17293 --9882
-		if volume != -1 then
+		if volume ~= -1 then
 			volume_mul = volume/base_volume
 		end
 		base_mass = 200
@@ -207,7 +207,7 @@ local function energy_generator_func(ent,type,sub_type,devinfo,Extra_Data,ent_ex
 		ent:AddResource("energy", math.ceil(volume_mul * 100));
 	elseif type == "generator_energy_steam_turbine" then
 		base_volume = 18619 --27929
-		if volume != -1 then
+		if volume ~= -1 then
 			volume_mul = volume/base_volume
 		end
 		base_mass = 150
