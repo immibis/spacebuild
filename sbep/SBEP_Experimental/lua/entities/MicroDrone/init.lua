@@ -115,7 +115,7 @@ function ENT:TriggerInput(iname, value)
 		
 	elseif (iname == "Angle") then
 		self.MAngle = value
-		if value != Angle(0,0,0) then
+		if value ~= Angle(0,0,0) then
 			self.Angling = true
 		else
 			self.Angling = true
@@ -181,19 +181,19 @@ function ENT:Think()
 			self.Targets = {}
 			local ScanResult = ents.FindInSphere(self:GetPos(), 5000)
 			for k,e in pairs( ScanResult ) do
-				if e != self then
-					if e.IsDrone && e.Squad != self.Squad then
+				if e ~= self then
+					if e.IsDrone and e.Squad ~= self.Squad then
 						--print("It's a drone!")
-						if e.Squad && e.Squad:IsValid() then
+						if e.Squad and e.Squad:IsValid() then
 							--print("They're in a squad")
 							local OurDroneCount = table.Count(self.Squad.Members)
 							local TheirCount = table.Count(e.Squad.Members)
-							if OurDroneCount >= TheirCount && OurDroneCount + TheirCount <= self.Squad.MaxSize then
+							if OurDroneCount >= TheirCount and OurDroneCount + TheirCount <= self.Squad.MaxSize then
 								--print("Our squad is bigger than theirs. They're joining us.")
 								for k2,e2 in pairs(e.Squad.Members) do
 									--print(e2, e2:IsValid())
-									if e2 && e2:IsValid() then
-										if e2.Squad && e2.Squad:IsValid() then e2.Squad:Remove() end
+									if e2 and e2:IsValid() then
+										if e2.Squad and e2.Squad:IsValid() then e2.Squad:Remove() end
 										e2.Squad = self.Squad
 										--print(self.Squad, e2.Squad)
 										table.insert(self.Squad.Members,e2)
@@ -229,14 +229,14 @@ function ENT:Think()
 			for k,e in pairs(self.Targets) do
 				if k > 1 then 
 					if k <= 6 then
-						if e && e:IsValid() then
+						if e and e:IsValid() then
 							self.Alternates[k-1] = e:GetPos()
 						else
 							table.remove(self.Targets,k)
 						end
 					end
 				else
-					if e && e:IsValid() then
+					if e and e:IsValid() then
 						self.TVec = e:GetPos()
 					else
 						table.remove(self.Targets,k)
@@ -248,7 +248,7 @@ function ENT:Think()
 		end
 		
 		if self.Squad.ObjectiveType == 1 then
-			if self.Squad.MVec && self.Squad.MVec != Vector(0,0,0) then
+			if self.Squad.MVec and self.Squad.MVec ~= Vector(0,0,0) then
 				self.MVec = self.Squad.MVec
 				self.MAngle.y = self:GetAngles().y
 				self.MAngle.p = 0
@@ -256,7 +256,7 @@ function ENT:Think()
 			end
 		end
 	else
-		if self.Squad.Alpha && self.Squad.Alpha:IsValid() then
+		if self.Squad.Alpha and self.Squad.Alpha:IsValid() then
 			self.Targets = self.Squad.Alpha.Targets or {}
 			local TCount = table.Count(self.Targets)
 			if TCount > 0 then
@@ -264,16 +264,16 @@ function ENT:Think()
 				self.TargetCount = math.Clamp(TCount,1,6)
 				local Assault = math.fmod(self.SquadNumber - 1, self.TargetCount) + 1
 				for k,e in pairs(self.Targets) do --We have to iterate through the table to avoid a crash. Currently, referencing an entry in a table that isn't valid by its key causes a crash. This way is relatively safe.
-					if k != Assault then 
+					if k ~= Assault then
 						if k <= 6 then
-							if e && e:IsValid() then
+							if e and e:IsValid() then
 								self.Alternates[k-1] = e:GetPos()
 							else
 								table.remove(self.Targets,k)
 							end
 						end
 					else
-						if e && e:IsValid() then
+						if e and e:IsValid() then
 							self.TVec = e:GetPos()
 						else
 							table.remove(self.Targets,k)
@@ -304,12 +304,12 @@ function ENT:Think()
 ---																Script for finding the next direction											 		 ---
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
-		if (self.Stance < 3) || (self.Stance == 3 && !self.TFound) then
-			if self.MVec != Vector(0,0,0) then
+		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
+			if self.MVec ~= Vector(0,0,0) then
 				local MDist = self.Entity:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
 					self.WaypointReached = 1
-					if self.Angling then--self.MAngle != Angle(0,0,0) then
+					if self.Angling then--self.MAngle ~= Angle(0,0,0) then
 						self.Pitch = math.AngleDifference(self.Entity:GetAngles().p,self.MAngle.p) * -0.01
 						self.Roll = math.AngleDifference(self.Entity:GetAngles().r,self.MAngle.r) * -0.01
 						self.Yaw = math.AngleDifference(self.Entity:GetAngles().y,self.MAngle.y) * -0.01
@@ -327,7 +327,7 @@ function ENT:Think()
 					self.Entity:SpeedFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetForward() )
 				end
 			end
-		elseif self.Stance == 3 && self.TFound then
+		elseif self.Stance == 3 and self.TFound then
 			local MDist = self.Entity:GetPos():Distance(self.TVec)
 			if MDist > 500 then
 				self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
@@ -336,7 +336,7 @@ function ENT:Think()
 				local HighP = 0
 				local MainG = 0
 				for k,e in pairs( self.Weaponry ) do
-					if e && e:IsValid() && e.Priority > 0 && e.Priority > HighP then
+					if e and e:IsValid() and e.Priority > 0 and e.Priority > HighP then
 						HighP = e.Priority
 						MainG = k
 					end
@@ -358,7 +358,7 @@ function ENT:Think()
 ---																		Script for guns and aiming														 ---
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	for i = 1, self.HPC do
-		if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+		if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 			local Weap = self.HP[i]["Ent"]
 			Weap:GetPhysicsObject():SetMass(1)
 		end
@@ -367,7 +367,7 @@ function ENT:Think()
 		for i = 1, self.HPC do
 			--print("HPC "..i)
 			--print(self.HP[i]["Ent"]:IsValid())
-			if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+			if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 				--print("Weapon "..i)
 				local Weap = self.HP[i]["Ent"]
 				Weap:GetPhysicsObject():SetMass(1)
@@ -377,7 +377,7 @@ function ENT:Think()
 				--print(math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc)
 				--print(math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc)
 				--print(self.Entity:GetPos():Distance(self.TVec) < self.Range)
-				if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc && math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc && self.Entity:GetPos():Distance(self.TVec) < self.Range then
+				if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.TVec) < self.Range then
 					local Dir = (self.TVec - (self.Entity:GetPos() + (self.Entity:GetUp() * self.HP[i]["Pos"].z) + (self.Entity:GetForward() * self.HP[i]["Pos"].x) + (self.Entity:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
 					local Ang = Dir:Angle()
 					local WAng = self.Entity:WorldToLocalAngles(Ang) -- It stands for "Weapon Angle". If I get even one "Wang" joke, I swear there will be bloodshed.
@@ -400,7 +400,7 @@ function ENT:Think()
 					for n = 1,5 do
 						--print("Alternate "..i)
 						RAng = (self.Alternates[n] - self.Entity:GetPos()):Angle()
-						if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc && math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc && self.Entity:GetPos():Distance(self.TVec) < self.Range && self.TargetCount > i then
+						if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.TVec) < self.Range and self.TargetCount > i then
 							--print("Found one")
 							local Dir = (self.Alternates[n] - (self.Entity:GetPos() + (self.Entity:GetUp() * self.HP[i]["Pos"].z) + (self.Entity:GetForward() * self.HP[i]["Pos"].x) + (self.Entity:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
 							local Ang = Dir:Angle()
@@ -445,11 +445,11 @@ function ENT:Think()
 	
 	Phys:SetVelocity((self.Entity:GetForward() * self.Forward) + (self.Entity:GetRight() * self.Lat) + (self.Entity:GetUp() * self.Vert))
 	
-	if self.TFound && self.Stance > 1 && self.Squad.Alpha != self then
+	if self.TFound and self.Stance > 1 and self.Squad.Alpha ~= self then
 		local AVDir = Vector(0,0,0)
 		for k,e in pairs(self.Squad.Members) do
 			--print("Checking members...")
-			if e && e:IsValid() && e != self then
+			if e and e:IsValid() and e ~= self then
 				--print("They're valid, and they're not us...")
 				local Dist = math.abs(self:GetPos().x - e:GetPos().x) + math.abs(self:GetPos().y - e:GetPos().y) + math.abs(self:GetPos().y - e:GetPos().y)
 				--print("Distance..."..Dist)
@@ -553,7 +553,7 @@ function ENT:TargetCriteria(ent)
 		return true
 	end
 	--if ent:GetClass() == "microdrone" then
-	--	if ent.Squad != self.Squad then
+	--	if ent.Squad ~= self.Squad then
 	--		return true
 	--	end
 	--end
@@ -562,11 +562,11 @@ end
 
 function ENT:OnRemove()
 	
-	if self.Squad && self.Squad:IsValid() then
+	if self.Squad and self.Squad:IsValid() then
 		if table.Count(self.Squad.Members) > 1 then
 			for k,e in pairs(self.Squad.Members) do
 				--print("Checking members...")
-				if e && e:IsValid() && e != self then
+				if e and e:IsValid() and e ~= self then
 					--print("They're valid, and they're not us...")
 					e:AttachSquad(self.Squad)
 					break

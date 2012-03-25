@@ -191,7 +191,7 @@ end
 	self.BaseClass.Think(self)
 	self.steamcon = math.abs(math.ceil(self.force/self.steamdiv))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "steam", self.steamcon)
 		self.outputon = 1
 	else

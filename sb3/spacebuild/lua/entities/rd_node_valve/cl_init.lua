@@ -9,7 +9,7 @@ OOO[1] = "Open"
 function ENT:Draw( bDontDrawModel )
 	self:DoNormalDraw()
 
-	//draw beams by MadDog
+	--draw beams by MadDog
 	CAF.GetAddon("Resource Distribution").Beam_Render( self.Entity )
 
 	if (Wire_Render) then
@@ -28,7 +28,7 @@ end
 
 function ENT:DoNormalDraw( bDontDrawModel )
 	local mode = self:GetNetworkedInt("overlaymode")
-	if RD_OverLay_Mode and mode != 0 then -- Don't enable it if disabled by default!
+	if RD_OverLay_Mode and mode ~= 0 then -- Don't enable it if disabled by default!
 		if RD_OverLay_Mode.GetInt then
 			local nr = math.Round(RD_OverLay_Mode:GetInt())
 			if nr >= 0 and nr <= 2 then
@@ -45,7 +45,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 			end
 		end
 	end
-	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode != 0) then
+	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < rd_overlay_dist and mode ~= 0) then
 		local HasOOO = true
 		local trace = LocalPlayer():GetEyeTrace()
 		if ( !bDontDrawModel ) then self:DrawModel() end
@@ -59,7 +59,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		-- 1 = default overlaytext
 		-- 2 = new overlaytext
 
-		if not mode or mode != 2 then
+		if not mode or mode ~= 2 then
 			local OverlayText = ""
 				OverlayText = OverlayText ..self.PrintName.."\n"
 			if netid == 0 then

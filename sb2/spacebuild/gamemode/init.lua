@@ -5,19 +5,19 @@
 
 ------------------------------------------------*/
 Complete_Planet_Backup = {}
-//Send to client
+--Send to client
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "cl_sun.lua" )
 AddCSLuaFile( "shared.lua" )
 
-//include files for use in here
+--include files for use in here
 include( 'shared.lua' )
 include( 'environments.lua' )
 include( 'hooks.lua' )
 include( 'volumes.lua' )
 include( 'brush_environments.lua' )
 
-//Variables needed
+--Variables needed
 util.PrecacheSound( "Player.FallGib" )
 util.PrecacheSound( "HL2Player.BurnPain" )
 
@@ -56,7 +56,7 @@ SB_DEBUG = false --Turn this off if you don't want to get debug data in console!
 local Energy_Increment = 5
 local Coolant_Increment = 5
 
-//Think
+--Think
 
 function GM:Think()
 	if (InSpace == 0) then return end
@@ -186,7 +186,7 @@ function GM:Space_Affect_Players()
 				if ply.suit and ply.onplanet then
 					ply.suit.temperature = self:GetTemperature(ply, ltemperature, stemperature, sunburn)
 				end
-				if gravity != 1 then
+				if gravity ~= 1 then
 					if self:GravityCheck(ply) then
 						ply:SetGravity(1)
 					else
@@ -306,7 +306,7 @@ function GM:Space_Affect_Ent(ent)
 	end
 end
 
-//Start init functions
+--Start init functions
 
 function GM:InitPostEntity()
 	self:Register_Sun()
@@ -324,11 +324,11 @@ function GM:Register_Sun()
 					local targets = ents.FindByName( "sun_target" )
 					for _, target in pairs( targets ) do
 						SunAngle = (target:GetPos() - ent:GetPos()):Normalize()
-						return //Sunangle set, all that was needed
+						return --Sunangle set, all that was needed
 					end
 				end
 			end
-			//Sun angle still not set, but sun found
+			--Sun angle still not set, but sun found
 		    local ang = ent:GetAngles()
 			ang.p = ang.p - 180
 			ang.y = ang.y - 180
@@ -340,7 +340,7 @@ function GM:Register_Sun()
 			return
 		end
 	end
-	//no sun found, so just set a default angle
+	--no sun found, so just set a default angle
 	if not SunAngle then SunAngle = Vector(0,0,-1) end	
 end
 
@@ -363,7 +363,7 @@ function GM:Register_Environments()
 	local Blooms = {}
 	local Colors = {}
 	local Planets = {}
-	//Load the planets/stars/bloom/color
+	--Load the planets/stars/bloom/color
 	local entities = ents.FindByClass( "logic_case" )
 	for _, ent in ipairs( entities ) do
 		local values = ent:GetKeyValues()
@@ -375,11 +375,11 @@ function GM:Register_Environments()
 						if (key2 == "Case02") then radius = tonumber(value2) end
 					end
 					local num =  SB_Add_Environment(ent, radius, 0, 0, 0, 100000, 100000, 0, 1, true, nil, nil)
-					//Msg("Registered Outside Star = "..tostring(num).."\n")
+					--Msg("Registered Outside Star = "..tostring(num).."\n")
 					num = SB_Add_Environment(ent, radius/2, 0, 0, 0, 300000, 300000, 0, 1, true, nil, nil)
-					//Msg("Registered Middle Star = "..tostring(num).."\n")
+					--Msg("Registered Middle Star = "..tostring(num).."\n")
 					num = SB_Add_Environment(ent, radius/3, 0, 0, 0, 500000, 500000, 0, 1, true, nil, nil)
-					//Msg("Registered Core Star = "..tostring(num).."\n")
+					--Msg("Registered Core Star = "..tostring(num).."\n")
 					TrueSun = ent:GetPos()
 					local hash = {}
 					hash.radius = radius
@@ -421,14 +421,14 @@ function GM:Register_Environments()
 							if (key2 == "Case16") then habitat, unstable, sunburn = SB_CalculateHabUnStSun(tonumber(value2)) end
 						end
 						local num = SB_Add_Environment(ent, radius, gravity, habitat, atmosphere, ltemperature, stemperature, unstable, sunburn, true, nil, nil)
-						//Msg("Registered Planet = "..tostring(num).."\n")
+						--Msg("Registered Planet = "..tostring(num).."\n")
 						if num then
 							Planets[num] = {}
 							Planets[num].ColorID = ColorID
 							Planets[num].BloomID = BloomID
 						end
-					//else
-						//Msg("Not registering planet => Same location as a star!\n")
+					--else
+						--Msg("Not registering planet => Same location as a star!\n")
 					end
 				elseif value == "planet_color" then
 					local AddColor_r
@@ -531,34 +531,34 @@ function GM:SB_Ragdoll(ply)
 	end
 end
 
-//DPF: Overriding original PlayerSpawn
+--DPF: Overriding original PlayerSpawn
 /*---------------------------------------------------------
    Name: gamemode:PlayerSpawn( )
    Desc: Called when a player spawns
 ---------------------------------------------------------*/
 function GM:PlayerSpawn( pl )
 
-	//
-	// If the player doesn't have a team in a TeamBased game
-	// then spawn him as a spectator
-	//
-	if ( self.TeamBased && ( pl:Team() == TEAM_SPECTATOR || pl:Team() == TEAM_UNASSIGNED ) ) then
+	--
+	-- If the player doesn't have a team in a TeamBased game
+	-- then spawn him as a spectator
+	--
+	if ( self.TeamBased and ( pl:Team() == TEAM_SPECTATOR or pl:Team() == TEAM_UNASSIGNED ) ) then
 
 		self:PlayerSpawnAsSpectator( pl )
 		return
 	
 	end
 
-	// Stop observer mode
+	-- Stop observer mode
 	pl:UnSpectate()
 
-	// Call item loadout function
+	-- Call item loadout function
 	hook.Call( "PlayerLoadout", GAMEMODE, pl )
 	
-	// Set player model
+	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
 	
-	// Set the player's speed
+	-- Set the player's speed
 	GAMEMODE:SetPlayerSpeed( pl, 250, 500 )
 	
 end

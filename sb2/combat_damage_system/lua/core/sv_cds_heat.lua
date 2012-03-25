@@ -66,9 +66,9 @@ function CDS_Adaptive_Heat(ent)
 			heat = ent.suit.temperature - 273
 		end
 		if heat > 250 then
-			heat = heat - 250 //Basic shield : 250 cold or heat
+			heat = heat - 250 --Basic shield : 250 cold or heat
 		elseif heat < -250 then
-			heat = math.abs(heat + 250) //Basic shield : 250 cold or heat
+			heat = math.abs(heat + 250) --Basic shield : 250 cold or heat
 		end
 		if heat > 0 then
 			ent.Shield:ShieldDamage(heat / 250, true)

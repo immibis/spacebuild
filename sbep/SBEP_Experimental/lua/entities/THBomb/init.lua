@@ -55,7 +55,7 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (self.Armed && !self.Exploded) then
+	if (self.Armed and !self.Exploded) then
 		self:Splode()
 	end
 end

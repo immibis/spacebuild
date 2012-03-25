@@ -15,14 +15,14 @@ cds_antigravityblast(trace.Entity, 2, 0)
 
 		function cds_antigravityblast(pos, resettime, grav, radius)
 		if not server_settings.Bool("CDS_Damage_Enabled") then return false end
-		if not radius then / / pos = ent
-		if pos:IsValid() and ! CDS_IsWorldEnt(pos) then
+		if not radius then -- pos = ent
+		if pos:IsValid() and  not  CDS_IsWorldEnt(pos) then
 		cds_antigrav(pos, resettime, grav)
 		end
 		else
 			local stuff = ents.FindInSphere(pos, radius)
 			for _, ent in pairs(stuff) do
-				if ent:IsValid() and ! CDS_IsWorldEnt(ent) then
+				if ent:IsValid() and  not  CDS_IsWorldEnt(ent) then
 				cds_antigrav(ent, resettime, grav)
 				end
 			end

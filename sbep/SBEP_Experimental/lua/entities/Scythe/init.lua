@@ -235,7 +235,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:OnRemove()
-	if self.Body && self.Body:IsValid() then
+	if self.Body and self.Body:IsValid() then
 		self.Body:Remove()
 	end
 end
@@ -249,10 +249,10 @@ function ENT:Think()
 	self.Entity:SetColor( 0, 0, 0, 0 )
 	
 	local Phys = nil
-	if self.Body && self.Body:IsValid() then
+	if self.Body and self.Body:IsValid() then
 		Phys = self.Body:GetPhysicsObject()
 		self.CPL = self.Body:GetPassenger()
-		if self.CPL && self.CPL:IsValid() then
+		if self.CPL and self.CPL:IsValid() then
 			self.AMul = 1
 			self.Active = true
 			--self.CPL:CrosshairEnable()
@@ -303,9 +303,9 @@ function ENT:Think()
 			
 			
 			for i = 1,self.HPC do
-				if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() then
+				if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() then
 					local Phys = self.HP[i]["Ent"]:GetPhysicsObject()
-					if Phys && Phys:IsValid() then
+					if Phys and Phys:IsValid() then
 						Phys:EnableGravity(false)
 						Phys:EnableDrag(false)
 						Phys:EnableCollisions(false)
@@ -316,13 +316,13 @@ function ENT:Think()
 			
 			---------------------------------------- Primary Attack ----------------------------------------
 			if ( self.CPL:KeyDown( IN_ATTACK ) ) then
-				if self.HPC && self.HPC > 0 then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i )
 						--print(HPC)
 						--print(string.byte(HPC))
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (tonumber(HPC) > 0) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (tonumber(HPC) > 0) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()
@@ -335,11 +335,11 @@ function ENT:Think()
 			
 			---------------------------------------- Secondary Attack ----------------------------------------
 			if ( self.CPL:KeyDown( IN_ATTACK2 ) ) then
-				if self.HPC && self.HPC > 0 then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (tonumber(HPC) > 0) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (tonumber(HPC) > 0) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()
@@ -352,7 +352,7 @@ function ENT:Think()
 			
 			
 			
-			if self.CPL.SBEPYaw == 0 && self.CPL.SBEPPitch == 0 then
+			if self.CPL.SBEPYaw == 0 and self.CPL.SBEPPitch == 0 then
 				if self.OPAng then
 					self.CPL:SetEyeAngles(self:WorldToLocalAngles(self.OPAng):Forward():Angle())
 				else
@@ -416,19 +416,19 @@ function ENT:Think()
 		RRo = self.Yaw * 0.1
 	end
 	
-	if self.LWingE && self.LWingE:IsValid() then
+	if self.LWingE and self.LWingE:IsValid() then
 		self.LWingE:SetLocalAngles(Angle(self.Fwd,self.Strafe,-90))
 		self.LWingE.Speed = self.Thrust
 	end
-	if self.RWingE && self.RWingE:IsValid() then
+	if self.RWingE and self.RWingE:IsValid() then
 		self.RWingE:SetLocalAngles(Angle(self.Fwd,-self.Strafe,90))
 		self.RWingE.Speed = self.Thrust
 	end
 	
-	if self.TREng && self.TREng:IsValid() then
+	if self.TREng and self.TREng:IsValid() then
 		self.TREng:SetLocalAngles(Angle(self.Fwd - PRo,YRo, 90))
 	end
-	if self.TLEng && self.TLEng:IsValid() then
+	if self.TLEng and self.TLEng:IsValid() then
 		self.TLEng:SetLocalAngles(Angle(self.Fwd - PRo,YRo,-90))
 	end
 	
@@ -436,14 +436,14 @@ function ENT:Think()
 	
 	if Phys:IsValid() then
 		if self.Active then
-			if Phys && Phys:IsValid() then
+			if Phys and Phys:IsValid() then
 				--Phys:EnableGravity(false)
 			end
 			--Phys:SetVelocity(Phys:GetVelocity() * .96)
 			if self.Fwd > -90 then
 				local Lift = math.Clamp(self:GetForward():DotProduct( Phys:GetVelocity() ) , 0 , 500 ) * 0.02
 				--print(self:GetForward():DotProduct( Phys:GetVelocity() ))
-				if self.RWingE && self.RWingE:IsValid() && self.LWingE && self.LWingE:IsValid() then
+				if self.RWingE and self.RWingE:IsValid() and self.LWingE and self.LWingE:IsValid() then
 					Phys:ApplyForceCenter(self:GetUp() * (Lift * Phys:GetMass()) )
 					--Phys:ApplyForceOffset(self.RWing:GetForward() * (self.Thrust * Phys:GetMass()), self:GetPos() + self:GetForward() * 86 + self:GetRight() * 50 )
 					--Phys:SetVelocity(self.RWing:GetForward() * self.Thrust)
@@ -453,18 +453,18 @@ function ENT:Think()
 			end
 			Phys:ApplyForceCenter(self.RWingE:GetForward() * (self.Thrust * Phys:GetMass()) )
 		else
-			if Phys && Phys:IsValid() then
+			if Phys and Phys:IsValid() then
 				--Phys:EnableGravity(true)
 			end
 		end
 	end
 	
 	
-	if !self.Tail || !self.Tail:IsValid() then
-		if self.TREng && self.TREng:IsValid() then
+	if !self.Tail or !self.Tail:IsValid() then
+		if self.TREng and self.TREng:IsValid() then
 			self.TREng:Remove()
 		end
-		if self.TLEng && self.TLEng:IsValid() then
+		if self.TLEng and self.TLEng:IsValid() then
 			self.TLEng:Remove()
 		end
 	end

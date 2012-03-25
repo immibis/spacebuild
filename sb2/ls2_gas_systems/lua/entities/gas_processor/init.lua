@@ -199,7 +199,7 @@ end
 function ENT:CanRun()
     local energy = RD_GetResourceAmount(self, "energy")
     local ngas = RD_GetResourceAmount(self, "naturalgas")
-    if (energy >= self.energycon && ngas >= self.ngascon) then
+    if (energy >= self.energycon and ngas >= self.ngascon) then
         return true
     else
         return false

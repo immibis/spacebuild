@@ -7,27 +7,27 @@ local rtsMaxDamage = 5000	-- Maximum amount of damage per explosion
 local rtsMaxRadius = 50000  -- Maximum explosion radius
 local rtsUseBlastWave = 1   -- Use the particle effect Blastwave? 0 - off, 1 - on
 
-/**
+--[[
 	The Constructor for this Custom Addon Class
 	Required
 	Return True if succesfully able to start up this addon
 	Return false, the reason of why it wasn't able to start
-*/
+]]
 function RTS.__Construct()
 	return false , "No Implementation yet"
 end
 
-/**
+--[[
 	The Destructor for this Custom Addon Class
 	Required
 	Return true if disabled correctly
 	Return false + the reason if disabling failed
-*/
+]]
 function RTS.__Destruct()
 	return false , "No Implementation yet"
 end
 
-/**
+--[[
 	Get the required Addons for this Addon Class
 	Optional
 	Put the string names of the Addons in here in table format
@@ -35,47 +35,47 @@ end
 	Example: return {"Resource Distribution", "Life Support"}
 	
 	Works together with the startup Level number at the bottom of this file
-*/
+]]
 function RTS.GetRequiredAddons()
 	return {"Resource Distribution", "Life Support"}
 end
 
-/**
+--[[
 	Get the Boolean Status from this Addon Class
 	Required, used to know if this addon is active or not
-*/
+]]
 function RTS.GetStatus()
 	return status
 end
 
-/**
+--[[
 	Get the Version of this Custom Addon Class
 	Optional (but should be put it in most cases!)
-*/
+]]
 function RTS.GetVersion()
 	return 2.5, "Alpha"
 end
 
-/**
+--[[
 	Get any custom options this Custom Addon Class might have
 	Not implemented yet
-*/
+]]
 function RTS.GetExtraOptions()
 	return {}
 end
 
-/**
+--[[
 	Get the Custom String Status from this Addon Class
 	Optional, returns a custom String status, could be used if your addon has more then 1 status based on the options activated?
-*/
+]]
 function RTS.GetCustomStatus()
 	return "Not Implemented Yet"
 end
 
-/**
+--[[
 	You can send all the files from here that you want to add to send to the client
 	Optional
-*/
+]]
 function RTS.AddResourcesToSend()
 	
 end

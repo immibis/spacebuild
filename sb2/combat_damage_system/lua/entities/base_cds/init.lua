@@ -125,7 +125,7 @@ end
 -- self.BaseClass.Shoot(self)
 function ENT:Shoot()
 	if(!self.Cooldown) then return false end
-	if(self.Cooldown != -1) then
+	if(self.Cooldown ~= -1) then
 		if(self.LastUse + self.Cooldown >= CurTime()) then
 			return false
 		end
@@ -176,7 +176,7 @@ end
 
 -- self.BaseClass.UpdateActive(self)
 function ENT:UpdateActive()
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "On", self.Active)
 	end
 end
@@ -251,7 +251,7 @@ function ENT:Think(Override)
 	
 	for k, v in pairs(CanFireTable) do
 		if(RD_GetResourceAmount(self.Entity, v[1]) < v[2]) then
-			if(v[1] != "coolant" or (v[1] == "coolant" and self.RequireCoolant)) then
+			if(v[1] ~= "coolant" or (v[1] == "coolant" and self.RequireCoolant)) then
 				CanFire = 0
 			end
 		end
@@ -277,7 +277,7 @@ end
 
 -- self.BaseClass.SetUpWireSupport(self)
 function ENT:SetUpWireSupport()
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, {"Fire", "Disable Use", "Draw Beam"})
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"Disable Use", "Can Fire", "Shots Left", "Hit Ent"})
@@ -310,7 +310,7 @@ end
 -- self.BaseClass.PreEntityCopy(self)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		local DupeInfo = WireLib.BuildDupeInfo(self.Entity)
 		if DupeInfo then
 			duplicator.StoreEntityModifier(self.Entity, "WireDupeInfo", DupeInfo)
@@ -321,7 +321,7 @@ end
 -- self.BaseClass.PostEntityPaste(self, Player, Ent, CreatedEntities)
 function ENT:PostEntityPaste(Player, Ent, CreatedEntities)
 	RD_ApplyDupeInfo(Ent, CreatedEntities)
-	if(WireAddon != nil) and (Ent.EntityMods) and (Ent.EntityMods.WireDupeInfo) then
+	if(WireAddon ~= nil) and (Ent.EntityMods) and (Ent.EntityMods.WireDupeInfo) then
 		WireLib.ApplyDupeInfo(Player, Ent, Ent.EntityMods.WireDupeInfo, function(id) return CreatedEntities[id] end)
 	end
 end
@@ -472,7 +472,7 @@ function ENT:SetupFactory()
 	end
 	RD_AddResource(self.Entity, self.GenResource, 0)
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, {"On"})
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"On", "Ammo Amount", "Max Ammo Amount"})
@@ -521,7 +521,7 @@ function ENT:FactoryThink()
 		end
 	end
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Ammo Amount", RD_GetResourceAmount(self.Entity, self.GenResource))
 		Wire_TriggerOutput(self.Entity, "Max Ammo Amount", RD_GetNetworkCapacity(self.Entity, self.GenResource))
 	end	
@@ -559,7 +559,7 @@ function ENT:CreateBeam(Time)
 	if(!Time) then
 		Time = 0.6
 	end
-	if(self.Entity:GetNetworkedBool("DrawBeam") != true) then
+	if(self.Entity:GetNetworkedBool("DrawBeam") ~= true) then
 		self.Entity:SetNetworkedBool("DrawBeam", true)
 		timer.Simple(Time, self.Entity.SetNetworkedBool, self.Entity, "DrawBeam", false)	
 	end
@@ -599,7 +599,7 @@ end
 -- self.BaseClass.SetUpCrate(self)
 function ENT:SetUpCrate()
 	RD_AddResource(self.Entity, self.AmmoType, 2000)
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"Ammo Amount", "Max Ammo"})
 		Wire_TriggerOutput(self.Entity, "Max Ammo", 2000)
@@ -608,7 +608,7 @@ end
 
 -- self.BaseClass.CrateThink(self)
 function ENT:CrateThink()
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Ammo Amount", RD_GetResourceAmount(self.Entity, self.AmmoType))
 	end
 end

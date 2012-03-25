@@ -32,7 +32,7 @@ function CDS_NormalDamage(ent, inflictor, attacker, amount, dmginfo)
 				end
 				cds_damageent(ent, amount, force, attacker)
 			elseif dmginfo:IsExplosionDamage() then
-				cds_damageent(ent, amount, 15, attacker) //default armor = 25
+				cds_damageent(ent, amount, 15, attacker) --default armor = 25
 			elseif dmginfo:IsFallDamage() then
 				if ent:IsPlayer() then
 					local dam = amount
@@ -45,7 +45,7 @@ function CDS_NormalDamage(ent, inflictor, attacker, amount, dmginfo)
 			end
 			
 			if ENT_PLAYERNPC or (ent:Health() == 0 and ent:GetMaxHealth() == 1) then
-				dmginfo:ScaleDamage( 0 ) //overrides the default damage system!			
+				dmginfo:ScaleDamage( 0 ) --overrides the default damage system!
 				return false
 			end
 		end

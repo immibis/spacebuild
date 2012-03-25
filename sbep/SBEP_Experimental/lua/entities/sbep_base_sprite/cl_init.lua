@@ -31,7 +31,7 @@ ENT.Mat = MatTab.SWSH[1]
 --ENT.Mat2 = Material( "cable/blue_elec" )
 
 function ENT:Draw()
-	local type = self:GetNWString( "SBEPSpriteType" ) || "SWSH"
+	local type = self:GetNWString( "SBEPSpriteType" ) or "SWSH"
 	if !MatTab[ type ] then return end
 	self.Mat = MatTab[ type ][1]
 	local dim1 = MatTab[ type ][2][1]

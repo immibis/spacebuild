@@ -55,9 +55,9 @@ end
 
 function ENT:Think()
 
-	if self.TD > 0 && CurTime() > self.TS + self.TD then self:Remove() return end
+	if self.TD > 0 and CurTime() > self.TS + self.TD then self:Remove() return end
 
-	if !self.SEO || !self.SEO:IsValid() then
+	if !self.SEO or !self.SEO:IsValid() then
 		if !self.set then 
 			self.TS = CurTime() 
 			self.set = true
@@ -68,7 +68,7 @@ function ENT:Think()
 		self.TD = 0
 	end
 	
-	if !self.Offset || !self.Dir then 
+	if !self.Offset or !self.Dir then
 		self.Following = false 
 	end
 
@@ -92,13 +92,13 @@ function ENT:GetSpriteType()
 end
 
 function ENT:PreEntityCopy()
-	if self.Entity && self.Entity:IsValid() then
+	if self.Entity and self.Entity:IsValid() then
 		self.Entity:Remove()
 	end
 end
 
 function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
-	if self.Entity && self.Entity:IsValid() then
+	if self.Entity and self.Entity:IsValid() then
 		self.Entity:Remove()
 	end
 end

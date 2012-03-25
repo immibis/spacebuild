@@ -68,7 +68,7 @@ function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 				
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			self.Ready = true
 			if self.Active then
 				self.CPL:SetEyeAngles(Angle( 0, 90, 0))
@@ -108,7 +108,7 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Touch( ent )
-	if (ent:IsVehicle() && ent != self.Pod) then
+	if (ent:IsVehicle() and ent ~= self.Pod) then
 		self.Pod = ent
 		self.Pod:SetNetworkedEntity( "BattleComputer", self.Entity )
 		self.Entity:SetNetworkedEntity( "BattleComputerPod", self.Pod )

@@ -34,7 +34,7 @@ function TOOL:GetExtraCCVars()
 end
 
 local function link_in_range(ent, range)
-	if ent != NULL and ValidEntity(ent) then
+	if ent ~= NULL and ValidEntity(ent) then
 		for k, v in pairs(ents.FindInSphere( ent:GetPos(), range)) do
 			local enttable = CAF.GetAddon("Resource Distribution").GetEntityTable(v)
 			if table.Count(enttable) > 0 and enttable.network == 0 and ent:GetPlayerName() == v:GetPlayerName() then
@@ -46,7 +46,7 @@ end
 
 local function resource_node_func(ent,type,sub_type,devinfo,Extra_Data,ent_extras)
 	MsgAll("Trying to Spawn Resource Node: "..tostring(type).."\n");
-	local volume_mul = 1 //Change to be 0 by default later on
+	local volume_mul = 1 --Change to be 0 by default later on
 	local base_volume = 2958
 	local base_mass = 20
 	local base_health = 300

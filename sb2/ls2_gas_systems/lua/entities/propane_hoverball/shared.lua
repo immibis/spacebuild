@@ -22,7 +22,7 @@ end
 
 function ENT:GetSpeed()
 
-	// Sensible limits
+	-- Sensible limits
 	if (!SinglePlayer()) then
 		return math.Clamp( self.Entity:GetNetworkedFloat( 1 ), 0.0, 10.0 )
 	end

@@ -70,18 +70,18 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if (self.Active && !self.Impact) then
+	if (self.Active and !self.Impact) then
 				
 		local physi = self.Entity:GetPhysicsObject()
 		--physi:SetVelocity(self.Entity:GetForward() * 5000)
 		--physi:EnableGravity(false)
-		if self.ParL && self.ParL:IsValid() then
+		if self.ParL and self.ParL:IsValid() then
 			local Dist = self.Entity:GetPos():Distance(self.ParL:GetPos())
-			if Dist < 8000 && self.ParL.LChange < self.ITime then
-				if self.Elastic && self.Elastic:IsValid() then
+			if Dist < 8000 and self.ParL.LChange < self.ITime then
+				if self.Elastic and self.Elastic:IsValid() then
 					self.Elastic:Fire("SetSpringLength",Dist * 1.4,0)
 				end
-				if self.Rope && self.Rope:IsValid() then
+				if self.Rope and self.Rope:IsValid() then
 					self.Rope:Fire("SetLength",Dist * 1.4,0)
 				end
 				self.CLength = Dist
@@ -96,14 +96,14 @@ function ENT:Think()
 				trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 100
 				trace.filter = self.Entity
 				local tr = util.TraceLine( trace )
-				if tr.HitNonWorld && tr.Entity && tr.Entity:IsValid() then
+				if tr.HitNonWorld and tr.Entity and tr.Entity:IsValid() then
 					self.Entity:SetModel("models/Slyfo/rover_winchhookopen.mdl")
 					self.Impact = true
 					self.ITime = CurTime()
 					self.Active = false
 					self.Entity:SetPos(tr.HitPos + self.Entity:GetForward() * 7)
 					self.HWeld = constraint.Weld(self.Entity, tr.Entity, 0, 0, 0, true)
-					if self.ParL && self.ParL:IsValid() then
+					if self.ParL and self.ParL:IsValid() then
 						local Vec = tr.Entity:WorldToLocal(self.Entity:GetPos() + (self.Entity:GetForward() * -16)) -- 
 						self.ParL:Latch( self.Entity, Vec, tr.Entity )
 					end
@@ -123,7 +123,7 @@ function ENT:Think()
 					util.Effect( "HookImpact", effectdata )
 					self.Entity:EmitSound("Metal_Barrel.BulletImpact")
 				elseif tr.HitWorld then
-					if self.Standalone && self.ParL && self.ParL:IsValid() then
+					if self.Standalone and self.ParL and self.ParL:IsValid() then
 						self.Active = false
 					else
 						local effectdata = EffectData()
@@ -142,17 +142,17 @@ function ENT:Think()
 		end
 	end
 	
-	if self.Standalone && self.ParL && self.ParL:IsValid() then
-		if self.ParL.LChange > self.ITime && self.Rope && self.Rope:IsValid() then
+	if self.Standalone and self.ParL and self.ParL:IsValid() then
+		if self.ParL.LChange > self.ITime and self.Rope and self.Rope:IsValid() then
 			self.CLength = math.Approach(self.CLength,self.ParL.DLength,self.ParL.ReelRate)
 			self.Elastic:Fire("SetSpringLength",self.CLength,0)
 			self.Rope:Fire("SetLength",self.CLength,0)
 		end
 		if self.ParL.Disengaging then
-			if self.Rope && self.Rope:IsValid() then
+			if self.Rope and self.Rope:IsValid() then
 				self.Rope:Remove()
 			end
-			if self.Elastic && self.Elastic:IsValid() then
+			if self.Elastic and self.Elastic:IsValid() then
 				self.Elastic:Remove()
 			end
 			self:Fire("kill", "", 5 + math.random() * 5)
@@ -160,12 +160,12 @@ function ENT:Think()
 	end
 	
 	if self.Impact then
-		if self.ParL && self.ParL:IsValid() then
+		if self.ParL and self.ParL:IsValid() then
 			if self.ParL.Disengaging then
-				if self.Rope && self.Rope:IsValid() then
+				if self.Rope and self.Rope:IsValid() then
 					self.Rope:Remove()
 				end
-				if self.Elastic && self.Elastic:IsValid() then
+				if self.Elastic and self.Elastic:IsValid() then
 					self.Elastic:Remove()
 				end
 				self:Fire("kill", "", 5 + math.random() * 5)
@@ -173,9 +173,9 @@ function ENT:Think()
 			if self.ParL.Retracting then
 				self.Entity:Retract()
 			end
-			if self.Rope && self.Rope:IsValid() then
+			if self.Rope and self.Rope:IsValid() then
 				if self.ITime < self.ParL.LChange then
-					if self.CLength - self.ParL.DLength < self.ParL.ReelRate && self.CLength - self.ParL.DLength > -self.ParL.ReelRate then
+					if self.CLength - self.ParL.DLength < self.ParL.ReelRate and self.CLength - self.ParL.DLength > -self.ParL.ReelRate then
 						self.CLength = self.ParL.DLength
 					end
 					if self.CLength > self.ParL.DLength then
@@ -199,10 +199,10 @@ end
 function ENT:Punt( ply )
 	--print("PUNT!")
 	if !self.Impact then
-		if self.Elastic && self.Elastic:IsValid() then
+		if self.Elastic and self.Elastic:IsValid() then
 			self.Elastic:Fire("SetSpringLength",5000,0)
 		end
-		if self.Rope && self.Rope:IsValid() then
+		if self.Rope and self.Rope:IsValid() then
 			self.Rope:Fire("SetLength",5000,0)
 		end
 		DropEntityIfHeld( self.Entity )
@@ -221,10 +221,10 @@ function ENT:GravyGrab( ply )
 	self.ITime = CurTime()
 	if self.CLength < 400 then
 		self.CLength = 400
-		if self.Elastic && self.Elastic:IsValid() then
+		if self.Elastic and self.Elastic:IsValid() then
 			self.Elastic:Fire("SetSpringLength",400,0)
 		end
-		if self.Rope && self.Rope:IsValid() then
+		if self.Rope and self.Rope:IsValid() then
 			self.Rope:Fire("SetLength",400,0)
 		end
 	end
@@ -244,10 +244,10 @@ function ENT:PhysicsCollide( data, physobj )
 end
 
 function ENT:OnRemove()
-	if self.Rope && self.Rope:IsValid() then
+	if self.Rope and self.Rope:IsValid() then
 		self.Rope:Remove()
 	end
-	if self.Elastic && self.Elastic:IsValid() then
+	if self.Elastic and self.Elastic:IsValid() then
 		self.Elastic:Remove()
 	end
 end
@@ -281,7 +281,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:PhysicsUpdate( phys )
-	if self.Active && !self.Impact then
+	if self.Active and !self.Impact then
 		local Vel = phys:GetVelocity()
 		self.Entity:SetAngles( Vel:Angle() )
 		phys:SetVelocity(Vel)

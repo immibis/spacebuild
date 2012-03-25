@@ -54,11 +54,11 @@ local function Discharge(ent)
 	local tr = util.TraceLine( trace )
 	if (tr.Hit) then
 		local hitent = tr.Entity
-		if (hitent.IsAsteroid == 1 and hitent.resource != nil and hitent.resource != false) then
+		if (hitent.IsAsteroid == 1 and hitent.resource ~= nil and hitent.resource ~= false) then
 			if (math.random(1, (hitent.resource.yield or 1)) < 12) then
 			local try = math.ceil(hitent.resource.yield/25)
 				for var = 0, try, 1  do
-				//while (hitent.resource.yield > 0) do
+				--while (hitent.resource.yield > 0) do
 					local raw_res = ents.Create( "raw_resource" )
 						raw_res:SetPos( hitent:GetPos()+(VectorRand()*40) )
 						raw_res:SetAngles(Angle(math.random(1, 360), math.random(1, 360), math.random(1, 360))) 
@@ -92,10 +92,10 @@ local function Discharge(ent)
 					end
 					raw_res:SetOverlayText( raw_res.resource.name .. ": " .. raw_res.resource.yield )
 				end
-				//hitent:SetKeyValue("exploderadius","1") 
-				//hitent:SetKeyValue("explodedamage","1")  
-				//hitent:Fire("break","","0.0") 
-				//hitent:Fire("kill","","0.1")
+				--hitent:SetKeyValue("exploderadius","1")
+				--hitent:SetKeyValue("explodedamage","1")
+				--hitent:Fire("break","","0.0")
+				--hitent:Fire("kill","","0.1")
 				hitent:Remove()
 			end
 		else

@@ -109,7 +109,7 @@ function ENT:Think()
 		local T = ents.FindInSphere( self.Entity:GetPos(), self.ScanDist)
 		
 		for _,i in pairs( T ) do
-			if( i.Entity && i.Entity:IsValid() && i.Entity != self.Entity && i.IsAirLock && i.DMode == 2) then
+			if( i.Entity and i.Entity:IsValid() and i.Entity ~= self.Entity and i.IsAirLock and i.DMode == 2) then
 				local RollMatch = false
 				local PitchMatch = false
 				local YawMatch = false
@@ -144,47 +144,47 @@ function ENT:Think()
 							
 				if self.RRoll > 0 then
 					for n = 0, 360, self.RRoll do
-						if math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll + n), 360),self.Entity:GetAngles().r) <= self.MRoll * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll + n), 360),self.Entity:GetAngles().r) >= self.MRoll * -3 then
+						if math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll + n), 360),self.Entity:GetAngles().r) <= self.MRoll * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll + n), 360),self.Entity:GetAngles().r) >= self.MRoll * -3 then
 							RollMatch = true
 							self.CRoll = n
 							break
 						end
 					end
 				else
-					if math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll), 360),self.Entity:GetAngles().r) <= self.MRoll * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll), 360),self.Entity:GetAngles().r) >= self.MRoll * -3 then
+					if math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll), 360),self.Entity:GetAngles().r) <= self.MRoll * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().r + self.ARoll), 360),self.Entity:GetAngles().r) >= self.MRoll * -3 then
 						RollMatch = true
 					end
 				end
 				
 				if self.RPitch > 0 then
 					for n = 0, 360, self.RPitch do
-						if math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch + n), 360),self.Entity:GetAngles().p) <= self.MPitch * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch + n), 360),self.Entity:GetAngles().p) >= self.MPitch * -3 then
+						if math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch + n), 360),self.Entity:GetAngles().p) <= self.MPitch * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch + n), 360),self.Entity:GetAngles().p) >= self.MPitch * -3 then
 							PitchMatch = true
 							self.CPitch = n
 							break
 						end
 					end
 				else
-					if math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch), 360),self.Entity:GetAngles().p) <= self.MPitch * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch), 360),self.Entity:GetAngles().p) >= self.MPitch * -3 then
+					if math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch), 360),self.Entity:GetAngles().p) <= self.MPitch * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().p + self.APitch), 360),self.Entity:GetAngles().p) >= self.MPitch * -3 then
 						PitchMatch = true
 					end
 				end
 				
 				if self.RYaw > 0 then
 					for n = 0, 360, self.RYaw do
-						if math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw + n), 360),self.Entity:GetAngles().y) <= self.MYaw * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw + n), 360),self.Entity:GetAngles().y) >= self.MYaw * -3 then
+						if math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw + n), 360),self.Entity:GetAngles().y) <= self.MYaw * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw + n), 360),self.Entity:GetAngles().y) >= self.MYaw * -3 then
 							YawMatch = true
 							self.CYaw = n
 							break
 						end
 					end
 				else
-					if math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * 3 && math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * -3 then
+					if math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * 3 and math.AngleDifference(math.fmod((i.Entity:GetAngles().y + self.AYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * -3 then
 						YawMatch = true
 					end
 				end
 								
-				if YawMatch && PitchMatch && RollMatch then
+				if YawMatch and PitchMatch and RollMatch then
 					self.LinkLock = i
 					i.LinkLock = self.Entity
 					self.Entity:SetNetworkedEntity( "LinkLock", self.LinkLock )
@@ -202,17 +202,17 @@ function ENT:Think()
 		end
 	end
 	
-	if self.DMode == 3 && self.LinkLock && self.LinkLock:IsValid() && self.LinkLock:GetPhysicsObject():IsMoveable() then
+	if self.DMode == 3 and self.LinkLock and self.LinkLock:IsValid() and self.LinkLock:GetPhysicsObject():IsMoveable() then
 		local RollMatch = false
 		local PitchMatch = false
 		local YawMatch = false
 		
 		--print("Entity Found")
-		if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) <= self.MRoll * 1 && math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) >= self.MRoll * -1 then
+		if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) <= self.MRoll * 1 and math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) >= self.MRoll * -1 then
 			--print("Roll Match")
-			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) <= self.MPitch * 1 && math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) >= self.MPitch * -1 then
+			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) <= self.MPitch * 1 and math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) >= self.MPitch * -1 then
 				--print("Pitch Match")
-				if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * 1 && math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * -1 then
+				if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * 1 and math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * -1 then
 					--print("Yaw Match")
 					if (self.Entity:GetPos() + (self.Entity:GetForward() * self.AF) + (self.Entity:GetRight() * self.AR) + (self.Entity:GetUp() * self.AU)):Distance(self.LinkLock:GetPos() + (self.LinkLock:GetForward() * self.LinkLock.AF) + (self.LinkLock:GetRight() * self.LinkLock.AR) + (self.LinkLock:GetUp() * self.LinkLock.AU)) <= self.MDist then
 						self.LinkLock.Entity:SetAngles(self.Entity:LocalToWorldAngles(Angle(math.fmod(self.LinkLock.APitch - self.CPitch, 360),math.fmod(self.LinkLock.AYaw - self.CYaw, 360),math.fmod(self.LinkLock.ARoll - self.CRoll, 360))))
@@ -228,9 +228,9 @@ function ENT:Think()
 		end
 	end
 	
-	if self.DMode == 4 && self.LinkLock && self.LinkLock:IsValid() then
+	if self.DMode == 4 and self.LinkLock and self.LinkLock:IsValid() then
 		if !self.AWeld or !self.AWeld:IsValid() then
-			if self.LinkLock.AWeld && self.LinkLock.AWeld:IsValid() then
+			if self.LinkLock.AWeld and self.LinkLock.AWeld:IsValid() then
 				self.AWeld = self.LinkLock.AWeld
 			else
 				self.AWeld = constraint.Weld(self.LinkLock.Entity, self.Entity, 0, 0, 0, true)
@@ -240,7 +240,7 @@ function ENT:Think()
 	end
 	
 	if self.DMode == 3 then
-		if self.LinkLock && self.LinkLock:IsValid() then
+		if self.LinkLock and self.LinkLock:IsValid() then
 			local Physy = self.Entity:GetPhysicsObject()
 			
 			Physy:Wake()		
@@ -255,17 +255,17 @@ function ENT:Think()
 			local RollBreak = false
 			local PitchBreak = false
 			
-			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) >= self.MRoll * 3 || math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) <= self.MRoll * -3 then
+			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) >= self.MRoll * 3 or math.AngleDifference(math.fmod((self.LinkLock:GetAngles().r + self.ARoll + self.CRoll), 360),self.Entity:GetAngles().r) <= self.MRoll * -3 then
 				RollBreak = true
 			end
-			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) >= self.MPitch * 3 || math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) <= self.MPitch * -3 then
+			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) >= self.MPitch * 3 or math.AngleDifference(math.fmod((self.LinkLock:GetAngles().p + self.APitch + self.CPitch), 360),self.Entity:GetAngles().p) <= self.MPitch * -3 then
 				PitchBreak = true
 			end
-			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * 3 || math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * -3 then
+			if math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) >= self.MYaw * 3 or math.AngleDifference(math.fmod((self.LinkLock:GetAngles().y + self.AYaw + self.CYaw), 360),self.Entity:GetAngles().y) <= self.MYaw * -3 then
 				YawBreak = true
 			end
 			
-			if Distance > self.ScanDist || YawBreak || RollBreak || PitchBreak then 
+			if Distance > self.ScanDist or YawBreak or RollBreak or PitchBreak then
 				self.LinkLock.DMode = 2
 				self.LinkLock.LinkLock = nil
 				self.LinkLock:SetNetworkedEntity( "LinkLock", nil )
@@ -276,7 +276,7 @@ function ENT:Think()
 				return
 			end
 						
-			if self.LinkLock.DMode != 3 then
+			if self.LinkLock.DMode ~= 3 then
 				self.Entity:SetNetworkedEntity( "LinkLock", nil )
 				self.LinkLock = nil
 				self.DMode = 2
@@ -307,7 +307,7 @@ function ENT:Think()
 	end
 	
 	Wire_TriggerOutput( self.Entity, "Status", self.DMode )
-	if self.ClDMode != self.DMode then
+	if self.ClDMode ~= self.DMode then
 		self.Entity:SetNWInt( "DMode", self.DMode )
 		self.ClDMode = self.DMode
 		--print("Changing DMode to "..self.DMode)
@@ -386,7 +386,7 @@ function ENT:PreEntityCopy()
 	DI.EfPoints = {}
 	for i = 1,10 do
 		local Vec = self.Entity:GetNetworkedVector("EfVec"..i)
-		if Vec && Vec != Vector(0,0,0) then
+		if Vec and Vec ~= Vector(0,0,0) then
 			DI.EfPoints[i] = {}
 			DI.EfPoints[i].x = Vec.x
 			DI.EfPoints[i].y = Vec.y
@@ -398,13 +398,13 @@ function ENT:PreEntityCopy()
 	DI.Doors = {}
 	if self.Doors then
 		for n,D in ipairs( self.Doors ) do
-			if D && D:IsValid() then
+			if D and D:IsValid() then
 				DI.Doors[n] = D:EntIndex()
 			end
 		end
 	end
 
-	if self.AWeld && self.AWeld:IsValid() then
+	if self.AWeld and self.AWeld:IsValid() then
 		self.AWeld:Remove()
 	end
 	
@@ -414,7 +414,7 @@ function ENT:PreEntityCopy()
 	
 	DI.CompatibleLocks = self.CompatibleLocks
 	DI.DMode = self.DMode
-	if self.LinkLock && self.LinkLock:IsValid() then
+	if self.LinkLock and self.LinkLock:IsValid() then
 		DI.LinkLock = self.LinkLock:EntIndex()
 	end
 	
@@ -459,8 +459,8 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 end
 
 function ENT:Disengage()
-	if self.LinkLock && self.LinkLock:IsValid() then
-		if self.LinkLock.DMode == 3 || self.LinkLock.DMode == 4 then 
+	if self.LinkLock and self.LinkLock:IsValid() then
+		if self.LinkLock.DMode == 3 or self.LinkLock.DMode == 4 then
 			self.LinkLock.DMode = 2
 		end
 		self.LinkLock.LinkLock = nil

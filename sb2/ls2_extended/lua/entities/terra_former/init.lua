@@ -21,7 +21,7 @@ function ENT:Initialize()
 		self.Inputs = Wire_CreateInputs(self.Entity, { "On" })
 		self.Outputs = Wire_CreateOutputs(self.Entity, { "On" })
 	end
-	self.lifetime = math.random(1800,2600)		//Generate a lifespan
+	self.lifetime = math.random(1800,2600)		--Generate a lifespan
 end
 
 function ENT:TurnOn()
@@ -60,13 +60,13 @@ function ENT:Damage()
 end
 
 function ENT:Repair()
-	if self.Active == 1 then return end // cannot be repaired while on!.
+	if self.Active == 1 then return end -- cannot be repaired while on!.
 	self.health = self.maxhealth
 	self.terrajuice = 0
 	self.energy = 0
 	self.damaged = 0
 	self.time = 0 
-	self.lifetime = math.random(1800,2600)		//Generate a lifespan
+	self.lifetime = math.random(1800,2600)		--Generate a lifespan
 	self.broken = false
 end
 
@@ -97,7 +97,7 @@ function ENT:Terra_Form()
 	RD_ConsumeResource(self.Entity, "energy",math.ceil(radius/64))
 	RD_ConsumeResource(self.Entity, "terrajuice",math.ceil(radius/128))
 	self.terrajuice = RD_GetResourceAmount(self.Entity, "terrajuice")
-	self.energy = RD_GetResourceAmount(self.Entity, "energy")														//12 before
+	self.energy = RD_GetResourceAmount(self.Entity, "energy")														--12 before
 	if self.Active == 1 and (self.energy <= (math.ceil(radius/64)*180) or self.terrajuice <= (math.ceil(radius/512)*180)) then
 		self.Entity:EmitSound( "common/warning.wav" )
 	end

@@ -191,7 +191,7 @@ end
 	self.BaseClass.Think(self)
 	self.nitrouscon = math.abs(math.ceil(self.force/self.nitrousdiv))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "nitrous", self.nitrouscon)
 		self.outputon = 1
 	else

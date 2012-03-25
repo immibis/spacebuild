@@ -1,8 +1,8 @@
 
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Initializes the effect. The data is a table of data  
     which was passed from the server. 
----------------------------------------------------------*/ 
+---------------------------------------------------------]]
 
 local SmokeRing = function(particle)
 	
@@ -15,8 +15,8 @@ end
 
 function EFFECT:Init( data ) 
  	 
- 	// This is how long the spawn effect  
- 	// takes from start to finish. 
+ 	-- This is how long the spawn effect
+ 	-- takes from start to finish.
  	self.Time = 3
  	self.LifeTime = CurTime() + self.Time 
 	
@@ -136,9 +136,9 @@ end
    
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Draw the effect 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
 function EFFECT:Render() 
 
 end  

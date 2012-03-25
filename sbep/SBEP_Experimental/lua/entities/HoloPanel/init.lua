@@ -77,7 +77,7 @@ end
 local function HoloEleOut(player,commandName,args)
 	local index, name, type, x,y,z = unpack( args )
 	local Panel = ents.GetByIndex(tonumber(index))
-	if Panel && Panel:IsValid() then
+	if Panel and Panel:IsValid() then
 		if type == "number" then
 			--print(tonumber(args[4]))
 			Wire_TriggerOutput( Panel, name, tonumber(x) )

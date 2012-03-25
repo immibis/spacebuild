@@ -1,4 +1,4 @@
-//if not GAMEMODE.IsSpacebuildDerived then return end //Dont register the climate Control!
+--if not GAMEMODE.IsSpacebuildDerived then return end --Dont register the climate Control!
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 util.PrecacheSound( "apc_engine_start" )
@@ -28,8 +28,8 @@ function ENT:TurnOn(value, caller)
 	if (self.Active == 0) then
 		self.Entity:EmitSound( "apc_engine_start" )
 		self.Active = 1
-		self:UpdateSize(self.Entity.sbenvironment.size, self.maxsize) //We turn the forcefield that contains the environment on
-		if self.environment and not self.environment:IsSpace() then //Fill the environment with air if the surounding environment has o2, replace with CO2
+		self:UpdateSize(self.Entity.sbenvironment.size, self.maxsize) --We turn the forcefield that contains the environment on
+		if self.environment and not self.environment:IsSpace() then --Fill the environment with air if the surounding environment has o2, replace with CO2
 			self.sbenvironment.air.o2 = self.sbenvironment.air.o2 + self.environment:Convert(0, -1, math.Round(self.sbenvironment.air.max/18))
 		end
 		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
@@ -44,7 +44,7 @@ function ENT:TurnOff(value, caller)
 		self.Entity:StopSound( "apc_engine_start" )
 		self.Entity:EmitSound( "apc_engine_stop" )
 		self.Active = 0
-		if self.environment then //flush all resources into the environment if we are in one (used for the slownes of the SB updating process, we don't want errors do we?)
+		if self.environment then --flush all resources into the environment if we are in one (used for the slownes of the SB updating process, we don't want errors do we?)
 			if self.sbenvironment.air.o2 > 0 then
 				local left = self.environment:Convert(-1, 0, self.sbenvironment.air.o2)
 				local RD = CAF.GetAddon("Resource Distribution")
@@ -67,7 +67,7 @@ function ENT:TurnOff(value, caller)
 			end
 		end
 		self.sbenvironment.temperature = 0
-		self:UpdateSize(self.Entity.sbenvironment.size, 0) //We turn the forcefield that contains the environment off!
+		self:UpdateSize(self.Entity.sbenvironment.size, 0) --We turn the forcefield that contains the environment off!
 		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
 		self:SetOOO(0)
 	end
@@ -122,15 +122,15 @@ function ENT:OnRemove()
 end
 
 function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
-	//Msg("CreateEnvironment: "..tostring(gravity).."\n")
-	//set Gravity if one is given
+	--Msg("CreateEnvironment: "..tostring(gravity).."\n")
+	--set Gravity if one is given
 	if gravity and type(gravity) == "number" then
 		if gravity < 0 then
 			gravity = 0
 		end
 		self.sbenvironment.gravity = gravity
 	end
-	//set atmosphere if given
+	--set atmosphere if given
 	if atmosphere and type(atmosphere) == "number" then
 		if atmosphere < 0 then
 			atmosphere = 0
@@ -139,17 +139,17 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 		end
 		self.sbenvironment.atmosphere = atmosphere
 	end
-	//set pressure if given
+	--set pressure if given
 	if pressure and type(pressure) == "number" and pressure >= 0 then
 		self.sbenvironment.pressure = pressure
 	else 
 		self.sbenvironment.pressure = math.Round(self.sbenvironment.atmosphere * self.sbenvironment.gravity)
 	end
-	//set temperature if given
+	--set temperature if given
 	if temperature and type(temperature) == "number" then
 		self.sbenvironment.temperature = temperature
 	end
-	//set o2 if given
+	--set o2 if given
 	if o2 and type(o2) == "number" then
 		if o2 < 0 then o2 = 0 end
 		if o2 > 100 then o2 = 100 end
@@ -158,7 +158,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	else 
 		o2 = 0
 	end
-	//set co2 if given
+	--set co2 if given
 	if co2 and type(co2) == "number" then
 		if co2 < 0 then co2 = 0 end
 		if (100 - o2) < co2 then co2 = 100-o2 end
@@ -167,7 +167,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	else 
 		co2 = 0
 	end
-	//set n if given
+	--set n if given
 	if n and type(n) == "number" then
 		if n < 0 then n = 0 end
 		if ((100 - o2)-co2) < n then n = (100-o2)-co2 end
@@ -176,7 +176,7 @@ function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, c
 	else 
 		n = 0
 	end
-	//set h if given
+	--set h if given
 	if h and type(n) == "number" then
 		if h < 0 then h = 0 end
 		if (((100 - o2)-co2)-n) < h then h = ((100-o2)-co2)-n end
@@ -295,23 +295,23 @@ function ENT:Climate_Control()
 	if self.environment then
 		temperature = self.environment:GetTemperature(self)
 		pressure = self.environment:GetPressure()
-		//Msg("Found environment, updating\n")
+		--Msg("Found environment, updating\n")
 	end
-	//Msg("Temperature: "..tostring(temperature)..", pressure: " ..tostring(pressure).."\n")
-	if self.Active == 1 then //Only do something if the device is on
+	--Msg("Temperature: "..tostring(temperature)..", pressure: " ..tostring(pressure).."\n")
+	if self.Active == 1 then --Only do something if the device is on
 		self.energy = RD.GetResourceAmount(self.Entity, "energy")
-		if self.energy == 0 or self.energy <  3 * math.ceil(self.maxsize/1024) then //Don't have enough power to keep the controler\'s think process running, shut it all down
+		if self.energy == 0 or self.energy <  3 * math.ceil(self.maxsize/1024) then --Don't have enough power to keep the controler\'s think process running, shut it all down
 			self:TurnOff()
 			return
-			//Msg("Turning of\n")
+			--Msg("Turning of\n")
 		else
 			self.air = RD.GetResourceAmount(self.Entity, "oxygen")
 			self.coolant = RD.GetResourceAmount(self.Entity, "water")
 			self.coolant2 = RD.GetResourceAmount(self.Entity, "nitrogen")
 			self.energy = RD.GetResourceAmount(self.Entity, "energy")
-			//First let check our air supply and try to stabilize it if we got oxygen left in storage at a rate of 5 oxygen per second
+			--First let check our air supply and try to stabilize it if we got oxygen left in storage at a rate of 5 oxygen per second
 			if self.sbenvironment.air.o2 < self.sbenvironment.air.max * (self.maxO2Level/100) then
-				//We need some energy to fire the pump!
+				--We need some energy to fire the pump!
 				local energyneeded =  5 * math.ceil(self.maxsize/1024)
 				local mul = 1
 				if self.energy < energyneeded then
@@ -342,31 +342,31 @@ function ENT:Climate_Control()
 				local tmp = self.sbenvironment.air.o2 - self.sbenvironment.air.max
 				RD.SupplyResource(self, "oxygen", tmp)
 			end
-			//Now let's check the pressure, if pressure is larger then 1 then we need some more power to keep the climate_controls environment stable. We don\' want any leaks do we?
+			--Now let's check the pressure, if pressure is larger then 1 then we need some more power to keep the climate_controls environment stable. We don\' want any leaks do we?
 			if pressure > 1 then
 				RD.ConsumeResource(self, "energy", (pressure-1) *  2 * math.ceil(self.maxsize/1024))
 			end
 			if temperature < self.sbenvironment.temperature then
 				local dif = self.sbenvironment.temperature - temperature
-				dif = math.ceil(dif/100) //Change temperature depending on the outside temperature, 5° difference does a lot less then 10000° difference
+				dif = math.ceil(dif/100) --Change temperature depending on the outside temperature, 5ï¿½ difference does a lot less then 10000ï¿½ difference
 				self.sbenvironment.temperature = self.sbenvironment.temperature - dif
 			elseif temperature > self.sbenvironment.temperature then
 				local dif = temperature - self.sbenvironment.temperature
 				dif = math.ceil(dif / 100)
 				self.sbenvironment.temperature = self.sbenvironment.temperature + dif
 			end
-			//Msg("Temperature: "..tostring(self.sbenvironment.temperature).."\n")
+			--Msg("Temperature: "..tostring(self.sbenvironment.temperature).."\n")
 			if self.sbenvironment.temperature < 288 then
-				//Msg("Heating up?\n")
+				--Msg("Heating up?\n")
 				if self.sbenvironment.temperature + 60 <= 303 then
 					RD.ConsumeResource(self, "energy",  24 * math.ceil(self.maxsize/1024))
 					self.energy = RD.GetResourceAmount(self.Entity, "energy")
 					if self.energy >  60 * math.ceil(self.maxsize/1024) then
-						//Msg("Enough energy\n")
+						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 60
 						RD.ConsumeResource(self, "energy",  60 * math.ceil(self.maxsize/1024))
 					else
-						//Msg("not Enough energy\n")
+						--Msg("not Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + math.ceil((self.energy/ 60 * math.ceil(self.maxsize/1024))*60)
 						RD.ConsumeResource(self, "energy", self.energy)
 					end
@@ -374,11 +374,11 @@ function ENT:Climate_Control()
 					RD.ConsumeResource(self, "energy",  12 * math.ceil(self.maxsize/1024))
 					self.energy = RD.GetResourceAmount(self.Entity, "energy")
 					if self.energy >  30 * math.ceil(self.maxsize/1024) then
-						//Msg("Enough energy\n")
+						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 30
 						RD.ConsumeResource(self, "energy",  30 * math.ceil(self.maxsize/1024))
 					else
-						//Msg("not Enough energy\n")
+						--Msg("not Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + math.ceil((self.energy/ 30 * math.ceil(self.maxsize/1024))*30)
 						RD.ConsumeResource(self, "energy", self.energy)
 					end
@@ -386,11 +386,11 @@ function ENT:Climate_Control()
 					RD.ConsumeResource(self, "energy",  6 * math.ceil(self.maxsize/1024))
 					self.energy = RD.GetResourceAmount(self.Entity, "energy")
 					if self.energy >  15 * math.ceil(self.maxsize/1024) then
-						//Msg("Enough energy\n")
+						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 15
 						RD.ConsumeResource(self, "energy",  15 * math.ceil(self.maxsize/1024))
 					else
-						//Msg("not Enough energy\n")
+						--Msg("not Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + math.ceil((self.energy/ 15 * math.ceil(self.maxsize/1024))*15)
 						RD.ConsumeResource(self, "energy", self.energy)
 					end
@@ -398,11 +398,11 @@ function ENT:Climate_Control()
 					RD.ConsumeResource(self, "energy",  2 * math.ceil(self.maxsize/1024))
 					self.energy = RD.GetResourceAmount(self.Entity, "energy")
 					if self.energy >  5 * math.ceil(self.maxsize/1024) then
-						//Msg("Enough energy\n")
+						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 5
 						RD.ConsumeResource(self, "energy",  5 * math.ceil(self.maxsize/1024))
 					else
-						//Msg("not Enough energy\n")
+						--Msg("not Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + math.ceil((self.energy/ 5 * math.ceil(self.maxsize/1024))*5)
 						RD.ConsumeResource(self, "energy", self.energy)
 					end
@@ -504,16 +504,16 @@ function ENT:OnEnvironment(ent)
 		if table.HasValue(ents.FindInBox( min, max ), ent) then
 			if not ent.environment then
 				ent.environment = self
-				//self:UpdateGravity(ent)
+				--self:UpdateGravity(ent)
 			else
 				if ent.environment:GetPriority() < self:GetPriority() then
 					ent.environment = self
-					//self:UpdateGravity(ent)
+					--self:UpdateGravity(ent)
 				elseif ent.environment:GetPriority() == self:GetPriority() then
-					if ent.environment:GetSize() != 0 then
+					if ent.environment:GetSize() ~= 0 then
 						if self:GetSize() <= ent.environment:GetSize() then
 							ent.environment = self
-							//self:UpdateGravity(ent)
+							--self:UpdateGravity(ent)
 						else
 							if dist < pos:Distance(ent.environment:GetPos()) then
 								ent.environment = self
@@ -521,7 +521,7 @@ function ENT:OnEnvironment(ent)
 						end
 					else
 						ent.environment = self
-						//self:UpdateGravity(ent)
+						--self:UpdateGravity(ent)
 					end
 				end
 			end

@@ -17,7 +17,7 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Vent") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.vent = false
 		else
 			self.vent = true
@@ -111,17 +111,17 @@ function ENT:Leak()
 end
 
 function ENT:UpdateMass()
-	/*local RD = CAF.GetAddon("Resource Distribution")
+	--[[local RD = CAF.GetAddon("Resource Distribution")
 	local mul = 0.5
 	local div = math.Round(RD.GetNetworkCapacity(self, "carbon dioxide")/self.MAXRESOURCE)
-	local mass = self.mass + ((RD.GetResourceAmount(self, "carbon dioxide") * mul)/div) // self.mass = default mass + need a good multiplier
+	local mass = self.mass + ((RD.GetResourceAmount(self, "carbon dioxide") * mul)/div) -- self.mass = default mass + need a good multiplier
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end
-	end*/
+	end]]
 end
 
 function ENT:Think()

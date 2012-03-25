@@ -20,7 +20,7 @@ function cds_ent_check(ent)
 	if ent:IsPlayer() or ent:IsNPC() then
 		ent.health = ent:Health()
 	end
-	if ent.health > ent.maxhealth and ent.maxhealth != 0 then
+	if ent.health > ent.maxhealth and ent.maxhealth ~= 0 then
 		ent.health = ent.maxhealth
 		if ent:IsPlayer() or ent:IsNPC() then
 			ent:SetHealth(ent.health)

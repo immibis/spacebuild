@@ -74,13 +74,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded && self.Armed) then
+	if (!self.Exploded and self.Armed) then
 		--self:Explode()
 	end
 	--self.Exploded=true
@@ -137,7 +137,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

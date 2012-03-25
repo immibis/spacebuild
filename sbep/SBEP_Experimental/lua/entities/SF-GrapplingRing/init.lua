@@ -67,9 +67,9 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if self.Hook && self.Hook:IsValid() then
+	if self.Hook and self.Hook:IsValid() then
 		Wire_TriggerOutput(self.Entity, "CurrentLength", self.Hook.CLength)
-		if self.Hook.CLength <= 15 && self.Coupling && !self.Hook.Impact && !self.Hook.Active then
+		if self.Hook.CLength <= 15 and self.Coupling and !self.Hook.Impact and !self.Hook.Active then
 			if self.Hook.ICD < CurTime() then
 				self.Hook:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 6)
 				local NAng = self.Entity:GetAngles()
@@ -125,7 +125,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 	if ent == self.Hook then
 		if self.Hook.ICD < CurTime() then
@@ -158,7 +158,7 @@ function ENT:Latch( Hook, Vec, Ent )
 end
 
 function ENT:OnRemove()
-	if self.Hook && self.Hook:IsValid() then
+	if self.Hook and self.Hook:IsValid() then
 		self.Hook:Remove()
 	end
 end

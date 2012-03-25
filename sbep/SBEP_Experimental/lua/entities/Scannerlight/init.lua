@@ -61,24 +61,24 @@ end
 function ENT:Think()
 	local Delta = CurTime() - self.LTT
 	-- THE FOLLOWING CODE WAS NICKED FROM THE LS3 LAMP. I TAKE NO CREDIT FOR IT! --
-	if self.Active && !self.flashlight then
+	if self.Active and !self.flashlight then
 		--local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self.Entity )
 
-		// The local positions are the offsets from parent..
+		-- The local positions are the offsets from parent..
 		self.flashlight:SetLocalPos( Vector(8,0,0) )
 		self.flashlight:SetLocalAngles( Angle(0,0,0) )
 
-		// Looks like only one flashlight can have shadows enabled!
+		-- Looks like only one flashlight can have shadows enabled!
 		self.flashlight:SetKeyValue( "enableshadows", 1 )
 		self.flashlight:SetKeyValue( "farz", 2048 )
 		self.flashlight:SetKeyValue( "nearz", 8 )
 
-		//the size of the light
+		--the size of the light
 		self.flashlight:SetKeyValue( "lightfov", 70 )
 
-		// Color.. white is default
+		-- Color.. white is default
 		self.flashlight:SetKeyValue( "lightcolor", "255 255 255" )
 		self.flashlight:Spawn()
 		self.flashlight:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )
@@ -93,11 +93,11 @@ function ENT:Think()
 	
 	if self.Active then
 		if CurTime() >= self.ScanCD then
-			if !self.Target || !self.Target:IsValid() then
+			if !self.Target or !self.Target:IsValid() then
 				local T = ents.FindInCrappyCone(self:GetPos(),Vector(2000,.8,.8),self:GetAngles())
 				for k,e in pairs(T) do
 					--e:SetColor(math.Rand(0,255),math.Rand(0,255),math.Rand(0,255),255)
-					if (e:IsPlayer() && e:Team() != self.SPL:Team()) || e:IsNPC() || e.IsInfestor then
+					if (e:IsPlayer() and e:Team() ~= self.SPL:Team()) or e:IsNPC() or e.IsInfestor then
 						self.Target = e
 						local Pos = self.Target:GetPos()
 						Wire_TriggerOutput(self.Entity, "TargetFound", 1)
@@ -108,7 +108,7 @@ function ENT:Think()
 						Wire_TriggerOutput(self.Entity, "Vector",Pos)
 					end
 				end
-				if !self.Target || !self.Target:IsValid() then
+				if !self.Target or !self.Target:IsValid() then
 					Wire_TriggerOutput(self.Entity, "TargetFound", 0)
 					Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
 				end
@@ -132,9 +132,9 @@ function ENT:Think()
 			self.ScanCD = CurTime() + 0.3
 		end
 		
-		if self.Target && self.Target:IsValid() then
+		if self.Target and self.Target:IsValid() then
 			local Pos = self.Target:GetPos()
-			if self.Pod && self.Pod:IsValid() then
+			if self.Pod and self.Pod:IsValid() then
 				self.Pod.Active = true
 				self.Pod.Angular = false
 				self.Pod.Firing = true
@@ -149,7 +149,7 @@ function ENT:Think()
 			Wire_TriggerOutput(self.Entity, "Z", Pos.z)
 			Wire_TriggerOutput(self.Entity, "Vector",Pos)
 		else
-			if self.Pod && self.Pod:IsValid() then
+			if self.Pod and self.Pod:IsValid() then
 				self.Pod.Active = true
 				self.Pod.Angular = true
 				self.Pod.Firing = false
@@ -182,11 +182,11 @@ function ENT:Think()
 	
 	
 	/*
-		if self.Target && self.Target:IsValid() then
+		if self.Target and self.Target:IsValid() then
 			local trace = {}
 			trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
 			trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 5000
-			if self.Pod && self.Pod:IsValid() then
+			if self.Pod and self.Pod:IsValid() then
 				trace.filter = { self.Entity, self.Pod }
 			else
 				trace.filter = self.Entity
@@ -238,7 +238,7 @@ function ENT:Think()
 			--local targets = ents.FindInCone( self.Entity:GetPos(), self.Entity:GetForward(), 4000, 360)
 					
 			for _,i in pairs(targets) do
-				if i:IsPlayer() || i:IsNPC() then
+				if i:IsPlayer() or i:IsNPC() then
 					local trace = {}
 					trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
 					trace.endpos = i:GetPos()
@@ -280,7 +280,7 @@ function ents.FindInCrappyCone(Pos,Size,Ang) --Technically this is more like a p
 		local EPL = WorldToLocal( EP, Angle(0,0,0), Pos, Ang)
 		local X,Y,Z = EPL.x, EPL.y, EPL.z
 		
-		if (X <= Size.x && X >= 0) && (Y <= YB * X && Y >= -YB * X) && (Z <= ZB * X && Z >= -ZB * X) then
+		if (X <= Size.x and X >= 0) and (Y <= YB * X and Y >= -YB * X) and (Z <= ZB * X and Z >= -ZB * X) then
 			table.insert(Results, e)
 		end
 	end
@@ -311,7 +311,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 			self.Active = true
 			self.dt.Active = true

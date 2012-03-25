@@ -79,11 +79,11 @@ AddCSLuaFile( "cl_init.lua" )
  		return  
  	end 
  	 
- 	// Get the data in worldspace 
+ 	-- Get the data in worldspace
  	local ThrusterWorldPos = phys:LocalToWorld( self.ThrustOffset ) 
  	local ThrusterWorldForce = phys:LocalToWorldVector( self.ThrustOffset * -1 ) 
  	 
- 	// Calculate the velocity 
+ 	-- Calculate the velocity
  	ThrusterWorldForce = ThrusterWorldForce * self.force * mul * 10 
  	self.ForceLinear, self.ForceAngle = phys:CalculateVelocityOffset( ThrusterWorldForce, ThrusterWorldPos ); 
  	self.ForceLinear = phys:WorldToLocalVector( self.ForceLinear ) 
@@ -106,7 +106,7 @@ AddCSLuaFile( "cl_init.lua" )
  ---------------------------------------------------------*/ 
  function ENT:TriggerInput(iname, value)
 	if (iname == "On") then
-		if (value > 0 || value < 0) then
+		if (value > 0 or value < 0) then
 			self.tempforce = self.force
 			local mul = 1
 			if (value < 0) then mul = -1 end
@@ -144,7 +144,7 @@ end
  	end 
  	 
  	self:SetForce( nil, self.Multiply ) 
- 	self:Switch( self.Multiply != 0 ) 
+ 	self:Switch( self.Multiply ~= 0 )
  	 
  end 
    
@@ -190,7 +190,7 @@ end
  
 	self.petrolpertick = math.ceil(self.force/GetConVarNumber( "sv_petrolthrustermult" ))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "Petrol", self.petrolpertick)
 		RD_SupplyResource(self.Entity, "12V Energy", 1)
 	else
@@ -308,13 +308,13 @@ end
  	return true 
  end 
    
- // register numpad functions 
+ -- register numpad functions
  numpad.Register( "petrolThruster_On", On )
  numpad.Register( "petrolThruster_Off", Off )
 
 
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

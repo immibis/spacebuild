@@ -62,9 +62,9 @@ end
 
 function ENT:Think()
 	local CPL = nil
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		CPL = self.Pod:GetPassenger()
-		if CPL && CPL:IsValid() then
+		if CPL and CPL:IsValid() then
 			if !CPL.CamCon then
 				CPL.CamCon = true
 				CPL:SetViewEntity( self )
@@ -109,11 +109,11 @@ function ENT:Think()
 	end
 	
 	self.Speed = math.Approach(self.Speed, (self.W + self.S) * self.AThrust, self.AThrust + (self.Speed * 0.01) + 5)
-	 if CPL && CPL:IsValid() then CPL:PrintMessage( HUD_PRINTCENTER, ""..self.Speed..", "..self.AThrust ) end
+	 if CPL and CPL:IsValid() then CPL:PrintMessage( HUD_PRINTCENTER, ""..self.Speed..", "..self.AThrust ) end
 	--print(self.Speed)
 	
 	local Phys = self:GetPhysicsObject()
-	if Phys && Phys:IsValid() && self.Active then
+	if Phys and Phys:IsValid() and self.Active then
 		Phys:SetVelocity(self:GetForward() * self.Speed)	
 		
 		local MTurn = 50
@@ -161,7 +161,7 @@ function ENT:BuildClientModel(Scale)
 		--self.Building = true
 		local CEnts = constraint.GetAllConstrainedEntities( self.Entity )
 		for k,e in pairs(CEnts) do
-			if e && e:IsValid() && e != self then
+			if e and e:IsValid() and e ~= self then
 				--local V,A = WorldToLocal( e:GetPos(), e:GetAngles(), self:GetPos(), self:GetAngles() ) --Why doesn't this work anymore?
 				local V2 = e:GetPos() - self:GetPos() --This really, really shouldn't fix the entity. And yet it does. 
 														--To err is human. To really foul things up, try a crappy implementation of Lua...

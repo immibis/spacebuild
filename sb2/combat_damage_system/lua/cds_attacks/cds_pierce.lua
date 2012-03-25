@@ -7,11 +7,11 @@ tracenormal = (optional) if it's given the an effect will be shown there
 	inflictor = who is damaging (optional)
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * /
 
-			function cds_pierce(pos, speed, pierce, radius, tracenormal, inflictor, gcombat) / / pierce damage, reduces armor first(small area)
+			function cds_pierce(pos, speed, pierce, radius, tracenormal, inflictor, gcombat) -- pierce damage, reduces armor first(small area)
 			if not server_settings.Bool("CDS_Damage_Enabled") then return false end
-			if not radius then / / pos = ent
+			if not radius then -- pos = ent
 			if not tracenormal then tracenormal = false end
-			if pos:IsValid() and ! CDS_IsWorldEnt(pos) then
+			if pos:IsValid() and  not  CDS_IsWorldEnt(pos) then
 			if pos.armor then
 				pierce = pierce * (speed / 100)
 				if pos.armor < pierce then
@@ -27,7 +27,7 @@ tracenormal = (optional) if it's given the an effect will be shown there
 				if not tracenormal then tracenormal = false end
 				local stuff = ents.FindInSphere(pos, radius)
 				for _, ent in pairs(stuff) do
-					if ent:IsValid() and ! CDS_IsWorldEnt(ent) then
+					if ent:IsValid() and  not  CDS_IsWorldEnt(ent) then
 					if ent.armor then
 						pierce = pierce * (speed / 100)
 						if ent.armor < pierce then

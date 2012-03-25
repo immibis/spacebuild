@@ -1,12 +1,12 @@
 
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Initializes the effect. The data is a table of data  
     which was passed from the server. 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]] 
  function EFFECT:Init( data ) 
  	 
- 	// This is how long the spawn effect  
- 	// takes from start to finish. 
+ 	-- This is how long the spawn effect  
+ 	-- takes from start to finish. 
  	self.Time = 0.5
  	self.LifeTime = CurTime() + self.Time 
 	
@@ -47,10 +47,10 @@
  end 
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     THINK 
     Returning false makes the entity die 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]] 
 function EFFECT:Think()
 
 	return ( self.LifeTime > CurTime() )  
@@ -59,9 +59,9 @@ end
    
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Draw the effect 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]] 
 function EFFECT:Render() 
 	local Frac = (self.LifeTime - CurTime()) / self.Time
 	local Alph = Lerp(Frac, 0, math.Clamp(150 + (self.vScale * 5),0,255))

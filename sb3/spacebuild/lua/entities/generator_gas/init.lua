@@ -82,7 +82,7 @@ end
 
 function ENT:SetActive( value )
 	if not (value == nil) then
-		if (value != 0 and self.Active == 0 ) then
+		if (value ~= 0 and self.Active == 0 ) then
 			self:TurnOn()
 		elseif (value == 0 and self.Active == 1 ) then
 			self:TurnOff()
@@ -158,7 +158,7 @@ function ENT:Pump_Air()
 	local mul = 1
 	local SB = CAF.GetAddon("Spacebuild")
 	if SB and SB.GetStatus() and self.environment and (self.environment:IsSpace() or self.environment:IsStar() )then
-		mul = 0 //Make the device still absorb energy, but not produce any gas anymore
+		mul = 0 --Make the device still absorb energy, but not produce any gas anymore
 	elseif SB and SB.GetStatus() and self.environment and  self.environment:IsEnvironment() and not self.environment:IsPlanet() then
 		mul = 0.5
 	end

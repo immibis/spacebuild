@@ -147,7 +147,7 @@ function PANEL:PerformLayout()
 	
 	if (!ActiveTab) then return end
 	
-	// Update size now, so the height is definitiely right.
+	-- Update size now, so the height is definitiely right.
 	ActiveTab:InvalidateLayout( true )
 	
 	self.tabScroller:StretchToParent( 4, 4, 4, 4 )
@@ -191,7 +191,7 @@ function PANEL:PerformLayout()
 		ActiveTab:SetZPos( 100 )
 	end
 	
-	// Give the animation a chance
+	-- Give the animation a chance
 	self.animFade:Run()
 	
 end

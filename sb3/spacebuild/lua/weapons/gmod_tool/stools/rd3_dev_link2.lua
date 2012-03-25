@@ -2,7 +2,7 @@
 --include( "RD2/tool_manifest.lua" )
 
 --dev link stool
-//TOOL			= ToolObj:Create()
+--TOOL			= ToolObj:Create()
 TOOL.Mode		= "rd3_dev_link2"
 TOOL.Category	= 'Resource Distribution'
 TOOL.Name		= '#Smart Link Tool'
@@ -46,16 +46,16 @@ function TOOL:RightClick( trace )
 	
 	if (CLIENT) then return true end
 	local iNum = self:NumObjects()
-	//local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
-	//self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
+	--local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
+	--self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
 	if ( iNum > 0 and trace.Entity.IsNode ) then
 		-- Get information we're about to use
 		for k, v in pairs(self.Objects) do
 			local Ent1,  Ent2  = self:GetEnt(k), trace.Entity
-			//local Bone1, Bone2 = self:GetBone(k),	trace.PhysicsBone
+			--local Bone1, Bone2 = self:GetBone(k),	trace.PhysicsBone
 			local WPos1, WPos2 = self:GetPos(k),		trace.Entity:GetPos()
-			//local LPos1, LPos2 = self:GetLocalPos(k),	self:GetLocalPos(2)
+			--local LPos1, LPos2 = self:GetLocalPos(k),	self:GetLocalPos(2)
 			local length = ( WPos1 - WPos2):Length()
 			Ent1:SetColor(255, 255, 255, 255) 
 			

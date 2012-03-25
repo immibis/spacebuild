@@ -51,7 +51,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if !(self.Active == true || self.FTime > CurTime()) then
+			if !(self.Active == true or self.FTime > CurTime()) then
 				self.NFTime = CurTime() + math.Rand(0,0.1)
 			end
 			self.Active = true
@@ -67,7 +67,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if ((self.Active == true || self.FTime > CurTime()) && CurTime() >= self.NFTime ) then
+	if ((self.Active == true or self.FTime > CurTime()) and CurTime() >= self.NFTime ) then
 	
 		local NewShell = ents.Create( "SF-TinyPulseShot" )
 		if ( !NewShell:IsValid() ) then return end
@@ -103,12 +103,12 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
-	if !(self.Active == true || self.FTime > CurTime()) then
+	if !(self.Active == true or self.FTime > CurTime()) then
 		self.NFTime = CurTime() + math.Rand(0,0.1)
 	end
 	self.FTime = CurTime() + 0.1

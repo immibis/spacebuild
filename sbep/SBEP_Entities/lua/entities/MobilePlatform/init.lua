@@ -37,12 +37,12 @@ function ENT:Initialize()
 	self.TPD = 0
 		
 	self.ShadowParams = {}
-		self.ShadowParams.maxangular = 100000000 //What should be the maximal angular force applied
-		self.ShadowParams.maxangulardamp = 10000000 // At which force/speed should it start damping the rotation
-		self.ShadowParams.maxspeed = 100000000 // Maximal linear force applied
-		self.ShadowParams.maxspeeddamp = 10000000 // Maximal linear force/speed before  damping
-		self.ShadowParams.dampfactor = 0.8 // The percentage it should damp the linear/angular force if it reachs it's max ammount
-		self.ShadowParams.teleportdistance = 0 // If it's further away than this it'll teleport (Set to 0 to not teleport)
+		self.ShadowParams.maxangular = 100000000 --What should be the maximal angular force applied
+		self.ShadowParams.maxangulardamp = 10000000 -- At which force/speed should it start damping the rotation
+		self.ShadowParams.maxspeed = 100000000 -- Maximal linear force applied
+		self.ShadowParams.maxspeeddamp = 10000000 -- Maximal linear force/speed before  damping
+		self.ShadowParams.dampfactor = 0.8 -- The percentage it should damp the linear/angular force if it reachs it's max ammount
+		self.ShadowParams.teleportdistance = 0 -- If it's further away than this it'll teleport (Set to 0 to not teleport)
 
 	self:StartMotionController()
 	
@@ -51,7 +51,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 	
-	if self.PasteDelay || !self.Controller || !self.Controller:IsValid() || self.Controller.Disabled then return SIM_NOTHING end
+	if self.PasteDelay or !self.Controller or !self.Controller:IsValid() or self.Controller.Disabled then return SIM_NOTHING end
 	
 	phys:Wake()
 	local Ang = Angle(0,0,0)
@@ -83,9 +83,9 @@ end
 
 function ENT:Think()
 		
-	if self.PasteDelay || self.Controller.Disabled then return end
+	if self.PasteDelay or self.Controller.Disabled then return end
 	
-	if !self.Controller || !self.Controller:IsValid() then
+	if !self.Controller or !self.Controller:IsValid() then
 		self.Entity:Remove()
 		return
 	end

@@ -78,7 +78,7 @@ local function OpenMenu(um)
 	RButton3:SetSize(140, 30)
 	RButton3:SetText("Add Resource")
 	function RButton3:DoClick()
-		if RText2:GetValue() != "" then
+		if RText2:GetValue() ~= "" then
 			RunConsoleCommand("AddLSSCreenResource", ent:EntIndex(), tostring(RText2:GetValue()))
 		end
 	end
@@ -239,7 +239,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 						surface.SetTextPos(textStartPos+15,TempY)
 						local othernetworks = 0
 						local othernetworksres = 0
-						if enttable.network and enttable.network != 0 then
+						if enttable.network and enttable.network ~= 0 then
 							local nettable = CAF.GetAddon("Resource Distribution").GetNetTable(enttable.network)
 							if table.Count(nettable) > 0 then
 								if nettable.resources and nettable.resources[v] then

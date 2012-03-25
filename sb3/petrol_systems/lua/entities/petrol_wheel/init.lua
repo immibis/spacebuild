@@ -8,10 +8,10 @@ include('shared.lua')
 ENT.WireDebugName = "Wheel"
 ENT.OverlayDelay = 0
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: Initialize
    Desc: First function called. Use to set up your entity
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:Initialize()
 
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
@@ -42,21 +42,21 @@ function ENT:Initialize()
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Sets the base torque
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:SetBaseTorque( base )
 
 	self.BaseTorque = base
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque )
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Sets the axis (world space)
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:SetAxis( vec )
 
 	self.Axis = self.Entity:GetPos() + vec * 512
@@ -66,35 +66,35 @@ function ENT:SetAxis( vec )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: PhysicsCollide
    Desc: Called when physics collides. The table contains 
 			data on the collision
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:PhysicsCollide( data, physobj )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: PhysicsUpdate
    Desc: Called to update the physics .. or something.
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:PhysicsUpdate( physobj )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: KeyValue
    Desc: Called when a keyvalue is added to us (usually from the map)
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:KeyValue( key, value )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: OnTakeDamage
    Desc: Entity takes damage
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:OnTakeDamage( dmginfo )
 
 	self.Entity:TakePhysicsDamage( dmginfo )
@@ -108,7 +108,7 @@ end
 
 function ENT:GetMotor()
 	
-	if (!self.Motor) then
+	if (not self.Motor) then
 		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )
 	end
 	
@@ -143,16 +143,16 @@ function ENT:SetStop( stop )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Forward
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:Forward( mul )
 
-	// Is this key invalid now? If so return false to remove it
-	if ( !self.Entity:IsValid() ) then return false end
+	-- Is this key invalid now? If so return false to remove it
+	if ( not self.Entity:IsValid() ) then return false end
 	local Motor = self:GetMotor()
-	if ( !Motor:IsValid() ) then
-		//Msg("Wheel doesn't have a motor!\n"); 
+	if ( not Motor:IsValid() ) then
+		--Msg("Wheel doesn't have a motor!\n");
 		return false
 	end
 
@@ -161,7 +161,7 @@ function ENT:Forward( mul )
 	local Speed = mdir * mul * self.TorqueScale * (1 + self.SpeedMod)
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque ) .. "\nSpeed: " .. (mdir * mul * (self.SpeedMod)) .. "\nBreak: " .. self.Breaking .. "\nSpeedMod: " .. math.floor( self.SpeedMod * 100 ) .. "%"
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 	
 	Motor:Fire( "Scale", Speed, 0 )
@@ -172,18 +172,18 @@ function ENT:Forward( mul )
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Reverse
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:Reverse( )
 	return self:Forward( -1 )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: TriggerInput
    Desc: the inputs
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:TriggerInput(iname, value)
 	if (iname == "A: Go") then
 		if ( value == self.Fwd ) then self.Go = 1
@@ -194,22 +194,22 @@ function ENT:TriggerInput(iname, value)
 	elseif (iname == "C: SpeedMod") then
 		self.SpeedMod = (value / 100)
 	end
-	if !self:CanRun() then self.Go = 0 end
+	if not self:CanRun() then self.Go = 0 end
 	return self:Forward( self.Go )
 end
 
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: PhysicsUpdate
    Desc: happy fun time breaking function
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:PhysicsUpdate( physobj )
 	local vel = physobj:GetVelocity()
 	
-	if (self.Breaking > 0) then // to prevent badness
-		if (self.Breaking >= 100) then //100% breaking!!!
-			vel.x = 0 //full stop!
+	if (self.Breaking > 0) then -- to prevent badness
+		if (self.Breaking >= 100) then --100% breaking!!!
+			vel.x = 0 --full stop!
 			vel.y = 0
 		else		
 			vel.x = vel.x * ((100.0 - self.Breaking)/100.0)
@@ -222,29 +222,29 @@ end
 
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Todo? Scale Motor:GetTable().direction?
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:SetTorque( torque )
 	
 	self.TorqueScale = torque / self.BaseTorque
 	
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if (not Motor or not Motor:IsValid()) then return end
 	Motor:Fire( "Scale", Motor:GetTable().direction * Motor:GetTable().forcescale * self.TorqueScale , 0 )
 	
 	txt = "Torque: " .. math.floor( self.TorqueScale * self.BaseTorque )
-	//self.BaseClass.BaseClass.SetOverlayText(self, txt)
+	--self.BaseClass.BaseClass.SetOverlayText(self, txt)
 	self:SetOverlayText(txt)
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Creates the direction arrows on the wheel
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:DoDirectionEffect()
 
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if (not Motor or not Motor:IsValid()) then return end
 
 	local effectdata = EffectData()
 		effectdata:SetOrigin( self.Axis )
@@ -254,9 +254,9 @@ function ENT:DoDirectionEffect()
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Reverse the wheel direction when a player uses the wheel
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:Use( activator, caller, type, value )
 		
 	local Motor = self:GetMotor()
@@ -290,7 +290,7 @@ function ENT:Think()
 	--Msg("Requiring " .. self.petrolpertick .. " petrol per tick\n")
 	--Msg(torquething)
 
-	if self.Go != 0 || self:CanRun() then
+	if self.Go ~= 0 or self:CanRun() then
 		RD.ConsumeResource(self.Entity, "Petrol", self.petrolpertick)
 		RD.SupplyResource(self.Entity, "12V Energy", 1)
 		--Msg("a'ight\n")
@@ -300,7 +300,7 @@ function ENT:Think()
 		--Msg("not enough stuff or standing still\n")
 	end
 	
-	if !self:CanRun() then
+	if not self:CanRun() then
 		self.Go = 0
 		self:Forward( self.Go )
 		--Msg("not enough stuff or standing still\n")
@@ -320,16 +320,16 @@ end
 	
  end
 
-  /*--------------------------------------------------------- 
+  --[[---------------------------------------------------------
     Name: OnRemove 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
  function ENT:OnRemove() 
    
    self.BaseClass.OnRemove(self)
    
  end 
  
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD.BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

@@ -55,7 +55,7 @@ function ENT:Think()
 		DistTime = self.Distance * 0.001
 	end
 	--print(self.Distance, DistTime, LTime)
-	if LTime > 10 || LTime > DistTime then
+	if LTime > 10 or LTime > DistTime then
 		self:GoBang()
 		--print(self.Distance, DistTime, LTime)
 	end

@@ -1,19 +1,19 @@
-// draw sun effects
+-- draw sun effects
 local stars = {}
 local function DrawSunEffects( )
-	// no pixel shaders? no sun effects!
+	-- no pixel shaders? no sun effects!
 	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// render each star.
+	-- render each star.
 	for _, Sun in pairs( stars ) do
-		// calculate brightness.
+		-- calculate brightness.
 		local dot = math.Clamp( EyeAngles():Forward():DotProduct( ( Sun.Position - EyePos() ):Normalize() ), 0, 1 );
 		local dist = ( Sun.Position - EyePos() ):Length();
-		// draw sunbeams.
+		-- draw sunbeams.
 		local sunpos = EyePos() + ( Sun.Position - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
-		if( dist <= Sun.BeamRadius && dot > 0 ) then
+		if( dist <= Sun.BeamRadius and dot > 0 ) then
 			local frac = ( 1 - ( ( 1 / ( Sun.BeamRadius ) ) * dist ) ) * dot;
-			// draw sun.
+			-- draw sun.
 			DrawSunbeams(
 				0.95,
 				frac,
@@ -22,18 +22,18 @@ local function DrawSunEffects( )
 				scrpos.y / ScrH()
 			);
 		end
-		// can the sun see us?
+		-- can the sun see us?
 		local trace = {
 			start = Sun.Position,
 			endpos = EyePos(),
 			filter = LocalPlayer(),
 		};
 		local tr = util.TraceLine( trace );
-		// draw!
-		if( dist <= Sun.Radius && dot > 0 && tr.Fraction >= 1 ) then
-			// calculate brightness.
+		-- draw!
+		if( dist <= Sun.Radius and dot > 0 and tr.Fraction >= 1 ) then
+			-- calculate brightness.
 			local frac = ( 1 - ( ( 1 / Sun.Radius ) * dist ) ) * dot;
-			// draw bloom.
+			-- draw bloom.
 			DrawBloom(
 				0.428, 
 				3 * frac, 
@@ -44,7 +44,7 @@ local function DrawSunEffects( )
 				1, 
 				1
 			);
-			// draw color.
+			-- draw color.
 			local tab = {
 				['$pp_colour_addr']		= 0.35 * frac,
 				['$pp_colour_addg']		= 0.15 * frac,
@@ -56,7 +56,7 @@ local function DrawSunEffects( )
 				['$pp_colour_mulg']		= 0,
 				['$pp_colour_mulb']		= 0,
 			};
-			// draw colormod.
+			-- draw colormod.
 			DrawColorModify( tab );
 		end
 	end
@@ -65,7 +65,7 @@ end
 hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
 
 
-// receive sun information
+-- receive sun information
 local function recvSun( msg )
 	local num = msg:ReadShort()
 	local pos = msg:ReadVector()

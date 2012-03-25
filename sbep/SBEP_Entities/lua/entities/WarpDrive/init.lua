@@ -6,10 +6,10 @@ include('shared.lua')
 ENT.WireDebugName = "Warp Drive"
 
 function ENT:SpawnFunction( ply, tr )
-	local ent = ents.Create("WarpDrive") 		// Create the entity
-	ent:SetPos(tr.HitPos + Vector(0, 0, 20)) 	// Set it to spawn 20 units over the spot you aim at when spawning it
-	ent:Spawn() 								// Spawn it
-	return ent 									// You need to return the entity to make it work
+	local ent = ents.Create("WarpDrive") 		-- Create the entity
+	ent:SetPos(tr.HitPos + Vector(0, 0, 20)) 	-- Set it to spawn 20 units over the spot you aim at when spawning it
+	ent:Spawn() 								-- Spawn it
+	return ent 									-- You need to return the entity to make it work
 end 
 
 /*---------------------------------------------------------
@@ -71,7 +71,7 @@ function ENT:TriggerInput(iname, value)
 			self.JumpCoords.Dest = self.JumpCoords.Vec
 		end
 	--[[	print( timer.IsTimer( "warpdrivewaittime" ) ) ]]
-		if (CurTime()-self.NTime)>7 and !timer.IsTimer( "warpdrivewaittime" ) and self.JumpCoords.Dest!=self.Entity:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
+		if (CurTime()-self.NTime)>7 and !timer.IsTimer( "warpdrivewaittime" ) and self.JumpCoords.Dest~=self.Entity:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
 			self.NTime=CurTime()
 			self.Entity:EmitSound("WarpDrive/warp.wav", 450, 70)
 			timer.Create( "warpdrivewaittime", 1, 1, function(self) self.Entity:Go() timer.Destroy("warpdrivewaittime") end, self )
@@ -80,7 +80,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	--[[	print( self.NTime )
 		print( timer.IsTimer( "warpdrivewaittime" ) )
-		print( self.JumpCoords.Dest != self.Entity:GetPos() )
+		print( self.JumpCoords.Dest ~= self.Entity:GetPos() )
 		print( util.IsInWorld( self.JumpCoords.Dest ) ) ]]
 	end
 end

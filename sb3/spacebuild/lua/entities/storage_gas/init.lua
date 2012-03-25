@@ -20,7 +20,7 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Vent") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.vent = false
 		else
 			self.vent = true
@@ -111,10 +111,10 @@ function ENT:UpdateMass()
 		mul = 0.02
 	end
 	local div = math.Round(self:GetNetworkCapacity(self.caf.custom.resource)/self.MAXRESOURCE)
-	local mass = self.mass + ((self:GetResourceAmount(self.caf.custom.resource) * mul)/div) // self.mass = default mass + need a good multiplier
+	local mass = self.mass + ((self:GetResourceAmount(self.caf.custom.resource) * mul)/div) -- self.mass = default mass + need a good multiplier
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

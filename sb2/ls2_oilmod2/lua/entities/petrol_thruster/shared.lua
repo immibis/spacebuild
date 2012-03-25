@@ -61,5 +61,5 @@ ENT.Type 			= "anim"
  ---------------------------------------------------------*/ 
  function ENT:GetSound() 
  	if ( !self.SoundOn ) then return false end 
- 	return self.SoundOn != 0 
+ 	return self.SoundOn ~= 0
 end

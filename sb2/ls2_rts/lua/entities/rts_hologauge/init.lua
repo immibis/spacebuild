@@ -53,7 +53,7 @@ function ENT:TriggerInput(iname, value)
 	value = math.Round(value)
 	self:ReadyResources()
 	if (iname == "Resource ID") then
-		if ((value > 0)&&(value <= (table.getn(self.ResTable))) && (value != self.ResourceType)) then
+		if ((value > 0) and (value <= (table.getn(self.ResTable))) and (value ~= self.ResourceType)) then
 			self.ResourceType = value
 			self.ResourceName = self.ResTable[self.ResourceType]
 		 	self.Entity:SetNetworkedString("Resource", "["..self.ResourceType.."] "..self.ResourceName)

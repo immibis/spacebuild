@@ -1,6 +1,6 @@
 local RND_Scale_Factor = .1
-//local MatA = Material("cds/spherez/cds_spherez")
-//local MatB = Material("cds/spherez/shield_base")
+--local MatA = Material("cds/spherez/cds_spherez")
+--local MatB = Material("cds/spherez/shield_base")
 local MatA = Material("models/props_combine/com_shield001a")
 local MatB = Material("models/props_combine/com_shield001b")
 
@@ -20,7 +20,7 @@ function EFFECT:Think()
 	if not (self.Parent and ValidEntity(self.Parent)) then return false end
 	
 	local rad = self.Parent:GetNWInt("Radius") or -1
-	//Msg("Rad: ", rad,"\n")
+	--Msg("Rad: ", rad,"\n")
 	self.On = not ((rad == -1) or (rad == 0))
 	
 	if self.On ~= -1 then

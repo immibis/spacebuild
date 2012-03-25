@@ -8,7 +8,9 @@ function CAFToolSetup.open( s_toolmode )
 	TOOL.ConfigName		= ""
 	TOOL.LeftClick		= CAFTool.LeftClick
 	TOOL.RightClick		= CAFTool.RightClick
-	if !TOOL.NoRepair then TOOL.Reload = CAFTool.Reload end
+	if not TOOL.NoRepair then
+        TOOL.Reload = CAFTool.Reload
+    end
 	TOOL.UpdateGhost	= CAFTool.UpdateGhost
 	TOOL.Think			= CAFTool.Think
 	
@@ -16,7 +18,7 @@ function CAFToolSetup.open( s_toolmode )
 end
 
 function CAFToolSetup.close()
-	if !TOOL then return end
+	if not TOOL then return end
 	
 	if TOOL.Model then util.PrecacheModel(TOOL.Model) end
 	
@@ -53,7 +55,7 @@ function CAFToolSetup.MaxLimit()
 end
 
 function CAFToolSetup.RegEnts()
-	if !TOOL.DevSelect then return end
+	if not TOOL.DevSelect then return end
 	
 	local t_devicefiles = file.FindInLua("CAF/Stools/"..TOOL.Mode.."/*.lua")
 	if t_devicefiles then
@@ -69,15 +71,15 @@ function CAFToolSetup.RegEnts()
 			MsgN("\tLoading dev type: ",s_devtype)
 			
 			DEVICEGROUP				= {}
-			//DEVICEGROUP.type		= s_devtype --entity class (can be defined differently in sub_types)
-			//DEVICEGROUP.group_name	= s_devtype --name of this group, file can cange it if needed. should be the same as type in most cases
+			--DEVICEGROUP.type		= s_devtype --entity class (can be defined differently in sub_types)
+			--DEVICEGROUP.group_name	= s_devtype --name of this group, file can cange it if needed. should be the same as type in most cases
 			
 			AddCSLuaFile( s_path..val )
 			include( s_path..val )
 			if DEVICEGROUP.type then
 				if TOOL.Devices[DEVICEGROUP.type] then --gorup exists, add new devices only
 					for sub_type, dev in pairs(DEVICEGROUP.devices) do
-						if !TOOL.Devices[DEVICEGROUP.type].devices[sub_type] then
+						if not TOOL.Devices[DEVICEGROUP.type].devices[sub_type] then
 							TOOL.Devices[DEVICEGROUP.type].devices[sub_type] = dev
 						end
 					end
@@ -90,25 +92,27 @@ function CAFToolSetup.RegEnts()
 		end
 	end
 	
-	/*
+	--[[
 		Make sure our device list is sane
-	*/
+	]]
 	for devtype, devlist in pairs(TOOL.Devices) do
 		devlist.type	= devlist.type or devtype
 		devlist.class	= devlist.class or devlist.type
-		if !devlist.Name or devlist.Name == "" then
+		if not devlist.Name or devlist.Name == "" then
 			TOOL.Devices[devtype] = nil
 			CAF.WriteToDebugFile("caf_tool_error", "CAF: Bad device catagory definition, removing\n")
 		else
 			for sub_type, dev in pairs(devlist.devices) do
-				if !dev.Name or dev.Name == ""
-				or !dev.model or dev.model == "" then
+				if not dev.Name or dev.Name == ""
+				or not dev.model or dev.model == "" then
 					devlist.devices[sub_type] = nil
 					CAF.WriteToDebugFile("caf_tool_error", "CAF: Bad device definition, removing\n")
 				else
 					dev.type		= dev.type or devlist.type
 					dev.class		= dev.class or devlist.class
-					if !table.HasValue(TOOL.DevClasses, dev.class) then table.insert(TOOL.DevClasses, dev.class) end
+					if not table.HasValue(TOOL.DevClasses, dev.class) then
+                        table.insert(TOOL.DevClasses, dev.class)
+                    end
 					dev.sub_type	= sub_type
 					dev.group		= devlist
 					dev.legacy		= dev.legacy or devlist.legacy
@@ -126,7 +130,7 @@ end
 
 function CAFToolSetup.MakeFunc()
 	if CLIENT then return end
-	if TOOL.DevSelect and !TOOL.MakeFunc then
+	if TOOL.DevSelect and not TOOL.MakeFunc then
 		local self = TOOL
 		TOOL.MakeEnt = CAFEnts.MakeEnt
 		TOOL.MakeFunc = function( ply, Ang, Pos, class, type, sub_type, model, Frozen, Extra_Data, Data )
@@ -134,7 +138,9 @@ function CAFToolSetup.MakeFunc()
 			
 			local ent = self:MakeEnt( ply, Ang, Pos, class, type, sub_type, model, Frozen, Extra_Data, Data )
 			
-			if !ent or !ent:IsValid() then return end
+			if not ent or not ent:IsValid() then
+                return
+            end
 			
 			ply:AddCount(self.LimitName, ent)
 			ply:AddCleanup(self.Mode, ent)
@@ -220,7 +226,7 @@ function CAFToolSetup.MakeCP()
 			local cur_sub_type	= GetConVarString(ccv_sub_type)
 			
 			for _, devlist in pairs(self.Devices) do
-				if !devlist.hide then
+				if not devlist.hide then
 					
 					local node = tree:AddNode(devlist.Name)
 					node.caftext = devlist.Name
@@ -245,7 +251,7 @@ function CAFToolSetup.MakeCP()
 
 					end
 					for _, dev in pairs(devlist.devices) do
-						if !dev.hide then
+						if not dev.hide then
 							
 							local cnode = node:AddNode(dev.Name)
 							cnode.caftext 		= dev.Name
@@ -287,7 +293,7 @@ function CAFToolSetup.MakeCP()
 end
 
 
-/*
+--[[
 TOOL.*
 
 --required vars
@@ -331,7 +337,7 @@ Renamed.class		table_sv	key: old class name. value: new class name
 Renamed.type		table_sv	ditto
 Renamed.sub_type	table_sv	ditto
 
-*/
+]]
 
 CAFTool = {}
 
@@ -340,8 +346,12 @@ local function NoLeftClickOn(self, trace)
 end
 
 local function NoHit(self, trace)
-	if !trace.HitPos or trace.Entity:IsPlayer() or trace.Entity:IsNPC() then return true end
-	if self.NoLeftOnClass and trace.HitNonWorld and trace.Entity:GetClass() == self.ClassName or NoLeftClickOn(self, trace) then return true end
+	if not trace.HitPos or trace.Entity:IsPlayer() or trace.Entity:IsNPC() then
+        return true
+    end
+	if self.NoLeftOnClass and trace.HitNonWorld and trace.Entity:GetClass() == self.ClassName or NoLeftClickOn(self, trace) then
+        return true
+    end
 	return false
 end
 
@@ -353,7 +363,7 @@ function CAFTool.LeftClick( self, trace )
 
 	local AllowWorldWeld	= self:GetClientNumber('AllowWorldWeld') == 1
 	local DontWeld			= self:GetClientNumber('DontWeld') == 1
-	local Frozen			= self:GetClientNumber('Frozen') == 1 or (!AllowWorldWeld and trace.Entity:IsWorld())
+	local Frozen			= self:GetClientNumber('Frozen') == 1 or (not AllowWorldWeld and trace.Entity:IsWorld())
 
 
 	local ent
@@ -383,7 +393,7 @@ function CAFTool.LeftClick( self, trace )
 			local type			= self:GetClientInfo('type')
 			local sub_type		= self:GetClientInfo('sub_type')
 
-			if !type or type == '' then
+			if not type or type == '' then
 				ErrorNoHalt("RD: GetClientInfo('type') is nil!\n")
 				return false
 			end
@@ -399,7 +409,9 @@ function CAFTool.LeftClick( self, trace )
 			return false
 		end
 
-		if !ent or !ent:IsValid() then return false end
+		if not ent or not ent:IsValid() then
+            return false
+        end
 		
 		local min = ent:OBBMins()
 		if (self.GetGhostMin) then
@@ -416,10 +428,10 @@ function CAFTool.LeftClick( self, trace )
 	--[[Msg("GetPlayer: "..tostring(ent:GetPlayer()).."\n")
 	Msg("Ply= "..tostring(ply).."\n")
 	ent:SetPlayer(ply)]]
-	--CAF.OnEntitySpawn(ent , "SENT" , ply) //Calls the CAF SentSpawn Hook
+	--CAF.OnEntitySpawn(ent , "SENT" , ply) --Calls the CAF SentSpawn Hook
 
 	local const
-	if !DontWeld and ( trace.Entity:IsValid() or AllowWorldWeld ) then
+	if not DontWeld and ( trace.Entity:IsValid() or AllowWorldWeld ) then
 		const = constraint.Weld(ent, trace.Entity,0, trace.PhysicsBone, 0, true )
 	end
 
@@ -454,7 +466,7 @@ function CAFTool.RightClick( self, trace )
 end
 
 function CAFTool.Reload( self, trace )
-	if !trace.Entity:IsValid() then return false end
+	if not trace.Entity:IsValid() then return false end
 	if CLIENT then return true end
 	if trace.Entity.Repair == nil then
 		self:GetOwner():SendLua("GAMEMODE:AddNotify('Object cannot be repaired!', NOTIFY_GENERIC, 7); surface.PlaySound(\"ambient/water/drip"..math.random(1, 4)..".wav\")")
@@ -465,13 +477,17 @@ function CAFTool.Reload( self, trace )
 end
 
 function CAFTool.UpdateGhost( self, ent )
-	if ( !ent or !ent:IsValid() ) then return end
+	if ( not ent or not ent:IsValid() ) then
+        return
+    end
 
 	local tr 		= utilx.GetPlayerTrace( self:GetOwner(), self:GetOwner():GetCursorAimVector() )
 	local trace 	= util.TraceLine( tr )
-	if (!trace.Hit) then return end
+	if (not trace.Hit) then
+        return
+    end
 
-	if (!trace.Hit or trace.Entity:IsPlayer() or trace.Entity:IsNPC() or (self.NoLeftOnClass and trace.Entity:GetClass() == self.ClassName) ) or NoLeftClickOn(self, trace) then
+	if (not trace.Hit or trace.Entity:IsPlayer() or trace.Entity:IsNPC() or (self.NoLeftOnClass and trace.Entity:GetClass() == self.ClassName) ) or NoLeftClickOn(self, trace) then
 		ent:SetNoDraw( true )
 		return
 	end
@@ -501,7 +517,10 @@ end
 
 function CAFTool.Think( self )
 	local model = self.Model or self:GetClientInfo( "model" )
-	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != model) then
+
+    if (not model) or (model == nil) or (model == "") or (not util.IsValidModel(model)) then return end
+
+    if not ValidEntity(self.GhostEntity) or string.lower(model) ~= string.lower(self.GhostEntity:GetModel()) then
 		if self.GetGhostAngle then
 			self:MakeGhostEntity( model, Vector(0,0,0), self:GetGhostAngle(Angle(0,0,0)) )
 		else

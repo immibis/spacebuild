@@ -81,8 +81,8 @@ function ENT:Think()
 	
 	
 	-- We can only work if we are switched on -_-
-	if(self.toggle == true || self.active == 1) then
-		if(self.val4 > 50 && self.val3 > 30 && self.val2 > 2) then
+	if(self.toggle == true or self.active == 1) then
+		if(self.val4 > 50 and self.val3 > 30 and self.val2 > 2) then
 			-- Code when on
 			RD_ConsumeResource(self, "12V Energy", 2)
 			RD_ConsumeResource(self, "Oil", 30)
@@ -150,7 +150,7 @@ function ENT:OnRemove()
 	self.Entity:StopSound( "apc_engine_stop" )
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

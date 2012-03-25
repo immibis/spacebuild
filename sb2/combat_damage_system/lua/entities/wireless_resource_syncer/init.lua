@@ -41,7 +41,7 @@ function ENT:Initialize()
 	self:CheckPair()
 	self:UpdateToolTip()
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, {"On", "Disable Use", "Channel"})
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"On", "Disable Use", "Has Pair", "Syncing", "Distance", "Max Distance", "Channel"})
@@ -74,9 +74,9 @@ end
 function ENT:CheckPair()
 	if(self.Pair == false) then
 		for k, v in pairs(ents.FindByClass("wireless_resource_syncer")) do
-			if(v:IsValid() and self.Owner == v:GetPlayer() and v != self.Entity and v.channel == self.channel) then
+			if(v:IsValid() and self.Owner == v:GetPlayer() and v ~= self.Entity and v.channel == self.channel) then
 				self.Pair = v
-				if(WireAddon != nil) then
+				if(WireAddon ~= nil) then
 					Wire_TriggerOutput(self.Entity, "Has Pair", 1)
 				end
 				return true
@@ -86,7 +86,7 @@ function ENT:CheckPair()
 		return true
 	else
 		self.Pair = false
-		if(WireAddon != nil) then
+		if(WireAddon ~= nil) then
 			Wire_TriggerOutput(self.Entity, "Has Pair", 0)
 		end		
 	end
@@ -115,7 +115,7 @@ function ENT:Think()
 		if(self.Active == 1) then
 			--self:TurnOff()
 		end
-	elseif(WireAddon != nil) then
+	elseif(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Distance", self.Entity:GetPos():Distance(self.Pair:GetPos()))
 	end
 	
@@ -129,17 +129,17 @@ function ENT:Think()
 			Distance = self.Entity:GetPos():Distance(self.Pair:GetPos())
 		end
 
-		if(Energy == 0 || Coolant == 0 || Distance > self.MaxDistance) then
+		if(Energy == 0 or Coolant == 0 or Distance > self.MaxDistance) then
 			if(Coolant == 0) then
 				cds_heatpos(self.Entity:GetPos(), 3, 250)
 			end
-			if(Energy == 0 || Distance > self.MaxDistance) then
+			if(Energy == 0 or Distance > self.MaxDistance) then
 				self.BaseClass.Warning(self)
 			end
 			
 			if(self.Syncing == 1) then
 				self.Syncing = 0
-				if(WireAddon != nil) then
+				if(WireAddon ~= nil) then
 					Wire_TriggerOutput(self.Entity, "Syncing", 0)
 				end
 				self:UpdateToolTip()
@@ -173,7 +173,7 @@ function ENT:Think()
 			end
 			if(self.Syncing == 0) then
 				self.Syncing = 1
-				if(WireAddon != nil) then
+				if(WireAddon ~= nil) then
 					Wire_TriggerOutput(self.Entity, "Syncing", 1)
 				end
 				self:UpdateToolTip()
@@ -187,20 +187,20 @@ function ENT:Think()
 			-- Real Sync Part End
 		elseif(self.Syncing == 1) then
 			self.Syncing = 0
-			if(WireAddon != nil) then
+			if(WireAddon ~= nil) then
 				Wire_TriggerOutput(self.Entity, "Syncing", 0)
 			end
 			self:UpdateToolTip()
 		end
 	elseif(self.Syncing == 1) then
 		self.Syncing = 0
-		if(WireAddon != nil) then
+		if(WireAddon ~= nil) then
 			Wire_TriggerOutput(self.Entity, "Syncing", 0)
 		end
 		self:UpdateToolTip()
 	end
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		for k, res in pairs(self.Resources) do
 			Wire_TriggerOutput(self.Entity, res, RD_GetResourceAmount(self.Entity, res))
 		end

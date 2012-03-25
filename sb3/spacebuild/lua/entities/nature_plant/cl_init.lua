@@ -4,7 +4,7 @@ language.Add("nature_planet", "Plant")
 
 function ENT:DoNormalDraw( bDontDrawModel )
 	local mode = self:GetNetworkedInt("overlaymode")
-	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < 256 and mode != 0) then
+	if ( LocalPlayer():GetEyeTrace().Entity == self.Entity and EyePos():Distance( self.Entity:GetPos() ) < 256 and mode ~= 0) then
 		local trace = LocalPlayer():GetEyeTrace()
 		if ( !bDontDrawModel ) then self:DrawModel() end
 		local nettable = CAF.GetAddon("Resource Distribution").GetEntityTable(self)
@@ -13,7 +13,7 @@ function ENT:DoNormalDraw( bDontDrawModel )
 		if playername == "" then
 			playername = "World"
 		end
-		if not mode or mode != 2 then
+		if not mode or mode ~= 2 then
 			local OverlayText = ""
 			OverlayText = OverlayText ..self.PrintName.."\n"
 			if nettable.network == 0 then

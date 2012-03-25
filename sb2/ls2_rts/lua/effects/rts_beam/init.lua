@@ -20,7 +20,7 @@ function EFFECT:Init( data )
 	self.TracerTime = 0.3
 	self.Length = math.Rand( 0.1, 0.15 )
 	
-	// Die when it reaches its target
+	-- Die when it reaches its target
 	self.DieTime = CurTime() + self.TracerTime
 	
 end

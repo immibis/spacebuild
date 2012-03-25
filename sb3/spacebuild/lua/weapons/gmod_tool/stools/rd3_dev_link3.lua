@@ -2,7 +2,7 @@
 --include( "RD2/tool_manifest.lua" )
 
 --dev link stool
-//TOOL			= ToolObj:Create()
+--TOOL			= ToolObj:Create()
 TOOL.Mode		= "rd3_dev_link3"
 TOOL.Category	= 'Resource Distribution'
 TOOL.Name		= '#Auto Link Tool'
@@ -47,10 +47,10 @@ function TOOL:LeftClick( trace )
 	else
 		self:GetOwner():SendLua( "GAMEMODE:AddNotify('You need to select a Resource Node to auto-link!', NOTIFY_GENERIC, 7);" )
 	end
-	//local iNum = self:NumObjects()
+	--local iNum = self:NumObjects()
 
-	//local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
-	//self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
+	--local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
+	--self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 	
 	/*if ( iNum > 0 ) then
 		-- Get client's CVars
@@ -121,21 +121,21 @@ function TOOL:LeftClick( trace )
 end
 
 function TOOL:RightClick( trace )
-	//if not valid or player, exit
-	if ( trace.Entity:IsValid() && trace.Entity:IsPlayer() ) then return end
-	//if client exit
+	--if not valid or player, exit
+	if ( trace.Entity:IsValid() and trace.Entity:IsPlayer() ) then return end
+	--if client exit
 	if ( CLIENT ) then return true end
-	// If there's no physics object then we can't constraint it!
-	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	-- If there's no physics object then we can't constraint it!
+	if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
-	//how many objects stored
+	--how many objects stored
 	local iNum = self:NumObjects() + 1
 
-	//save clicked postion
+	--save clicked postion
 	self:SetObject( iNum, trace.Entity, trace.HitPos, trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ), trace.PhysicsBone, trace.HitNormal )
 
 	if ( iNum > 1 ) then
-		// Get information we're about to use
+		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt(1), self:GetEnt(2)
 
 		if (Ent1 == Ent2) then
@@ -220,7 +220,7 @@ function TOOL:RightClick( trace )
 			end
 		end
 
-		// Clear the objects so we're ready to go again
+		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
 	else
 		self:SetStage( iNum )
@@ -230,9 +230,9 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL:Reload(trace)
-	//if not valid or player, exit
-	if ( trace.Entity:IsValid() && trace.Entity:IsPlayer() ) then return end
-	//if client exit
+	--if not valid or player, exit
+	if ( trace.Entity:IsValid() and trace.Entity:IsPlayer() ) then return end
+	--if client exit
 	if ( CLIENT ) then return true end
 
 	if trace.Entity.IsNode then
@@ -253,7 +253,7 @@ function TOOL:Reload(trace)
 		CAF.GetAddon("Resource Distribution").Unlink(trace.Entity)
 	end
 
-	self:ClearObjects()	//clear objects
+	self:ClearObjects()	--clear objects
 	return true
 end
 

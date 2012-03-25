@@ -5,7 +5,7 @@ TOOL.Command = nil
 TOOL.ConfigName = ''
 if (CLIENT and GetConVarNumber("RD_UseLSTab") == "1") then TOOL.Tab = "Life Support" end
 
-// Add Default Language translation (saves adding it to the txt files)
+-- Add Default Language translation (saves adding it to the txt files)
 if ( CLIENT ) then
 	language.Add( "Tool_grav_plate_name", "Gravity Plating" )
 	language.Add( "Tool_grav_plate_desc", "Enables walking on a prop even in low-to-zero gravity." )
@@ -53,7 +53,7 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL.BuildCPanel( CPanel )
-	// HEADER
+	-- HEADER
 	CPanel:AddControl( "Header", { Text = "#Tool_grav_plate_name", Description	= "#Tool_grav_plate_desc" }  )
 end
 

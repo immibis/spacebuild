@@ -71,7 +71,7 @@ function ENT:Think()
 			self.Entity:SetColor(255,255,255,255)
 		end
 	end
-	if self.CBCount > 0 && CurTime() > self.BTime then
+	if self.CBCount > 0 and CurTime() > self.BTime then
 		self.Entity:BombDrop()
 		self.CBCount = self.CBCount - 1
 		self.BTime = CurTime() + 0.5
@@ -95,7 +95,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

@@ -17,10 +17,10 @@ end
 function SBEPRTS() --It stands for Spacebuild Enhancement Project - Real Time Strategy, in case you couldn't guess
 	local ply = LocalPlayer()
 	local PLVec = ply:GetVehicle()
-	if PLVec && PLVec:IsValid() then
+	if PLVec and PLVec:IsValid() then
 		local BComp = PLVec:GetNetworkedEntity( "BattleComputer" ) or nil
 		local BCR = BComp:GetNetworkedBool( "BattleComputerActive" ) or false
-		if BComp && BComp:IsValid() && BComp:GetNetworkedEntity( "BattleComputerPod" ) == PLVec then
+		if BComp and BComp:IsValid() and BComp:GetNetworkedEntity( "BattleComputerPod" ) == PLVec then
 			if BCR then
 			
 				--print(ply:EyeAngles())
@@ -86,7 +86,7 @@ function SBEPRTS() --It stands for Spacebuild Enhancement Project - Real Time St
 				
 				
 				------------------------------------Selection------------------------------------
-				if input.IsMouseDown(MOUSE_FIRST) && !BComp.COrder then
+				if input.IsMouseDown(MOUSE_FIRST) and !BComp.COrder then
 					if !BComp.RTS_Selecting then
 						--print("Mouse Start")
 						if (gui.MouseY() < (ScrH() - 100)) then -- Note to self: Create a constant for the height/width of the various panels.
@@ -170,13 +170,13 @@ function SBEPRTS() --It stands for Spacebuild Enhancement Project - Real Time St
 				end
 				
 				for k,i in ipairs(BComp.UnitsSelected) do
-					if !i || !i:IsValid() then
+					if !i or !i:IsValid() then
 						table.remove(BComp.UnitsSelected, k)
 					end
 					--PrintTable(BComp.UnitsSelected)
 				end
 				
-				if input.IsMouseDown(MOUSE_FIRST) && BComp.COrder then
+				if input.IsMouseDown(MOUSE_FIRST) and BComp.COrder then
 					
 				end
 				
@@ -252,7 +252,7 @@ function SBEPRTS() --It stands for Spacebuild Enhancement Project - Real Time St
 				BComp.UnitsSelected = BComp.UnitsSelected or {}
 				local MSize = 0
 				for _,i in ipairs(BComp.UnitsSelected) do
-					if i && i:IsValid() then
+					if i and i:IsValid() then
 						local Mag = i:GetNetworkedInt( "Size" )
 						if Mag <= 0 then Mag = 500 end
 						if Mag > MSize then MSize = Mag end
@@ -315,7 +315,7 @@ function SBEPRTS_SetStance( Stance, Computer )
 		return 
 	end
 	for _,i in ipairs(Computer.UnitsSelected) do
-		if i && i:IsValid() then
+		if i and i:IsValid() then
 			LocalPlayer():ConCommand("RTSSetStance "..i:EntIndex().." "..Stance)
 		end
 	end
@@ -329,7 +329,7 @@ function SBEPRTS_IssueOrder( Vec, Computer, OrderType )
 	local Distance = Computer.MSize * 3
 	if UCount > 0 then
 		local First = Computer.UnitsSelected[1]
-		if First && First:IsValid() then
+		if First and First:IsValid() then
 			Dir = (First:GetPos() - Vec):GetNormal()
 			Ang = (Dir * -1):Angle()
 			Ang.p = 0 --I'll figure out vertical formations later
@@ -337,7 +337,7 @@ function SBEPRTS_IssueOrder( Vec, Computer, OrderType )
 		if UCount > 1 then
 			if Computer.Formation == 0 then
 				for k,i in ipairs(Computer.UnitsSelected) do
-					if i && i:IsValid() then
+					if i and i:IsValid() then
 						local Ri = (k - (UCount/2)) * Distance
 						local AV = Vec + (Ang:Right() * Ri)
 						LocalPlayer():ConCommand("IssueRTSOrder "..i:EntIndex().." "..AV.x.." "..AV.y.." "..AV.z.." "..OrderType.." "..Ang.r.." "..Ang.p.." "..Ang.y.." "..1)
@@ -348,7 +348,7 @@ function SBEPRTS_IssueOrder( Vec, Computer, OrderType )
 				local CR = 0
 				local ColumnWidth = 3
 				for k,i in ipairs(Computer.UnitsSelected) do
-					if i && i:IsValid() then
+					if i and i:IsValid() then
 						RC = RC + 1
 						if RC >= ColumnWidth then
 							RC = 0
@@ -362,7 +362,7 @@ function SBEPRTS_IssueOrder( Vec, Computer, OrderType )
 				end
 			else
 				for k,i in ipairs(Computer.UnitsSelected) do
-					if i && i:IsValid() then
+					if i and i:IsValid() then
 						local Ri = (k - (UCount/2)) * Distance
 						local AV = Vec + (Ang:Right() * Ri)
 						LocalPlayer():ConCommand("IssueRTSOrder "..i:EntIndex().." "..AV.x.." "..AV.y.." "..AV.z.." "..OrderType.." "..Ang.r.." "..Ang.p.." "..Ang.y.." "..1)
@@ -371,7 +371,7 @@ function SBEPRTS_IssueOrder( Vec, Computer, OrderType )
 			end
 		else
 			for _,i in ipairs(Computer.UnitsSelected) do
-				if i && i:IsValid() then
+				if i and i:IsValid() then
 					LocalPlayer():ConCommand("IssueRTSOrder "..i:EntIndex().." "..Vec.x.." "..Vec.y.." "..Vec.z.." "..OrderType.." "..Ang.r.." "..Ang.p.." "..Ang.y.." "..0)
 				end
 			end
@@ -382,7 +382,7 @@ end
 
 function SBEPBMView( ply, origin, angles, fov ) 
 	if ply.BCMode then
-		if ply.BComp && ply.BComp:IsValid() then
+		if ply.BComp and ply.BComp:IsValid() then
 			
 		 	origin = origin + ply.BComp.CVVec
 			angles = Angle(90,0,0) 

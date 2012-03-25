@@ -54,7 +54,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	
 	if (iname == "TrackLength") then
-		if ( value > 0 && value < 1000 ) then
+		if ( value > 0 and value < 1000 ) then
 			self.Entity:SetLength( value )
 		end
 		
@@ -65,19 +65,19 @@ function ENT:TriggerInput(iname, value)
 		self.HeightOffSet = math.Clamp( value, -1000, 1000 )
 	
 	elseif (iname == "SegWidth") then	
-		if ( value > 0 && value < 50 ) then
+		if ( value > 0 and value < 50 ) then
 			self.SWidth = value
 			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
 		
 	elseif (iname == "SegHeight") then	
-		if ( value > 0 && value < 50 ) then
+		if ( value > 0 and value < 50 ) then
 			self.SHeight = value
 			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
 		
 	elseif (iname == "SegLength") then	
-		if ( value > 0 && value < 50 ) then
+		if ( value > 0 and value < 50 ) then
 			self.SLength = value
 			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
@@ -183,7 +183,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if self.Linking && ent:IsValid() && ent.IsTankTrack then
+	if self.Linking and ent:IsValid() and ent.IsTankTrack then
 		ent:SetCont( self.Entity )
 	end
 end
@@ -192,7 +192,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	if !self.Hovering then return SIM_NOTHING end
 
-	if ( self.ZVelocity != 0 ) then
+	if ( self.ZVelocity ~= 0 ) then
 	
 		self.TargetZ = self.TargetZ + (self.ZVelocity * deltatime * self.HSpeed)
 		self.Entity:GetPhysicsObject():Wake()
@@ -219,9 +219,9 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	local zVel = physVel.z
 	
 	Exponent = Exponent - ( zVel * deltatime * 600 )
-	// The higher you make this 300 the less it will flop about
-	// I'm thinking it should actually be relative to any objects we're connected to
-	// Since it seems to flop more and more the heavier the object
+	-- The higher you make this 300 the less it will flop about
+	-- I'm thinking it should actually be relative to any objects we're connected to
+	-- Since it seems to flop more and more the heavier the object
 	
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 	

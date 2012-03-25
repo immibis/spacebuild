@@ -5,7 +5,7 @@ inflictor = the one doing the damage(optional)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * /
 
 local function Disintigrate2(ent, inflictor)
-	if ( ! ent:IsValid() ) then return end
+	if (  not  ent:IsValid() ) then return end
 	if not inflictor then inflictor = 0 end
 	if ent:IsPlayer() or ent:IsNPC() then
 		ent:TakeDamage(200, inflictor)
@@ -19,7 +19,7 @@ local function Disintigrate2(ent, inflictor)
 end
 
 local function Disintigrate(ent)
-	if ( ! ent:IsValid() ) then return end
+	if (  not  ent:IsValid() ) then return end
 	local Effect = EffectData()
 	Effect:SetEntity(ent)
 	Effect:SetScale(math.random(0.8, 1.2))

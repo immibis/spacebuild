@@ -12,16 +12,16 @@ include("CAF/Addons/shared/spacebuild.lua")
 SB3 = nil;
 
 --Local functions
-// used for sun effects
+-- used for sun effects
 local stars = {}
 
-// Used for planet effects
-local planets = {} //Clients hasn't been updated yet
-// enabled?
+-- Used for planet effects
+local planets = {} --Clients hasn't been updated yet
+-- enabled?
 local Color_Enabled = false;
 local Bloom_Enabled = false;
 
-// Color Variables.
+-- Color Variables.
 local ColorModify = {
 	[ "$pp_colour_addr" ] = 0,
 	[ "$pp_colour_addg" ] = 0,
@@ -34,7 +34,7 @@ local ColorModify = {
 	[ "$pp_colour_mulb" ] = 0,
 };
 
-// Bloom Variables
+-- Bloom Variables
 local Bloom = {
 	darken = 0,
 	multiply = 0,
@@ -48,14 +48,14 @@ local Bloom = {
 		b = 0,
 	},
 };
-// Color receive message
+-- Color receive message
 local function SetColor(planet)
-	// don't support colormod?
-	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// enabled?
+	-- don't support colormod?
+	if( not render.SupportsPixelShaders_2_0() ) then return; end
+	-- enabled?
 	Color_Enabled = planet.color
-	if( !Color_Enabled ) then return; end
-	// read attributes
+	if( not Color_Enabled ) then return; end
+	-- read attributes
 	ColorModify[ "$pp_colour_addr" ] 	= planet.AddColor_r
 	ColorModify[ "$pp_colour_addg" ] 	= planet.AddColor_g
 	ColorModify[ "$pp_colour_addb" ] 	= planet.AddColor_b
@@ -67,14 +67,14 @@ local function SetColor(planet)
 	ColorModify[ "$pp_colour_mulb" ] 	= planet.AddColor_b
 end
 
-// Bloom receive message
+-- Bloom receive message
 local function SetBloom(planet)
-	// don't support bloom?
-	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// enabled?
+	-- don't support bloom?
+	if( not render.SupportsPixelShaders_2_0() ) then return; end
+	-- enabled?
 	Bloom_Enabled = planet.bloom
-	if( !Bloom_Enabled ) then return; end
-	// read attributes
+	if( not Bloom_Enabled ) then return; end
+	-- read attributes
 	Bloom.darken 	= planet.Darken
 	Bloom.multiply 	= planet.Multiply
 	Bloom.sizex 	= planet.SizeX
@@ -86,15 +86,15 @@ local function SetBloom(planet)
 	Bloom.col.b 	= planet.Col_b
 end
 
-// render.
+-- render.
 local function Render( )
 	if( Color_Enabled ) then
-		// draw colormod.
+		-- draw colormod.
 		DrawColorModify( ColorModify );
 	end
 	if( Bloom_Enabled ) then
-		// draw bloom.
-		//DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, colb )
+		-- draw bloom.
+		--DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, colb )
 		DrawBloom(
 			Bloom.darken, 
 			Bloom.multiply, 
@@ -110,23 +110,23 @@ local function Render( )
 end
 
 local function DrawSunEffects( )
-	// no pixel shaders? no sun effects!
-	if( !render.SupportsPixelShaders_2_0() ) then return; end
-	// render each star.
+	-- no pixel shaders? no sun effects!
+	if( not render.SupportsPixelShaders_2_0() ) then return; end
+	-- render each star.
 	for ent, Sun in pairs( stars ) do
-		// calculate brightness.
-		local entpos = Sun.Position //Sun.ent:LocalToWorld( Vector(0,0,0) )
+		-- calculate brightness.
+		local entpos = Sun.Position --Sun.ent:LocalToWorld( Vector(0,0,0) )
 		local dot = math.Clamp( EyeAngles():Forward():DotProduct( Vector( entpos - EyePos() ):Normalize() ), -1, 1 );
 		dot = math.abs(dot)
-		//local dist = Vector( entpos - EyePos() ):Length();
+		--local dist = Vector( entpos - EyePos() ):Length();
 		local dist = entpos:Distance(EyePos())/1.5
-		// draw sunbeams.
+		-- draw sunbeams.
 		local sunpos = EyePos() + Vector( entpos - EyePos() ):Normalize() * ( dist * 0.5 );
 		local scrpos = sunpos:ToScreen();
-		if( dist <= Sun.BeamRadius && dot > 0 ) then
+		if( dist <= Sun.BeamRadius and dot > 0 ) then
 			local frac = ( 1 - ( ( 1 / ( Sun.BeamRadius ) ) * dist ) ) * dot;
-			// draw sun.
-			//DrawSunbeams( darken, multiply, sunsize, sunx, suny )
+			-- draw sun.
+			--DrawSunbeams( darken, multiply, sunsize, sunx, suny )
 			DrawSunbeams(
 				0.95,
 				frac,
@@ -135,18 +135,18 @@ local function DrawSunEffects( )
 				scrpos.y / ScrH()
 			);
 		end
-		// can the sun see us?
+		-- can the sun see us?
 		local trace = {
 			start = entpos,
 			endpos = EyePos(),
 			filter = LocalPlayer(),
 		};
 		local tr = util.TraceLine( trace );
-		// draw!
-		if( dist <= Sun.Radius && dot > 0 && tr.Fraction >= 1 ) then
-			// calculate brightness.
+		-- draw!
+		if( dist <= Sun.Radius and dot > 0 and tr.Fraction >= 1 ) then
+			-- calculate brightness.
 			local frac = ( 1 - ( ( 1 / Sun.Radius ) * dist ) ) * dot;
-			// draw bloom.
+			-- draw bloom.
 			DrawBloom(
 				0.428, 
 				3 * frac, 
@@ -157,7 +157,7 @@ local function DrawSunEffects( )
 				1, 
 				1
 			);
-			/*DrawBloom(
+			--[[DrawBloom(
 				0, 
 				0.75 * frac, 
 				3 * frac, 3 * frac, 
@@ -166,8 +166,8 @@ local function DrawSunEffects( )
 				1, 
 				1, 
 				1
-			);*/
-			// draw color.
+			);]]
+			-- draw color.
 			local tab = {
 				['$pp_colour_addr']		= 0.35 * frac,
 				['$pp_colour_addg']		= 0.15 * frac,
@@ -179,7 +179,7 @@ local function DrawSunEffects( )
 				['$pp_colour_mulg']		= 0,
 				['$pp_colour_mulb']		= 0,
 			};
-			// draw colormod.
+			-- draw colormod.
 			DrawColorModify( tab );
 		end
 	end
@@ -225,7 +225,7 @@ local function recPlanet( msg )
 end
 usermessage.Hook( "AddPlanet", recPlanet );
 
-// receive sun information
+-- receive sun information
 local function recvSun( msg )
 	local ent = msg:ReadShort()
 	local tmpname = msg:ReadString()
@@ -235,8 +235,8 @@ local function recvSun( msg )
 		Ent = ents.GetByIndex(ent),
 		name = tmpname,
 		Position = position,
-		Radius = radius, // * 2
-		BeamRadius = radius * 1.5, //*3
+		Radius = radius, -- * 2
+		BeamRadius = radius * 1.5, --*3
 	}
 end
 usermessage.Hook( "AddStar", recvSun );
@@ -246,9 +246,9 @@ usermessage.Hook( "AddStar", recvSun );
 
 
 --The Class
-/**
+--[[
 	The Constructor for this Custom Addon Class
-*/
+]]
 function SB.__Construct()
 	hook.Add( "RenderScreenspaceEffects", "VFX_Render", Render );
 	hook.Add( "RenderScreenspaceEffects", "SunEffects", DrawSunEffects );
@@ -257,9 +257,9 @@ function SB.__Construct()
 	return true
 end
 
-/**
+--[[
 	The Destructor for this Custom Addon Class
-*/
+]]
 function SB.__Destruct()
 	hook.Remove( "RenderScreenspaceEffects", "VFX_Render");
 	hook.Remove( "RenderScreenspaceEffects", "SunEffects");
@@ -275,9 +275,9 @@ function SB.Space_Affect_Cl()
 	if not (ply and ply:IsValid() and ply:Alive()) then return end
 	local plypos = ply:LocalToWorld( Vector(0,0,0) )
 	for ent, p in pairs( planets ) do
-		local ppos = p.position //:LocalToWorld( Vector(0,0,0) )
+		local ppos = p.position --:LocalToWorld( Vector(0,0,0) )
 		if plypos:Distance(ppos) < p.radius then
-			if not ply.planet or ply.planet != ent then
+			if not ply.planet or ply.planet ~= ent then
 				ply:ChatPrint("Entering "..tostring(p.name))
 				SetBloom(p)
 				SetColor(p)
@@ -286,7 +286,7 @@ function SB.Space_Affect_Cl()
 			return
 		end
 	end
-	if (ply.planet != nil) then
+	if (ply.planet ~= nil) then
 		Color_Enabled = false
 		Bloom_Enabled = false
 		ply.planet = nil
@@ -294,45 +294,45 @@ function SB.Space_Affect_Cl()
 end
 --End
 
-/**
+--[[
 	Get the Boolean Status from this Addon Class
-*/
+]]
 function SB.GetStatus()
 	return status
 end
 
-/**
+--[[
 	Get the Version of this Custom Addon Class
-*/
+]]
 function SB.GetVersion()
 	return 3.1, CAF.GetLangVar("Beta")
 end
 
-/**
+--[[
 	Get any custom options this Custom Addon Class might have
-*/
+]]
 function SB.GetExtraOptions()
 	return {}
 end
 
-/**
+--[[
 	Gets a menu from this Custom Addon Class
-*/
-function SB.GetMenu(menutype, menuname)//Name is nil for main menu, String for others
+]]
+function SB.GetMenu(menutype, menuname) --Name is nil for main menu, String for others
 	local data = {}
 	return data
 end
 
-/**
+--[[
 	Get the Custom String Status from this Addon Class
-*/
+]]
 function SB.GetCustomStatus()
 	return
 end
 
-/**
+--[[
 	Returns a table containing the Description of this addon
-*/
+]]
 function SB.GetDescription()
 	return {
 				"Spacebuild Addon",

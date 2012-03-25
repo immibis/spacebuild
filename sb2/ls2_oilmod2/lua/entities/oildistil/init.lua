@@ -115,7 +115,7 @@ function ENT:Think()
 
 
 	-- We can only Crack if we are actually turned on right? lol
-	if (self.toggle == true || self.active == 1) then
+	if (self.toggle == true or self.active == 1) then
 		-- If we have more than 70 energy, We can heat up the coils to atmosphericly distil the oil
 		if (self.val4 > 70) then
 			-- But this can only be acheived if we actualy HAVE  oil :/
@@ -152,7 +152,7 @@ function ENT:OnRemove()
 	Dev_Unlink_All(self.Entity)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

@@ -92,12 +92,12 @@ end
 
 function ENT:Think()
 	
-	if self.AutoC && CurTime() > self.AutoCT then
+	if self.AutoC and CurTime() > self.AutoCT then
 		self.Entity:Close(self.Mode)
 		self.AutoC = false
 	end
 	
-	if self.Mode == 1 || self.Mode == 2 then
+	if self.Mode == 1 or self.Mode == 2 then
 		local A = math.Clamp( self.OTime - CurTime(), 0, 1 )
 		local F = 0
 		local S = 0
@@ -111,14 +111,14 @@ function ENT:Think()
 		local Alph = Lerp(A,F,S)
 		self.Entity:SetColor(255,255,255,Alph)
 		
-		if self.Mode == 2 && self.BTime > CurTime() then
-			if self.Panel && self.Panel:IsValid() then
+		if self.Mode == 2 and self.BTime > CurTime() then
+			if self.Panel and self.Panel:IsValid() then
 				self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * self.X + self.Entity:GetForward() * self.Y + self.Entity:GetUp() * self.Z)
 			end
 		end
 	end
 	
-	if self.Panel && self.Panel:IsValid() && !self.Panel.Blasted then
+	if self.Panel and self.Panel:IsValid() and !self.Panel.Blasted then
 		self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * self.X + self.Entity:GetForward() * self.Y + self.Entity:GetUp() * self.Z)
 		self.Panel.Blasted = true
 	end
@@ -169,7 +169,7 @@ function ENT:Open( mode )
 		self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.COp = true
 				
-		if self.Panel && self.Panel:IsValid() then
+		if self.Panel and self.Panel:IsValid() then
 			self.Panel:Remove()
 		end
 		

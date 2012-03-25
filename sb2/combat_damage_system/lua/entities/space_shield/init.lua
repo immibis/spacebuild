@@ -29,7 +29,7 @@ function ENT:Initialize()
 	self.LastUSUpdate = CurTime()
 	self.CDS_Allow_Heat = false
 	
-	if (WireAddon != nil) then
+	if (WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, {"On", "Disable Use", "Radius"})
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"On", "Disable Use", "Radius", "Coolant", "Energy", "Strength", "Max Strength"})
@@ -68,7 +68,7 @@ end
 function ENT:ChangeRadius(NewRadius)
 	self.Radius = NewRadius
 	self:SetNetworkedInt("Radius", self.Radius)
-	if (WireAddon != nil) then
+	if (WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Radius", self.Radius)
 	end
 end
@@ -89,7 +89,7 @@ end
 function ENT:UpdateStrength()
 	self.Strength = math.Round(self.Strength)
 	self.Entity:SetNetworkedBeamInt("str", self.Strength)	
-	if (WireAddon != nil) then
+	if (WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Strength", self.Strength)
 	end
 end
@@ -136,7 +136,7 @@ function ENT:ShieldCheckStuffTable(Check, Class, StrengthCheck)
 end
 
 function ENT:Think()
-	if (self.Active == 0 || !self:StrengthTimerCheck()) then
+	if (self.Active == 0 or !self:StrengthTimerCheck()) then
 		for k, v in pairs(self.ShieldedEnts) do
 			v.Shield = nil
 		end
@@ -144,7 +144,7 @@ function ENT:Think()
 	else
 		local Sphere = ents.FindInSphere(self.Entity:GetPos(), self.Radius)
 		for k, ent in pairs(Sphere) do
-			if (ent:IsValid() and !ent:IsWorld() and ent:GetClass() != "prop_dynamic" and !string.find(ent:GetClass(), "func_") and (ent:GetMoveType() != 0 and ent:GetSolid() != (0 || 6))) then
+			if (ent:IsValid() and !ent:IsWorld() and ent:GetClass() ~= "prop_dynamic" and !string.find(ent:GetClass(), "func_") and (ent:GetMoveType() ~= 0 and ent:GetSolid() ~= (0 or 6))) then
 				--Error("Class: "..ent:GetClass().."\n")
 				local StuffTblOpimitizationHackz = self:ShieldCheckStuffTable(2, ent:GetClass(), true)
 				if (string.find(string.lower(ent:GetClass()), string.lower("missile_")) == 1) and (ent.CreationTime - 0.05 >= CurTime()) then
@@ -247,7 +247,7 @@ function ENT:Think()
 		end
 	end
 	
-	if (WireAddon != nil) then
+	if (WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Coolant", Coolant)
 		Wire_TriggerOutput(self.Entity, "Energy", Energy)
 	end

@@ -50,7 +50,7 @@ function ENT:EndTouch(entity)
 		if true or self.Debugging then
 			Msg("...And has started touching our parent in unusual places....\n")
 		end
-	else //SPACE TEH BASTERD
+	else --SPACE TEH BASTERD
 		entity.IsInBrushEnv = false
 		SB_BrushEnvironments.SpaceEnt(entity)
 		if true or self.Debugging then
@@ -107,7 +107,7 @@ function ENT:AcceptInput(name, activator, caller, data)
 end
 
 function ENT:OnRemove()
-	if self.ID != -1 then
+	if self.ID ~= -1 then
 		SB_BrushEnvironments.Remove(self.ID)
 	end
 end

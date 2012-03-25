@@ -56,10 +56,10 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:Think()
-	if self.Vec && self.Vec:IsValid() then
+	if self.Vec and self.Vec:IsValid() then
 		local Ply = self.Vec:GetPassenger()
-		if Ply && Ply:IsValid() then
-			if (Ply:KeyDown( IN_RELOAD ) && Ply:KeyDown( IN_DUCK )) then
+		if Ply and Ply:IsValid() then
+			if (Ply:KeyDown( IN_RELOAD ) and Ply:KeyDown( IN_DUCK )) then
 				self.Entity:Launch()
 			end
 		end
@@ -81,19 +81,19 @@ function ENT:Touch( ent )
 end
 
 function ENT:Use( ply )
-	if self.Vec && self.Vec:IsValid() then
+	if self.Vec and self.Vec:IsValid() then
 		ply:EnterVehicle( self.Vec )
 	end
 end
 
 function ENT:Launch( )
-	if self.Vec && self.Vec:IsValid() then
+	if self.Vec and self.Vec:IsValid() then
 		local EPP = self.Entity:GetPos()
 		local VP = self.Vec:GetPos()
 		local Dist = EPP:Distance(VP)
 		if Dist <= 3500 then
 			local Ply = self.Vec:GetPassenger()
-			if Ply && Ply:IsValid() then
+			if Ply and Ply:IsValid() then
 				local NPod = ents.Create( "prop_vehicle_prisoner_pod" )
 				if ( !NPod:IsValid() ) then return end
 				NPod:SetModel( "models/SmallBridge/Vehicles/SBVdroppod1.mdl" )
@@ -139,7 +139,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 
-	if self.Vec && self.Vec:IsValid() then
+	if self.Vec and self.Vec:IsValid() then
 	    DI.Vec = self.Vec:EntIndex()
 	end
 	

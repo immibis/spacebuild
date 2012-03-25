@@ -2,7 +2,7 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 
 include('shared.lua')
-//Todo: Add Cooldown? = toWater
+--Todo: Add Cooldown? = toWater
 function ENT:Initialize()
 	self.BaseClass.Initialize(self)
 	self.damaged = 0
@@ -19,7 +19,7 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Vent") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.vent = false
 		else
 			self.vent = true
@@ -37,20 +37,20 @@ function ENT:OnRemove()
 		self.environment:Convert(-1, 3, H)
 		self.environment:Convert(-1, 0, O2)
 	end
-	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 end
 
 function ENT:Damage()
 	if (self.damaged == 0) then
 		self.damaged = 1
-		self.Entity:EmitSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+		self.Entity:EmitSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	end
 end
 
 function ENT:Repair()
 	self.BaseClass.Repair(self)
 	self.Entity:SetColor(255, 255, 255, 255)
-	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+	self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	self.damaged = 0
 end
 
@@ -76,17 +76,17 @@ function ENT:Leak()
 			self.environment:Convert(-1, 3, H)
 			self.environment:Convert(-1, 0, O2)
 		end
-		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )//Change to a new air Vent/Escaping Sound
+		self.Entity:StopSound( "PhysicsCannister.ThrusterLoop" )--Change to a new air Vent/Escaping Sound
 	end
 end
 
 function ENT:UpdateMass()
 	local mul = 0.02
 	local div = math.Round(self:GetNetworkCapacity("steam")/self.MAXRESOURCE)
-	local mass = self.mass + ((self:GetResourceAmount("steam") * mul)/div) // self.mass = default mass + need a good multiplier
+	local mass = self.mass + ((self:GetResourceAmount("steam") * mul)/div) -- self.mass = default mass + need a good multiplier
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
-		if phys:GetMass() != mass then
+		if phys:GetMass() ~= mass then
 			phys:SetMass(mass)
 			phys:Wake()
 		end

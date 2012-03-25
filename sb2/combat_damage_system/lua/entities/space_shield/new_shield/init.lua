@@ -29,7 +29,7 @@ function ENT:Initialize()
 	self.LastUSUpdate = CurTime()
 	self.CDS_Allow_Heat = false
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, {"On", "Disable Use", "Radius"})
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"On", "Disable Use", "Radius", "Coolant", "Energy", "Strength", "Max Strength"})
@@ -84,7 +84,7 @@ function ENT:ChangeRadius(NewRadius)
 	if(self.EmitEnt and self.EmitEnt:IsValid()) then
 		self.EmitEnt:SetNetworkedInt("Radius", self.Radius)
 	end
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Radius", self.Radius)
 	end
 end
@@ -104,7 +104,7 @@ end
 function ENT:UpdateStrength()
 	self.Strength = math.Round(self.Strength)
 	self.Entity:SetNetworkedBeamInt("str", self.Strength)	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Strength", self.Strength)
 	end
 end
@@ -129,7 +129,7 @@ function ENT:SetShieldedEnts(tbl)
 end
 
 function ENT:Think()
-	if(self.Active == 0 || !self:StrengthTimerCheck()) then
+	if(self.Active == 0 or !self:StrengthTimerCheck()) then
 		for k, v in pairs(self.ShieldedEnts) do
 			v.Shield = nil
 		end
@@ -195,7 +195,7 @@ function ENT:Think()
 		end
 	end
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		Wire_TriggerOutput(self.Entity, "Coolant", Coolant)
 		Wire_TriggerOutput(self.Entity, "Energy", Energy)
 	end

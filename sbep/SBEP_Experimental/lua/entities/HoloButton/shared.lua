@@ -38,7 +38,7 @@ function ENT:GetHighlighted()
 end
 
 function ENT:AddHValue( iVal )
-	if iVal >= 0 && iVal < 10 then
+	if iVal >= 0 and iVal < 10 then
 		self.dt.iValue = self.dt.iValue + iVal2
 	end
 end

@@ -93,7 +93,7 @@ function ENT:GenEnergy()
 				SunAngle:Normalize()
 				local startpos = (entpos - (SunAngle * 4096))
 				trace.start = startpos
-				trace.endpos = entpos //+ Vector(0,0,30)
+				trace.endpos = entpos --+ Vector(0,0,30)
 				local tr = util.TraceLine( trace )
 				if (tr.Hit) then
 					if (tr.Entity == self) then
@@ -136,7 +136,7 @@ function ENT:GenEnergy()
 		end
 		local SUN_POS = (entpos - (SunAngle2 * 4096))
 		--[[trace.start = startpos
-		trace.endpos = entpos //+ Vector(0,0,30)
+		trace.endpos = entpos --+ Vector(0,0,30)
 		local tr = util.TraceLine( trace )
 		if (tr.Hit) then
 			if (tr.Entity == self) then
@@ -169,7 +169,7 @@ function ENT:GenEnergy()
 				--solar panel is being blocked
 			end
 		end
-		self:TurnOff() //No Sunbeams in sight so turn Off
+		self:TurnOff() --No Sunbeams in sight so turn Off
 	end
 end
 

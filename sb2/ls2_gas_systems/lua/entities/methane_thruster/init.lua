@@ -191,7 +191,7 @@ end
 	self.BaseClass.Think(self)
 	self.methanecon = math.abs(math.ceil(self.force/self.methanediv))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "methane", self.methanecon)
 		self.outputon = 1
 	else

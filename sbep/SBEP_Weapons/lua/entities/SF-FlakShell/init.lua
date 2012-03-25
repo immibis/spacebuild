@@ -56,7 +56,7 @@ function ENT:Think()
 		self.PreLaunch = true
 	end
 	
-	if (self.Exploded != true) then
+	if (self.Exploded ~= true) then
 		self.Entity:SetAngles(self.CAng)
 	end
 	
@@ -80,7 +80,7 @@ function ENT:Think()
 		
 		if targets then
 			for _,i in pairs(targets) do
-				if i:GetPhysicsObject() && i:GetPhysicsObject():IsValid() && i:GetPhysicsObject():GetMass() > 0 && i:GetClass() != self.Entity:GetClass() && i:GetClass() != "wreckedstuff" then
+				if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and i:GetPhysicsObject():GetMass() > 0 and i:GetClass() ~= self.Entity:GetClass() and i:GetClass() ~= "wreckedstuff" then
 					TFound = TFound + 1
 				end
 			end

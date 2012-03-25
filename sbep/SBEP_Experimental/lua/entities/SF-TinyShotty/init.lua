@@ -49,7 +49,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if !(self.Active == true || self.FTime > CurTime()) then
+			if !(self.Active == true or self.FTime > CurTime()) then
 				self.NFTime = CurTime() + math.Rand(0,0.6)
 			end
 			self.Active = true
@@ -66,7 +66,7 @@ end
 
 function ENT:Think()
 	
-	if ((self.Active == true || self.FTime > CurTime()) && CurTime() >= self.NFTime ) then
+	if ((self.Active == true or self.FTime > CurTime()) and CurTime() >= self.NFTime ) then
 		local vStart = self.Entity:GetPos()-- + (self.Entity:GetForward() * 20) + (self.Entity:GetUp() * BUp) + (self.Entity:GetRight() * BRi)
 		local vForward = self.Entity:GetForward()
 		
@@ -85,7 +85,7 @@ function ENT:Think()
 			if (tr.Entity and tr.Entity:IsValid()) then
 				local  gdmg = math.random(5,10)
 				attack = cbt_dealdevhit(tr.Entity, gdmg, 5)
-				if (attack != nil) then
+				if (attack ~= nil) then
 					if (attack == 2) then
 						local wreck = ents.Create( "wreckedstuff" )
 						wreck:SetModel( tr.Entity:GetModel() )
@@ -136,12 +136,12 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
-	if !(self.Active == true || self.FTime > CurTime()) then
+	if !(self.Active == true or self.FTime > CurTime()) then
 		self.NFTime = CurTime() + math.Rand(0,0.6)
 	end
 	self.FTime = CurTime() + 0.1

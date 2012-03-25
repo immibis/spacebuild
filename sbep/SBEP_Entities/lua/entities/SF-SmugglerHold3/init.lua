@@ -92,14 +92,14 @@ end
 /*
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 		self.Entity:SetParent()
 	end
 end
 
 function ENT:HPFire()
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		self.HP[1]["Ent"]:HPFire()
 	end
 end

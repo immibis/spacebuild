@@ -86,7 +86,7 @@ function ENT:TriggerInput(iname, value)
 		
 	elseif (iname == "Angle") then
 		self.MAngle = value
-		if value != Angle(0,0,0) then
+		if value ~= Angle(0,0,0) then
 			self.Angling = true
 		else
 			self.Angling = true
@@ -139,12 +139,12 @@ function ENT:Think()
 	self.Vert = 0
 
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
-		if (self.Stance < 3) || (self.Stance == 3 && !self.TFound) then
-			if self.MVec != Vector(0,0,0) then
+		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
+			if self.MVec ~= Vector(0,0,0) then
 				local MDist = self.Entity:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
 					self.WaypointReached = 1
-					if self.Angling then--self.MAngle != Angle(0,0,0) then
+					if self.Angling then--self.MAngle ~= Angle(0,0,0) then
 						self.Pitch = math.AngleDifference(self.Entity:GetAngles().p,self.MAngle.p) * -0.01
 						self.Roll = math.AngleDifference(self.Entity:GetAngles().r,self.MAngle.r) * -0.01
 						self.Yaw = math.AngleDifference(self.Entity:GetAngles().y,self.MAngle.y) * -0.01
@@ -160,7 +160,7 @@ function ENT:Think()
 					self.Entity:SpeedFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetForward() )
 				end
 			end
-		elseif self.Stance == 3 && self.TFound then
+		elseif self.Stance == 3 and self.TFound then
 			local MDist = self.Entity:GetPos():Distance(self.TVec)
 			if MDist > 1000 then
 				self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
@@ -169,7 +169,7 @@ function ENT:Think()
 				local HighP = 0
 				local MainG = 0
 				for k,e in pairs( self.Weaponry ) do
-					if e && e:IsValid() && e.Priority > 0 && e.Priority > HighP then
+					if e and e:IsValid() and e.Priority > 0 and e.Priority > HighP then
 						HighP = e.Priority
 						MainG = k
 					end
@@ -222,7 +222,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent:GetClass() == "gyropod_advanced" && (!self.Gyro || !self.Gyro:IsValid()) then
+	if ent:GetClass() == "gyropod_advanced" and (!self.Gyro or !self.Gyro:IsValid()) then
 		--Speed
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "SpeedAbs", "cable/cable2", Color(0,0,0,0), 0)
 		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Forward", self.SPL)

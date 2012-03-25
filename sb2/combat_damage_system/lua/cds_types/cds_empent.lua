@@ -5,12 +5,12 @@ time = the amount of time before the entitie restores itself automaticaly
 		* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * /
 
 local function resetempforce(ent, power)
-	if ! ent:IsValid() then return end
+	if  not  ent:IsValid() then return end
 	ent:SetForce(power)
 end
 
 local function resetempspeed(ent, speed)
-	if ! ent:IsValid() then return end
+	if  not  ent:IsValid() then return end
 	ent:SetSpeed(speed)
 end
 
@@ -48,7 +48,7 @@ function cds_empent(ent, time)
 	elseif ent:GetClass() == "gmod_wheel" then
 		local torq = ent.BaseTorque
 		local torq2 = ent.BaseTorque * ent.TorqueScale
-		if torq2 ! = 0 then
+		if torq2 ~= 0 then
 		timer.Simple(time, resetemptorq, ent, torq, torq2)
 		ent:SetBaseTorque(1)
 		ent:SetTorque(0)
@@ -56,14 +56,14 @@ function cds_empent(ent, time)
 		EMPed = true
 	elseif ent:GetClass() == "gmod_thruster" then
 		local power = ent.force
-		if power ! = 0 then
+		if power ~= 0 then
 		timer.Simple(time, resetempforce, ent, power)
 		ent:SetForce(0)
 		end
 		EMPed = true
 	elseif ent:GetClass() == "gmod_hoverball" then
 		local speed = ent:GetSpeed()
-		if speed ! = 0 then
+		if speed ~= 0 then
 		ent:SetSpeed(0)
 		timer.Simple(time, resetempspeed, ent, speed)
 		end

@@ -3,7 +3,7 @@ local LS = {}
 local status = false
 
 --Stuff that can't be disabled
-CreateConVar( "LS_AllowNukeEffect", "1" ) //Update to something changeable later on 
+CreateConVar( "LS_AllowNukeEffect", "1" ) --Update to something changeable later on
 --end 
 
 --Local Functions
@@ -107,8 +107,8 @@ function LS.__Construct()
 		SB.AddPlayerOverride()
 		SB.AddOverride_PlayerHeatDestroy()
 	end
-	//SB_PlayerOverride = true
-	//SB_Override_PlayerHeatDestroy = true
+	--SB_PlayerOverride = true
+	--SB_Override_PlayerHeatDestroy = true
 	hook.Add( "PlayerSpawnedVehicle", "LS_vehicle_spawn", LS_Reg_Veh )
 	if (SunAngle == nil) then SunAngle = Vector(0,0,-1) end
 	for k, ply in pairs(player.GetAll( )) do
@@ -211,26 +211,26 @@ CAF.RegisterAddon("Life Support", LS, "2")
 function LS.AddAirRegulator(ent)
 	if ent.GetLSClass and ent:GetLSClass() == "air exchanger" then
 		if table.insert(LS.generators.air, ent) then
-		//table.insert(LS.generators.air, ent)
-		//	Msg("Added Air Exchanger\n");
+		--table.insert(LS.generators.air, ent)
+		--	Msg("Added Air Exchanger\n");
 			return true
 		end
-		//Msg("Not Added Air Exchanger\n");
+		--Msg("Not Added Air Exchanger\n");
 	end
-	//Msg("Not Added Air Exchanger\n");
+	--Msg("Not Added Air Exchanger\n");
 	return false
 end
 
 function LS.AddTemperatureRegulator(ent)
 	if ent.GetLSClass and ent:GetLSClass() == "temperature exchanger" then
 		if table.insert(LS.generators.temperature, ent) then
-		//table.insert(LS.generators.temperature, ent)
-			//Msg("Added Temp Exchanger\n");
+		--table.insert(LS.generators.temperature, ent)
+			--Msg("Added Temp Exchanger\n");
 			return true
 		end
-		//Msg("Not Added temp Exchanger\n");
+		--Msg("Not Added temp Exchanger\n");
 	end
-	//Msg("Not Added temp Exchanger\n");
+	--Msg("Not Added temp Exchanger\n");
 	return false
 end
 
@@ -402,7 +402,7 @@ function Ply:LsCheck()
 		local SB = CAF.GetAddon("Spacebuild")
 		if SB and SB.GetStatus() then
 			local space = SB.GetSpace()
-			local environment = space //restore to default before doing the Environment checks
+			local environment = space --restore to default before doing the Environment checks
 			local oldenvironment = self.environment
 			for k, v in pairs(SB.GetPlanets()) do
 				if v and v:IsValid() then
@@ -428,10 +428,10 @@ function Ply:LsCheck()
 					table.remove(Environments, k)
 				end
 			end
-			if oldenvironment != environment then
+			if oldenvironment ~= environment then
 				self.environment = environment
 				SB.OnEnvironmentChanged(self)
-			elseif oldenvironment != self.environment then
+			elseif oldenvironment ~= self.environment then
 				self.environment = oldenvironment
 			end
 			self.environment:UpdateGravity(self)

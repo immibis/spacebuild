@@ -120,7 +120,7 @@ end
 function CDS_GetHAFromMatType(mattype, ent, health)
 	local phys = ent:GetPhysicsObject()
 	local mass = phys:GetMass()
-	local multi = 1 //Default multiplier
+	local multi = 1 --Default multiplier
 	if not mattype then
 		multi = CDS_PHXMatCheck(ent)
 	elseif mattype == MAT_CONCRETE then

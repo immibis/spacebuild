@@ -33,7 +33,7 @@ self.aHealth = self.aHealth - dmg:GetDamage()
 end
 
 
-	if self.aHealth <= 0 && self.val1 > 1000  then 
+	if self.aHealth <= 0 and self.val1 > 1000  then
 		
 	
 		local Effect = EffectData()
@@ -73,7 +73,7 @@ function ENT:OnRemove()
 	Dev_Unlink_All(self.Entity)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

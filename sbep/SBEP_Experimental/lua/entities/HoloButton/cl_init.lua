@@ -124,7 +124,7 @@ function ENT:DrawTranslucent()
 			local N = up
 			local AVec = LocalPlayer():GetAimVector()
 			local mx,my = gui.MousePos()
-			if mx > 0 || my > 0 then
+			if mx > 0 or my > 0 then
 				AVec = gui.ScreenToVector( gui.MousePos() )
 			end
 			local U = AVec--LocalPlayer():GetAimVector()
@@ -165,7 +165,7 @@ function ENT:DrawTranslucent()
 				else
 					Value = self.CString
 				end
-				if RX >= -85 && RX <= 85 && RY >= -85 && RY <= -50 then
+				if RX >= -85 and RX <= 85 and RY >= -85 and RY <= -50 then
 					draw.RoundedBox( 6, -85, -85, 170, 35, KColH )
 						local mc = math.Max( self.R, self.G, self.B)
 						r,g,b = self:ScaleColor( 1/mc )
@@ -185,7 +185,7 @@ function ENT:DrawTranslucent()
 				
 				for label,B in pairs( self.Buttons ) do
 					local XY = B:GetPos()
-					if RX >= XY.x-17.5 && RX <= XY.x+17.5 && RY >= XY.y-17.5 && RY <= XY.y+17.5 then
+					if RX >= XY.x-17.5 and RX <= XY.x+17.5 and RY >= XY.y-17.5 and RY <= XY.y+17.5 then
 						B:SetHL( true )
 						B:SetHAlpha( Alpha * 200 )
 						B:Draw()
@@ -210,7 +210,7 @@ function ENT:DrawTranslucent()
 				
 				/*for y,Row in pairs( self.Boxes ) do
 					for label,x in pairs( Row ) do
-						if RX >= x-17.5 && RX <= x+17.5 && RY >= y-17.5 && RY <= y+17.5 then
+						if RX >= x-17.5 and RX <= x+17.5 and RY >= y-17.5 and RY <= y+17.5 then
 							draw.RoundedBox( 12, x-17.5, y-17.5, 35, 35, KColH )
 								local mc = math.Max( self.R, self.G, self.B)
 								r,g,b = self:ScaleColor( 1/mc )
@@ -244,7 +244,7 @@ function ENT:DrawTranslucent()
 					
 					--print(Highlight,self:GetHighlighted())
 					
-					if Highlight != self:GetHighlighted() && Highlight != -1 then
+					if Highlight ~= self:GetHighlighted() and Highlight ~= -1 then
 						self:SetHighlighted( Highlight )
 					end
 				--end
@@ -262,7 +262,7 @@ function ENT:Think()
 
 	local plypos = self:WorldToLocal( LocalPlayer():GetShootPos() )
 
-	if plypos.x >= -100 && plypos.x <= 100 && plypos.y >= -100 && plypos.y <= 100 && plypos.z >= 0 && plypos.z <= 100 && YDif <= 30 && PDif <= 30 then
+	if plypos.x >= -100 and plypos.x <= 100 and plypos.y >= -100 and plypos.y <= 100 and plypos.z >= 0 and plypos.z <= 100 and YDif <= 30 and PDif <= 30 then
 		if self.PermA then
 			self.IncZ = 15
 			self.Inc  = 10
@@ -273,26 +273,26 @@ function ENT:Think()
 				self.Inc = math.Approach(self.Inc, 10, .2)
 			end
 		end
-		if self.IncZ >= 15 && self.Inc >= 10 && self.Alpha < 1 then
+		if self.IncZ >= 15 and self.Inc >= 10 and self.Alpha < 1 then
 			self.Alpha = math.Approach(self.Alpha, 1, .05)
 			if !self.Persist then
 				self.CString = ""
 			end
 		end
 		
-		if LocalPlayer():KeyPressed( IN_USE ) || (input.IsMouseDown(MOUSE_FIRST) && !self.MTog) then
+		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and !self.MTog) then
 			self.MTog = true
 			local val = self:GetHighlighted()
 			if val == 10 then
 				self.CString = ""
 			elseif val == 11 then
 				RunConsoleCommand( "HoloPadSetVar" , self:EntIndex() , self.CString )
-					if self.CLDelay || self.CLDelay < 0 then
+					if self.CLDelay or self.CLDelay < 0 then
 						timer.Simple( self.CLDelay, function() self.CString = "" end)
 					end
 				self.PulseTime = CurTime()
 			else
-				if val >= 0 && val <= 9 then
+				if val >= 0 and val <= 9 then
 					if string.len( self.CString ) <= 22 then -- 22 seems a reasonable length. Quite generous, in fact...
 						self.CString = self.CString..tostring(val)
 					end

@@ -47,10 +47,10 @@ function ENT:GetTemperature(ent)
 		return self.sbenvironment.temperature/3
 	elseif dist < self:GetSize() * 2/3 then
 		return self.sbenvironment.temperature/6
-	elseif self.sbenvironment.temperature/12 <= 14 then //Check that it isn't colder then Space, else return Space temperature
+	elseif self.sbenvironment.temperature/12 <= 14 then --Check that it isn't colder then Space, else return Space temperature
 		return 14
 	end
-	return self.sbenvironment.temperature/12 //All other checks failed, player is the farest away from the star, but temp is still warmer then space, return that temperature
+	return self.sbenvironment.temperature/12 --All other checks failed, player is the farest away from the star, but temp is still warmer then space, return that temperature
 end
 
 function ENT:GetPriority()
@@ -60,16 +60,16 @@ end
 local function SendSunBeam(ent)
 	for k, ply in pairs(player.GetAll()) do
 		umsg.Start( "AddStar", ply )
-			//umsg.Entity( ent ) //planet.num
+			--umsg.Entity( ent ) --planet.num
 			umsg.Short( ent:EntIndex())
-			umsg.Angle( ent:GetPos() ) //planet.num
+			umsg.Angle( ent:GetPos() ) --planet.num
 			umsg.Float( ent.sbenvironment.size )
 		umsg.End()
 	end
 end
 
 function ENT:CreateEnvironment(ent, radius)
-	if not ent then self:Remove() end //needs a parent!
+	if not ent then self:Remove() end --needs a parent!
 	self:SetParent(ent)
 	if radius and type(radius) == "number" then
 		if radius < 0 then

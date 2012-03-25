@@ -20,7 +20,7 @@ function ENT:Initialize()
 		Phys:Wake()
 	end
 	
-	if(WireAddon != nil) then
+	if(WireAddon ~= nil) then
 		self.WireDebugName = self.PrintName
 		self.Outputs = Wire_CreateOutputs(self.Entity, {"Resource Amount"})
 		Wire_TriggerOutput(self.Entity, "Resource Amount", self.MaxAmount)
@@ -47,7 +47,7 @@ end
 
 
 function ENT:OnRemove()
-	//self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
+	--self.BaseClass.OnRemove(self) --use this if you have to use OnRemove
 	CAF.GetAddon("Resource Distribution").Unlink(self)
 	CAF.GetAddon("Resource Distribution").RemoveRDEntity(self)
 	if not (WireAddon == nil) then Wire_Remove(self.Entity) end

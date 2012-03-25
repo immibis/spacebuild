@@ -116,7 +116,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity ) 
 			ent.Cont.MineProof = true
 			ent.MineProof = true

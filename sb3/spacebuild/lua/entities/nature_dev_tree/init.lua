@@ -15,7 +15,7 @@ function ENT:AcceptInput(name,activator,caller)
 end
 
 function ENT:SetRate(rate, setmodel)
-	//Add Various models depending on the rate!
+	--Add Various models depending on the rate!
 	rate = rate or 0
 	--
 	if setmodel then
@@ -26,7 +26,7 @@ function ENT:SetRate(rate, setmodel)
 end
 
 function ENT:OnTakeDamage(DmgInfo)
-	//Don't take damage?
+	--Don't take damage?
 end
 
 function ENT:Think()

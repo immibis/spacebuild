@@ -83,12 +83,12 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
-	if (!self.Fired && self.Faust && self.Faust:IsValid()) then
+	if (!self.Fired and self.Faust and self.Faust:IsValid()) then
 		self.Faust:SetParent()
 		constraint.RemoveConstraints( self.Faust, "Weld" )
 		self.Faust.PhysObj:SetVelocity(self.Entity:GetForward() * 5000)

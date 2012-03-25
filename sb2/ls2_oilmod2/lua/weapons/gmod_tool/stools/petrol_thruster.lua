@@ -33,10 +33,10 @@ end
 
 function TOOL:RightClick( trace )
 	
-	if trace.Entity && trace.Entity:IsPlayer() then return false end 
+	if trace.Entity and trace.Entity:IsPlayer() then return false end
  	 
- 	// If there's no physics object then we can't constraint it! 
- 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end 
+ 	-- If there's no physics object then we can't constraint it!
+ 	if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
  	 
  	if (CLIENT) then return true end 
 	
@@ -59,7 +59,7 @@ function TOOL:RightClick( trace )
  	if ( !self:GetSWEP():CheckLimit( "petrol_thrusters" ) ) then return false end 
    
  	if (!util.IsValidModel(model)) then return false end 
- 	if (!util.IsValidProp(model)) then return false end		// Allow ragdolls to be used? 
+ 	if (!util.IsValidProp(model)) then return false end		-- Allow ragdolls to be used?
    
     local pos = trace.Entity:GetPos()
 	local ang = trace.Entity:GetAngles()
@@ -93,10 +93,10 @@ function TOOL:RightClick( trace )
 
 function TOOL:LeftClick( trace ) 
    
- 	if trace.Entity && trace.Entity:IsPlayer() then return false end 
+ 	if trace.Entity and trace.Entity:IsPlayer() then return false end
  	 
- 	// If there's no physics object then we can't constraint it! 
- 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end 
+ 	-- If there's no physics object then we can't constraint it!
+ 	if ( SERVER and !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
  	 
  	if (CLIENT) then return true end 
  	 
@@ -112,8 +112,8 @@ function TOOL:LeftClick( trace )
  	local damageable	= self:GetClientNumber( "damageable" )  
  	local sound			= self:GetClientNumber( "sound" )  
  	 
- 	// If we shot another petrol thruster change its force 
- 	if ( trace.Entity:IsValid() && trace.Entity:GetClass() == "petrol_thruster" && trace.Entity.pl == ply ) then 
+ 	-- If we shot another petrol thruster change its force
+ 	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == "petrol_thruster" and trace.Entity.pl == ply ) then
    
  		trace.Entity:SetForce( force ) 
  		trace.Entity:SetEffect( effect ) 
@@ -131,7 +131,7 @@ function TOOL:LeftClick( trace )
  	if ( !self:GetSWEP():CheckLimit( "petrol_thrusters" ) ) then return false end 
    
  	if (!util.IsValidModel(model)) then return false end 
- 	if (!util.IsValidProp(model)) then return false end		// Allow ragdolls to be used? 
+ 	if (!util.IsValidProp(model)) then return false end		-- Allow ragdolls to be used?
    
  	local Ang = trace.HitNormal:Angle() 
  	Ang.pitch = Ang.pitch + 90 
@@ -143,12 +143,12 @@ function TOOL:LeftClick( trace )
  	 
  	local const, nocollide 
  	 
- 	// Don't weld to world 
+ 	-- Don't weld to world
  	if ( trace.Entity:IsValid() ) then 
  	 
  		const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision == 0, true ) 
  		 
- 		// Don't disable collision if it's not attached to anything 
+ 		-- Don't disable collision if it's not attached to anything
  		if ( collision == 0 ) then  
  		 
  			thruster:GetPhysicsObject():EnableCollisions( false ) 
@@ -236,7 +236,7 @@ function TOOL:UpdateGhostpetrolThruster( ent, player )
 	local trace 	= util.TraceLine( tr )
 	if (!trace.Hit) then return end
 	
-	if (trace.Entity && trace.Entity:GetClass() == "petrol_thruster" || trace.Entity:IsPlayer()) then
+	if (trace.Entity and trace.Entity:GetClass() == "petrol_thruster" or trace.Entity:IsPlayer()) then
 	
 		ent:SetNoDraw( true )
 		return
@@ -257,7 +257,7 @@ end
 
 function TOOL:Think()
 
-	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != self:GetClientInfo( "model" )) then
+	if (!self.GhostEntity or !self.GhostEntity:IsValid() or self.GhostEntity:GetModel() ~= self:GetClientInfo( "model" )) then
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector(0,0,0), Angle(0,0,0) )
 	end
 	

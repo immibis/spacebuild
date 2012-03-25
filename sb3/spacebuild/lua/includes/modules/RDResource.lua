@@ -1,11 +1,11 @@
-//=============================================================================//
-// 			Addon: CAF
-// 			Author: SnakeSVx									 
-//			Version: 0.1
-//
-//  A module for ResourceData for use with both RDEntityData as an RDNetwork
-//
-//=============================================================================//
+--=============================================================================--
+-- 			Addon: CAF
+-- 			Author: SnakeSVx
+--			Version: 0.1
+--
+--  A module for ResourceData for use with both RDEntityData as an RDNetwork
+--
+--=============================================================================--
 
 local table 	= table
 local setmetatable 	= setmetatable

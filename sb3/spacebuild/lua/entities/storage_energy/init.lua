@@ -18,7 +18,7 @@ end
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Vent") then
-		if (value != 1) then
+		if (value ~= 1) then
 			self.vent = false
 		else
 			self.vent = true

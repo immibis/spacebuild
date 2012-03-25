@@ -8,7 +8,7 @@ if not (WireAddon == nil) then
 end
 
 function ENT:Initialize()
-	self.Entity:SetModel("models//props_wasteland/laundry_washer001a.mdl")
+	self.Entity:SetModel("models/props_wasteland/laundry_washer001a.mdl")
     self.BaseClass.Initialize(self)
 	self.Entity:SetColor(127,127,127, 255)
 
@@ -22,7 +22,7 @@ function ENT:Initialize()
 
 	if not (WireAddon == nil) then self.Outputs = Wire_CreateOutputs(self.Entity, { "Natural Gas", "Max Natural Gas" }) end
 	
-	//self.timer = CurTime() +  1
+	--self.timer = CurTime() +  1
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:SetMass(400)

@@ -51,19 +51,19 @@ function ENT:Think()
 	local Time = ( (CurTime() - self.STime - self.PreSplode) / (self.Time - self.PreSplode) )
 	local Alpha = math.Clamp((255 - (Time * 255)) - 50,0,255)
 	local Sz = ((Time * 2) + (Alpha * 0.001) - 0.201) * 7000
-	if T >= 4.5 && T <= 11.5 && CurTime() >= self.NFT then
+	if T >= 4.5 and T <= 11.5 and CurTime() >= self.NFT then
 		self.NFT = CurTime() + 0.1
 		local Targets = ents.FindInSphere( self:GetPos(), Sz)
 		
 		for _,e in pairs(Targets) do
-			if e && e:IsValid() && e:GetClass() != "wreckedstuff" then
+			if e and e:IsValid() and e:GetClass() ~= "wreckedstuff" then
 				--print(e:GetClass())
 				local ZD = math.abs(e:GetPos().z - self:GetPos().z)
 				local Dmg = (1500 - ZD) * 3
 				if Dmg > 0 then
 					e:TakeDamage( Dmg, self, self )
 					attack = cbt_dealdevhit(e, Dmg, 8)
-					if (attack != nil) then
+					if (attack ~= nil) then
 						if (attack == 2) then
 							/*
 							local wreck = ents.Create( "wreckedstuff" )

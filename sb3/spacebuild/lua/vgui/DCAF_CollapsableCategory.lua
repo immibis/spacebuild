@@ -44,10 +44,10 @@ function PANEL:PerformLayout()
 	self:SetTall(72)
 end
 
-//PANEL.ExtraButtonAction = nil;
-//function PANEL:SetExtraButtonAction(actionFunction)
-//	self.ExtraButtonAction = actionFunction;
-//end
+--PANEL.ExtraButtonAction = nil;
+--function PANEL:SetExtraButtonAction(actionFunction)
+--	self.ExtraButtonAction = actionFunction;
+--end
 
 function PANEL:Setup( name, addon )
 	local status = false;
@@ -56,9 +56,9 @@ function PANEL:Setup( name, addon )
 	self.Button:SetText("Enable");
 	function self.Button:DoClick()
 		RunConsoleCommand("CAF_Addon_Construct", name)
-		//if self.ExtraButtonAction then
-		//	pcall(self.ExtraButtonAction);
-		//end
+		--if self.ExtraButtonAction then
+		--	pcall(self.ExtraButtonAction);
+		--end
 	end
 	local customstatus = "";
 	local version = "0";
@@ -76,9 +76,9 @@ function PANEL:Setup( name, addon )
 			self.Button:SetText("Disable");
 			function self.Button:DoClick()
 				RunConsoleCommand("CAF_Addon_Destruct", name)
-				//if self.ExtraButtonAction then
-				//	pcall(self.ExtraButtonAction);
-				//end
+				--if self.ExtraButtonAction then
+				--	pcall(self.ExtraButtonAction);
+				--end
 			end
 		end
 	end
@@ -89,7 +89,7 @@ function PANEL:Setup( name, addon )
 	
 	self.Name:SetText( name )
 	local statusstring = tostring(statustext);
-	if customstatus and customstatus != "" then
+	if customstatus and customstatus ~= "" then
 		statusstring = statusstring.." ("..tostring(customstatus)..")"
 	end
 	self.Status:SetText( statusstring )
@@ -170,9 +170,9 @@ function PANEL:Think()
 
 end
 
-//function PANEL:SetExtraButtonAction(actionFunction)
-//	self.Header = actionFunction;
-//end
+--function PANEL:SetExtraButtonAction(actionFunction)
+--	self.Header = actionFunction;
+--end
 
 /*---------------------------------------------------------
 	Paint
@@ -255,7 +255,7 @@ function PANEL:PerformLayout()
 		
 	end
 	
-	// Make sure the color of header text is set
+	-- Make sure the color of header text is set
 	self.Header:ApplySchemeSettings()
 	
 	self.animSlide:Run()
@@ -320,7 +320,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:SetSize( 300, 300 )
 		ctrl:SetPadding( 10 )
 		
-		// The contents can be any panel, even a DPanelList
+		-- The contents can be any panel, even a DPanelList
 		local Contents = vgui.Create( "DButton" )
 		Contents:SetText( "This is the content of the control" )
 		ctrl:SetContents( Contents )

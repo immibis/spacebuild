@@ -349,7 +349,7 @@ function ENT:Think()
 			self.entorpod:EmitSound( "buttons/combine_button3.wav" )
 			self.AimSound = true
 		end
-		if self.SystemOn || (joystick && joystick.Get(self.CPL, "gyro_launch")) then
+		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
 			self:AimByTarPos()
 		end	
 	else 
@@ -363,8 +363,8 @@ function ENT:Think()
 			self.entorpod:EmitSound( "buttons/combine_button2.wav" )
 			self.AimSound = false
 		end
-		if self.SystemOn || (joystick && joystick.Get(self.CPL, "gyro_launch")) then
-			if (self.GyroDriver && self.GyroDriver:IsValid()) then  
+		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
+			if (self.GyroDriver and self.GyroDriver:IsValid()) then
 				if (joystick) then
 					self:UseJoystick()
 				else 
@@ -378,12 +378,12 @@ function ENT:Think()
 		end	
 	end 
 	
-	if self.SystemOn || (joystick && joystick.Get(self.CPL, "gyro_launch")) then
+	if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
 		self.OnOut = 1
 		self.OnPlanet = false
 		if !self.gravtrigger then
 			self.AllGyroConstraints = constraint.GetAllConstrainedEntities( self.Entity )
-			if self.HighEngineSound || self.LowDroneSound then
+			if self.HighEngineSound or self.LowDroneSound then
 				self.HighEngineSound:Stop()
 				self.LowDroneSound:Stop()
 			end 
@@ -527,7 +527,7 @@ function ENT:Think()
 		self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, localentorparvel.y
 		lastshipangle = self.Entity:GetAngles()
 		
-		if self.HighEngineSound || self.LowDroneSound then  --Wind down engine sound when turned off
+		if self.HighEngineSound or self.LowDroneSound then  --Wind down engine sound when turned off
 			self.HighEnginePitch = clamp(self.HighEnginePitch - 0.7, 0, 300)
 			self.LowDronePitch = clamp(self.LowDronePitch - 0.3, 0, 300)
 			self.HighEngineVolume = clamp(self.HighEngineVolume - 0.005, 0, 2)
@@ -605,7 +605,7 @@ end
 function ENT:PodModelFix() --fixing the strange bug where some vehicles are rotated 90 degrees
 	if (self.Pod and self.Pod:IsValid()) then  
 		local podmodel = self.Pod:GetModel()
-		if (string.find(podmodel, "carseat") || string.find(podmodel, "nova") || string.find(podmodel, "prisoner_pod_inner")) then
+		if (string.find(podmodel, "carseat") or string.find(podmodel, "nova") or string.find(podmodel, "prisoner_pod_inner")) then
 			local podright = self.Pod:GetRight()
 			self.T90, self.Tmod = podright, 500
 		else
@@ -738,7 +738,7 @@ function ENT:UseJoystick()  --Joystick Controls (I've never tested this)
 			self.TarSpeed = (joystick.Get(self.GyroDriver, "gyro_thrust")/127.5-1)*2000
 		elseif (joystick.Get(self.GyroDriver, "gyro_thrust") < 127) then
 			self.TarSpeed = (joystick.Get(self.GyroDriver, "gyro_thrust")/127.5-1)*40
-		elseif (joystick.Get(self.GyroDriver, "gyro_thrust") < 128 && joystick.Get(self.GyroDriver, "gyro_thrust") > 127) then
+		elseif (joystick.Get(self.GyroDriver, "gyro_thrust") < 128 and joystick.Get(self.GyroDriver, "gyro_thrust") > 127) then
 			self.TarSpeed = 0
 		end
 		if (self.TarSpeed > self.GyroSpeed) then
@@ -753,7 +753,7 @@ function ENT:UseJoystick()  --Joystick Controls (I've never tested this)
 			self.GyroPitch = -(joystick.Get(self.GyroDriver, "gyro_pitch")/127.5-1)*90
 		elseif (joystick.Get(self.GyroDriver, "gyro_pitch") < 127) then
 			self.GyroPitch = -(joystick.Get(self.GyroDriver, "gyro_pitch")/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, "gyro_pitch") < 128 && joystick.Get(self.GyroDriver, "gyro_pitch") > 127) then
+		elseif (joystick.Get(self.GyroDriver, "gyro_pitch") < 128 and joystick.Get(self.GyroDriver, "gyro_pitch") > 127) then
 			self.GyroPitch = 0
 		end
 	end
@@ -774,7 +774,7 @@ function ENT:UseJoystick()  --Joystick Controls (I've never tested this)
 			self.GyroYaw = -(joystick.Get(self.GyroDriver, yaw)/127.5-1)*90
 		elseif (joystick.Get(self.GyroDriver, yaw) < 127) then
 			self.GyroYaw = -(joystick.Get(self.GyroDriver, yaw)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, yaw) < 128 && joystick.Get(self.GyroDriver, yaw) > 127) then
+		elseif (joystick.Get(self.GyroDriver, yaw) < 128 and joystick.Get(self.GyroDriver, yaw) > 127) then
 			self.GyroYaw = 0
 		end
 	end
@@ -783,7 +783,7 @@ function ENT:UseJoystick()  --Joystick Controls (I've never tested this)
 			self.GyroRoll = (joystick.Get(self.GyroDriver, roll)/127.5-1)*90
 		elseif (joystick.Get(self.GyroDriver, roll) < 127) then
 			self.GyroRoll = (joystick.Get(self.GyroDriver, roll)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, roll) < 128 && joystick.Get(self.GyroDriver, roll) > 127) then
+		elseif (joystick.Get(self.GyroDriver, roll) < 128 and joystick.Get(self.GyroDriver, roll) > 127) then
 			self.GyroRoll = 0
 		end
 	end

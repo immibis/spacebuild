@@ -55,24 +55,24 @@ end
 
 function ENT:Think()
 	-- THE FOLLOWING CODE WAS NICKED FROM THE LS3 LAMP. I TAKE NO CREDIT FOR IT! --
-	if self.Active && !self.flashlight then
+	if self.Active and !self.flashlight then
 		--local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self.Entity )
 
-		// The local positions are the offsets from parent..
+		-- The local positions are the offsets from parent..
 		self.flashlight:SetLocalPos( Vector(35,0,0) )
 		self.flashlight:SetLocalAngles( Angle(0,0,0) )
 
-		// Looks like only one flashlight can have shadows enabled!
+		-- Looks like only one flashlight can have shadows enabled!
 		self.flashlight:SetKeyValue( "enableshadows", 1 )
 		self.flashlight:SetKeyValue( "farz", 2048 )
 		self.flashlight:SetKeyValue( "nearz", 8 )
 
-		//the size of the light
+		--the size of the light
 		self.flashlight:SetKeyValue( "lightfov", 70 )
 
-		// Color.. white is default
+		-- Color.. white is default
 		self.flashlight:SetKeyValue( "lightcolor", "255 255 255" )
 		self.flashlight:Spawn()
 		self.flashlight:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )
@@ -82,12 +82,12 @@ function ENT:Think()
 	end
 	-- END OF CODE THEFT --
 	
-	if self.Active && self.Searching then 
-		if self.Target && self.Target:IsValid() then
+	if self.Active and self.Searching then
+		if self.Target and self.Target:IsValid() then
 			local trace = {}
 			trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
 			trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 5000
-			if self.Pod && self.Pod:IsValid() then
+			if self.Pod and self.Pod:IsValid() then
 				trace.filter = { self.Entity, self.Pod }
 			else
 				trace.filter = self.Entity
@@ -139,7 +139,7 @@ function ENT:Think()
 			--local targets = ents.FindInCone( self.Entity:GetPos(), self.Entity:GetForward(), 4000, 360)
 					
 			for _,i in pairs(targets) do
-				if i:IsPlayer() || i:IsNPC() then
+				if i:IsPlayer() or i:IsNPC() then
 					local trace = {}
 					trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
 					trace.endpos = i:GetPos()
@@ -204,7 +204,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then 
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 		end
 	end

@@ -50,7 +50,7 @@ function ENT:OnRemove()
 end
 
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD_BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

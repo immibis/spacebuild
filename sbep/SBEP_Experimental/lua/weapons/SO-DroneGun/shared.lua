@@ -1,5 +1,5 @@
 
-// Variables that are used on both client and server
+-- Variables that are used on both client and server
 
 SWEP.Author			= ""
 SWEP.Contact		= ""
@@ -45,7 +45,7 @@ SWEP.NBurst					= 0
 							Reload
 ---------------------------------------------------------*/
 function SWEP:Reload()
-	if !self.Reloading && self:Ammo1() > 0 && self:Clip1() < self.Primary.ClipSize then
+	if !self.Reloading and self:Ammo1() > 0 and self:Clip1() < self.Primary.ClipSize then
 		self:SetNetworkedFloat( "RTime", CurTime(), true )
 		--print(self:GetNetworkedFloat( "RTime" ))
 		self.Reloading = true
@@ -120,9 +120,9 @@ end
 	PrimaryAttack
 ---------------------------------------------------------*/
 function SWEP:PrimaryAttack()
-	if CLIENT || self.Bursting then return end
+	if CLIENT or self.Bursting then return end
 	
-	if self:Clip1() > 0 && !self.Reloading then
+	if self:Clip1() > 0 and !self.Reloading then
 		local ply = self.Owner
 	
 		self:TakePrimaryAmmo( 1 )
@@ -169,7 +169,7 @@ end
 function SWEP:SecondaryAttack()
 	if CLIENT then return end
 	--local ply = self.Owner
-	if self:Clip1() > 0 && !self.Reloading then
+	if self:Clip1() > 0 and !self.Reloading then
 		self.Bursting = !self.Bursting
 	else
 		self:EmitSound( "Weapon_Pistol.Empty" )

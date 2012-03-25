@@ -30,7 +30,7 @@ local function IncrementZoom(player,command,args)
 	--[[print("Increment Args")
 	PrintTable(args)]]
 	local zoomMod = 10
-	if (#args != 0) then
+	if (#args ~= 0) then
 		zoomMod = args[1]
 	end
 	if not (player and player:IsValid()) then return end
@@ -45,7 +45,7 @@ local function DecrementZoom(player,command,args)
 	--[[print("Decrement Args")
 	PrintTable(args)]]
 	local zoomMod = 10
-	if (#args != 0) then
+	if (#args ~= 0) then
 		zoomMod = args[1]
 	end
 	if not (player and player:IsValid()) then return end

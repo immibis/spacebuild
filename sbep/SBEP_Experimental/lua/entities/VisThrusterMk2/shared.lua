@@ -20,7 +20,7 @@ end
 function ENT:SetSize( val )
 	if CurTime() > self.NVT then
 		local CVal = self.Entity:GetSize() or 0
-		if val != CVal then
+		if val ~= CVal then
 			self.Entity:SetNetworkedInt("ClSize",val,true)
 			self.NVT = CurTime() + 1
 		end
@@ -34,7 +34,7 @@ end
 function ENT:SetLength( val )
 	if CurTime() > self.NVT then
 		local CVal = self.Entity:GetLength() or 0
-		if val != CVal then
+		if val ~= CVal then
 			self.Entity:SetNetworkedInt("ClLength",val,true)
 			self.NVT = CurTime() + 1
 		end

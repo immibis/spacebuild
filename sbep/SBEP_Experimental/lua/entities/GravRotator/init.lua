@@ -62,7 +62,7 @@ end
 
 function ENT:Think()
 	if self.CPL then
-		if self.CPL.GravCon != self || (self.CPL:GetVehicle() && self.CPL:GetVehicle():IsValid()) || self.CPL:GetMoveType() == 8 then
+		if self.CPL.GravCon ~= self or (self.CPL:GetVehicle() and self.CPL:GetVehicle():IsValid()) or self.CPL:GetMoveType() == 8 then
 			self:Remove()
 		end
 		--print(self.CPL:GetPhysicsObject():IsValid())
@@ -84,19 +84,19 @@ function ENT:Think()
 		trace.filter = { self.Entity, self.CPL }
 		local tr = util.TraceEntity( trace, self )
 		local OnGround = false
-		if tr.Hit && !tr.HitSky then
+		if tr.Hit and !tr.HitSky then
 			OnGround = true
 		end
 		if self.GravMode == 1 then
-			if self.GravGen && self.GravGen:IsValid() then
+			if self.GravGen and self.GravGen:IsValid() then
 				GravDir = self.GravGen:GetUp() * -1
 			end
 		elseif self.GravMode == 2 then
-			if self.GravGen && self.GravGen:IsValid() then
+			if self.GravGen and self.GravGen:IsValid() then
 				GravDir = (self.GravGen:GetPos() - self:GetPos()):GetNormal()
 			end
 		elseif self.GravMode == 3 then
-			if tr.HitNormal != Vector(0,0,0) then
+			if tr.HitNormal ~= Vector(0,0,0) then
 				GravDir = tr.HitNormal * -1
 			else
 				GravDir = self:GetUp() * -1
@@ -192,7 +192,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if !self.Linked && ent:IsPlayer() then
+	if !self.Linked and ent:IsPlayer() then
 		self.CPL = ent
 		self.CPL.GravCon = self
 		self.Linked = true

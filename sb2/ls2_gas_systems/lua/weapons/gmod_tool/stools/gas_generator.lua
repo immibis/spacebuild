@@ -70,16 +70,16 @@ end
 
 local gas_gen_models = {
 		{"Natural Gas Extractor", "models/props/cs_assault/firehydrant.mdl", "gas_extractor"},
-		{"Natural Gas (Oil) Extractor", "models//props_wasteland/gaspump001a.mdl", "gas_oil_extractor"},
+		{"Natural Gas (Oil) Extractor", "models/props_wasteland/gaspump001a.mdl", "gas_oil_extractor"},
         {"Natural Gas Processor", "models/props_industrial/oil_storage.mdl", "gas_processor"},
         {"Nitrogen Oxidizer", "models/props/de_nuke/equipment2.mdl", "gas_nitrooxidizer"},
         {"Nitrogen Liquidizer", "models/Gibs/airboat_broken_engine.mdl", "gas_nitroliq"},
 		{"Nitrogen Inverter", "models/props_c17/FurnitureBoiler001a.mdl", "gas_inverter"},
         {"Large Methane & Propane Reactor", "models/props_citizen_tech/steamengine001a.mdl", "gas_reactor"},
 		{"Large Nitrous Oxide Reactor", "models/props_c17/factorymachine01.mdl", "gas_nitrousreactor"},
-		{"Micro Methane Reactor", "models//props_combine/headcrabcannister01a.mdl", "gas_microreactor"},
-		{"Micro Propane Reactor", "models//props_combine/headcrabcannister01a.mdl", "gas_micropropreactor"},
-		{"Micro Nitrous Oxide Reactor", "models//props_combine/headcrabcannister01a.mdl", "gas_micronitrousreactor"},
+		{"Micro Methane Reactor", "models/props_combine/headcrabcannister01a.mdl", "gas_microreactor"},
+		{"Micro Propane Reactor", "models/props_combine/headcrabcannister01a.mdl", "gas_micropropreactor"},
+		{"Micro Nitrous Oxide Reactor", "models/props_combine/headcrabcannister01a.mdl", "gas_micronitrousreactor"},
 		{"Methane Collector", "models/props_c17/light_decklight01_off.mdl", "methane_collector"},
 		{"Propane Collector", "models/props_c17/light_decklight01_off.mdl", "propane_collector"},
 		{"Nitrogen Collector", "models/props_c17/light_decklight01_off.mdl", "nitrogen_collector"}

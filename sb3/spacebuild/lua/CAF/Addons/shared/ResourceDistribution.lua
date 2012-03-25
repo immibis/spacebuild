@@ -23,7 +23,7 @@
 	ent_table[entity].resources[resource].value = value
 	ent_table[entity].resources[resource].haschanged = true/false
 	ent_table[entity].network = networkid
-	//ent_table[entity].linkedto = {}//remove if simplified RD
+	--ent_table[entity].linkedto = {}--remove if simplified RD
 	ent_table[entity].clear = true/false
 	ent_talbe[entity].haschanged = true/false
 	ent_Table[entity].new = true/false

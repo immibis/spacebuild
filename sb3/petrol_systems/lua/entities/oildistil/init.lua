@@ -85,7 +85,7 @@ function ENT:Use()
 end
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.Hit ) then return end
+	if (not tr.Hit ) then return end
 	local ent = ents.Create( "oildistil" )
 	ent:SetPos(tr.HitPos + Vector(0,0,100))
 	ent:Spawn()
@@ -114,7 +114,7 @@ function ENT:Think()
 
 
 	-- We can only Crack if we are actually turned on right? lol
-	if (self.toggle == true || self.active == 1) then
+	if (self.toggle == true or self.active == 1) then
 		-- If we have more than 70 energy, We can heat up the coils to atmosphericly distil the oil
 		if (self.val4 > 70) then
 			-- But this can only be acheived if we actualy HAVE  oil :/
@@ -151,7 +151,7 @@ function ENT:OnRemove()
 	self.BaseClass.OnRemove(self)
 end
 
-//Duplicator support (TAD2020)
+--Duplicator support (TAD2020)
 function ENT:PreEntityCopy()
 	RD.BuildDupeInfo(self.Entity)
 	if (WireAddon == 1) then

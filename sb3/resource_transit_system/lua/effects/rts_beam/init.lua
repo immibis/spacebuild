@@ -4,9 +4,9 @@
 --EFFECT.Mat = Material( "trails/electric"  )
 EFFECT.Mat = Material( "trails/laser"  )
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Init( data table )
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function EFFECT:Init( data )
 
 	self.StartPos 	= data:GetStart()	
@@ -20,14 +20,14 @@ function EFFECT:Init( data )
 	self.TracerTime = 0.3
 	self.Length = math.Rand( 0.1, 0.15 )
 	
-	// Die when it reaches its target
+	-- Die when it reaches its target
 	self.DieTime = CurTime() + self.TracerTime
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    THINK
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function EFFECT:Think( )
 
 	if ( CurTime() > self.DieTime ) then
@@ -40,9 +40,9 @@ function EFFECT:Think( )
 
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Draw the effect
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function EFFECT:Render( )
 
 	local fDelta = (self.DieTime - CurTime()) / self.TracerTime

@@ -115,8 +115,8 @@ if (SERVER) then
 end
 
 local lifesupport_models
-if (GAMEMODE.Name == "SpaceBuild" || SpaceBuild) then MsgAll("You need the new Spacebuild for this update!\n") end
-if GAMEMODE.IsSpaceBuildDerived then //new update won't work with the old spacebuild!
+if (GAMEMODE.Name == "SpaceBuild" or SpaceBuild) then MsgAll("You need the new Spacebuild for this update!\n") end
+if GAMEMODE.IsSpaceBuildDerived then --new update won't work with the old spacebuild!
 	lifesupport_models = {
 		{ 'Suit Dispenser', 'models/props_combine/combine_emitter01.mdl', 'dispenser' },
 		{ 'Small Air Exchanger', 'models/props_combine/combine_light001a.mdl', 'air_exchanger' },
@@ -126,7 +126,7 @@ if GAMEMODE.IsSpaceBuildDerived then //new update won't work with the old spaceb
 		{ 'Climate Regulator', 'models/props_combine/combine_generator01.mdl', 'climate_control' },
 		{ 'Atmospheric Probe', 'models/props_combine/combine_mine01.mdl', 'env_probe' },
 		{ 'Air Hydroponics', 'models/props/cs_office/plant01.mdl', 'air_hydro' },
-		{ 'Terra Former', 'models//props_wasteland/lighthouse_fresnel_light_base.mdl', 'terra_former'}
+		{ 'Terra Former', 'models/props_wasteland/lighthouse_fresnel_light_base.mdl', 'terra_former'}
 	}
 else
 	lifesupport_models = {

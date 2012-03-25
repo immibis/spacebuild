@@ -44,7 +44,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -127,10 +127,10 @@ hook.Add("JoystickInitialize","BPodJoystickControl",BPodJoystickControl)
 function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		self.CPL = self.Pod:GetPassenger()
-		if (self.CPL && self.CPL:IsValid()) then
-			if !self.CPL.CamCon then
+		if (self.CPL and self.CPL:IsValid()) then
+			if not self.CPL.CamCon then
 				self.CPL.CamCon = true
-				if !self.CamC || !self.CamC:IsValid() then
+				if not self.CamC or not self.CamC:IsValid() then
 					self.CamC = ents.Create( "prop_physics" )
 					self.CamC:SetModel( "models/props_junk/PopCan01a.mdl" )
 					self.CamC:SetPos( self.Pod:GetPos() + self.Pod:GetRight() * 10 ) 
@@ -145,7 +145,7 @@ function ENT:Think()
 			end
 			
 			if (self.CPL:KeyDown( IN_JUMP )) then
-				if !self.Active then
+				if not self.Active then
 					self.Entity:SetActive()
 				end
 			end
@@ -184,7 +184,7 @@ function ENT:Think()
 					self.Roll = self.TSpeed * (joystick.Get(self.CPL, roll)/127.5-1)
 				end
 				if (joystick.Get(self.CPL, "bpod_launch")) then
-					if !self.Active then
+					if not self.Active then
 						self.Entity:SetActive()
 					end
 				end
@@ -193,7 +193,7 @@ function ENT:Think()
 			if (self.CPL:KeyDown( IN_ATTACK )) then
 				for i = 1, self.HPC do
 					local HPC = self.CPL:GetInfo( "SBHP_"..i )
-					if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 						self.HP[i]["Ent"].Entity:HPFire()
 					end
 				end
@@ -202,7 +202,7 @@ function ENT:Think()
 			if (self.CPL:KeyDown( IN_ATTACK2 )) then
 				for i = 1, self.HPC do
 					local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-					if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 						self.HP[i]["Ent"].Entity:HPFire()
 					end
 				end
@@ -215,7 +215,7 @@ function ENT:Think()
 			self.Pitch = 0
 		end
 	
-		if (self.Active && !self.Impact) then
+		if (self.Active and !self.Impact) then
 					
 			local physi = self.Pod:GetPhysicsObject()
 			physi:SetVelocity( ( physi:GetVelocity() * 0.75 ) + ( self.Pod:GetRight() * 6000 ) )
@@ -228,11 +228,11 @@ function ENT:Think()
 				trace.endpos = self.Pod:GetPos() + self.Pod:GetRight() * 120
 				trace.filter = self.Pod
 				local tr = util.TraceLine( trace )
-				if tr.HitNonWorld && tr.Entity && tr.Entity:IsValid() then
+				if tr.HitNonWorld and tr.Entity and tr.Entity:IsValid() then
 					self.Impact = true
 					self.Active = false
 					self.Pod:SetPos(tr.HitPos)
-					if self.CPL && self.CPL:IsValid() then
+					if self.CPL and self.CPL:IsValid() then
 						self.CPL:ExitVehicle()
 						self.CPL:SetPos( self.Pod:GetPos() + self.Pod:GetRight() * 200 )
 						local Vel = self.Pod:GetPhysicsObject():GetVelocity() * 0.05
@@ -255,7 +255,7 @@ function ENT:Think()
 					effectdata:SetNormal( self.Pod:GetForward() )
 					util.Effect( "ShellDrill", effectdata )
 					local Vel = self.Pod:GetPhysicsObject():GetVelocity()
-					if self.CPL && self.CPL:IsValid() then
+					if self.CPL and self.CPL:IsValid() then
 						self.CPL:ExitVehicle()
 						self.CPL:SetVelocity( Vel )
 					end
@@ -271,15 +271,15 @@ function ENT:Think()
 			--physi:EnableGravity(true)
 		end
 		
-		if !self.Active && !self.Mounted then
+		if !self.Active and !self.Mounted then
 			local mn, mx = self.Pod:WorldSpaceAABB()
 			mn = mn - Vector(2, 2, 2)
 			mx = mx + Vector(2, 2, 2)
 			local T = ents.FindInBox(mn, mx)
 			for _,i in pairs( T ) do
-				if( i.Entity && i.Entity:IsValid() && i.Entity != self.Pod ) then
+				if( i.Entity and i.Entity:IsValid() and i.Entity ~= self.Pod ) then
 					if i.HasHardpoints then
-						if i.Cont && i.Cont:IsValid() then HPLink( i.Cont, i.Entity, self.Pod ) end
+						if i.Cont and i.Cont:IsValid() then HPLink( i.Cont, i.Entity, self.Pod ) end
 						self.Mounted = true
 						self.DMounted = true
 						--self.Pod:SetParent()
@@ -299,9 +299,9 @@ function ENT:Think()
 end
 
 function ENT:HPFire()
-	if !self.CPL || !self.CPL:IsValid() then
+	if !self.CPL or !self.CPL:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger()
-		if ECPL && ECPL:IsValid() then
+		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()
 			ECPL:EnterVehicle( self.Pod )
 			self.Pod.Pod:Fire("kill", "", 5.2)
@@ -336,7 +336,7 @@ function ENT:SetActive()
 	self.Pod:SetParent()
 	if self.DMounted then self.Pod:SetPos( self.Pod:GetPos() + self.Pod:GetUp() * -60 )	end
 	
-	if self.Pod.Pod && self.Pod.Pod:IsValid() then
+	if self.Pod.Pod and self.Pod.Pod:IsValid() then
 		self.Pod.Pod.Cont.HP[self.Pod.HPN]["Ent"] = nil
 		local NC = constraint.NoCollide(self.Pod, self.Pod.Pod, 0, 0, 0, true)
 	end
@@ -355,7 +355,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:OnRemove()
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		self.Pod:Remove()
 	end
 end

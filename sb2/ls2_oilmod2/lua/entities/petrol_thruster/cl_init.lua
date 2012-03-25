@@ -7,7 +7,7 @@ include('shared.lua')
  local matPlasma			= Material( "effects/strider_muzzle" ) 
    
    
- // Thrusters only really need to be twopass when they're active.. something to think about.. 
+ -- Thrusters only really need to be twopass when they're active.. something to think about..
  ENT.RenderGroup 		= RENDERGROUP_BOTH 
    
  /*--------------------------------------------------------- 
@@ -18,7 +18,7 @@ include('shared.lua')
  	self.ShouldDraw = 1 
  	self.NextSmokeEffect = 0 
  	 
- 	// Make the render bounds a bigger so the effect doesn't get snipped off 
+ 	-- Make the render bounds a bigger so the effect doesn't get snipped off
  	mx, mn = self.Entity:GetRenderBounds() 
  	self.Entity:SetRenderBounds( mn + Vector(0,0,128), mx, 0 ) 
  	 

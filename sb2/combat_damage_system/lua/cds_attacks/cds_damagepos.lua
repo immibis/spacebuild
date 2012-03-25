@@ -17,13 +17,13 @@ cds_damagepos(trace.Entity, damage, pierce, nil, inflictor(not needed can be nil
 		function cds_damagepos(pos, damage, pierce, radius, inflictor)
 		if not server_settings.Bool("CDS_Damage_Enabled") then return false end
 		if not radius then
-			if pos:IsValid() and ! CDS_IsWorldEnt(pos) then
+			if pos:IsValid() and  not  CDS_IsWorldEnt(pos) then
 			cds_damageent(pos, damage, pierce, inflictor)
 			end
 		else
 			local stuff = ents.FindInSphere(pos, radius)
 			for _, ent in pairs(stuff) do
-				if ent:IsValid() and ! CDS_IsWorldEnt(ent) then
+				if ent:IsValid() and  not  CDS_IsWorldEnt(ent) then
 				cds_damageent(ent, damage, pierce, inflictor)
 				end
 			end

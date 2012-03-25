@@ -218,7 +218,7 @@ function ENT:DrawTranslucent()
 			local N = up
 			local AVec = LocalPlayer():GetAimVector()
 			local mx,my = gui.MousePos()
-			if mx > 0 || my > 0 then
+			if mx > 0 or my > 0 then
 				AVec = gui.ScreenToVector( gui.MousePos() )
 			end
 			local U = AVec--LocalPlayer():GetAimVector()
@@ -262,7 +262,7 @@ function ENT:DrawTranslucent()
 				
 				
 				/*
-				if RX >= -85 && RX <= 85 && RY >= -85 && RY <= -50 then
+				if RX >= -85 and RX <= 85 and RY >= -85 and RY <= -50 then
 					draw.RoundedBox( 6, -85, -85, 170, 35, KColH )
 					draw.DrawText( Value , "TrebuchetH", 80, -81, Color(R,G,B, 255), TEXT_ALIGN_RIGHT )
 					self.ManualInput = true
@@ -279,7 +279,7 @@ function ENT:DrawTranslucent()
 				
 				for y,Row in pairs( self.Boxes ) do
 					for label,x in pairs( Row ) do
-						if RX >= x-17.5 && RX <= x+17.5 && RY >= y-17.5 && RY <= y+17.5 then
+						if RX >= x-17.5 and RX <= x+17.5 and RY >= y-17.5 and RY <= y+17.5 then
 							draw.RoundedBox( 12, x-17.5, y-17.5, 35, 35, KColH )
 								local mc = math.Max( self.R, self.G, self.B)
 								r,g,b = self:ScaleColor( 1/mc )
@@ -306,7 +306,7 @@ function ENT:DrawTranslucent()
 						self.HighClear = 0
 					end
 										
-					if Highlight != self:GetHighlighted() && Highlight != -1 then
+					if Highlight ~= self:GetHighlighted() and Highlight ~= -1 then
 						self:SetHighlighted( Highlight )
 					end
 				end
@@ -325,14 +325,14 @@ function ENT:Think()
 		local YDif = math.abs(math.AngleDifference(SDir.y, PDir.y))
 		--print(PDif,YDif)
 		local plypos = self:WorldToLocal( LocalPlayer():GetShootPos() )
-		if plypos.x >= -100 && plypos.x <= 100 && plypos.y >= -100 && plypos.y <= 100 && plypos.z >= 0 && plypos.z <= 100 && YDif <= 30 && PDif <= 30 then
+		if plypos.x >= -100 and plypos.x <= 100 and plypos.y >= -100 and plypos.y <= 100 and plypos.z >= 0 and plypos.z <= 100 and YDif <= 30 and PDif <= 30 then
 			--print("Here's looking at you, kid")
 			self.LocalActive = true
 		else
 			self.LocalActive = false
 		end
 	end
-	if self.LocalActive || self.PermaA then
+	if self.LocalActive or self.PermaA then
 		--print("Active")
 		self.IncZ = math.Approach(self.IncZ, 1, .03)
 		if self.IncZ >= 1 then
@@ -349,7 +349,7 @@ function ENT:Think()
 		
 		
 		
-		if LocalPlayer():KeyPressed( IN_USE ) || (input.IsMouseDown(MOUSE_FIRST) && !self.MTog) then
+		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and !self.MTog) then
 			self.MTog = true
 			local val = 0-- self:GetHighlighted()
 			if val == 10 then
@@ -368,7 +368,7 @@ function ENT:Think()
 				self.PulseTime = CurTime()
 			else
 				--self:AddHValue( val )
-				if val >= 0 && val <= 9 then
+				if val >= 0 and val <= 9 then
 					if self.Adding then
 						if string.len( self.CString ) <= 22 then -- 22 seems a reasonable length. Quite generous, in fact...
 							self.CString = self.CString..tostring(val)

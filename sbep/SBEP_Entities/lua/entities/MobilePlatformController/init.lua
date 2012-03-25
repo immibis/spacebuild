@@ -56,12 +56,12 @@ function ENT:Initialize()
 	self.Vel = 0.1
 	
 	self.ShadowParams = {}
-		self.ShadowParams.maxangular = 100000000 //What should be the maximal angular force applied
-		self.ShadowParams.maxangulardamp = 10000000 // At which force/speed should it start damping the rotation
-		self.ShadowParams.maxspeed = 100000000 // Maximal linear force applied
-		self.ShadowParams.maxspeeddamp = 10000000 // Maximal linear force/speed before  damping
-		self.ShadowParams.dampfactor = 0.8 // The percentage it should damp the linear/angular force if it reachs it's max ammount
-		self.ShadowParams.teleportdistance = 0 // If it's further away than this it'll teleport (Set to 0 to not teleport)
+		self.ShadowParams.maxangular = 100000000 --What should be the maximal angular force applied
+		self.ShadowParams.maxangulardamp = 10000000 -- At which force/speed should it start damping the rotation
+		self.ShadowParams.maxspeed = 100000000 -- Maximal linear force applied
+		self.ShadowParams.maxspeeddamp = 10000000 -- Maximal linear force/speed before  damping
+		self.ShadowParams.dampfactor = 0.8 -- The percentage it should damp the linear/angular force if it reachs it's max ammount
+		self.ShadowParams.teleportdistance = 0 -- If it's further away than this it'll teleport (Set to 0 to not teleport)
 
 	self:StartMotionController()
 	
@@ -204,7 +204,7 @@ function ENT:Think()
 	
 	if self.PasteDelay then return end
 	
-	if (!self.Plat || !self.Plat:IsValid()) and self.PlModel then
+	if (!self.Plat or !self.Plat:IsValid()) and self.PlModel then
 		self.Plat = ents.Create( "MobilePlatform" )
 		self.Plat:SetModel( self.PlModel )
 		self.Plat:SetPos( self.Entity:GetPos() )
@@ -254,7 +254,7 @@ function ENT:Think()
 		local PitchZ = 0]]
 		local RPos = Vector( self.XCo , self.YCo , self.ZCo )
 		
-		if self.FulX ~= 0 || self.FulY ~= 0 || self.FulZ ~= 0 then
+		if self.FulX ~= 0 or self.FulY ~= 0 or self.FulZ ~= 0 then
 			local FulVec = Vector( self.FulX , self.FulY , self.FulZ )
 			FulVec:Rotate( Angle( self.Pitch , self.Yaw , self.Roll ) )
 			
@@ -318,10 +318,10 @@ end
 
 function ENT:Use( activator, caller )
 	self.PasteDelay = false
-	if activator:KeyDown( IN_SPEED ) && activator:KeyDown( IN_WALK ) then
+	if activator:KeyDown( IN_SPEED ) and activator:KeyDown( IN_WALK ) then
 		local RPos = Vector( self.XCo , self.YCo , self.ZCo )
 		
-		if self.FulX ~= 0 || self.FulY ~= 0 || self.FulZ ~= 0 then
+		if self.FulX ~= 0 or self.FulY ~= 0 or self.FulZ ~= 0 then
 			local FulVec = Vector( self.FulX , self.FulY , self.FulZ )
 			FulVec:Rotate( Angle( self.Pitch , self.Yaw , self.Roll ) )
 			RPos = RPos - FulVec

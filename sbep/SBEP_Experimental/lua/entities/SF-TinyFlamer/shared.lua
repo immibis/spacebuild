@@ -15,7 +15,7 @@ ENT.WInfo			= "Tiny Flamer"
 ENT.Range 			= 400
 
 function ENT:SetActive( val )
-	if val != self.Entity:GetNetworkedBool("ClActive") then
+	if val ~= self.Entity:GetNetworkedBool("ClActive") then
 		self.Entity:SetNetworkedBool("ClActive",val,true)
 	end
 end

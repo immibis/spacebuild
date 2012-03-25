@@ -23,7 +23,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,150)
 	
@@ -39,7 +39,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if (self.NPod1 == nil || !self.NPod1:IsValid() || self.NPod1.Active) then
+	if (self.NPod1 == nil or not self.NPod1:IsValid() or self.NPod1.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * 350 + self.Entity:GetUp() * -50 )
 		ent:Spawn()
@@ -68,7 +68,7 @@ function ENT:Think()
 		self.NPod1.Cont = ent
 	end
 	
-	if (self.NPod2 == nil || !self.NPod2:IsValid() || self.NPod2.Active) then
+	if (self.NPod2 == nil or not self.NPod2:IsValid() or self.NPod2.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * -350 + self.Entity:GetUp() * -50 )
 		ent:Spawn()

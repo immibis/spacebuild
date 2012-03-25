@@ -45,7 +45,7 @@ if ( SERVER ) then
 			list.Set( "CAF_MakeCAFEnt", "air_compressor", air_comp )
 			]]--
 			
-			//Msg("found MakeCAFEntSupFunction for "..system_class.."\n")
+			--Msg("found MakeCAFEntSupFunction for "..system_class.."\n")
 			local noerror, rt, mh, ma = pcall( SupFunction, ply, ent, system_type, system_class, model )
 			if (!noerror) then
 				CAF.WriteToDebugFile("caf_tool_error", "MakeCAFEntSupFunction errored: '"..tostring(rt).."'. Removing.\n")
@@ -85,7 +85,7 @@ if ( SERVER ) then
 	function CAF_GenerateMakeFunction( ToolName )
 		-- Check to see if we already have a generic function for this tool
 		if (CAF_CallbackFuncs[ToolName]) then
-			//Msg('Stool CallBack [Existing] -> '..ToolName..'\n')
+			--Msg('Stool CallBack [Existing] -> '..ToolName..'\n')
 			return CAF_CallbackFuncs[ToolName]
 		end
 		
@@ -98,7 +98,7 @@ if ( SERVER ) then
 		end
 		
 		CAF_CallbackFuncs[ToolName] = MakeFunction
-		//Msg('\nStool CallBack  [Created] -> '..ToolName..'\n')
+		--Msg('\nStool CallBack  [Created] -> '..ToolName..'\n')
 		
 		return MakeFunction
 	end
@@ -109,14 +109,14 @@ if ( SERVER ) then
 			EntMakeFunct = CAF_GenerateMakeFunction( ToolName ) -- Thats checks to see if a function already exists for this tool or it will make a new one
 			duplicator.RegisterEntityClass( EntClass, EntMakeFunct, "Ang", "Pos", "Class", "model", "frozen" )
 		else
-			//Msg('Stool CallBack [Argument] -- '..EntClass..' -> '..tostring(EntMakeFunct)..'\n')
+			--Msg('Stool CallBack [Argument] -- '..EntClass..' -> '..tostring(EntMakeFunct)..'\n')
 		end
 		list.Set( ToolName.."_Funcs", EntClass, EntMakeFunct )
 	end
 
 	function CAF_AddMakeCAFEntSupFunction( EntClass, MakeCAFEntSupFunction )
 		if not (EntClass and MakeCAFEntSupFunction) then return end
-		//Msg('MakeCAFEntSupFunction set for - '..EntClass..' -\n')
+		--Msg('MakeCAFEntSupFunction set for - '..EntClass..' -\n')
 		list.Set( "CAF_MakeCAFEnt", EntClass, MakeCAFEntSupFunction ) --tell CAF_MakeCAFEnt how to set up this ent
 	end
 	
@@ -126,7 +126,7 @@ end
 --CAF_AddStoolItem('cdsweapons', "Heat Gun", 'models/props_junk/TrafficCone001a.mdl', 'gun_heat')
 function CAF_AddStoolItem( ToolName, EntPrintName, EntModel, EntClass, EntMakeFunct, MakeCAFEntSupFunction )
 	if not (ToolName and EntPrintName and EntModel and EntClass) then 
-		//Msg('Error when calling CAF_AddStoolItem -- ToolName: -'..tostring(ToolName)..'- EntPrintName: -'..tostring(EntPrintName)..'- Model: -'..tostring(Model)..'- EntClass: -'..tostring(EntClass)..'-\n')
+		--Msg('Error when calling CAF_AddStoolItem -- ToolName: -'..tostring(ToolName)..'- EntPrintName: -'..tostring(EntPrintName)..'- Model: -'..tostring(Model)..'- EntClass: -'..tostring(EntClass)..'-\n')
 		return 
 	end
 	
@@ -150,7 +150,7 @@ end
 --MakeCAFEntSupFunctionList: list of functions used by MakeCAFEnt to setup an EntClass, list is indexed with EntClass (only needed if you're using MakeCAFEnt to make your ents)
 function CAF_ToolRegister( TOOL, Models_List, MakeFunc, ToolName, ToolLimit, MakeCAFEntSupFunctionList)
 
-	if (ToolLimit != nil and type(ToolLimit) == "number" and ToolLimit >=0) then
+	if (ToolLimit ~= nil and type(ToolLimit) == "number" and ToolLimit >=0) then
 		local sbox = 'sbox_max'..ToolName
 		Msg(sbox..' -> '..ToolLimit..'\n')
 		CreateConVar(sbox, ToolLimit)
@@ -177,7 +177,7 @@ function CAF_ToolRegister( TOOL, Models_List, MakeFunc, ToolName, ToolLimit, Mak
 	end
 	
 	function TOOL:LeftClick( trace )
-		if trace.Entity && (trace.Entity:IsPlayer() ) then return false end
+		if trace.Entity and (trace.Entity:IsPlayer() ) then return false end
 		if(CLIENT) then return true end
 		
 		return CAF_ToolLeftClick( self, trace, ToolName )
@@ -238,10 +238,10 @@ if ( SERVER ) then
 		local ent = func( ply, Ang, Pos, type, model, Frozen)
 		if (not ent) then return false end
 		ent:SetPos( trace.HitPos - trace.HitNormal * ent:OBBMins().z)
-		--CAF.OnEntitySpawn(ent , "SENT" , ply) //Calls the CAF SentSpawn Hook
+		--CAF.OnEntitySpawn(ent , "SENT" , ply) --Calls the CAF SentSpawn Hook
 		local const
 		if (!DontWeld) and ( trace.Entity:IsValid() or AllowWorldWeld ) then
-			local const = constraint.Weld(ent, trace.Entity,0, trace.PhysicsBone, 0, true ) //add true to turn DOR on
+			local const = constraint.Weld(ent, trace.Entity,0, trace.PhysicsBone, 0, true ) --add true to turn DOR on
 		end
 		
 		undo.Create( ToolName )
@@ -260,7 +260,7 @@ if (SinglePlayer() and SERVER) or (!SinglePlayer() and CLIENT) then --server sid
 		local model = model or tool:GetClientInfo('model')
 		if (model == '') then return end
 		
-		if (!tool.GhostEntity || !tool.GhostEntity:IsValid() || tool.GhostEntity:GetModel() != model) then
+		if (!tool.GhostEntity or !tool.GhostEntity:IsValid() or tool.GhostEntity:GetModel() ~= model) then
 			tool:MakeGhostEntity( model, Vector(0,0,0), Angle(0,0,0) )
 		end
 		

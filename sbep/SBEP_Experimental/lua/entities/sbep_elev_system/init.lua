@@ -30,10 +30,10 @@ function ENT:Initialize()
 	self.FT  = {} --Floor Table
 	self.HT  = {} --Hatch Table
 	
-	self.Usable = self.Usable || true
+	self.Usable = self.Usable or true
 	self:SetSystemSize( "S" )
-	self.ST.Usable = self.Usable || true
-	self.ST.Skin   = self.Skin || 0
+	self.ST.Usable = self.Usable or true
+	self.ST.Skin   = self.Skin or 0
 	
 	self.Entity:SetNWInt( "ActivePart" , 1 )
 	
@@ -100,7 +100,7 @@ end
 
 function ENT:AddPartToTable( part , pos )
 	table.insert( self.PT , pos , part )
-	part.PD.PN = pos || self:GetPartCount()
+	part.PD.PN = pos or self:GetPartCount()
 	local ang = self.Entity:GetAngles()
 	part.PD.Pitch, part.PD.Yaw, part.PD.Roll = ang.p, (ang.y + 90), ang.r
 	self:SetNWInt( "SBEP_LiftPartCount" , self:GetPartCount() )
@@ -146,7 +146,7 @@ function ENT:GetFloorCount()
 end
 
 function ENT:SetSystemSize( size )
-	if size == "L" || size == 2 then
+	if size == "L" or size == 2 then
 		self.Size = { "L" , "l" , "Large" , 1 }
 		self.ST.Size = self.Size
 	else
@@ -195,20 +195,20 @@ function ENT:Think()
 	end
 	self.OldATL = self.ATL
 	
-	if --[[self.IsHolding ~= self.OIH &&]] self.ST.UseDoors then
+	if --[[self.IsHolding ~= self.OIH  and ]] self.ST.UseDoors then
 		self:CheckDoorStatus()
 	end
 	--self.OIH = self.IsHolding
 	
-	if self.TAD > 0 && CurTime() > ( self.TAST + self.TAD ) && #self.CFT > 1 then
+	if self.TAD > 0 and CurTime() > ( self.TAST + self.TAD ) and #self.CFT > 1 then
 		table.remove( self.CFT , 1 ) 
 		self.TAD = 0
 	end
 	
-	if self.THD > 0 && CurTime() < ( self.THST + self.THD ) then
+	if self.THD > 0 and CurTime() < ( self.THST + self.THD ) then
 		WireLib.TriggerOutput( self , "Holding" , 1 )
 		return true
-	elseif self.THD > 0 && CurTime() > ( self.THST + self.THD ) then
+	elseif self.THD > 0 and CurTime() > ( self.THST + self.THD ) then
 		self.THD = 0
 		if self.IsHolding then
 			self:AddHoldDelay( 2 )
@@ -252,7 +252,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	if !self.LiftActive || !self.PT then return SIM_NOTHING end
+	if !self.LiftActive or !self.PT then return SIM_NOTHING end
 
 	local Pos1 = self.PT[1]:GetPos()
 	local Pos2 = self.PT[self:GetPartCount()]:GetPos()
@@ -279,9 +279,9 @@ function ENT:PhysicsSimulate( phys, deltatime )
 end
 
 function ENT:CheckHatchStatus()
-	if 	!self.ST.UseHatches 	||
-		!self.LiftActive 		||
-		self.ATL 				||
+	if 	!self.ST.UseHatches 	 or
+		!self.LiftActive 		 or
+		self.ATL 				 or
 		!self.HT then return end
 
 	for k,V in ipairs( self.HT ) do
@@ -302,7 +302,7 @@ function ENT:CheckHatchStatus()
 end
 
 function ENT:CheckDoorStatus()
-	if (!self.ST.UseDoors) || (!self.LiftActive) || !self.PT then return end
+	if (!self.ST.UseDoors) or (!self.LiftActive) or !self.PT then return end
 
 	if self.ATL then
 		for k,V in ipairs( self.PT[ self:FloorToPartNum( self:GetFloorNum() ) ].PD.FDT ) do
@@ -393,7 +393,7 @@ function ENT:CreateHatches()		--Creating Hatches. Each Hatch is paired with the 
 	--print( "Making Hatches" )
 	for k,V in ipairs(self.PT) do
 		local V1 = self.PT[k + 1]
-		if !(k == self:GetPartCount()) && !(V.PD.SD.IsShaft && V1.PD.SD.IsShaft) then
+		if !(k == self:GetPartCount()) and !(V.PD.SD.IsShaft and V1.PD.SD.IsShaft) then
 			local NH = ents.Create( "sbep_base_door" )
 				--print( "Made Hatch" )
 				NH:Spawn()
@@ -420,7 +420,7 @@ function ENT:CreateDoors()
 		local data = DD[ string.lower( P.PD.model ) ]
 		if data then
 			for n,I in ipairs( data ) do
-				if !(I.type == "Door_ElevHatch_S" || I.type == "Door_ElevHatch_L") then
+				if !(I.type == "Door_ElevHatch_S" or I.type == "Door_ElevHatch_L") then
 					local ND = ents.Create( "sbep_base_door" )
 						ND:Spawn()
 						ND:Initialize()
@@ -438,17 +438,17 @@ function ENT:WeldSystem() --Welds and nocollides the system once completed.
 	local C = self:GetPartCount()
 	if C > 1 then
 		for k,V in ipairs( self.PT ) do
-			if ValidEntity( V ) && ValidEntity(self.PT[k + 1]) then
+			if ValidEntity( V ) and ValidEntity(self.PT[k + 1]) then
 				constraint.Weld( V , self.PT[k + 1] , 0 , 0 , 0 , true )
 			end
-			if ValidEntity( V ) && ValidEntity(self.PT[k + 2]) && (k/2 == math.floor(k/2)) then
+			if ValidEntity( V ) and ValidEntity(self.PT[k + 2]) and (k/2 == math.floor(k/2)) then
 				constraint.Weld( V , self.PT[k + 2] , 0 , 0 , 0 , true )
 			end
-			if ValidEntity( V ) && ValidEntity(self) then
+			if ValidEntity( V ) and ValidEntity(self) then
 				constraint.NoCollide( V , self , 0 , 0 )
 			end
 		end
-		if ValidEntity(self.PT[1]) && ValidEntity(self.PT[ C ]) then
+		if ValidEntity(self.PT[1]) and ValidEntity(self.PT[ C ]) then
 			constraint.Weld( self.PT[1] , self.PT[ C ] , 0 , 0 , 0 , true )
 		end
 	end
@@ -458,7 +458,7 @@ function ENT:CalcPanelModel( PartNum )
 
 	local P = self.PT[ PartNum ]
 	
-	if P.PD.TC == "R" && P.PD.Inv then
+	if P.PD.TC == "R" and P.PD.Inv then
 		P.PD.AT = {0,1,1,0}
 	end
 	
@@ -504,7 +504,7 @@ function ENT:CalcPanelModel( PartNum )
 		if T[1] == T[3] then
 			SetLiftModel( 3 )
 			self.ST.AYO = (T[2] * 90)
-		elseif T[1] == T[2] || T[2] == T[3] then
+		elseif T[1] == T[2] or T[2] == T[3] then
 			SetLiftModel( 4 )
 			if T[1] == 1 then
 				self.ST.AYO =  (T[2] * -90) % 360
@@ -540,12 +540,12 @@ function ENT:TriggerInput(k,v)
 	end
 	
 	for i = 1, self:GetFloorCount() do
-		if k == ("Floor "..tostring(i)) && v > 0 then
+		if k == ("Floor "..tostring(i)) and v > 0 then
 			self:AddCallFloorNum( i )
 		end
 	end
 	
-	if k == "Hold" && v > 0 then
+	if k == "Hold" and v > 0 then
 		self:AddHoldDelay( 4 )
 	end
 end
@@ -624,7 +624,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	
 	self:MakeWire()
 	
-	if(Ent.EntityMods && DT.WireData) then
+	if(Ent.EntityMods and DT.WireData) then
 		WireLib.ApplyDupeInfo( pl, Ent, DT.WireData, function(id) return CreatedEntities[id] end)
 	end
 	

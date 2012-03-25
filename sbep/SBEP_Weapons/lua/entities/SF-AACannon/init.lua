@@ -66,7 +66,7 @@ end
 
 function ENT:Think()
 	
-	if (self.Active == true || self.FTime > CurTime() ) && CurTime() >= self.CDown then	
+	if (self.Active == true or self.FTime > CurTime() ) and CurTime() >= self.CDown then
 	
 		local vStart = self.Entity:GetPos()
 		local vForward = self.Entity:GetForward()
@@ -115,7 +115,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

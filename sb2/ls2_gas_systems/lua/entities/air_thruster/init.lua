@@ -191,7 +191,7 @@ end
 	self.BaseClass.Think(self)
 	self.aircon = math.abs(math.ceil(self.force/self.airdiv))
 
-	if (self:IsOn() && self:CanRun()) then
+	if (self:IsOn() and self:CanRun()) then
 		RD_ConsumeResource(self.Entity, "air", self.aircon)
 		self.outputon = 1
 	else

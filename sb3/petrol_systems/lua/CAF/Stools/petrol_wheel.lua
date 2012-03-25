@@ -9,16 +9,16 @@ TOOL.ClientConVar[ "torque" ] 		= "3000"
 TOOL.ClientConVar[ "friction" ] 	= "1"
 TOOL.ClientConVar[ "nocollide" ] 	= "1"
 TOOL.ClientConVar[ "forcelimit" ] 	= "0"
-TOOL.ClientConVar[ "fwd" ] 			= "1"	// Forward
-TOOL.ClientConVar[ "bck" ] 			= "-1"	// Back
-TOOL.ClientConVar[ "stop" ] 		= "0"	// Stop
+TOOL.ClientConVar[ "fwd" ] 			= "1"	-- Forward
+TOOL.ClientConVar[ "bck" ] 			= "-1"	-- Back
+TOOL.ClientConVar[ "stop" ] 		= "0"	-- Stop
 TOOL.ClientConVar[ "model" ] 		= "models/props_vehicles/carparts_wheel01a.mdl"
 TOOL.ClientConVar[ "rx" ] 			= "90"
 TOOL.ClientConVar[ "ry" ] 			= "0"
 TOOL.ClientConVar[ "rz" ] 			= "90"
 
 
-// Add Default Language translation (saves adding it to the txt files)
+-- Add Default Language translation (saves adding it to the txt files)
 if ( CLIENT ) then
 	language.Add( "Tool_petrol_wheel_name", "Petrol Wheel Tool (wire)" )
     language.Add( "Tool_petrol_wheel_desc", "Attaches a petrol-consuming wheel to something." )
@@ -43,25 +43,25 @@ end
 
 cleanup.Register( "petrol_wheels" )
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Places a wheel
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function TOOL:LeftClick( trace )
 
-	if ( trace.Entity && trace.Entity:IsPlayer() ) then return false end
+	if ( trace.Entity and trace.Entity:IsPlayer() ) then return false end
 	
-	// If there's no physics object then we can't constraint it!
-	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
+	-- If there's no physics object then we can't constraint it!
+	if ( SERVER and not util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	
 	if (CLIENT) then return true end
 	
 	local ply = self:GetOwner()
 
-	if ( !self:GetSWEP():CheckLimit( "petrol_wheels" ) ) then return false end
+	if ( not self:GetSWEP():CheckLimit( "petrol_wheels" ) ) then return false end
 
 	local targetPhys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	
-	// Get client's CVars
+	-- Get client's CVars
 	local torque		= self:GetClientNumber( "torque" )
 	local friction 		= self:GetClientNumber( "friction" )
 	local nocollide		= self:GetClientNumber( "nocollide" )
@@ -72,17 +72,17 @@ function TOOL:LeftClick( trace )
 	local bck			= self:GetClientNumber( "bck" )
 	local stop			= self:GetClientNumber( "stop" )
 	
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
+	if ( not util.IsValidModel( model ) ) then return false end
+	if ( not util.IsValidProp( model ) ) then return false end
 	
-	if ( fwd == stop || bck == stop || fwd == bck ) then return false end
+	if ( fwd == stop or bck == stop or fwd == bck ) then return false end
 	
 	
-	// Create the wheel
+	-- Create the wheel
 	local wheelEnt = MakePetrolWheel( ply, trace.HitPos, Angle(0,0,0), model, nil, nil, nil, fwd, bck, stop, toggle )
 	
 	
-	// Make sure we have our wheel angle
+	-- Make sure we have our wheel angle
 	self.wheelAngle = Angle( tonumber(self:GetClientInfo( "rx" )), tonumber(self:GetClientInfo( "ry" )), tonumber(self:GetClientInfo( "rz" )) )
 	
 	local TargetAngle = trace.HitNormal:Angle() + self.wheelAngle	
@@ -94,12 +94,12 @@ function TOOL:LeftClick( trace )
 		
 	wheelEnt:SetPos( trace.HitPos + wheelOffset + trace.HitNormal )
 	
-	// Wake up the physics object so that the entity updates
+	-- Wake up the physics object so that the entity updates
 	wheelEnt:GetPhysicsObject():Wake()
 	
 	local TargetPos = wheelEnt:GetPos()
 			
-	// Set the hinge Axis perpendicular to the trace hit surface
+	-- Set the hinge Axis perpendicular to the trace hit surface
 	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( TargetPos + trace.HitNormal )
 	local LPos2 = targetPhys:WorldToLocal( trace.HitPos )
 	
@@ -128,27 +128,27 @@ function TOOL:LeftClick( trace )
 end
 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Apply new values to the wheel
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function TOOL:RightClick( trace )
 
-	if ( trace.Entity && trace.Entity:GetClass() != "petrol_wheel" ) then return false end
+	if ( trace.Entity and trace.Entity:GetClass() ~= "petrol_wheel" ) then return false end
 	if (CLIENT) then return true end
 	
 	local wheelEnt = trace.Entity
 	
-	// Only change your own wheels..
-	if ( wheelEnt:GetTable():GetPlayer():IsValid() && 
-	     wheelEnt:GetTable():GetPlayer() != self:GetOwner() ) then 
+	-- Only change your own wheels..
+	if ( wheelEnt:GetTable():GetPlayer():IsValid() and
+	     wheelEnt:GetTable():GetPlayer() ~= self:GetOwner() ) then
 		 
 		 return false 
 		 
 	end
 
-	// Get client's CVars
+	-- Get client's CVars
 	local torque		= self:GetClientNumber( "torque" )
-	local toggle		= self:GetClientNumber( "toggle" ) != 0
+	local toggle		= self:GetClientNumber( "toggle" ) ~= 0
 	local fwd			= self:GetClientNumber( "fwd" )
 	local bck			= self:GetClientNumber( "bck" )
 	local stop			= self:GetClientNumber( "stop" )
@@ -164,15 +164,15 @@ end
 
 if ( SERVER ) then
 
-	/*---------------------------------------------------------
+	--[[---------------------------------------------------------
 	   For duplicator, creates the wheel.
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]
 	function MakePetrolWheel( pl, Pos, Ang, Model, Vel, aVel, frozen, fwd, bck, stop, toggle, direction, Axis, Data )
 		
-		if ( !pl:CheckLimit( "petrol_wheels" ) ) then return false end
+		if ( not pl:CheckLimit( "petrol_wheels" ) ) then return false end
 		
 		local wheel = ents.Create( "petrol_wheel" )
-		if ( !wheel:IsValid() ) then return end
+		if ( not wheel:IsValid() ) then return end
 		
 		wheel:SetModel( Model )
 		wheel:SetPos( Pos )
@@ -220,12 +220,12 @@ end
 
 function TOOL:UpdateGhostWireWheel( ent, player )
 
-	if ( !ent ) then return end
-	if ( !ent:IsValid() ) then return end
+	if ( not ent ) then return end
+	if ( not ent:IsValid() ) then return end
 	
 	local tr 	= utilx.GetPlayerTrace( player, player:GetCursorAimVector() )
 	local trace 	= util.TraceLine( tr )
-	if (!trace.Hit) then return end
+	if (not trace.Hit) then return end
 	
 	if ( trace.Entity:IsPlayer() ) then
 	
@@ -247,12 +247,12 @@ function TOOL:UpdateGhostWireWheel( ent, player )
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Maintains the ghost wheel
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function TOOL:Think()
 
-	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != self:GetClientInfo( "model" )) then
+	if (not self.GhostEntity or not self.GhostEntity:IsValid() or self.GhostEntity:GetModel() ~= self:GetClientInfo( "model" )) then
 		self.wheelAngle = Angle( tonumber(self:GetClientInfo( "rx" )), tonumber(self:GetClientInfo( "ry" )), tonumber(self:GetClientInfo( "rz" )) )
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector(0,0,0), Angle(0,0,0) )
 	end

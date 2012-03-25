@@ -78,7 +78,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if self.CHook && self.CHook:IsValid() then
+	if self.CHook and self.CHook:IsValid() then
 	
 	end
 end
@@ -97,7 +97,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 

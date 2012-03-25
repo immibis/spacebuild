@@ -58,11 +58,11 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Open") then
 		if (value > 0) then
-			if !self.COp && self.Pod && self.Pod:IsValid() then
+			if !self.COp and self.Pod and self.Pod:IsValid() then
 				self.Entity:Open(self.Mode)
 			end
 		else
-			if self.COp && self.Pod && self.Pod:IsValid() then
+			if self.COp and self.Pod and self.Pod:IsValid() then
 				self.Entity:Close(self.Mode)
 			end
 		end
@@ -79,12 +79,12 @@ end
 
 function ENT:Think()
 	
-	if self.AutoC && CurTime() > self.AutoCT then
+	if self.AutoC and CurTime() > self.AutoCT then
 		self.Entity:Close(self.Mode)
 		self.AutoC = false
 	end
 	
-	if self.Mode == 1 || self.Mode == 2 then
+	if self.Mode == 1 or self.Mode == 2 then
 		local A = math.Clamp( self.OTime - CurTime(), 0, 1 )
 		local F = 0
 		local S = 0
@@ -98,16 +98,16 @@ function ENT:Think()
 		local Alph = Lerp(A,F,S)
 		self.Entity:SetColor(255,255,255,Alph)
 		
-		if self.Mode == 2 && self.BTime > CurTime() then
-			if self.Panel && self.Panel:IsValid() then
+		if self.Mode == 2 and self.BTime > CurTime() then
+			if self.Panel and self.Panel:IsValid() then
 				self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * 5000)
 			end
 		end
 	elseif self.Mode == 3 then
-		if self.COp && self.CHeight < 100 then
+		if self.COp and self.CHeight < 100 then
 			self.CHeight = self.CHeight + 1
 		end
-		if !self.COp && self.CHeight > 0 then
+		if !self.COp and self.CHeight > 0 then
 			self.CHeight = self.CHeight - 1
 		end
 		local PAngle = self.Pod.HP[self.HPN]["Angle"]
@@ -130,10 +130,10 @@ function ENT:Think()
 		end
 		self.Entity:SetLocalPos( Vector(X,Y,Z) )
 	elseif self.Mode == 4 then
-		if self.COp && self.CRotate < 360 then
+		if self.COp and self.CRotate < 360 then
 			self.CRotate = self.CRotate + 4
 		end
-		if !self.COp && self.CRotate > 0 then
+		if !self.COp and self.CRotate > 0 then
 			self.CRotate = self.CRotate - 4
 		end
 		
@@ -165,7 +165,7 @@ function ENT:Think()
 		self.Entity:SetLocalAngles( self.Entity:WorldToLocalAngles(NAng) )
 	end
 	
-	if self.Panel && self.Panel:IsValid() && !self.Panel.Blasted then
+	if self.Panel and self.Panel:IsValid() and !self.Panel.Blasted then
 		self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * 2500 + self.Entity:GetUp() * 2500)
 		self.Panel.Blasted = true
 	end
@@ -198,13 +198,13 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 	end
 end
 
 function ENT:HPFire()
-	if !self.COp && self.Pod && self.Pod:IsValid() then
+	if !self.COp and self.Pod and self.Pod:IsValid() then
 		self.Entity:Open(self.Mode)
 	else
 		self.Entity:Close(self.Mode)
@@ -263,7 +263,7 @@ function ENT:Open( mode )
 		effectdata:SetRadius( 5 )
 		util.Effect( "GlassImpact", effectdata )
 		
-		if self.Panel && self.Panel:IsValid() then
+		if self.Panel and self.Panel:IsValid() then
 			self.Panel:Remove()
 		end
 		

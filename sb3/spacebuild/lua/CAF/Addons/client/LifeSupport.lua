@@ -36,9 +36,9 @@ local huds 	= {}
 local hud1 		= {}
 hud1.ScH 		= ScH;
 hud1.MidW 		= MidW;
-hud1.Left 		= hud1.MidW - 80 //70
-hud1.Left2		= hud1.MidW - 90 //80
-hud1.Right		= hud1.MidW + 80 //70
+hud1.Left 		= hud1.MidW - 80 --70
+hud1.Left2		= hud1.MidW - 90 --80
+hud1.Right		= hud1.MidW + 80 --70
 hud1.H1			= hud1.ScH / 8
 hud1.H2			= hud1.ScH - hud1.H1
 hud1.H3			= hud1.H1 - 5
@@ -85,7 +85,7 @@ local function lifesupport_HUDPaint()
 		local ply = LocalPlayer()
 		if not ply or not ply:Alive() or (ply:GetActiveWeapon() and ply:GetActiveWeapon() == "Camera") then return end
 		local hud_to_use = Display_hud:GetInt()
-		if hud_to_use != 0 then
+		if hud_to_use ~= 0 then
 			if not ls_sb_mode then
 				if ply:WaterLevel() > 2 then
 					local Air = ls_suit.o2 / MaxAmountsDivide
@@ -361,9 +361,9 @@ end
 usermessage.Hook("LS_umsg2", LS_umsg_hook2) 
 
 --The Class
-/**
+--[[
 	The Constructor for this Custom Addon Class
-*/
+]]
 function LS.__Construct()
 	hook.Add("HUDPaint", "LS_Core_HUDPaint", lifesupport_HUDPaint)
 	status = true
@@ -379,55 +379,55 @@ function LS.__Construct()
 	RD.AddProperResourceName("heavy water", CAF.GetLangVar("Heavy Water"))
 	RD.AddProperResourceName("liquid nitrogen", CAF.GetLangVar("Liquid Nitrogen"))
 	return true
-	//return false , CAF.GetLangVar("No Implementation yet")
+	--return false , CAF.GetLangVar("No Implementation yet")
 end
 
-/**
+--[[
 	The Destructor for this Custom Addon Class
-*/
+]]
 function LS.__Destruct()
 	hook.Remove("HUDPaint", "LS_Core_HUDPaint")
 	CAF.RemoveHook("think3", lifesupport_think)
 	status = false
 	return true
-	//return false , CAF.GetLangVar("No Implementation yet")
+	--return false , CAF.GetLangVar("No Implementation yet")
 end
 
-/**
+--[[
 	Get the required Addons for this Addon Class
-*/
+]]
 function LS.GetRequiredAddons()
 	return {"Resource Distribution"}
 end
 
-/**
+--[[
 	Get the Boolean Status from this Addon Class
-*/
+]]
 function LS.GetStatus()
 	return status
 end
 
-/**
+--[[
 	Get the Version of this Custom Addon Class
-*/
+]]
 function LS.GetVersion()
 	return 3.1, CAF.GetLangVar("Beta")
 end
 
 
 local isuptodatecheck;
-/**
+--[[
 	Update check
-*/
+]]
 function LS.IsUpToDate(callBackfn)
 	if not CAF.HasInternet then
 		return
 	end
-	if isuptodatecheck != nil then
+	if isuptodatecheck ~= nil then
 		callBackfn(isuptodatecheck);
 		return
 	end
-	http.Get("http://www.snakesvx.net/versions/ls.txt","",
+	--[[http.Get("http://www.snakesvx.net/versions/ls.txt","",
 		function(html,size)
 			local version = tonumber(html);
 			if(version) then
@@ -441,20 +441,20 @@ function LS.IsUpToDate(callBackfn)
 				end
 			end
 		end
-	);
+	);]]
 end
 
-/**
+--[[
 	Get any custom options this Custom Addon Class might have
-*/
+]]
 function LS.GetExtraOptions()
 	return {}
 end
 
-/**
+--[[
 	Gets a menu from this Custom Addon Class
-*/
-function LS.GetMenu(menutype, menuname)//Name is nil for main menu, String for others
+]]
+function LS.GetMenu(menutype, menuname) --Name is nil for main menu, String for others
 	local data = {}
 	if not menutype then
 		--Create Info Menu
@@ -475,9 +475,9 @@ function LS.GetMenu(menutype, menuname)//Name is nil for main menu, String for o
 	return data
 end
 
-/**
+--[[
 	Get the Custom String Status from this Addon Class
-*/
+]]
 function LS.GetCustomStatus()
 	return ; --CAF.GetLangVar("Not Implemented Yet")
 end
@@ -486,9 +486,9 @@ function LS.AddResourcesToSend()
 	
 end
 
-/**
+--[[
 	Returns a table containing the Description of this addon
-*/
+]]
 function LS.GetDescription()
 	return {
 				"Life Support 3",

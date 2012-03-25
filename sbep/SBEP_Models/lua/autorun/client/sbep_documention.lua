@@ -175,7 +175,7 @@ function SBEPDoc.ClickPage( File , name , Form )
 			Dimage = vgui.Create( "DImageButton" )
 				Dimage:SetImage( image )
 				local ratio = Dimage.m_Image.ActualHeight/Dimage.m_Image.ActualWidth
-				if ratio <= 1 && !H then
+				if ratio <= 1 and !H then
 					Dimage:SetSize( size , ratio * size )
 				else
 					Dimage:SetSize( 1.4 * size/ratio  , 1.4 * size )
@@ -236,13 +236,13 @@ function SBEPDoc.ProcessDoc( File )
 		local i = string.match( s , "%[IMG%](.*)%[/IMG%]"  )
 		local iS = 3
 		if i then
-			iS = tonumber( string.match( i , "%[size%s*=%s*(%d)%]"  ) || 3 )
+			iS = tonumber( string.match( i , "%[size%s*=%s*(%d)%]"  ) or 3 )
 			i = string.gsub( i , "%[size%s*=%s*%d%]" , "")
 		end
 		iSize = 30 + 15 * iS
 		s = string.gsub( s , "%[IMG%].*%[/IMG%]" , "")
 		local H = false
-		if string.Left( s , 1) == "*" && string.Right( s , 1) == "*" then
+		if string.Left( s , 1) == "*" and string.Right( s , 1) == "*" then
 			H = true
 			i = SBEPDoc.Icons[ Filename ]
 			if i then
@@ -272,7 +272,7 @@ function SBEPDoc.OpenPage( Dtab , page )
 		SBEPDoc.Menu.Sheet:SetActiveTab( SBEPDoc.Menu.Sheet.Items[ #SBEPDoc.Menu.Sheet.Items ].Tab )
 	end
 	
-	if !SBEPDoc.DirEnumTable[ Dtab ] || !SBEPDoc.DocEnumTable[ Dtab ] || !SBEPDoc.DocEnumTable[ Dtab ][ page ] then return false end
+	if !SBEPDoc.DirEnumTable[ Dtab ] or !SBEPDoc.DocEnumTable[ Dtab ] or !SBEPDoc.DocEnumTable[ Dtab ][ page ] then return false end
 	if !SBEPDoc.Menu then SBEPDoc.OpenManual() end
 	
 	SBEPDoc.Menu.Sheet:SetActiveTab( SBEPDoc.Menu.Sheet.Items[ SBEPDoc.DirEnumTable[ Dtab ] ].Tab )
@@ -326,7 +326,7 @@ function SBEPDoc.SearchWiki( search )
 				for n, tag in ipairs( tt ) do
 					for k, S in ipairs( SerTab) do
 						if !Results[ F ] then
-							if tag == S || string.match( S , tag ) || string.match( tag , S ) then
+							if tag == S or string.match( S , tag ) or string.match( tag , S ) then
 								--print( "found result" )
 								local Ic = SBEPDoc.Icons[ F ]
 								Results[ F ] = { D , Ic }

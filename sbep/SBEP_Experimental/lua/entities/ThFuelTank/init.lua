@@ -63,7 +63,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if self.Venting && self.Fuel > 0 then
+	if self.Venting and self.Fuel > 0 then
 		local Spray = ents.Create( "TFuelSpray" )
 		Spray:SetPos( self.Entity:GetPos() + self.Entity:GetForward() * 40 )
 		--Spray:SetAngles( ply:GetAimVector():Angle() + Angle(90, 0, 0))
@@ -80,7 +80,7 @@ function ENT:Think()
 		self.Fuel = self.Fuel - 10
 	end
 	
-	if self.Leaking && self.Fuel > 0 then
+	if self.Leaking and self.Fuel > 0 then
 		local Spray = ents.Create( "TFuelSpray" )
 		local LPE = math.random(1,table.getn( self.LeakPoints ))
 		Spray:SetPos( self.LeakPoints[LPE] + self.Entity:GetPos() )
@@ -109,7 +109,7 @@ end
 function ENT:OnTakeDamage( dmg )
 	--print(dmg:GetDamage())
 	self.THealth = self.THealth - dmg:GetDamage()
-	if dmg:GetDamage() >= 100 || self.THealth <= 0 then
+	if dmg:GetDamage() >= 100 or self.THealth <= 0 then
 		self.Entity:Splode()
 	elseif dmg:GetDamage() >= 12 then
 		self.Leaking = true
@@ -186,8 +186,8 @@ function ENT:Splode()
 end
 
 function ENT:Touch( ent )
-	if ent.HasHardpoints && self.Fuel > 0 then
-		if ent.Cont && ent.Cont:IsValid() then 
+	if ent.HasHardpoints and self.Fuel > 0 then
+		if ent.Cont and ent.Cont:IsValid() then
 			HPLink( ent.Cont, ent.Entity, self.Entity )
 		end
 	end

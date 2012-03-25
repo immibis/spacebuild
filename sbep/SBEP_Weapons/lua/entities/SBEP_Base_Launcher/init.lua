@@ -174,7 +174,7 @@ function ENT:Think()
 	local MCount = 0
 	for n = 1, self.Shots do
 		if CurTime() >= self.CDL[n] then
-			if self.CDL[n] != 0 then
+			if self.CDL[n] ~= 0 then
 				self.CDL[n] = 0
 				self.Entity:EmitSound("Buttons.snd26")
 			end
@@ -190,14 +190,14 @@ function ENT:Think()
 		Wire_TriggerOutput(self.Entity, "CanFire", 0) 
 	end
 	
-	if self.Pod && self.Pod:IsValid() && !self.WireG && self.Pod.Trace then
+	if self.Pod and self.Pod:IsValid() and !self.WireG and self.Pod.Trace then
 		local HPos = self.Pod.Trace.HitPos
 		self.XCo = HPos.x
 		self.YCo = HPos.y
 		self.ZCo = HPos.z
 	end
 	
-	if self.Primary && self.Primary:IsValid() then
+	if self.Primary and self.Primary:IsValid() then
 		Wire_TriggerOutput(self.Entity, "PrimaryMissileActive", 1)
 		Wire_TriggerOutput(self.Entity, "PrimaryMissilePos", self.Primary:GetPos() )
 		Wire_TriggerOutput(self.Entity, "PrimaryMissileAngle", self.Primary:GetAngles())
@@ -226,7 +226,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
@@ -258,9 +258,9 @@ function ENT:FFire( CCD )
 	NewShell:Fire("kill", "", 30)
 	NewShell.TEnt = self.TEnt
 	local Trace = nil
-	if self.Pod && self.Pod:IsValid() && self.Pod:IsVehicle() then
+	if self.Pod and self.Pod:IsValid() and self.Pod:IsVehicle() then
 		local CPL = self.Pod:GetPassenger()
-		if CPL && CPL:IsValid() then
+		if CPL and CPL:IsValid() then
 			--CPL.CamCon = true
 			--CPL:SetViewEntity( NewShell )
 		end
@@ -287,7 +287,7 @@ function ENT:FFire( CCD )
 	RockTrail:Activate()
 	*/
 	
-	if !self.Primary || !self.Primary:IsValid() then
+	if !self.Primary or !self.Primary:IsValid() then
 		self.Primary = NewShell
 	end
 	--RD_ConsumeResource(self, "Munitions", 1000)
