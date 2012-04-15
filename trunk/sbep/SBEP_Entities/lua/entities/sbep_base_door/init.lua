@@ -15,7 +15,10 @@ DTT[ "Door_AnimS1"	]	= { { model = "models/SmallBridge/SEnts/SBADoorS1a.mdl" ,	U
 		CS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } ,
 							{ model = "models/SmallBridge/SEnts/SBADoorS1.mdl" 	,	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } ,
-		CS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } }
+		CS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } ,
+			{ model = "models/SmallBridge/SEnts/forcedoor.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
 DTT[ "Door_AnimS2"	]	= { { model = "models/SmallBridge/SEnts/SBADoorS2a.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
@@ -25,14 +28,20 @@ DTT[ "Door_AnimS2"	]	= { { model = "models/SmallBridge/SEnts/SBADoorS2a.mdl" 	,	
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
 					{ model = "models/SmallBridge/SEnts/SBADoorS3.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
-		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
+			{ model = "models/SmallBridge/SEnts/forcesquare.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
 DTT[ "Door_AnimT"	]	= { { model = "models/SmallBridge/SEnts/SBADoorT.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
 				{ model = "models/SmallBridge/SEnts/SBADoorT2.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
-		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
+			{ model = "models/SmallBridge/SEnts/forcetall.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
 DTT[ "Door_SIris"	]	= { { model = "models/SmallBridge/SEnts/SBADoorSIrisa.mdl",	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [0.90] = "Doors.FullOpen8" , [2.65] = "Doors.FullOpen9" } ,
@@ -46,7 +55,10 @@ DTT[ "Door_AnimW"	]	= { { model = "models/SmallBridge/SEnts/SBADoorWb.mdl" ,	UD 
 		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } } ,
 							{ model = "models/SmallBridge/SEnts/SBADoorWa.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } ,
-		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } } }
+		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } } ,
+			{ model = "models/SmallBridge/SEnts/forcewide.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
 DTT[ "Door_AnimL"	]	= { { model = "models/SmallBridge/SEnts/SBADoorLa.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.80] = "Doors.FullOpen8" , [1.60] = "Doors.FullOpen8" , [2.40] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } ,
