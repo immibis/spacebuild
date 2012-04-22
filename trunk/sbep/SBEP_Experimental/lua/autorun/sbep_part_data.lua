@@ -258,6 +258,8 @@ local SMB_PAD = {
 	[ "models/smallbridge/ship parts/sbcockpit3.mdl"			] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
 	[ "models/smallbridge/ship parts/sbcockpit4.mdl"			] = { { type = "SWSH" , pos = Vector(  -27.9 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
 	[ "models/smallbridge/ship parts/sbcockpit5dw.mdl"			] = { { type = "DWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
+	[ "models/smallbridge/ship parts/sbcockpith2.mdl"			] = { { type = "SWDH" , pos = Vector(  111.6 ,   0  , 65.1) , dir = Angle(  0,  0,  0) } } ,
+	[ "models/smallbridge/ship parts/sbcockpitw2h2.mdl"			] = { { type = "DWDH" , pos = Vector(  111.6 ,   0  , 65.1) , dir = Angle(  0,  0,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 	[ "models/smallbridge/ship parts/sbengine1.mdl"				] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
@@ -271,6 +273,10 @@ local SMB_PAD = {
 	[ "models/smallbridge/ship parts/sbengine4r.mdl"			] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
 	[ "models/smallbridge/ship parts/sbengine5.mdl"				] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
 	[ "models/smallbridge/ship parts/sbengine5dwdh.mdl"			] = { { type = "DWDH" , pos = Vector( -111.6 ,   0  , 65.1) , dir = Angle(  0,180,  0) } } ,
+	[ "models/smallbridge/ship parts/sbengine42h.mdl"			] = { { type = "SWDH" , pos = Vector(  111.6 ,   0  , 65.1) , dir = Angle(  0,  0,  0) } } ,
+	[ "models/smallbridge/ship parts/sbenginebo.mdl"			] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
+	[ "models/mandrac/smallbridgeaddon/sbenginemsw.mdl"			] = { { type = "SWSH" , pos = Vector(  -55.8 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
+	[ "models/mandrac/smallbridgeaddon/sbenginecdw.mdl"			] = { { type = "DWSH" , pos = Vector(    0 , -111.6  ,  0  ) , dir = Angle(  0,-90,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 	[ "models/smallbridge/ship parts/sbhulldsdwe.mdl"			] = { { type = "DWSH" , pos = Vector(  111.6 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } , 
@@ -288,6 +294,7 @@ local SMB_PAD = {
 	[ "models/smallbridge/ship parts/sbhulldst.mdl"				] = { { type = "SWSH" , pos = Vector(  111.6 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } ,
 																	  { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } , 
 																	  { type = "SWSH" , pos = Vector(    0   ,-111.6,  0  ) , dir = Angle(  0,270,  0) } } ,
+	[ "models/smallbridge/ship parts/sbhulldoorevad.mdl"			] = { { type = "ESML" , pos = Vector(  -13.95 ,  0  ,  0  ) , dir = Angle( 180,  0,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 	[ "models/smallbridge/ship parts/sblandramp.mdl"			] = { { type = "SWSH" , pos = Vector(  111.6 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } ,
@@ -305,6 +312,15 @@ local SMB_PAD = {
 																	  { type = "LRC4" , pos = Vector(    0   ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
 	[ "models/smallbridge/ship parts/sblandurampdwdh.mdl"		] = { { type = "DWDH" , pos = Vector(  111.6 ,   0  , 65.1) , dir = Angle(  0,  0,  0) } ,
 																	  { type = "LRC6" , pos = Vector(    0   ,   0  , 65.1) , dir = Angle(  0,180,  0) } } ,
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+	[ "models/smallbridge/panels/1w2wpanel.mdl"			] = { { type = "DWSH" , pos = Vector(  4.65 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } , 
+										{ type = "SWSH" , pos = Vector( -4.65 ,  0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
+	[ "models/smallbridge/panels/2w2hsplitter1.mdl"			] = { { type = "SWDH" , pos = Vector(  4.65 ,   0  , 65.1) , dir = Angle(  0,  0,  0) } , 
+										{ type = "DWDH" , pos = Vector( -4.65 ,  0  , 65.1) , dir = Angle(  0,180,  0) } } ,
+	[ "models/smallbridge/panels/2w2hsplitter2.mdl"			] = { { type = "DWDH" , pos = Vector(  4.65 ,   0  ,  65.1  ) , dir = Angle(  0,  0,  0) } ,
+										{ type = "SWDH" , pos = Vector( -4.65 , 111.6,  65.1  ) , dir = Angle(  0,180,  0) } ,
+										{ type = "SWDH" , pos = Vector( -4.65 ,-111.6,  65.1  ) , dir = Angle(  0,180,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 	[ "models/smallbridge/splitters/sbconvmb.mdl"				] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  , 65.1) , dir = Angle(  0,180,  0) } ,
