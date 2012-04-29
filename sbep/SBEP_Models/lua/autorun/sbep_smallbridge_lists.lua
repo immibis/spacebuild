@@ -75,6 +75,8 @@ local SMT = {}
 		"models/SmallBridge/Ship Parts/sbcockpit3.mdl"		,
 		"models/SmallBridge/Ship Parts/sbcockpit4.mdl"		,
 		"models/SmallBridge/Ship Parts/sbcockpit5dw.mdl"	,
+		"models/SmallBridge/Ship Parts/sbcockpith2.mdl"		,
+		"models/SmallBridge/Ship Parts/sbcockpitw2h2.mdl"	,
 		"models/SmallBridge/Ship Parts/sbengine1.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine2.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine2o.mdl"		,
@@ -84,8 +86,12 @@ local SMT = {}
 		"models/SmallBridge/Ship Parts/sbengine4l.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine4m.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine4r.mdl"		,
+		"models/SmallBridge/Ship Parts/sbengine42h.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine5.mdl"		,
 		"models/SmallBridge/Ship Parts/sbengine5dwdh.mdl"	,
+		"models/mandrac/smallbridgeaddon/sbenginemsw.mdl"	,
+		"models/mandrac/smallbridgeaddon/sbenginecdw.mdl"	,
+		"models/SmallBridge/Ship Parts/sbenginebo.mdl"		,
 		"models/SmallBridge/Ship Parts/sbhulldsdwe.mdl"		,
 		"models/SmallBridge/Ship Parts/sbhulldsdwe2.mdl"	,
 		"models/SmallBridge/Ship Parts/sbhulldse.mdl"		,
@@ -123,7 +129,10 @@ local SMT = {}
 		"models/SmallBridge/Splitters/sbsplits-dwdh.mdl"	,
 		"models/SmallBridge/Splitters/sbsplitv.mdl"			,
 		"models/SmallBridge/Splitters/sbsplitvdh.mdl"		,
-		"models/SmallBridge/Splitters/sbsplitvw.mdl"		
+		"models/SmallBridge/Splitters/sbsplitvw.mdl"		,
+		"models/SmallBridge/Panels/1w2wpanel.mdl"		,
+		"models/SmallBridge/Panels/2w2hsplitter1.mdl"		,
+		"models/SmallBridge/Panels/2w2hsplitter2.mdl"
 							}
 
 	SMT.SmallBridge["Height Transfer"] = {
@@ -144,7 +153,8 @@ local SMT = {}
 		"models/SmallBridge/Height Transfer/sbhtsrampz.mdl"		,
 		"models/SmallBridge/Height Transfer/sbhtsrampzdh.mdl"	,
 		"models/SmallBridge/Height Transfer/sbhtsrampzdw.mdl"	,
-		"models/SmallBridge/Height Transfer/sbhtsrampzdwdh.mdl"	
+		"models/SmallBridge/Height Transfer/sbhtsrampzdwdh.mdl"	,
+		"models/mandrac/smallbridgeaddon/sbhtsladder.mdl"
 								}
 
 	SMT.SmallBridge["Panels"] = {
