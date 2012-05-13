@@ -11,6 +11,8 @@ local SRT = {
 	ESML = true  ,
 	ELRG = true  ,
 	
+	INSR = false ,
+
 	LRC1 = false ,
 	LRC2 = false ,
 	LRC3 = false ,

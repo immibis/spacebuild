@@ -77,7 +77,8 @@ local DTT = {}
 											
 		DTT.SmallBridge["Other"] = {
 			"models/smallbridge/panels/sbpaneldbsmall.mdl"			,
-			"models/smallbridge/station parts/sbbaydps.mdl"		
+			"models/smallbridge/station parts/sbbaydps.mdl"			,
+			"models/mandrac/smallbridgeaddon/2room.mdl"		
 									}
 
 	DTT.ModBridge = {}
@@ -293,6 +294,8 @@ local DCT = {}
 	DCT[ "models/smallbridge/panels/sbpaneldbsmall.mdl"			] = { { type = "Door_DBS"   	} }
 	DCT[ "models/smallbridge/station parts/sbbaydps.mdl"		] = { { type = "Door_AnimS2" 	, V = Vector(51.15,0,0     ) 							} ,
 																	  { type = "Door_SIris"  	, V = Vector(-37.2,0,-60.45) , A = Angle( 90 , 0 , 0 )	} }
+	DCT[ "models/mandrac/smallbridgeaddon/2room.mdl"			] = { { type = "Door_Insert"  , V = Vector(34.5,7.62,65.1     )	} ,
+											{ type = "Door_Insert"  , V = Vector(-34.5,7.62,65.1     )	} }
 
 for m,D in pairs( DCT ) do
 	list.Set( "SBEP_DoorControllerModels", m , D )

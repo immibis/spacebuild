@@ -67,6 +67,10 @@ DTT[ "Door_AnimL"	]	= { { model = "models/SmallBridge/SEnts/SBADoorLa.mdl" ,	UD 
 		OS = { [0] = "Doors.Move14" , [0.80] = "Doors.FullOpen8" , [1.60] = "Doors.FullOpen8" , [2.40] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.35] = "Doors.FullOpen8" , [2.15] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } } }
 
+DTT[ "Door_Insert"	]	= { { model = "models/SmallBridge/SEnts/insertdoor.mdl" ,	UD = 2 , OD = 1   , CD = 1 	,
+		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
+		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
+
 DTT[ "Door_Sly1"	]	= { { model = "models/Slyfo/SLYAdoor1.mdl" ,	UD = 2 , OD = 0.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } } }
