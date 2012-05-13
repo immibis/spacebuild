@@ -17,6 +17,8 @@ local SPD = {
 	
 	ESML = "ESML" ,
 	ELRG = "ELRG" ,
+
+	INSR = "INSR" ,
 	
 	LRC1 = "LRC2" ,
 	LRC2 = "LRC1" ,

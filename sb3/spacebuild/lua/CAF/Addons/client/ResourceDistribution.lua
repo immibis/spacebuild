@@ -450,27 +450,11 @@ CAF.RegisterAddon("Resource Distribution", RD, "1")
 	return contable
 end]]
 
---[[function RD.GetNetResourceAmount(netid, resource)
+function RD.GetNetResourceAmount(netid, resource)
 	if not resource then return 0, "No resource given" end
-	--[[if not nettable[netid] then return 0, "Not a valid network" end
-	
-	local amount = 0
-	local index = {}
-	index.network = netid
-	if table.Count(nettable[index.network].cons) > 0 then
-		for k, v in pairs(RD.getConnectedNets(index.network)) do
-			if nettable[v] and nettable[v].resources and nettable[v].resources[resource]  then
-				amount = amount + nettable[v].resources[resource].value
-			end
-		end
-	else
-		if nettable[index.network].resources[resource] then
-			amount = nettable[index.network].resources[resource].value
-		end
-	end
-	return amount
 	local data = GetNetTable(netid);
-	if not data then return false end
+	if not data then return 0, "Not a valid network" end
+	
 	local amount = 0;
 	if data.resources[resource] then
 		amount = data.resources[resource].value
@@ -482,20 +466,17 @@ function RD.GetResourceAmount(ent, resource)
 	if not ValidEntity( ent ) then return 0, "Not a valid entity" end
 	if not resource then return 0, "No resource given" end
 	local amount = 0
-	if ent_table[ent:EntIndex( )] then
-		local index = ent_table[ent:EntIndex( )];
-		if index.network == 0 then
-			if index.resources[resource] then
-				amount = index.resources[resource].value
-			end
-		else
-			amount = RD.GetNetResourceAmount(index.network, resource)
+	
+	local index=RD.GetEntityTable(ent)
+	if table.Count(index)>0 then
+		if index.resources[resource] then
+			amount = index.resources[resource].value
 		end
 	end
 	return amount
 end
 
-function RD.GetUnitCapacity(ent, resource)
+--[[function RD.GetUnitCapacity(ent, resource)
 	if not ValidEntity( ent ) then return 0, "Not a valid entity" end
 	if not resource then return 0, "No resource given" end
 	local amount = 0
@@ -506,24 +487,16 @@ function RD.GetUnitCapacity(ent, resource)
 		end
 	end
 	return amount
-end
+end]]
 
 function RD.GetNetNetworkCapacity(netid, resource)
-	if not nettable[netid] then return 0, "Not a valid Network" end
 	if not resource then return 0, "No resource given" end
-	local amount = 0
-	local index = {}
-	index.network = netid
-	if table.Count(nettable[index.network].cons) > 0 then
-		for k, v in pairs(RD.getConnectedNets(index.network)) do
-			if nettable[v] and nettable[v].resources and nettable[v].resources[resource]  then
-				amount = amount + nettable[v].resources[resource].maxvalue
-			end
-		end
-	else
-		if nettable[index.network].resources[resource] then
-			amount = nettable[index.network].resources[resource].maxvalue
-		end
+	local data = GetNetTable(netid);
+	if not data then return 0, "Not a valid network" end
+	
+	local amount = 0;
+	if data.resources[resource] then
+		amount = data.resources[resource].maxvalue
 	end
 	return amount
 end
@@ -532,18 +505,14 @@ function RD.GetNetworkCapacity(ent, resource)
 	if not ValidEntity( ent ) then return 0, "Not a valid entity" end
 	if not resource then return 0, "No resource given" end
 	local amount = 0
-	if ent_table[ent:EntIndex( )] then
-		local index = ent_table[ent:EntIndex( )];
-		if index.network == 0 then
-			if index.resources[resource] then
-				amount = index.resources[resource].maxvalue
-			end
-		else
-			amount = RD.GetNetNetworkCapacity(index.network, resource)
+	local index=RD.GetEntityTable(ent)
+	if table.Count(index) then
+		if index.resources[resource] then
+			amount = index.resources[resource].maxvalue
 		end
 	end
 	return amount
-end]]
+end
 
 local requests = {}
 local ttl = 0.2; --Wait 0.2 second before doing a new request

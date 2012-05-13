@@ -5,6 +5,7 @@ local MatTab = {
 	SWDH = { Material( "sprites/SWDHgreen"		) , { 21 , 30 } } ,
 	DWSH = { Material( "sprites/DWSHred"		) , { 42 , 15 } } ,
 	DWDH = { Material( "sprites/DWDHyellow"		) , { 42 , 30 } } ,
+	INSR = { Material( "sprites/Insert"		) , { 42 , 15 } } ,
 	
 	ESML = { Material( "sprites/ESML"			) , { 35 , 35 } } ,
 	ELRG = { Material( "sprites/ELRG"			) , { 35 , 35 } } ,
