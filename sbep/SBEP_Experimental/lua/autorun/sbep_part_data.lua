@@ -21,6 +21,7 @@ preventing the vast amount of memory-hogging that is performed on load at the mo
 		ESML - Elevator, small
 		ELRG - Elevator, large
 		INSR - Insert Component
+		HNGR - Hangar
 
 	Medbridge:
 		MBSH - Medium Bridge, Single Height
@@ -684,36 +685,128 @@ local SMB_PAD = {
 																	  { type = "ELRG" , pos = Vector(    0   ,   0  ,-65.1) , dir = Angle( 90,  0,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
-	[ "models/smallbridge/hangars/sbdb1l.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb1ls.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb1m.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb1m1.mdl"					] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } } ,
+	[ "models/smallbridge/hangars/sbdb1l.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb1ls.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb1m.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb1m1.mdl"					] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
 	[ "models/smallbridge/hangars/sbdb1m12.mdl"					] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
-																	  { type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } } ,
-	[ "models/smallbridge/hangars/sbdb1r.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb1rs.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb2l.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb2m.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb2mdw.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb2r.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb3m.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb3mdw.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb3mx.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb3mxdw.mdl"				] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb3side.mdl"				] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb4l.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb4m.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb4mdw.mdl"					] = {  	} ,
-	[ "models/smallbridge/hangars/sbdb4r.mdl"					] = {  	} ,
+												{ type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb1r.mdl"					] = { { type = "HNGR" , pos = Vector( -9.3 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 102.3 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb1rs.mdl"					] = { { type = "HNGR" , pos = Vector( -9.3 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 102.3 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb2l.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb2m.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb2mdw.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 334.8 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -334.8 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 167.4 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -167.4 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb2r.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb3m.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb3mdw.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 334.8 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -334.8 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 167.4 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -167.4 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb3mx.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb3mxdw.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 334.8 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -334.8 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 167.4 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -167.4 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -167.4 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb3side.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb4l.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb4m.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 167.4 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -167.4 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0, 180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb4mdw.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 334.8 , 0 ) , dir = Angle(  0, 0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 0 , -334.8 , 0 ) , dir = Angle(  0, 180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 167.4 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -167.4 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdb4r.mdl"					] = { { type = "HNGR" , pos = Vector( 0 , 27.9 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0, 180,  0) } } ,
+
 	[ "models/smallbridge/hangars/sbdbcomp1.mdl"				] = { { type = "SWSH" , pos = Vector( -446.4 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
-																	  { type = "SWSH" , pos = Vector( -446.4 ,   0  ,130.2) , dir = Angle(  0,180,  0) } } ,
+												{ type = "SWSH" , pos = Vector( -446.4 ,   0  ,130.2) , dir = Angle(  0,180,  0) } } ,
+
 	[ "models/smallbridge/hangars/sbdbseg1s.mdl"				] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
-																	  { type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } } ,
+												{ type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 195.3 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
 	[ "models/smallbridge/hangars/sbdbseg1ss.mdl"				] = { { type = "SWSH" , pos = Vector( -111.6 ,   0  ,  0  ) , dir = Angle(  0,180,  0) } ,
-																	  { type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } } ,
-	[ "models/smallbridge/hangars/sbdbseg2s.mdl"				] = {  	} ,
-	[ "models/smallbridge/hangars/sbdbseg3s.mdl"				] = {  	} ,
-	[ "models/smallbridge/hangars/sbdbseg4s.mdl"				] = {  	} ,
+												{ type = "SWSH" , pos = Vector( -111.6 ,   0  ,130.2) , dir = Angle(  0,180,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 195.3 , 0 ) , dir = Angle(  0,  0,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdbseg2s.mdl"				] = { { type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -195.3 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 195.3 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdbseg3s.mdl"				] = { { type = "HNGR" , pos = Vector( 111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , -195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( 111.6 , 195.3 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -195.3 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 195.3 , 0 ) , dir = Angle(  0,  180,  0) } } ,
+
+	[ "models/smallbridge/hangars/sbdbseg4s.mdl"				] = { { type = "HNGR" , pos = Vector( -111.6 , 0 , 0 ) , dir = Angle(  0,  0,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , -195.3 , 0 ) , dir = Angle(  0,  180,  0) } ,
+												{ type = "HNGR" , pos = Vector( -111.6 , 195.3 , 0 ) , dir = Angle(  0,  180,  0) } } ,
 ----------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------
 	[ "models/smallbridge/life support/sbhullcache.mdl"			] = { { type = "SWSH" , pos = Vector(  111.6 ,   0  ,  0  ) , dir = Angle(  0,  0,  0) } , 
