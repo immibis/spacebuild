@@ -12,6 +12,7 @@ local SRT = {
 	ELRG = true  ,
 	
 	INSR = false ,
+	HNGR = false ,
 
 	LRC1 = false ,
 	LRC2 = false ,
